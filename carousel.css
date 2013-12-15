@@ -20,6 +20,14 @@ body {
   z-index: 20;
 }
 
+.navbar-inverse .navbar-brand {
+  color: #ffffff;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+  color: #cccccc;
+}
+
 /* Flip around the padding for proper display in narrow viewports */
 .navbar-wrapper .container {
   padding-left: 0;
