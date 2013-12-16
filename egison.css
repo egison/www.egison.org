@@ -1,151 +1,223 @@
 /* GLOBAL STYLES
--------------------------------------------------- */
+   -------------------------------------------------- */
 /* Padding below the footer and lighter body text */
 
 body {
-  padding-top: 50px;
-  color: #5a5a5a;
+    padding-top: 50px;
+    color: #5a5a5a;
 }
 
-
+.manual h1 {
+    padding-top: 80px;
+    margin-top: -45px;
+}
+.manual h2 {
+    padding-top: 80px;
+    margin-top: -45px;
+}
+.manual h3 {
+    padding-top: 80px;
+    margin-top: -45px;
+}
 
 /* CUSTOMIZE THE NAVBAR
--------------------------------------------------- */
+   -------------------------------------------------- */
 
 /* Special class on .container surrounding .navbar, used for positioning it into place. */
 .navbar-wrapper {
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 20;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 20;
 }
 
 .navbar-inverse .navbar-brand {
-  color: #ffffff;
+    color: #ffffff;
 }
 
 .navbar-inverse .navbar-nav > li > a {
-  color: #cccccc;
+    color: #cccccc;
 }
 
 /* Flip around the padding for proper display in narrow viewports */
 .navbar-wrapper .container {
-  padding-left: 0;
-  padding-right: 0;
+    padding-left: 0;
+    padding-right: 0;
 }
 .navbar-wrapper .navbar {
-  padding-left: 15px;
-  padding-right: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 .navbar-nav > li > iframe {
-  margin-top: 15px;
+    margin-top: 15px;
 
+}
+
+/* CUSTOMIZE THE SIDENAV
+   -------------------------------------------------- */
+
+.affix {
+    margin-top: 0;
+    margin-bottom: 0;
+    top: 80px;
+    width: 263px;
+}
+
+sidenav, .bs-sidebar.affix .bs-sidenav {
+    margin-top: 0;
+    margin-bottom: 0;
+    top: 80px;
+    width: 263px;
+}
+
+/* First level of nav */
+.bs-sidenav {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    padding-top:    10px;
+    padding-bottom: 10px;
+    text-shadow: 0 1px 0 #fff;
+    background-color: #f7f5fa;
+    border-radius: 5px;
+}
+
+/* All levels of nav */
+.bs-sidebar .nav > li > a {
+    display: block;
+    color: #716b7a;
+    padding: 5px 20px;
+}
+.bs-sidebar .nav > li > a:hover,
+.bs-sidebar .nav > li > a:focus {
+    text-decoration: none;
+    background-color: #e5e3e9;
+    border-right: 1px solid #dbd8e0;
+}
+.bs-sidebar .nav > .active > a,
+.bs-sidebar .nav > .active:hover > a,
+.bs-sidebar .nav > .active:focus > a {
+    font-weight: bold;
+    color: #563d7c;
+    background-color: transparent;
+    border-right: 1px solid #563d7c;
+}
+
+/* Nav: second level (shown on .active) */
+.bs-sidebar .nav .nav {
+    display: none; /* Hide by default, but at >768px, show it */
+    margin-bottom: 8px;
+}
+.bs-sidebar .nav .nav > li > a {
+    padding-top:    3px;
+    padding-bottom: 3px;
+    padding-left: 30px;
+    font-size: 90%;
 }
 
 /* CUSTOMIZE THE CAROUSEL
--------------------------------------------------- */
+   -------------------------------------------------- */
 
 /* Carousel base class */
 .carousel {
-  height: 280px;
-  margin-bottom: 60px;
+    height: 280px;
+    margin-bottom: 60px;
 }
 /* Since positioning the image, we need to help out the caption */
 .carousel-caption {
-  z-index: 10;
+    z-index: 10;
 }
 
 /* Declare heights because of positioning of img element */
 .carousel .item {
-  height: 280px;
-  background-color: #777;
+    height: 280px;
+    background-color: #777;
 }
 .carousel-inner > .item > img {
-  min-width: 100%;
-  height: 280px;
+    min-width: 100%;
+    height: 280px;
 }
 
 
 
 /* MARKETING CONTENT
--------------------------------------------------- */
+   -------------------------------------------------- */
 
 /* Pad the edges of the mobile views a bit */
 .marketing {
-  padding-left: 15px;
-  padding-right: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 .marketing .col-lg-4 {
-  margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 .marketing h2 {
-  font-weight: normal;
-  font-size: x-large;
+    font-weight: normal;
+    font-size: x-large;
 }
 .marketing h3 {
-  font-weight: normal;
-  font-size: x-large;
+    font-weight: normal;
+    font-size: x-large;
 }
 .marketing .col-lg-4 p {
 }
 .marketing ul {
-  padding: 0px;
-  margin: 0 0 9px 20px;
+    padding: 0px;
+    margin: 0 0 9px 20px;
 }
 
 /* Featurettes
-------------------------- */
+   ------------------------- */
 
 .featurette-divider {
-  margin: 80px 0; /* Space out the Bootstrap <hr> more */
+    margin: 80px 0; /* Space out the Bootstrap <hr> more */
 }
 
 /* Thin out the marketing headings */
 .featurette-heading {
-  font-weight: 300;
-  line-height: 1;
-  letter-spacing: -1px;
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -1px;
 }
 
 
 
 /* RESPONSIVE CSS
--------------------------------------------------- */
+   -------------------------------------------------- */
 
 @media (min-width: 768px) {
 
-  /* Remove the edge padding needed for mobile */
-  .marketing {
-    padding-left: 0;
-    padding-right: 0;
-  }
+    /* Remove the edge padding needed for mobile */
+    .marketing {
+        padding-left: 0;
+        padding-right: 0;
+    }
 
-  /* Bump up size of carousel content */
-  .carousel-caption p {
-    font-size: 21px;
-    line-height: 1.4;
-  }
+    /* Bump up size of carousel content */
+    .carousel-caption p {
+        font-size: 21px;
+        line-height: 1.4;
+    }
 
-  .featurette-heading {
-    font-size: 50px;
-  }
+    .featurette-heading {
+        font-size: 50px;
+    }
 
 }
 
 /* Costuminzing by Egi
--------------------------------------------------- */
+   -------------------------------------------------- */
 
 .footer {
-  background-color: #222222;
-  color: #fff;
-  margin-top: 70px;
-  padding: 12px 8px 8px 8px;
-  text-align: center;
-  font-size: 95%;
+    background-color: #222222;
+    color: #fff;
+    margin-top: 80px;
+    padding: 12px 8px 8px 8px;
+    text-align: center;
+    font-size: 95%;
 }
 .footer p {
-  margin-bottom: 0;
-  color: #fff;
+    margin-bottom: 0;
+    color: #fff;
 }

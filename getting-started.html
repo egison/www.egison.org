@@ -27,7 +27,7 @@
   </head>
 <!-- NAVBAR
 ================================================== -->
-  <body>
+  <body data-spy="scroll" data-target=".bs-sidebar" data-offset="0">
     <div class="navbar-wrapper">
       <div class="container">
 
@@ -80,27 +80,32 @@
     ================================================== -->
     <!-- Wrap the rest of the page in another container to center all the content. -->
 
-    <div class="container marketing">
+    <div class="container manual">
 
       <div class="row">
 
-        <div class="col-md-8" id="sidebar" role="navigation">
+        <div class="col-md-12" id="top" role="complementary">
           <h1>Getting Started!!</h1>
         </div>
 
-        <div class="col-md-4" id="sidebar" role="navigation">
-          <div class="nav">
-            <a href="#what-is-egison" class="list-group-item">What is Egison?</a>
-            <a href="#how-to-install" class="list-group-item">How to install</a>
-            <a href="#how-to-update" class="list-group-item">How to update</a>
-            <a href="#run-interpreter" class="list-group-item">Run interpreter</a>
-            <a href="#egison-mode" class="list-group-item">Egison mode on your Emacs</a>
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-3">
+          <div data-spy="affix" class="bs-sidebar hidden-print" role="complementary" data-offset-top="100" data-offset-bottom="100">
+            <ul class="nav bs-sidenav">
+              <li><a href="#what-is-egison">What is Egison?</a></li>
+              <li><a href="#how-to-install">How to install</a></li>
+              <li><a href="#how-to-update">How to update</a></li>
+              <li><a href="#egison-mode">Egison mode on your Emacs</a></li>
+            </ul>
           </div>
         </div>
       
-        <div class="col-md-12" role="main">
+        <div class="col-md-9" role="main">
 
-          <h2 id ="what-is-egiosn">What is Egison?</h2>
+          <h2 id ="what-is-egison">What is Egison?</h2>
 
           <p>
             If you would like to know about Egison before you install it, see <a href="quick-demo.html">Quick Demo</a>.
@@ -125,7 +130,7 @@ Registering egison-X.X.X...</code></pre>
 
           <p>
             If successfully installed, there will be an output where the binary file is generated as above.
-            Please add new path to $PATH variable of your shell, to make your shell be able to find egison command.
+            Please add new path to <code>$PATH</code> variable of your shell, to make your shell be able to find <code>egison</code> command.
             (If your OS is Windows, you don't need to configure the path of the shell.) 
             For example, if you are using bash, you will execute commands as follows.
           </p>
@@ -134,23 +139,7 @@ Registering egison-X.X.X...</code></pre>
 % source ~/.bashrc</code></pre>
 
           <p>
-            After that, you can use Egison with the following command.
-          </p>
-          
-<pre><code>% egison</code></pre>
-
-          <h2 id ="how-to-update">How to update</h2>
-          <p>
-            You can update Egison with the following commands.
-          </p>
-
-<pre><code>% cabal update
-% cabal install egison</code></pre>
-
-          <h2 id="run-interpreter">Run Interpreter!!</h2>
-
-          <p>
-            After you have installed Egison, you can run Egison interpreter with a command 'egison'.
+            Then, you can run Egison interpreter with a command <code>egison</code>.
             Type Control-D to terminate the interpreter.
           </p>
           
@@ -160,6 +149,14 @@ http://www.egison.org
 Welcome to Egison Interpreter!
 &gt; ^D
 Leaving Egison Interpreter.</code></pre>
+
+          <h2 id ="how-to-update">How to update</h2>
+          <p>
+            You can update Egison with the following commands.
+          </p>
+
+<pre><code>% cabal update
+% cabal install egison</code></pre>
 
           <h2 id="egison-mode">How to use Egison mode on your emacs</h2>
           
