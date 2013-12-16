@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../../docs-assets/ico/favicon.png">
+
+    <title>Egison - Programming Language</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../docs-assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Custom styles for this template -->
+    <link href="egison.css" rel="stylesheet">
+  </head>
+<!-- NAVBAR
+================================================== -->
+  <body>
+    <div class="navbar-wrapper">
+      <div class="container">
+
+        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="index.html">Egison</a>
+            </div>
+            <div class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+                <li class="navbar-special active"><a href="getting-started.html">Getting Started</a></li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tutorials<b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">Egison in One minute</a></li>
+                    <li><a href="#">Egison in Thirty minute</a></li>
+                    <li><a href="#">Egison in One day</a></li>
+                    <li class="divider"></li>
+                    <li class="dropdown-header">Others</li>
+                    <li><a href="#">View Demonstrations</a></li>
+                    <li><a href="#">View FAQ</a></li>
+                  </ul>
+                </li>
+                <li><a href="manual3/">Manual</a></li>
+                <li><a href="about.html">About</a></li>
+              </ul>
+              <ul class="nav navbar-nav pull-right">
+                <li>
+                  <a href="https://twitter.com/share" class="twitter-share-button" data-via="Egison_Lang">Tweet</a>
+                  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                </li>
+                <li>
+                  <iframe src="http://ghbtns.com/github-btn.html?user=egisatoshi&repo=egison3&type=watch&count=true" height="30" width="118" frameborder="0" scrolling="0" style="width:118px; height: 30px;" allowTransparency="true"></iframe>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Marketing messaging and featurettes
+    ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+
+    <div class="container marketing">
+
+      <div class="row">
+
+        <!--
+        <div class="col-xs-6 col-sm-3 sidebar" id="sidebar" role="navigation">
+          <div class="nav">
+            <a href="#how-to-install" class="list-group-item active">How to install</a>
+            <a href="#how-to-update" class="list-group-item">How to update</a>
+            <a href="#" class="list-group-item">Run interpreter</a>
+            <a href="#" class="list-group-item">Egison mode on your Emacs</a>
+          </div>
+        </div>
+        -->
+      
+        <div class="col-md9" role="main">
+
+          <h1>Getting Started!!</h1>
+
+          <hr/>
+
+          <h2 id ="how-to-install">How to install?</h2>
+
+          <p>
+            To install Egison, you need to install  <a href="http://hackage.haskell.org/platform/">Haskell Platform</a>.
+            This is because Egison is implemented in Haskell and distributed as a <a href="http://hackage.haskell.org/packages/hackage.html">Hackage</a> package.<br/>
+          </p>
+
+          <p>
+            After you installed Haskell Platform, perform following commands.
+          </p>
+
+<pre><code>% cabal update
+% cabal install egison
+...
+Installing executable(s) in /home/xxx/.cabal/bin
+Registering egison-X.X.X...</code></pre>
+
+          <p>
+            If successfully installed, there will be an output where the binary file is generated as above.
+            Please add new path to $PATH variable of your shell, to make your shell be able to find egison command.
+            (If your OS is Windows, you don't need to configure the path of the shell.) 
+            For example, if you are using bash, you will execute commands as follows.
+          </p>
+
+<pre><code>% echo "PATH=\$PATH:/home/xxx/.cabal/bin" &gt;&gt; ~/.bashrc
+% source ~/.bashrc</code></pre>
+
+          <p>
+            After that, you can use Egison with the following command.
+          </p>
+          
+<pre><code>% egison</code></pre>
+
+          <h2 id ="how-to-update">How to update?</h2>
+          <p>
+            You can update Egison with the following commands.
+          </p>
+
+<pre><code>% cabal update
+% cabal install egison</code></pre>
+
+          <h2 id="run-interpreter">Run Interpreter!!</h2>
+
+          <p>
+            After you have installed Egison, you can run Egison interpreter with a command 'egison'.
+            Type Control-D to terminate the interpreter.
+          </p>
+          
+<pre><code>% egison
+Egison Version X.X.X (C) 2011-2013 Satoshi Egi
+http://www.egison.org
+Welcome to Egison Interpreter!
+&gt; ^D
+Leaving Egison Interpreter.</code></pre>
+
+          <h2 id="egison-mode">How to use Egison mode on your emacs</h2>
+          
+          <p>
+            To use Egison mode on your Emacs, you should copy a file <code>egison-mode.el</code>, which exists in <code>~/.cabal/share/</code>,
+            to load-path of your emacs, and add following lines in your <code>.emacs</code>.
+          </p>
+
+<pre><code>(autoload 'egison-mode "egison-mode" "Major mode for editing Egison code." t)
+(setq auto-mode-alist
+(cons `("\\.egi$" . egison-mode) auto-mode-alist))</code></pre>
+          
+        </div>
+      </div><!--/row-->
+      
+    </div><!-- /.container -->
+    <!-- FOOTER -->
+    <footer class="footer">
+      <p style="center">Copyright &copy; 2011-2013 <a href="http://egison.org/~egi/index.html">Satoshi Egi</a></p>
+    </footer>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="bootstrap/docs-assets/js/holder.js"></script>
+  </body>
+</html>
