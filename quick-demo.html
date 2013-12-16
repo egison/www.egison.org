@@ -46,9 +46,9 @@
               <ul class="nav navbar-nav">
                 <li class="navbar-special"><a href="getting-started.html">Getting started</a></li>
                 <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tutorials<b class="caret"></b></a>
+                  <a href="#" class="dropdown-toggle active" data-toggle="dropdown">Tutorials<b class="caret"></b></a>
                   <ul class="dropdown-menu">
-                    <li><a href="quick-demo.html">Egison in one minute</a></li>
+                    <li><a class="active" href="quick-demo.html">Egison in one minute</a></li>
                     <li><a href="egison-tutorial.html">Egison in thirty minute</a></li>
                     <li><a href="contact.html#workshop">Egison in one day</a></li>
                     <li class="divider"></li>
@@ -86,7 +86,7 @@
       <div class="row">
 
         <div class="col-md-12" id="top" role="complementary">
-          <h1>Getting Started!!</h1>
+          <h1>Egison in One Minute</h1>
         </div>
 
       </div>
@@ -95,83 +95,78 @@
 
         <div class="col-md-8" role="main">
 
-          <h2 id ="what-is-egison">What is Egison?</h2>
+          <h2 id ="poker-hands">Poker-hands Demonstration</h2>
 
-          <p>
-            If you would like to know about Egison before you install it, see <a href="quick-demo.html">Quick Demo</a>.
-          </p>
-          
-          <h2 id ="how-to-install">How to install</h2>
-
-          <p>
-            To install Egison, you need to install  <a href="http://hackage.haskell.org/platform/">Haskell Platform</a>.
-            This is because Egison is implemented in Haskell and distributed as a <a href="http://hackage.haskell.org/packages/hackage.html">Hackage</a> package.<br/>
-          </p>
-
-          <p>
-            After you installed Haskell Platform, perform following commands.
-          </p>
-
-<pre><code>% cabal update
-% cabal install egison
-...
-Installing executable(s) in /home/xxx/.cabal/bin
-Registering egison-X.X.X...</code></pre>
-
-          <p>
-            If successfully installed, there will be an output where the binary file is generated as above.
-            Please add new path to <code>$PATH</code> variable of your shell, to make your shell be able to find <code>egison</code> command.
-            (If your OS is Windows, you don't need to configure the path of the shell.) 
-            For example, if you are using bash, you will execute commands as follows.
-          </p>
-
-<pre><code>% echo "PATH=\$PATH:/home/xxx/.cabal/bin" &gt;&gt; ~/.bashrc
-% source ~/.bashrc</code></pre>
-
-          <p>
-            Then, you can run Egison interpreter with a command <code>egison</code>.
-            Type Control-D to terminate the interpreter.
-          </p>
-          
-<pre><code>% egison
-Egison Version X.X.X (C) 2011-2013 Satoshi Egi
-http://www.egison.org
-Welcome to Egison Interpreter!
-&gt; ^D
-Leaving Egison Interpreter.</code></pre>
-
-          <h2 id ="how-to-update">How to update</h2>
-          <p>
-            You can update Egison with the following commands.
-          </p>
-
-<pre><code>% cabal update
-% cabal install egison</code></pre>
-
-          <h2 id="egison-mode">How to use Egison mode on your emacs</h2>
-          
-          <p>
-            To use Egison mode on your Emacs, you should copy a file <code>egison-mode.el</code>, which exists in <code>~/.cabal/share/</code>,
-            to load-path of your emacs, and add following lines in your <code>.emacs</code>.
-          </p>
-
-<pre><code>(autoload 'egison-mode "egison-mode" "Major mode for editing Egison code." t)
-(setq auto-mode-alist
-(cons `("\\.egi$" . egison-mode) auto-mode-alist))</code></pre>
+<pre><code>(define $poker-hands
+  (lambda [$cs]
+    (match cs (multiset card)
+      {[&lt;cons &lt;card $s $n&gt;
+         &lt;cons &lt;card ,s ,(- n 1)&gt;
+          &lt;cons &lt;card ,s ,(- n 2)&gt;
+           &lt;cons &lt;card ,s ,(- n 3)&gt;
+            &lt;cons &lt;card ,s ,(- n 4)&gt;
+             &lt;nil&gt;&gt;&gt;&gt;&gt;&gt;
+        &lt;Straight-Flush&gt;]
+       [&lt;cons &lt;card _ $n&gt;
+         &lt;cons &lt;card _ ,n&gt;
+          &lt;cons &lt;card _ ,n&gt;
+            &lt;cons &lt;card _ ,n&gt;
+              &lt;cons _
+                &lt;nil&gt;&gt;&gt;&gt;&gt;&gt;
+        &lt;Four-of-Kind&gt;]
+       [&lt;cons &lt;card _ $m&gt;
+         &lt;cons &lt;card _ ,m&gt;
+          &lt;cons &lt;card _ ,m&gt;
+           &lt;cons &lt;card _ $n&gt;
+            &lt;cons &lt;card _ ,n&gt;
+              &lt;nil&gt;&gt;&gt;&gt;&gt;&gt;
+        &lt;Full-House&gt;]
+       [&lt;cons &lt;card $s _&gt;
+         &lt;cons &lt;card ,s _&gt;
+           &lt;cons &lt;card ,s _&gt;
+             &lt;cons &lt;card ,s _&gt;
+               &lt;cons &lt;card ,s _&gt;
+                 &lt;nil&gt;&gt;&gt;&gt;&gt;&gt;
+        &lt;Flush&gt;]
+       [&lt;cons &lt;card _ $n&gt;
+         &lt;cons &lt;card _ ,(- n 1)&gt;
+          &lt;cons &lt;card _ ,(- n 2)&gt;
+           &lt;cons &lt;card _ ,(- n 3)&gt;
+            &lt;cons &lt;card _ ,(- n 4)&gt;
+             &lt;nil&gt;&gt;&gt;&gt;&gt;&gt;
+        &lt;Straight&gt;]
+       [&lt;cons &lt;card _ $n&gt;
+         &lt;cons &lt;card _ ,n&gt;
+          &lt;cons &lt;card _ ,n&gt;
+           &lt;cons _
+            &lt;cons _
+             &lt;nil&gt;&gt;&gt;&gt;&gt;&gt;
+        &lt;Three-of-Kind&gt;]
+       [&lt;cons &lt;card _ $m&gt;
+         &lt;cons &lt;card _ ,m&gt;
+          &lt;cons &lt;card _ $n&gt;
+            &lt;cons &lt;card _ ,n&gt;
+             &lt;cons _
+               &lt;nil&gt;&gt;&gt;&gt;&gt;&gt;
+        &lt;Two-Pair&gt;]
+       [&lt;cons &lt;card _ $n&gt;
+         &lt;cons &lt;card _ ,n&gt;
+          &lt;cons _
+           &lt;cons _
+            &lt;cons _
+             &lt;nil&gt;&gt;&gt;&gt;&gt;&gt;
+        &lt;One-Pair&gt;]
+       [&lt;cons _
+         &lt;cons _
+          &lt;cons _
+           &lt;cons _
+            &lt;cons _
+             &lt;nil&gt;&gt;&gt;&gt;&gt;&gt;
+        &lt;Nothing&gt;]})))
+</code></pre>
           
         </div>
 
-        <div class="col-md-4">
-          <div data-spy="affix" class="bs-sidebar hidden-print" role="complementary" data-offset-top="100" data-offset-bottom="100">
-            <ul class="nav bs-sidenav">
-              <li><a href="#what-is-egison">What is Egison?</a></li>
-              <li><a href="#how-to-install">How to install</a></li>
-              <li><a href="#how-to-update">How to update</a></li>
-              <li><a href="#egison-mode">Egison mode on your Emacs</a></li>
-            </ul>
-          </div>
-        </div>
-      
       </div><!--/row-->
     
       
