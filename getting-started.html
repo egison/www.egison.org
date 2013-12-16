@@ -84,24 +84,29 @@
 
       <div class="row">
 
-        <!--
-        <div class="col-xs-6 col-sm-3 sidebar" id="sidebar" role="navigation">
+        <div class="col-md-8" id="sidebar" role="navigation">
+          <h1>Getting Started!!</h1>
+        </div>
+
+        <div class="col-md-4" id="sidebar" role="navigation">
           <div class="nav">
-            <a href="#how-to-install" class="list-group-item active">How to install</a>
+            <a href="#what-is-egison" class="list-group-item">What is Egison?</a>
+            <a href="#how-to-install" class="list-group-item">How to install</a>
             <a href="#how-to-update" class="list-group-item">How to update</a>
-            <a href="#" class="list-group-item">Run interpreter</a>
-            <a href="#" class="list-group-item">Egison mode on your Emacs</a>
+            <a href="#run-interpreter" class="list-group-item">Run interpreter</a>
+            <a href="#egison-mode" class="list-group-item">Egison mode on your Emacs</a>
           </div>
         </div>
-        -->
       
-        <div class="col-md9" role="main">
+        <div class="col-md-12" role="main">
 
-          <h1>Getting Started!!</h1>
+          <h2 id ="what-is-egiosn">What is Egison?</h2>
 
-          <hr/>
-
-          <h2 id ="how-to-install">How to install?</h2>
+          <p>
+            If you would like to know about Egison before you install it, see <a href="quick-demo.html">Quick Demo</a>.
+          </p>
+          
+          <h2 id ="how-to-install">How to install</h2>
 
           <p>
             To install Egison, you need to install  <a href="http://hackage.haskell.org/platform/">Haskell Platform</a>.
@@ -134,7 +139,7 @@ Registering egison-X.X.X...</code></pre>
           
 <pre><code>% egison</code></pre>
 
-          <h2 id ="how-to-update">How to update?</h2>
+          <h2 id ="how-to-update">How to update</h2>
           <p>
             You can update Egison with the following commands.
           </p>
@@ -168,7 +173,9 @@ Leaving Egison Interpreter.</code></pre>
 (cons `("\\.egi$" . egison-mode) auto-mode-alist))</code></pre>
           
         </div>
+
       </div><!--/row-->
+    
       
     </div><!-- /.container -->
     <!-- FOOTER -->
