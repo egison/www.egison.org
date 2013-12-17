@@ -21,6 +21,7 @@ body {
 }
 
 pre.prettyprint {
+    padding-left: 10px;
     font-size: 17px;
 }
 
