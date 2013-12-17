@@ -90,7 +90,7 @@
       <div class="row">
 
         <div class="col-md-12" id="top" role="complementary">
-          <h1>Egison in One Minute</h1>
+          <h1>What is Egison?</h1>
         </div>
 
       </div>
@@ -99,77 +99,31 @@
 
         <div class="col-md-8" role="main">
 
-          <h2 id ="poker-hands">Poker-hands Demonstration</h2>
+          <h2 id =""></h2>
 
-<pre class="prettyprint lang-egison linenums">(define $poker-hands
-  (lambda [$cs]
-    (match cs (multiset card)
-      {[&lt;cons &lt;card $s $n&gt;
-         &lt;cons &lt;card ,s ,(- n 1)&gt;
-          &lt;cons &lt;card ,s ,(- n 2)&gt;
-           &lt;cons &lt;card ,s ,(- n 3)&gt;
-            &lt;cons &lt;card ,s ,(- n 4)&gt;
-             &lt;nil&gt;&gt;&gt;&gt;&gt;&gt;
-        &lt;Straight-Flush&gt;]
-       [&lt;cons &lt;card _ $n&gt;
-         &lt;cons &lt;card _ ,n&gt;
-          &lt;cons &lt;card _ ,n&gt;
-            &lt;cons &lt;card _ ,n&gt;
-              &lt;cons _
-                &lt;nil&gt;&gt;&gt;&gt;&gt;&gt;
-        &lt;Four-of-Kind&gt;]
-       [&lt;cons &lt;card _ $m&gt;
-         &lt;cons &lt;card _ ,m&gt;
-          &lt;cons &lt;card _ ,m&gt;
-           &lt;cons &lt;card _ $n&gt;
-            &lt;cons &lt;card _ ,n&gt;
-              &lt;nil&gt;&gt;&gt;&gt;&gt;&gt;
-        &lt;Full-House&gt;]
-       [&lt;cons &lt;card $s _&gt;
-         &lt;cons &lt;card ,s _&gt;
-           &lt;cons &lt;card ,s _&gt;
-             &lt;cons &lt;card ,s _&gt;
-               &lt;cons &lt;card ,s _&gt;
-                 &lt;nil&gt;&gt;&gt;&gt;&gt;&gt;
-        &lt;Flush&gt;]
-       [&lt;cons &lt;card _ $n&gt;
-         &lt;cons &lt;card _ ,(- n 1)&gt;
-          &lt;cons &lt;card _ ,(- n 2)&gt;
-           &lt;cons &lt;card _ ,(- n 3)&gt;
-            &lt;cons &lt;card _ ,(- n 4)&gt;
-             &lt;nil&gt;&gt;&gt;&gt;&gt;&gt;
-        &lt;Straight&gt;]
-       [&lt;cons &lt;card _ $n&gt;
-         &lt;cons &lt;card _ ,n&gt;
-          &lt;cons &lt;card _ ,n&gt;
-           &lt;cons _
-            &lt;cons _
-             &lt;nil&gt;&gt;&gt;&gt;&gt;&gt;
-        &lt;Three-of-Kind&gt;]
-       [&lt;cons &lt;card _ $m&gt;
-         &lt;cons &lt;card _ ,m&gt;
-          &lt;cons &lt;card _ $n&gt;
-            &lt;cons &lt;card _ ,n&gt;
-             &lt;cons _
-               &lt;nil&gt;&gt;&gt;&gt;&gt;&gt;
-        &lt;Two-Pair&gt;]
-       [&lt;cons &lt;card _ $n&gt;
-         &lt;cons &lt;card _ ,n&gt;
-          &lt;cons _
-           &lt;cons _
-            &lt;cons _
-             &lt;nil&gt;&gt;&gt;&gt;&gt;&gt;
-        &lt;One-Pair&gt;]
-       [&lt;cons _
-         &lt;cons _
-          &lt;cons _
-           &lt;cons _
-            &lt;cons _
-             &lt;nil&gt;&gt;&gt;&gt;&gt;&gt;
-        &lt;Nothing&gt;]})))
-</pre>
+    <pre class="prettyprint lang-egison linenums">(define $x 2)
+; comment
+"abc\n"
+{'a' 'b' '\n'}
+((lambda [$x $y] (+ x y)) -11.30 10.23)
+(+ x y)
+(fn x y)
+a_2_3
+a_x_3
+$a_2_3
+$a_x_3
+$even?
+$odd-or-even?
+&lt;Node 1 &lt;Leaf&gt; &lt;Leaf&gt;&gt;
+(match-all {1 2 3 1} (multiset integer)
+  [&lt;cons $x &lt;cons ,x _&gt;&gt; x])
+(define $map
+  (lambda [$fn $ls]
+    (match ls (list something)
+      {[&lt;nil&gt; {}]
+       [&lt;cons $x $xs&gt; {(fn x) @(map fn xs)}]})))</pre>
 
-          <p><a class="btn btn-lg btn-primary" href="getting-started.html" role="button">Install Egison on your computer!</a></p>
+          <p><a class="btn btn-lg btn-primary" href="getting-started.html" role="button">Getting started!</a></p>
 
         </div>
 
