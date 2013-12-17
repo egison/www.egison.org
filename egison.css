@@ -20,9 +20,13 @@ body {
     margin-top: -45px;
 }
 
+.manual p {
+    font-size: 17px;
+}
+
 pre.prettyprint {
     padding-left: 10px;
-    font-size: 17px;
+    font-size: 15px;
 }
 
 /* CUSTOMIZE THE NAVBAR
