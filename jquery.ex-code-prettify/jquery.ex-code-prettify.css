@@ -7,12 +7,12 @@
 @media screen {
   /* string content */
   .str {
-    color: #739200;
+    color: #0B1B99;
   }
 
   /* a keyword */
   .kwd {
-    color: #739200;
+    color: #DB07B4;
   }
 
   /* a comment */
@@ -47,7 +47,7 @@
 
   /* a markup tag name */
   .tag {
-    color: #111111;
+    color: #DB07B4;
   }
 
   /* a markup attribute name */

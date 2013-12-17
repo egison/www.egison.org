@@ -78,13 +78,15 @@ PR['registerLangHandler'](
         ],
         [
          [PR['PR_LITERAL'], /^[+\-]?(?:[0#]x[0-9a-f]+|\d+\/\d+|(?:\.\d+|\d+(?:\.\d*)?)(?:[ed][+\-]?\d+)?)/i],
-         [PR['PR_KEYWORD'], /^(define|test|execute|main|lambda|let|letrec|if|match-all|match|matcher|algebraic-data-matcher|match-lambda|pattern-function|something|,|\_|@)\b/, null],
+         [PR['PR_KEYWORD'], /^(define|test|execute|main|lambda|let|letrec|if|match-all|match|matcher|algebraic-data-matcher|match-lambda|pattern-function|something)\b/, null],
          // A single $ possibly followed by a word that optionally ends with = ! or ?.
-         [PR['PR_TAG'], /^\$(?:-*(?:\w|\\[\x21-\x7e])(?:[\w-]*|\\[\x21-\x7e])[=!?]?)?/],
-         [PR['PR_TAG'], /^[,@]/, null],
-         // A printable non-space non-special character
+         // Using PR_ATTRIB_NAME instead of PR_VARIABLE.
+         [PR['PR_ATTRIB_NAME'], /^\$(?:-*(?:\w|\\[\x21-\x7e])(?:[\w-]*|\\[\x21-\x7e])[=!?]?)?/],
+         // Using PR_TAG instead of PR_KEYWORD for these characters.
+         [PR['PR_TAG'], /^[\_,@]/, null],
+         // A printable non-space non-special character.
          [PR['PR_PUNCTUATION'], /^[\(\)<>\[\]\{\}\\;]+/],
-         // A word that optionally ends with = ! or ?.
+         // A normal word.
          [PR['PR_PLAIN'], /^[^\t\n\r \(\)<>\[\]\{\}\\;]+/]
         ]),
     ['egison' ,'egi']);
