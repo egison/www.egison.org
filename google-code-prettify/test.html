@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+  <head>
+    <title>Egison Test</title>
+
+    <script src="src/prettify.js" type="text/javascript"></script>
+    <script src="src/lang-lisp.js" type="text/javascript"></script>
+    <script src="src/lang-egison.js" type="text/javascript"></script>
+    <link href="src/prettify.css" type="text/css" rel="stylesheet" />
+    <link href="styles/sunburst.css" type="text/css" rel="stylesheet" />
+
+    <style type="text/css">
+      body { margin-left: .5in }
+      h1, h2, h3, h4, .footer { margin-left: -.4in; }
+      a.Extension { display: inline-block; width: 5em; height:2.5em; border: 1px solid black; vertical-align: top; text-align: center }
+    </style>
+  </head>
+  <body onload="prettyPrint()">
+    <p>
+      No hint
+    </p>
+    
+    <pre class="prettyprint">(define x 2)
+(defun x 2)
+; comment
+"abc"
+((lambda (y) (+ x y)) 10)
+  [&lt;cons $x &lt;cons ,x _&gt;&gt; x])</pre>
+
+    <p>
+      Emacs Lisp
+    </p>
+    
+    <pre class="prettyprint lang-el">(define x 2)
+(defun x 2)
+; comment
+"abc"
+((lambda (y) (+ x y)) 10)
+  [&lt;cons $x &lt;cons ,x _&gt;&gt; x])</pre>
+
+    <p>
+      Scheme
+    </p>
+    
+    <pre class="prettyprint lang-scm">(define x 2)
+(defun x 2)
+pp; comment
+"abc"
+((lambda (y) (+ x y)) 10)
+  [&lt;cons $x &lt;cons ,x _&gt;&gt; x])</pre>
+
+    <p>
+      Egison
+    </p>
+    
+    <pre class="prettyprint lang-egison">(define $x 2)
+; comment
+"abc"
+@
+{'a' 'b'}
+@test
+((lambda [$y] (+ x y)) 10)
+(+ x y)
+(fn x y)
+a_2_3
+a_x_3
+$a_2_3
+$a_x_3
+$even?
+$odd-or-even?
+&lt;Node 1 &lt;Leaf&gt; &lt;Leaf&gt;&gt;
+(match-all {1 2 3 1} (multiset integer)
+  [&lt;cons $x &lt;cons ,x _&gt;&gt; x])
+(define $map
+  (lambda [$fn $ls]
+    (match ls (list something)
+      {[&lt;nil&gt; {}]
+       [&lt;cons $x $xs&gt; {(fn x) @(map fn xs)}]})))</pre>
+        
+  </body>
+</html>

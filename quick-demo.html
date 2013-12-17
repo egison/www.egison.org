@@ -24,10 +24,17 @@
 
     <!-- Custom styles for this template -->
     <link href="egison.css" rel="stylesheet">
+    
+    <!-- google-code-prettify -->
+    <script src="google-code-prettify/src/prettify.js" type="text/javascript"></script>
+    <script src="google-code-prettify/src/lang-lisp.js" type="text/javascript"></script>
+    <script src="google-code-prettify/src/lang-egison.js" type="text/javascript"></script>
+    <link href="google-code-prettify/src/prettify.css" type="text/css" rel="stylesheet" />
+    <link href="google-code-prettify/styles/egison-mode.css" type="text/css" rel="stylesheet" />
   </head>
 <!-- NAVBAR
 ================================================== -->
-  <body data-spy="scroll" data-target=".bs-sidebar" data-offset="0">
+  <body data-spy="scroll" data-target=".bs-sidebar" data-offset="0" onload="prettyPrint()">
     <div class="navbar-wrapper">
       <div class="container">
 
@@ -97,7 +104,7 @@
 
           <h2 id ="poker-hands">Poker-hands Demonstration</h2>
 
-<pre><code>(define $poker-hands
+<pre class="prettyprint lang-egison">(define $poker-hands
   (lambda [$cs]
     (match cs (multiset card)
       {[&lt;cons &lt;card $s $n&gt;
@@ -163,7 +170,7 @@
             &lt;cons _
              &lt;nil&gt;&gt;&gt;&gt;&gt;&gt;
         &lt;Nothing&gt;]})))
-</code></pre>
+</pre>
           
         </div>
 

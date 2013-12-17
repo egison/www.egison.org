@@ -20,6 +20,10 @@ body {
     margin-top: -45px;
 }
 
+pre.prettyprint {
+    font-size: 17px;
+}
+
 /* CUSTOMIZE THE NAVBAR
    -------------------------------------------------- */
 
@@ -61,14 +65,14 @@ body {
     margin-top: 0;
     margin-bottom: 0;
     top: 80px;
-    width: 263px;
+    width: 360px;
 }
 
 sidenav, .bs-sidebar.affix .bs-sidenav {
     margin-top: 0;
     margin-bottom: 0;
     top: 80px;
-    width: 263px;
+    width: 360px;
 }
 
 /* First level of nav */
