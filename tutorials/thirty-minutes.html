@@ -89,49 +89,68 @@
 
       <div class="row">
 
-        <div class="col-md-12" id="top" role="complementary">
-          <h1>What is Egison?</h1>
-        </div>
-
-      </div>
-
-      <div class="row">
-
         <div class="col-md-8" role="main">
 
-          <h2 id =""></h2>
+          <h2>Learn Basics of Egison!!</h2>
 
-    <pre class="prettyprint lang-egison linenums">(define $x 2)
-; comment
-"abc\n"
-{'a' 'b' '\n'}
-((lambda [$x $y] (+ x y)) -11.30 10.23)
-(+ x y)
-(fn x y)
-a_2_3
-a_x_3
-$a_2_3
-$a_x_3
-$even?
-$odd-or-even?
-&lt;Node 1 &lt;Leaf&gt; &lt;Leaf&gt;&gt;
-(match-all {1 2 3 1} (multiset integer)
-  [&lt;cons $x &lt;cons ,x _&gt;&gt; x])
-(define $map
-  (lambda [$fn $ls]
-    (match ls (list something)
-      {[&lt;nil&gt; {}]
-       [&lt;cons $x $xs&gt; {(fn x) @(map fn xs)}]})))</pre>
+          <h3 id="egison-tutorial-command">Egison Tutorial Command</h3>
+          
+          <p>
+            We have preapared <code>egison-tutorial</code> command for this purpose.
+            It is distributed as a <a href="http://hackage.haskell.org/packages/hackage.html">Hackage</a> package.
+            Therefore, you can install it with the following commands.
+          </p>
+
+<pre><code>% cabal update
+% cabal install egison-tutorial
+</code></pre>
+
+<pre><code>% egison-tutorial
+Egison Tutorial for Version 3.0.3 (C) 2013 Satoshi Egi
+http://www.egison.org
+Welcome to Egison Tutorial!
+====================
+Select a section to learn.
+1: Lv1 - Buildin data
+2: Lv2 - Functions
+3: Lv3 - Pattern-matching
+4: Lv4 - Infinite collections (Play with prime numbers)
+5: Lv5 - Loop-patterns
+====================
+(1-5): 1
+====================
+There are two boolean value `#t` and `#f`.
+e.g.
+  #t
+  #f
+====================
+&gt;</code></pre>
+
+          <h3 id="libraries-and-samples">Libaries and Sample Programs</h3>
+          
+          <p>
+            We have preapared <code>egison-tutorial</code> command for this purpose.
+            It is distributed as a <a href="http://hackage.haskell.org/packages/hackage.html">Hackage</a> package.
+            Therefore, you can install it with the following commands.
+          </p>
 
           <h2 id="next">What to do next...</h2>
           
           <p>
-            <a class="btn btn-lg btn-primary" href="../getting-started.html" role="button">Install Egison!</a>
-            <a class="btn btn-lg btn-primary" href="thirty-minutes.html" role="button">Learn Basics of Egison</a>
+            <a class="btn btn-lg btn-primary" href="tutorials/thirty-minutes.html" role="button">Learn Basics of Egison</a>
           </p>
       
         </div>
 
+        <div class="col-md-4">
+          <div data-spy="affix" class="bs-sidebar hidden-print" role="complementary" data-offset-top="100" data-offset-bottom="100">
+            <ul class="nav bs-sidenav">
+              <li><a href="#egison-tutorial-command">Egison Tutorial Command</a></li>
+              <li><a href="#libararies-and-samples">Libararies and Sample programs</a></li>
+            </ul>
+          </div>
+        </div>
+      
       </div><!--/row-->
     
     </div><!-- /.container -->

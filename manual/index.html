@@ -52,8 +52,8 @@
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle active" data-toggle="dropdown">Tutorials<b class="caret"></b></a>
                   <ul class="dropdown-menu">
-                    <li><a class="active" href="./one-minute.html">Egison in one minute</a></li>
-                    <li><a href="./thirty-minutes.html">Egison in thirty minute</a></li>
+                    <li><a class="active" href="../tutorials/one-minute.html">Egison in one minute</a></li>
+                    <li><a href="../tutorials/thirty-minutes.html">Egison in thirty minute</a></li>
                     <li><a href="../contact.html#workshop">Egison in one day</a></li>
                     <li class="divider"></li>
                     <li class="dropdown-header">Others</li>
@@ -62,7 +62,7 @@
                     <li><a href="../faq.html">View FAQ</a></li>
                   </ul>
                 </li>
-                <li><a href="../manual/">Manual</a></li>
+                <li class="active"><a href="./">Manual</a></li>
                 <li><a href="../contact.html">Contact</a></li>
               </ul>
               <ul class="nav navbar-nav pull-right">
@@ -85,51 +85,40 @@
     ================================================== -->
     <!-- Wrap the rest of the page in another container to center all the content. -->
 
-    <div class="container manual">
+    <div class="container table-of-contents">
 
       <div class="row">
 
-        <div class="col-md-12" id="top" role="complementary">
-          <h1>What is Egison?</h1>
-        </div>
-
-      </div>
-
-      <div class="row">
-
-        <div class="col-md-8" role="main">
-
-          <h2 id =""></h2>
-
-    <pre class="prettyprint lang-egison linenums">(define $x 2)
-; comment
-"abc\n"
-{'a' 'b' '\n'}
-((lambda [$x $y] (+ x y)) -11.30 10.23)
-(+ x y)
-(fn x y)
-a_2_3
-a_x_3
-$a_2_3
-$a_x_3
-$even?
-$odd-or-even?
-&lt;Node 1 &lt;Leaf&gt; &lt;Leaf&gt;&gt;
-(match-all {1 2 3 1} (multiset integer)
-  [&lt;cons $x &lt;cons ,x _&gt;&gt; x])
-(define $map
-  (lambda [$fn $ls]
-    (match ls (list something)
-      {[&lt;nil&gt; {}]
-       [&lt;cons $x $xs&gt; {(fn x) @(map fn xs)}]})))</pre>
-
-          <h2 id="next">What to do next...</h2>
+        <div class="col-md-12" id="top" role="main">
+          <h1>Table of Contents</h1>
           
-          <p>
-            <a class="btn btn-lg btn-primary" href="../getting-started.html" role="button">Install Egison!</a>
-            <a class="btn btn-lg btn-primary" href="thirty-minutes.html" role="button">Learn Basics of Egison</a>
-          </p>
-      
+          <h2>Egison User's Manual</h2>
+          <ol>
+            <li><a href="basics.html">Basics of Syntax and Semantics</a></li>
+            <li><a href="patterns.html">Basics of Patterns : Syntax and Semantics</a></li>
+            <li><a href="pattern-matching.html">Pattern Matching</a></li>
+            <li><a href="how-to-define-matchers.html">How to Define Matchers</a></li>
+            <li><a href="io.html">Basics of I/O</a></li>
+            <li><a href="primitives.html">Primitive functions</a></li>
+          </ol>
+          <h2>Examples</h2>
+          <ol>
+            <li><a href="poker-hands.html">Poker Hands</a></li>
+            <li><a href="graph.html">Graphs</a></li>
+            <li><a href="n-queen.html">N-Queen</a></li>
+            <li><a href="mahjong.html">Mahjong Hands</a></li>
+          </ol>
+          <h2>Libraries (github)</h2>
+          <ul>
+            <li><a href="https://github.com/egisatoshi/egison3/blob/master/lib/core/base.egi"><code>base.egi</code></a></li>
+            <li><a href="https://github.com/egisatoshi/egison3/blob/master/lib/core/number.egi"><code>number.egi</code></a></li>
+            <li><a href="https://github.com/egisatoshi/egison3/blob/master/lib/core/collection.egi"><code>collection.egi</code></a></li>
+          </ul>
+          <h2>Egison Developer's Manaul</h2>
+          <ul>
+            <li><a href="mechanism.html">Pattern Matching Mechanism</a></li>
+          </ul>
+
         </div>
 
       </div><!--/row-->
