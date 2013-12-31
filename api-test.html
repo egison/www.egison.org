@@ -106,7 +106,7 @@
 (test (match-all {1 2 3 4} (multiset integer) [&lt;cons $x $xs&gt; [x xs]]))
           </textarea>
 
-          <button id="run-egison" class="btn btn-lg btn-primary" role="button">Run</button>
+          <button id="run-egison" class="btn btn-lg btn-primary" data-loading-text="Loading..." role="button">Run</button>
 
           <pre id="egison-result"></pre>
           
@@ -134,16 +134,20 @@
     <script>
       var editor = CodeMirror.fromTextArea(document.getElementById("egison-program"), {
         matchBrackets: true,
-        value: "(test (rac (take 100 primes)))"
+        lineNumbers: true,
       });
     </script>
     <script>
       $(document).ready(function(){
-        $('#run-egison').button();
+        $('.btn').button()
 
         $('#run-egison').click(function() {
+          $('#run-egison').prop("disabled", true);
+          $('#run-egison').html("Running...");
           $.post("http://www.egison.org/api/eval", { program: editor.getValue() }, function(data) {
             $('#egison-result').html(data.output);
+            $('#run-egison').html("Run");
+            $('#run-egison').prop("disabled", false);
            }, "json")
         });
       });
