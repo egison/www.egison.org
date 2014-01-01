@@ -16,7 +16,7 @@ CodeMirror.defineMode("clojure", function () {
     var atoms = makeKeywords("true false nil");
 
     var keywords = makeKeywords(
-      "define test let letrec do lambda match-lambda match match-all pattern-function if _ & | @ loop something undefined main");
+      "define test let letrec do lambda match-lambda match match-all pattern-function if _ , & | @ loop something undefined main");
 
     var builtins = makeKeywords(
         "bool integer list multiset set nil cons join snoc nioj");
@@ -185,6 +185,8 @@ CodeMirror.defineMode("clojure", function () {
                     } else if ( ch == "$" ) {
                         stream.eatWhile(tests.symbol);
                         return ATOM;
+                    } else if ( ch == "," || ch == "@" ) {
+                        return KEYWORD;
                     } else {
                         stream.eatWhile(tests.symbol);
 
