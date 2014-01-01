@@ -234,3 +234,15 @@ sidenav, .bs-sidebar.affix .bs-sidenav {
     margin-bottom: 0;
     color: #fff;
 }
+
+
+/* For CodeMirror
+   -------------------------------------------------- */
+.CodeMirror {
+    border: 1px solid #eee;
+    height: auto;
+}
+.CodeMirror-scroll {
+    overflow-y: hidden;
+    overflow-x: auto;
+}

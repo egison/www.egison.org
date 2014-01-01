@@ -104,7 +104,34 @@
 
           <textarea id="egison-program" name="code">
 (test (match-all {1 2 3 4} (multiset integer) [&lt;cons $x $xs&gt; [x xs]]))
-          </textarea>
+(define $x 2)
+; comment
+"abc\n"
+{'a' 'b' '\n'}
+((lambda [$x $y] (+ x y)) -11.30 10.23)
+(+ x y)
+(fn x y)
+a_2_3
+a_x_3
+$a_2_3
+$a_x_3
+$even?
+$odd-or-even?
+&lt;Node 1 &lt;Leaf&gt; &lt;Leaf&gt;&gt;
+(match-all {1 2 3 1} (multiset integer)
+  [&lt;cons $x &lt;cons ,x _&gt;&gt; x])
+(define $map
+  (lambda [$fn $ls]
+    (match ls (list something)
+      {[&lt;nil&gt; {}]
+       [&lt;cons $x $xs&gt; {(fn x) @(map fn xs)}]})))
+(define $comb
+  (lambda [$xs $n]
+    (match-all xs (list something)
+      [(loop $i (between 1 n) &lt;join _ &lt;cons $a_i ...&gt;&gt; _) a])))
+&lt;cons $n ^&lt;cons ,n _&gt;&gt;
+(& ,10 $x)
+(| ,10 $x)</textarea>
 
           <button id="run-egison" class="btn btn-lg btn-primary" data-loading-text="Loading..." role="button">Run</button>
 
