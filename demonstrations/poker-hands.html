@@ -23,8 +23,7 @@
     <![endif]-->
 
     <!-- google-code-prettify -->
-    <link href="../jquery.ex-code-prettify/jquery.ex-code-prettify.css" type="text/css" rel="stylesheet" />
-    <link href="../jquery.ex-code-prettify/google-code-prettify/styles/egison-mode.css" type="text/css" rel="stylesheet" />
+    <link href="../codemirror-3.20/lib/codemirror.css" type="text/css" rel="stylesheet" />
     
     <!-- Custom styles for this template -->
     <link href="../egison.css" rel="stylesheet">
@@ -50,9 +49,9 @@
               <ul class="nav navbar-nav">
                 <li class="navbar-special"><a href="../getting-started.html">Getting started</a></li>
                 <li class="dropdown">
-                  <a href="#" class="dropdown-toggle active" data-toggle="dropdown">Tutorials<b class="caret"></b></a>
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tutorials<b class="caret"></b></a>
                   <ul class="dropdown-menu">
-                    <li><a class="active" href="../tutorials/one-minute.html">Egison in one minute</a></li>
+                    <li><a href="../tutorials/one-minute.html">Egison in one minute</a></li>
                     <li><a href="../tutorials/thirty-minutes.html">Egison in thirty minute</a></li>
                     <li><a href="../contact.html#workshop">Egison in one day</a></li>
                     <li class="divider"></li>
@@ -62,7 +61,7 @@
                     <li><a href="../faq.html">View FAQ</a></li>
                   </ul>
                 </li>
-                <li><a href="../manual3/">Manual</a></li>
+                <li><a href="../manual/">Manual</a></li>
                 <li><a href="../contact.html">Contact</a></li>
               </ul>
               <ul class="nav navbar-nav pull-right">
@@ -90,7 +89,7 @@
       <div class="row">
 
         <div class="col-md-12" id="top" role="complementary">
-          <h1>Poker-hands</h1>
+          <h1>Egison program</h1>
         </div>
 
       </div>
@@ -99,83 +98,118 @@
 
         <div class="col-md-8" role="main">
 
-          <h2>Example</h2>
+          <h2 id =""></h2>
 
-          <h2>Program</h2>
+          <textarea id="egison-program" name="code">
+(define $suit
+  (algebraic-data-matcher
+    {<spade> <heart> <club> <diamond>}))
 
-<pre class="prettyprint lang-egison linenums">(define $poker-hands
+(define $card
+  (algebraic-data-matcher
+    {<card suit (mod 13)>}))
+
+(define $poker-hands
   (lambda [$cs]
     (match cs (multiset card)
-      {[&lt;cons &lt;card $s $n&gt;
-         &lt;cons &lt;card ,s ,(- n 1)&gt;
-          &lt;cons &lt;card ,s ,(- n 2)&gt;
-           &lt;cons &lt;card ,s ,(- n 3)&gt;
-            &lt;cons &lt;card ,s ,(- n 4)&gt;
-             &lt;nil&gt;&gt;&gt;&gt;&gt;&gt;
-        &lt;Straight-Flush&gt;]
-       [&lt;cons &lt;card _ $n&gt;
-         &lt;cons &lt;card _ ,n&gt;
-          &lt;cons &lt;card _ ,n&gt;
-            &lt;cons &lt;card _ ,n&gt;
-              &lt;cons _
-                &lt;nil&gt;&gt;&gt;&gt;&gt;&gt;
-        &lt;Four-of-Kind&gt;]
-       [&lt;cons &lt;card _ $m&gt;
-         &lt;cons &lt;card _ ,m&gt;
-          &lt;cons &lt;card _ ,m&gt;
-           &lt;cons &lt;card _ $n&gt;
-            &lt;cons &lt;card _ ,n&gt;
-              &lt;nil&gt;&gt;&gt;&gt;&gt;&gt;
-        &lt;Full-House&gt;]
-       [&lt;cons &lt;card $s _&gt;
-         &lt;cons &lt;card ,s _&gt;
-           &lt;cons &lt;card ,s _&gt;
-             &lt;cons &lt;card ,s _&gt;
-               &lt;cons &lt;card ,s _&gt;
-                 &lt;nil&gt;&gt;&gt;&gt;&gt;&gt;
-        &lt;Flush&gt;]
-       [&lt;cons &lt;card _ $n&gt;
-         &lt;cons &lt;card _ ,(- n 1)&gt;
-          &lt;cons &lt;card _ ,(- n 2)&gt;
-           &lt;cons &lt;card _ ,(- n 3)&gt;
-            &lt;cons &lt;card _ ,(- n 4)&gt;
-             &lt;nil&gt;&gt;&gt;&gt;&gt;&gt;
-        &lt;Straight&gt;]
-       [&lt;cons &lt;card _ $n&gt;
-         &lt;cons &lt;card _ ,n&gt;
-          &lt;cons &lt;card _ ,n&gt;
-           &lt;cons _
-            &lt;cons _
-             &lt;nil&gt;&gt;&gt;&gt;&gt;&gt;
-        &lt;Three-of-Kind&gt;]
-       [&lt;cons &lt;card _ $m&gt;
-         &lt;cons &lt;card _ ,m&gt;
-          &lt;cons &lt;card _ $n&gt;
-            &lt;cons &lt;card _ ,n&gt;
-             &lt;cons _
-               &lt;nil&gt;&gt;&gt;&gt;&gt;&gt;
-        &lt;Two-Pair&gt;]
-       [&lt;cons &lt;card _ $n&gt;
-         &lt;cons &lt;card _ ,n&gt;
-          &lt;cons _
-           &lt;cons _
-            &lt;cons _
-             &lt;nil&gt;&gt;&gt;&gt;&gt;&gt;
-        &lt;One-Pair&gt;]
-       [&lt;cons _
-         &lt;cons _
-          &lt;cons _
-           &lt;cons _
-            &lt;cons _
-             &lt;nil&gt;&gt;&gt;&gt;&gt;&gt;
-        &lt;Nothing&gt;]})))
-</pre>
+      {[<cons <card $s $n>
+         <cons <card ,s ,(- n 1)>
+          <cons <card ,s ,(- n 2)>
+           <cons <card ,s ,(- n 3)>
+            <cons <card ,s ,(- n 4)>
+             <nil>>>>>>
+        <Straight-Flush>]
+       [<cons <card _ $n>
+         <cons <card _ ,n>
+          <cons <card _ ,n>
+            <cons <card _ ,n>
+              <cons _
+                <nil>>>>>>
+        <Four-of-Kind>]
+       [<cons <card _ $m>
+         <cons <card _ ,m>
+          <cons <card _ ,m>
+           <cons <card _ $n>
+            <cons <card _ ,n>
+              <nil>>>>>>
+        <Full-House>]
+       [<cons <card $s _>
+         <cons <card ,s _>
+           <cons <card ,s _>
+             <cons <card ,s _>
+               <cons <card ,s _>
+                 <nil>>>>>>
+        <Flush>]
+       [<cons <card _ $n>
+         <cons <card _ ,(- n 1)>
+          <cons <card _ ,(- n 2)>
+           <cons <card _ ,(- n 3)>
+            <cons <card _ ,(- n 4)>
+             <nil>>>>>>
+        <Straight>]
+       [<cons <card _ $n>
+         <cons <card _ ,n>
+          <cons <card _ ,n>
+           <cons _
+            <cons _
+             <nil>>>>>>
+        <Three-of-Kind>]
+       [<cons <card _ $m>
+         <cons <card _ ,m>
+          <cons <card _ $n>
+            <cons <card _ ,n>
+             <cons _
+               <nil>>>>>>
+        <Two-Pair>]
+       [<cons <card _ $n>
+         <cons <card _ ,n>
+          <cons _
+           <cons _
+            <cons _
+             <nil>>>>>>
+        <One-Pair>]
+       [<cons _
+         <cons _
+          <cons _
+           <cons _
+            <cons _
+             <nil>>>>>>
+        <Nothing>]})))
+
+
+(test (poker-hands {<Card <Club> 12>
+                    <Card <Club> 10>
+                    <Card <Club> 13>
+                    <Card <Club> 1>
+                    <Card <Club> 11>}))
+
+(test (poker-hands {<Card <Diamond> 1>
+                    <Card <Club> 2>
+                    <Card <Club> 1>
+                    <Card <Heart> 1>
+                    <Card <Diamond> 2>}))
+
+(test (poker-hands {<Card <Diamond> 4>
+                    <Card <Club> 2>
+                    <Card <Club> 5>
+                    <Card <Heart> 1>
+                    <Card <Diamond> 3>}))
+
+(test (poker-hands {<Card <Diamond> 4>
+                    <Card <Club> 10>
+                    <Card <Club> 5>
+                    <Card <Heart> 1>
+                    <Card <Diamond> 3>}))
+          </textarea>
+
+          <button id="run-egison" class="btn btn-lg btn-primary" data-loading-text="Loading..." role="button">Run</button>
+
+          <pre id="egison-result"></pre>
           
         </div>
 
       </div><!--/row-->
     
-      
     </div><!-- /.container -->
     <!-- FOOTER -->
     <footer class="footer">
@@ -187,8 +221,32 @@
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="../bootstrap/js/bootstrap.min.js"></script>
     <script src="../bootstrap/docs-assets/js/holder.js"></script>
-    <script src="../jquery.ex-code-prettify/google-code-prettify/prettify.js"></script>
-    <script src="../jquery.ex-code-prettify/google-code-prettify/lang-egison.js"></script>
-    <script src="../jquery.ex-code-prettify/jquery.ex-code-prettify.js"></script>
+    <script src="../codemirror-3.20/lib/codemirror.js"></script>
+    <script src="../codemirror-3.20/addon/edit/matchbrackets.js"></script>
+    <script src="../codemirror-3.20/mode/egison/egison.js"></script>
+    <script>
+      var editor = CodeMirror.fromTextArea(document.getElementById("egison-program"), {
+        matchBrackets: true,
+        lineNumbers: true,
+        viewportMargin: Infinity
+      });
+    </script>
+    <script>
+      $(document).ready(function(){
+        $('.btn').button()
+
+        $('#run-egison').click(function() {
+          $('#run-egison').prop("disabled", true);
+          $('#run-egison').html("Running...");
+          $.post("http://www.egison.org/api/eval", { program: editor.getValue() }, function(data) {
+            data.output = data.output.replace(/</g, "&lt;");
+            data.output = data.output.replace(/>/g, "&gt;");
+            $('#egison-result').html(data.output);
+            $('#run-egison').html("Run");
+            $('#run-egison').prop("disabled", false);
+           }, "json")
+        });
+      });
+    </script>
   </body>
 </html>
