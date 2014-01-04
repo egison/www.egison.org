@@ -87,7 +87,7 @@
       <div class="row">
 
         <div class="col-md-12" id="top" role="complementary">
-          <h1>Mahjong Demonstration</h1>
+          <h1>Graph Demonstration</h1>
         </div>
 
       </div>
@@ -107,7 +107,7 @@
           <h2 id="next">What to do next...</h2>
           
           <p>
-            <a class="btn btn-lg btn-primary" href="./sequence.html" role="button">Next Demonstration</a>
+            <a class="btn btn-lg btn-primary" href="./social-graph.html" role="button">Next Demonstration</a>
           </p>
           
         </div>
@@ -130,7 +130,7 @@
     <script src="../codemirror-3.20/mode/egison/egison.js"></script>
     <script>
       var editor;
-      $.get("http://www.egison.org/api/source", { path: "sample/mahjong.egi"}, function(data) {
+      $.get("http://www.egison.org/api/source", { path: "sample/graph.egi"}, function(data) {
         var e = document.getElementById("egison-program");
         e.value = data.content;
         editor = CodeMirror.fromTextArea(document.getElementById("egison-program"), {
