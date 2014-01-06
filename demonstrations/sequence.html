@@ -128,7 +128,7 @@
     <script src="../codemirror-3.20/mode/egison/egison.js"></script>
     <script>
       var editor;
-      $.get("http://www.egison.org/api/source", { path: "sample/sequence.egi"}, function(data) {
+      $.get("/api/source", { path: "sample/sequence.egi"}, function(data) {
         var e = document.getElementById("egison-program");
         e.value = data.content;
         editor = CodeMirror.fromTextArea(document.getElementById("egison-program"), {
@@ -144,7 +144,7 @@
         $('#run-egison').click(function() {
           $('#run-egison').prop("disabled", true);
           $('#run-egison').html("Running...");
-          $.post("http://www.egison.org/api/eval", { program: editor.getValue() }, function(data) {
+          $.post("/api/eval", { program: editor.getValue() }, function(data) {
             data.output = data.output.replace(/</g, "&lt;");
             data.output = data.output.replace(/>/g, "&gt;");
             $('#egison-result').html(data.output);
