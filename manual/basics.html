@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!--# include file="/templates/header.html" -->
+  </head>
+  <body data-spy="scroll" data-target=".bs-sidebar" data-offset="0">
+    <!--# include file="/templates/navbar.html" -->
+
+    <div class="container manual">
+
+      <div class="row">
+
+        <div class="col-md-12" id="top" role="complementary">
+          <h1>Basics of Syntax and Semantics</h1>
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-8" role="main">
+
+<p>
+  In this chapter, we explains an aspect of Egison as an ordinal purely functional programming language.
+  We will explain patterns and pattern-matching, the most important feature of Egison in <a href="./patterns.html">the next chapter</a>.
+  The readers familiar to other functional programming languages can skip this chapter.
+</p>
+
+<h2 id="top">Top Expressions</h2>
+
+<h3 id="define">Define and Test Expressions</h3>
+
+<p>
+  Give some input to Egison as below.
+</p>
+
+<pre><code>&gt; (define $x 2)
+&gt; (test (+ x 3))
+5
+&gt; (define $f (lambda [$x $y] [(+ x y) (* x y)]))
+&gt; (test (f x 4))
+[6 8]</code></pre>
+
+<p>
+  There are two kinds of <i>top expressions</i> in above input, <code>define</code> expressions and <code>test</code> expressions.
+  A <code>define</code> expression binds the variable to the value or the function.
+  A <code>test</code> expression evaluates the given expression.
+  On the interpreter, you can omit <code>test</code>.
+  That is, you can write as follows.
+</p>
+
+<pre><code>&gt; (define $x 2)
+&gt; (+ x 3)
+5
+&gt; (define $f (lambda [$x $y] [(+ x y) (* x y)]))
+&gt; (f x 4)
+[6 8]</code></pre>
+
+<h3 id="load">Load Expressions</h3>
+
+<p>
+  You can load Egison Libraries with <code>load</code> expressions.
+</p>
+
+<pre><code>&gt; (load "lib/core/base.egi")
+&gt; (load "lib/core/number.egi")
+&gt; (load-file "/home/xxx/code/egison/myfile.egi")</code></pre>
+
+<p>
+  To load your own program, you can use <code>load-file</code> expressions.
+  A <code>load-file</code> expression takes a full-path to the Egison program file.
+</p>
+
+<h3 id="execute">Execute Expressions</h3>
+
+<p>
+  Like other programming language, you can manipulate IO via Egison.
+  In such a purpose, <code>execute</code> expressions are used.
+  To explain the expression, we need to explain IO in Egison.
+  We will do at another chapter.
+</p>
+
+<h2 id="built-in">Built-in Data</h2>
+
+<p>
+  Boolean values, integers, float numbers, and characters are implemented as built-in data in Egison.
+</p>
+
+<h3 id="boolean">Boolean Values</h3>
+
+<p>
+  <code>#t</code> represents true.<br/>
+  <code>#f</code> represents false.<br/>
+</p>
+
+<pre><code>#t
+#f</code></pre>
+
+<h3 id="integers">Integers</h3>
+
+<p>
+  A string which consists of only numbers is a number literal.
+  An integer literal is a number literal or concatenation of <code>-</code> and a number literal.
+</p>
+
+<pre><code>1
+0
+-100
+...</code></pre>
+
+<h3 id="floats">Floats</h3>
+
+<p>
+  A floating-point literal is concatenation of an integer literal, <code>.</code>, and a number literal.
+</p>
+
+<pre><code>1.0
+0.0
+-100.012001
+...</code></pre>
+
+<h3 id="characters">Characters</h3>
+
+<p>
+  A character literal is a character enclosed in single quotes.
+</p>
+
+<pre><code>'a'
+'b'
+'c'
+...</code></pre>
+
+<h3 id="strings">Strings</h3>
+
+<p>
+  A string literal is a string enclosed in double quotes.
+  It is treated as a list of characters.
+</p>
+
+<pre><code>"abc"
+"cde\n"
+...</code></pre>
+
+<h3 id="undefined">Undefined</h3>
+
+<p>
+  As shown follows, you can use an array in Egison.
+  You can access any index in an array, even if it is out of range of array.
+  For example, you can try to get the 123456th element of an array whose size is 10.
+  In such a case, you get <code>undefined</code>.
+  Of course, you can use <code>undefined</code> in any other case.
+</p>
+
+<pre><code>undefined</code></pre>
+
+<h2 id="objects">Objects</h2>
+
+<h3 id="enclosures">Five Enclosures</h3>
+
+<p>
+First of all, we explain the enclosures of Egison.
+Perhaps you are surprised at how many kinds of enclosures in Egison when you first see code of Egison.
+In Egison, there are five kinds of enclosures, i.e. parentheses <code>(</code> <code>)</code>, brackets <code>&lt;</code> <code>&gt;</code>, square brackets <code>[</code> <code>]</code>, braces <code>{</code> <code>}</code>, and double brackets <code>[|</code> <code>|]</code>.
+They represents procedure call, an <a href="#inductive-data">inductive datum</a>, a <a href="#tuple">tuple</a>, a <a href="#collection">collection</a>, and an <a href="#array">array</a>.
+Roughly speaking, you should use parentheses as LISP, brackets when you want to create patterns or your own data, and double brackets to create an array.
+Square brackets and braces are both used to collect values.
+The difference between them is the number of values.
+The former are used to collect the fixed number of values, but the latter are used to collect the others.
+</p>
+
+<h3 id="inductive-data">Inductive Data</h3>
+
+<pre><code>  &lt;<i>Identifier</i> <i>value</i> ...&gt;</code></pre>
+
+<p>
+  You can create an object whose name you want.
+  It is called an inductive datum.
+  An inductive datum can have values.
+  In particular, it can have any inductive data.
+  This is why it is called "inductive".
+  Note that the name has to start with uppercase.
+</p>
+
+<pre><code>&lt;A&gt;
+&lt;Abc 1 #t "Hello, World!\n"&gt;
+&lt;Cons &lt;Cons &lt;Nil&gt;&gt; &lt;Nil&gt;&gt;</code></pre>
+
+<h3 id="tuple">Tuples (Multiple Values)</h3>
+
+<pre><code>  [<i>value</i> ...]</code></pre>
+
+<p>
+A tuple is expressed as a sequence of elements enclosed in square brackets.
+</p>
+
+<pre><code>[]
+[1 2]
+[#t "abc" 4]
+[1]</code></pre>
+
+<p>
+If a tuple consists of an element, the tuple and the element are the same.
+</p>
+
+<pre><code>&gt; (eq? [1] 1)
+#t
+&gt; (eq? [[[[[[[[[[["too many"]]]]]]]]]]] "too many")
+#t</code></pre>
+
+<h3 id="collection">Collections</h3>
+
+<pre><code>  {<i>value</i> ...}</code></pre>
+
+<p>
+A collection is a sequence of elements enclosed in braces.
+Unlike a tuple, a collection of an element and its unique element differ.
+</p>
+
+<pre><code>{}
+{1 2}
+{#t "abc" 4}
+{1}</code></pre>
+
+<p>
+A collection may contain a collection as its element.
+Generally, an element of a collection that is an element of a collection isn't an element of the outer collection.
+<code>@</code> placed before a collection breaks the collection.
+Then, an element of a collection with <code>@</code> that is an element of a collection is an element of the outer collection.
+Using this notation, you can construct a collection from subcollections.
+</p>
+
+<pre><code>&gt; {1 @{2 3}}
+{1 2 3}
+&gt; {@{@{1}} @{2 @{3}}}
+{1 2 3}</code></pre>
+
+<h3 id="array">Array</h3>
+
+<pre><code>  [|<i>value</i> ...|]</code></pre>
+
+<p>
+An array is a sequence of elements enclosed in double brackets.
+Adding an underscore <code>_</code> and an index at the end, you can get the associated element of an array.
+If the index is larger than the size of an array, (which can be got by <a href="#array-size">array-size</a>) you will get <a href="#undefined">undefined</a>.
+</p>
+
+<pre><code>&gt; (array-size [| 1 2 3 4 5 |])
+5
+&gt; [| 1 2 3 4 5 |]_1
+1
+&gt; [| 1 2 3 4 5 |]_4
+4
+&gt; [| 1 2 3 4 5 |]_8
+undefined</code></pre>
+
+<p>
+An array can have another array as its element.
+It allows us to use multi-dimensional arrays.
+</p>
+
+<pre><code>&gt; [| [| 1 2 3 |] [| 4 5 6 |] [| 7 8 9 |] |]
+[|[|1 2 3|] [|4 5 6|] [|7 8 9|]|]
+&gt; [| [| 1 2 3 |] [| 4 5 6 |] [| 7 8 9 |] |]_2
+[|4 5 6|]
+&gt; [| [| 1 2 3 |] [| 4 5 6 |] [| 7 8 9 |] |]_2_3
+6</code></pre>
+
+<p>
+Egison prepares special syntax for arrays.
+They are <a href="#generate-array">generate-array</a>, <a href="#array-size">array-size</a><!-- , and <a href="#array-ref">array-ref</a>-->.
+The former gives an easy way to create complicated arrays, and the latter shows the size of arrays. 
+The details are described in each subsection.
+</p>
+
+<h2 id="syntax">Syntax of Egison</h2>
+
+<h3 id="lambda"><code>lambda</code> expressions</h3>
+
+<pre><code>  (lambda [<i>variable</i> ...] <i>formula</i>)</code></pre>
+
+<p>
+Lambda expressions make functions as other functional programming languages.
+It takes two arguments.
+The first one is a tuple of variables, which are the dummy variables of the function.
+Note <code>[$x]</code> and <code>$x</code> are the same.
+The second argument is a formula, which is the body of the function.
+</p>
+
+<pre><code>&gt; (lambda [$x $y] (+ x y))
+(lambda [x y] ...)
+&gt; ((lambda [$x $y] (+ x y)) 3 7)
+10
+&gt; ((lambda $x (not x)) #t)
+#f</code></pre>
+
+<p>
+  From ver.3.0, a lambda expression is equipped with simpler notation.
+  In this notation, you can omit to write "lambda" and the arguments of the function.
+  You can refer to the i-th argument by writing concatenation of <code>$</code> and i.
+  If the order of occurrences of the arguments is the same as the order of the arguments and their occurrences are exactly one, then you can omit a number after <code>$</code>.
+  That is, <code>(lambda [$x $y] (+ x y))</code>, <code>(+ $1 $2)</code>, and <code>(+ $ $)</code> are the same.
+  Although this notation is so powerful, it is limited to specific functions.
+  The body of such a function has to be simple.
+  Namely, it is application of a function and its arguments, and all occurrences of <code>$i</code> are the arguments.
+  For example, you can't write <code>(+ $1 (* $2 2))</code> or <code>(if $1 #f #t)</code>
+</p>
+
+<pre><code>&gt; ((+ $1 $2) 3 4)
+7
+&gt; ((+ $ $) 3 4)
+7
+&gt; ((* $1 $1) 5)
+25
+&gt; ((map $2 $1) {1 2 3} (+ $ 1))
+{2 3 4}</code></pre>
+
+<h3 id="let"><code>let</code> expressions</h3>
+
+<pre><code>  (let {[<i>variable</i> <i>formula</i>] ...} <i>formula</i>)</code></pre>
+
+<p>
+A let expression takes two arguments.
+The first argument is a collection of binary tuples, which are pairs of a variable and a formula.
+These formulae will be evaluated when the associated variable is needed in an evaluation of the second argument, and then the variable is bound to them.
+Since a formula in the first argument is evaluated with the original environment, you can't use variables in the first argument in the formula.
+</p>
+
+<pre><code>&gt; (let {[$x 1] [$y 2]} (+ x y))
+3
+&gt; (let {[$x #t] [$y x]} (not x))
+#f
+&gt; x
+Unbound variable: x</code></pre>
+
+<p>
+Note the latter example works even if x is unbound, since Egison uses lazy evaluation.
+</p>
+
+<h3 id="letrec"><code>letrec</code> expressions</h3>
+
+<pre><code>  (letrec {[<i>variable</i> <i>formula</i>] ...} <i>formula</i>)</code></pre>
+
+<p>
+  A letrec expression is the same as a let expression except the fact that you can use recursive definition in the first argument.
+  Mutual recursion is also allowed.
+</p>
+
+<pre><code>&gt; (letrec {[$x #t] [$y x]} (not y))
+#f</code></pre>
+
+<h3 id="if"><code>if</code> expressions</h3>
+
+<pre><code>  (if <i>boolean</i> <i>formula</i> <i>formula</i>)</code></pre>
+
+<p>
+  It's ordinary <code>if</code>.
+  But, note the result of an evaluation of the first argument must be a boolean value (i.e. <code>#t</code> or <code>#f</code>).
+</p>
+
+<pre><code>&gt; (if #f "YES" "NO")
+NO
+&gt; (if #t 1 ((lambda $x (x x)) (lambda $x (x x))))
+1</code></pre>
+
+<h3 id="apply"><code>apply</code> expressions</h3>
+
+<pre><code>  (apply <i>function</i> [<i>value</i> ...])</code></pre>
+
+<p>
+If you have a function and its arguments as a tuple, and want to get the result of the application, then you should use this expression.
+The result of the evaluation of an apply expression is the result of application of the function with the arguments.
+That is, <code>(apply f [x<sub>0</sub> x<sub>1</sub> x<sub>2</sub>])</code> is the same thing as <code>(f x<sub>0</sub> x<sub>1</sub> x<sub>2</sub>)</code>.
+</p>
+
+<pre><code>&gt; (apply + [1 2])
+3</code></pre>
+
+<h3 id="generate-array"><code>generate-array</code> expressions</h3>
+
+<pre><code>  (generate-array [<i>variable</i> ...] [<i>integer</i> ...] <i>formula</i>)</code></pre>
+
+<p>
+Egison is equipped with two ways to generate an array.
+One is to write elements explicitly using double brackets <code>[|</code> <code>|]</code>.
+The other is this <code>generate-array</code> expression.
+</p>
+
+<pre><code>&gt; (generate-array [$x] [5] x)
+[|1 2 3 4 5|]
+&gt; (generate-array [$x] [5] (* x 2))
+[|2 4 6 8 10|]</code></pre>
+
+<p>
+The first argument is the index variable, the second is the size of each dimension, and the third argument determines each element of the array.
+Note the first argument and the second argument have the same number of elements.
+For example, the above and the followings are examples to create an array whose size is 5 and 5&times;3, respectively.
+</p>
+
+<pre><code>&gt; (generate-array [$x $y] [5 3] (* x y))
+[|[|1 2 3|] [|2 4 6|] [|3 6 9|] [|4 8 12|] [|5 10 15|]|]
+&gt; (generate-array [$x $y] [5 3] (+ (* 10 x) y))
+[|[|11 12 13|] [|21 22 23|] [|31 32 33|] [|41 42 43|] [|51 52 53|]|]
+&gt; (generate-array [$x $y] [5 3] [x y])
+[|[|[1 1] [1 2] [1 3]|] [|[2 1] [2 2] [2 3]|] [|[3 1] [3 2] [3 3]|] [|[4 1] [4 2] [4 3]|] [|[5 1] [5 2] [5 3]|]|]</code></pre>
+
+<h3 id="array-size"><code>array-size</code> expressions</h3>
+
+<pre><code>  (array-size <i>array</i>)</code></pre>
+
+<p>
+An <code>array-size</code> expression tells us the number of elements in a given array.
+</p>
+
+<pre><code>&gt; (array-size [| 1 2 3 4 5 6 |])
+6
+&gt; (array-size [| 1 2 3 6 |])
+4
+&gt; (array-size [| 1 2 3 |])
+3
+&gt; (array-size [| |])
+0
+&gt; (array-size [| [| 1 2 3 |] |])
+1</code></pre>
+
+<p>
+Note that an <code>array-size</code> expression returns not the maximum index but the NUMBER of ELEMENTS.
+See the followings.
+</p>
+
+<pre><code>&gt; (match 2 integer {[$a_2 a]})
+[|2|]
+&gt; (match 2 integer {[$a_2 (array-size a)]})
+1</code></pre>
+
+<p>
+To understand the above, you have to read the next chapter.
+Here, you can assume these code binds the second element of <code>a</code> to <code>2</code>, the former shows such <code>a</code>, and the latter shows <code>array-size</code> of <code>a</code>.
+</p>
+
+<pre><code>&gt; (match 2 integer {[$a_2 a_1]})
+undefined
+&gt; (match 2 integer {[$a_2 a_2]})
+2</code></pre>
+
+<p>
+The above show <code>a</code> does not have the first element, but have the second element
+You should be careful how to use <code>array-size</code>.
+</p>
+
+<h3 id="array-ref"><code>array-ref</code> expressions</h3>
+
+<pre><code>  (array-ref <i>array</i> <i>integer</i>)</code></pre>
+
+<p>
+An <code>array-ref</code> expression returns the <i>integer</i>-th element of the <i>array</i>.
+It is the same as <code><i>array</i>_<i>integer</i></code>.
+</p>
+
+<pre><code>&gt; [| 1 2 3 |]_2
+2
+&gt; (array-ref [| 1 2 3 |] 2)
+2
+&gt; [| 1 2 3 |]_4
+undefined
+&gt; (array-ref [| 1 2 3 |] 4
+undefined</code></pre>
+
+        </div>
+
+        <div class="col-md-4">
+          <div data-spy="affix" class="bs-sidebar hidden-print" role="complementary" data-offset-top="100" data-offset-bottom="100">
+            <ul class="nav bs-sidenav">
+              <li><a href="#top">Top Expressions</a></li>
+              <ul class="nav">
+                <li><a href="#define">Define and Test Expressions</a></li>
+                <li><a href="#load">Load Expressions</a></li>
+                <li><a href="#execute">Execute Expressions</a></li>
+              </ul>
+              <li><a href="#built-in">Built-in Data</a></li>
+              <ul class="nav">
+                <li><a href="#boolean">Boolean Values</a></li>
+                <li><a href="#integers">Integers</a></li>
+                <li><a href="#floats">Floats</a></li>
+                <li><a href="#characters">Characters</a></li>
+                <li><a href="#strings">Strings</a></li>
+                <li><a href="#undefined">Undefined</a></li>
+              </ul>
+              <li><a href="#objects">Objects</a></li>
+              <ul class="nav">
+                <li><a href="#enclosures">Five Enclosures</a></li>
+                <li><a href="#inductive-data">Inductive Data</a></li>
+                <li><a href="#tuple">Tuples (Multiple Values)</a></li>
+                <li><a href="#collection">Collections</a></li>
+                <li><a href="#array">Array</a></li>
+              </ul>
+              <li><a href="#syntax">Syntax of Egison</a></li>
+              <ul class="nav">
+                <li><a href="#lambda"><code>lambda</code> expressions</a></li>
+                <li><a href="#let"><code>let</code> expressions</a></li>
+                <li><a href="#letrec"><code>letrec</code> expressions</a></li>
+                <li><a href="#if"><code>if</code> expressions</a></li>
+                <li><a href="#apply"><code>apply</code> expressions</a></li>
+                <li><a href="#generate-array"><code>generate-array</code> expressions</a></li>
+                <li><a href="#array-size"><code>array-size</code> expressions</a></li>
+                <li><a href="#array-ref"><code>array-ref</code> expressions</a></li>
+              </ul>
+            </ul>
+          </div>
+        </div>
+
+      </div><!--/row-->
+    
+    </div><!-- /.container -->
+    
+    <!--# include file="/templates/footer.html" -->
+  </body>
+</html>
