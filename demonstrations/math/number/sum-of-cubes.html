@@ -11,7 +11,7 @@
       <div class="row">
 
         <div class="col-md-12" id="top" role="complementary">
-          <h1>Sequece of Natural Numbers</h1>
+          <h1>Sum of Cubes</h1>
         </div>
 
       </div>
@@ -33,8 +33,7 @@
           <h2 id="next">What to do next...</h2>
           
           <p>
-            <a class="btn btn-lg btn-primary" href="./tree.html" role="button">Next Demonstration</a>
-            <a class="btn btn-lg btn-primary" href="/demonstrations/math/number/sum-of-squares.html" role="button">More Sequence Demonstration</a>
+            <a class="btn btn-lg btn-primary" href="/demonstrations/tree.html" role="button">Next Demonstration</a>
           </p>
           
         </div>
@@ -46,7 +45,7 @@
     <!--# include file="/templates/footer.html" -->
     <script>
       var editor;
-      $.get("/api/source", { path: "sample/sequence.egi"}, function(data) {
+      $.get("/api/source", { path: "sample/math/number/sum-of-cubes.egi"}, function(data) {
         var e = document.getElementById("egison-program");
         e.value = data.content;
         editor = CodeMirror.fromTextArea(document.getElementById("egison-program"), {
