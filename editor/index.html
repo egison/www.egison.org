@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/docs-assets/ico/favicon.png">
+
+    <title>Egison Editor</title>
+    
+    <link href="/vendors/codemirror/lib/codemirror.css" type="text/css" rel="stylesheet" />
+    <link href="/vendors/codemirror/addon/display/fullscreen.css" type="text/css" rel="stylesheet" />
+  </head>
+  <body>
+
+    <textarea id="egison-program" name="code"></textarea>
+    
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="/vendors/codemirror/lib/codemirror.js"></script>
+    <script src="/vendors/codemirror/addon/edit/matchbrackets.js"></script>
+    <script src="/vendors/codemirror/addon/display/fullscreen.js"></script>
+    <script src="/vendors/codemirror/mode/egison/egison.js"></script>
+    <script>
+      var editor = CodeMirror.fromTextArea(document.getElementById("egison-program"), {
+          matchBrackets: true,
+          fullScreen: true,
+          lineNumbers: true,
+          viewportMargin: Infinity
+      });
+      /*
+      var sourcePath; // TODO define
+      $.get("/api/source", { path: sourcePath}, function(data) {
+        var e = document.getElementById("egison-program");
+        e.value = data.content;
+        editor = CodeMirror.fromTextArea(document.getElementById("egison-program"), {
+          matchBrackets: true,
+          fullScreen: true,
+          lineNumbers: true,
+          viewportMargin: Infinity
+        });
+      }, "json");
+      */
+    </script>
+  </body>
+</html>
