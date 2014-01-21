@@ -21,10 +21,51 @@
         <div class="col-md-8" role="main">
 
 <p>
-  In this chapter, we explains an aspect of Egison as an ordinal purely functional programming language.
-  We will explain patterns and pattern-matching, the most important feature of Egison in <a href="./patterns.html">the next chapter</a>.
+  In this and the next chapters, we briefly explain the syntax of Egison.
+  This chapter explains an aspect of Egison as an ordinal purely functional programming language.
+  We will explain patterns and pattern-matching, the most important feature of Egison in the next chapter.
   The readers familiar to other functional programming languages can skip this chapter.
 </p>
+<hr/>
+
+<ul>
+  <li><a href="#top">Top Expressions</a></li>
+  <ul>
+    <li><a href="#define">Define and Test Expressions</a></li>
+    <li><a href="#load">Load Expressions</a></li>
+    <li><a href="#execute">Execute Expressions</a></li>
+  </ul>
+  <li><a href="#built-in">Built-in Data</a></li>
+  <ul>
+    <li><a href="#boolean">Boolean Values</a></li>
+    <li><a href="#integers">Integers</a></li>
+    <li><a href="#floats">Floats</a></li>
+    <li><a href="#characters">Characters</a></li>
+    <li><a href="#strings">Strings</a></li>
+    <li><a href="#undefined">Undefined</a></li>
+  </ul>
+  <li><a href="#objects">Objects</a></li>
+  <ul>
+    <li><a href="#enclosures">Five Enclosures</a></li>
+    <li><a href="#inductive-data">Inductive Data</a></li>
+    <li><a href="#tuple">Tuples (Multiple Values)</a></li>
+    <li><a href="#collection">Collections</a></li>
+    <li><a href="#array">Array</a></li>
+  </ul>
+  <li><a href="#syntax">Syntax of Egison</a></li>
+  <ul>
+    <li><a href="#lambda"><code>lambda</code> expressions</a></li>
+    <li><a href="#let"><code>let</code> expressions</a></li>
+    <li><a href="#letrec"><code>letrec</code> expressions</a></li>
+    <li><a href="#if"><code>if</code> expressions</a></li>
+    <li><a href="#apply"><code>apply</code> expressions</a></li>
+    <li><a href="#generate-array"><code>generate-array</code> expressions</a></li>
+    <li><a href="#array-size"><code>array-size</code> expressions</a></li>
+    <!-- <li><a href="#array-ref"><code>array-ref</code> expressions</a></li> -->
+  </ul>
+</ul>
+
+<hr/>
 
 <h2 id="top">Top Expressions</h2>
 
@@ -447,66 +488,8 @@ The above show <code>a</code> does not have the first element, but have the seco
 You should be careful how to use <code>array-size</code>.
 </p>
 
-<h3 id="array-ref"><code>array-ref</code> expressions</h3>
-
-<pre><code>  (array-ref <i>array</i> <i>integer</i>)</code></pre>
-
-<p>
-An <code>array-ref</code> expression returns the <i>integer</i>-th element of the <i>array</i>.
-It is the same as <code><i>array</i>_<i>integer</i></code>.
-</p>
-
-<pre><code>&gt; [| 1 2 3 |]_2
-2
-&gt; (array-ref [| 1 2 3 |] 2)
-2
-&gt; [| 1 2 3 |]_4
-undefined
-&gt; (array-ref [| 1 2 3 |] 4
-undefined</code></pre>
-
         </div>
 
-        <div class="col-md-4">
-          <div data-spy="affix" class="bs-sidebar hidden-print" role="complementary" data-offset-top="100" data-offset-bottom="100">
-            <ul class="nav bs-sidenav">
-              <li><a href="#top">Top Expressions</a></li>
-              <ul class="nav">
-                <li><a href="#define">Define and Test Expressions</a></li>
-                <li><a href="#load">Load Expressions</a></li>
-                <li><a href="#execute">Execute Expressions</a></li>
-              </ul>
-              <li><a href="#built-in">Built-in Data</a></li>
-              <ul class="nav">
-                <li><a href="#boolean">Boolean Values</a></li>
-                <li><a href="#integers">Integers</a></li>
-                <li><a href="#floats">Floats</a></li>
-                <li><a href="#characters">Characters</a></li>
-                <li><a href="#strings">Strings</a></li>
-                <li><a href="#undefined">Undefined</a></li>
-              </ul>
-              <li><a href="#objects">Objects</a></li>
-              <ul class="nav">
-                <li><a href="#enclosures">Five Enclosures</a></li>
-                <li><a href="#inductive-data">Inductive Data</a></li>
-                <li><a href="#tuple">Tuples (Multiple Values)</a></li>
-                <li><a href="#collection">Collections</a></li>
-                <li><a href="#array">Array</a></li>
-              </ul>
-              <li><a href="#syntax">Syntax of Egison</a></li>
-              <ul class="nav">
-                <li><a href="#lambda"><code>lambda</code> expressions</a></li>
-                <li><a href="#let"><code>let</code> expressions</a></li>
-                <li><a href="#letrec"><code>letrec</code> expressions</a></li>
-                <li><a href="#if"><code>if</code> expressions</a></li>
-                <li><a href="#apply"><code>apply</code> expressions</a></li>
-                <li><a href="#generate-array"><code>generate-array</code> expressions</a></li>
-                <li><a href="#array-size"><code>array-size</code> expressions</a></li>
-                <li><a href="#array-ref"><code>array-ref</code> expressions</a></li>
-              </ul>
-            </ul>
-          </div>
-        </div>
 
       </div><!--/row-->
     

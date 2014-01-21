@@ -11,7 +11,7 @@
       <div class="row">
 
         <div class="col-md-12" id="top" role="complementary">
-          <h1></h1>
+          <h1>Basics of I/O</h1>
         </div>
 
       </div>
@@ -20,14 +20,111 @@
 
         <div class="col-md-8" role="main">
 
+<p>
+This chapter describes I/O of Egison.
+Since Egison is purely functional, Egison I/O has its own special syntax.
+</p>
 
-        </div>
+<hr/>
 
-        <div class="col-md-4">
-          <div data-spy="affix" class="bs-sidebar hidden-print" role="complementary" data-offset-top="100" data-offset-bottom="100">
-            <ul class="nav bs-sidenav">
-            </ul>
-          </div>
+<ul>
+  <li><a href="#main">The function <code>main</code></a></li>
+  <li><a href="#do"><code>do</code> Expressions</a></li>
+</ul>
+
+<hr/>
+
+<h2 id="main">The function <code>main</code></h2>
+
+<p>
+In honour to the tradition of programming languages, we greet the world using Egison.
+</p>
+
+<pre><code>&gt; (define $main
+    (lambda [$argv]
+      (write-string "Hello, World!\n")))
+&gt; (execute)
+Hello, World!</code></pre>
+
+<p>
+Egison I/O works via a function named <code>main</code> and a top expression <code>execute</code>.
+In <code>main</code>, you can use I/O functions such as <code>write-string</code>, which you cannot use in the others. (The list of I/O primitive functions is given in the next chapter <a href="./primitives.html">Primitive Functions</a>.)
+You can call <code>main</code> not directly but through an <code>execute</code> expression, which calls <code>main</code>.
+An <code>execute</code> takes several strings as its argument.
+The collection of them is given for <code>main</code> as its argument.
+</p>
+
+<pre><code>&gt; (execute "This" "is" "an" "argument" ".")
+Hello World!
+&gt; (define $main
+    (lambda [$argv]
+      (write argv)))
+&gt; (execute "This" "is" "an" "argument" ".")
+{This is an argument .}</code></pre>
+
+<p>
+If you run the interpreter with a filename as its first argument, the interpreter executes the function <code>main</code>.
+Like the above case, the arguments other than the filename hand <code>main</code>.
+</p>
+
+<p>
+For instance, assume we create <code>argv.egi</code>.
+</p>
+
+<pre><code>argv.egi : 
+(define $main
+  (lambda [$argv]
+    (write argv)))</code></pre>
+
+<p>
+Then, executing the following commands, you can find the arguments are given for <code>main</code> as <code>$argv</code>.
+</p>
+
+<pre><code>$ egison argv.egi; echo
+{}
+$ egison argv.egi This is an argument . ; echo
+{This is an argument .}</code></pre>
+
+
+<h2 id="do"><code>do</code> Expressions</h2>
+
+<pre><code>  (do {[<i>variable</i> <i>formula</i>] ...} <i>formula</i>)</code></pre>
+
+<p>
+To do more complicated I/O tasks, you can use <code>do</code> expressions, which is similar to <code>let</code> and <code>letrec</code> expressions.
+The most special feature of <code>do</code> expressions is serial execution.
+If you know Haskell, you probably realise that it is the same as do in Haskell.
+Recall many I/O functions have no return values.
+In such cases, you can omit to write <code><i>variable</i></code> as follows.
+</p>
+
+<pre><code>(define $main
+  (lambda [$argv]
+    (do {[(write-string "argv: ")]
+         [(write argv)]
+         [(write "\n")]}
+      [])))</code></pre>
+
+<p>
+Let's see the above code. 
+When the code is executed, <code>(write-string "argv: ")</code>, <code>(write argv)</code> and <code>(write "\n")</code> are executed in the order.
+Note any <code>do</code> expression cannot be used out of <code>main</code>.
+</p>
+
+<p>
+There are several samples in the directory "sample/io/".
+You may notice that the last argument of <code>do</code> is always <code>[]</code>.
+But, this is meaningless.
+You can return any value as follows.
+</p>
+
+<pre><code>(define $main
+  (lambda [$argv]
+    (do {[$line (read-line)]
+         [(write-string line)]
+         [(write-char '\n')]}
+      #t)))</code></pre>
+
         </div>
 
       </div><!--/row-->

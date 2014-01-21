@@ -11,7 +11,7 @@
       <div class="row">
 
         <div class="col-md-12" id="top" role="complementary">
-          <h1></h1>
+          <h1>How to Define Matchers</h1>
         </div>
 
       </div>
@@ -20,14 +20,284 @@
 
         <div class="col-md-8" role="main">
 
+<p>
+  As described in previous chapters, matchers define how to do pattern-matching.
+  In this section, we explain how to define matchers using libraries as examples.
+</p>
 
-        </div>
+<hr/>
 
-        <div class="col-md-4">
-          <div data-spy="affix" class="bs-sidebar hidden-print" role="complementary" data-offset-top="100" data-offset-bottom="100">
-            <ul class="nav bs-sidenav">
-            </ul>
-          </div>
+<ul>
+  <li><a href="#formaldef">Formal Definition of <code>matcher</code></a></li>
+  <li><a href="#simple">Definitions of Simple Matchers</a></li>
+  <li><a href="#collection">Definitions of Matchers for Collection Data</a></li>
+</ul>
+
+<hr/>
+
+<h2 id="formaldef">Formal Definition of <code>matcher</code></h2>
+
+<p>
+You can define a matcher using <code>matcher</code>.
+First of all, we show the formal definition of <code>matcher</code>.
+</p>
+
+<pre><code>&lt;matcher-sentence&gt;          := `(' "matcher" `{' &lt;primitive-pattern-clause&gt;* `}' `)'
+&lt;primitive-pattern-clause&gt;  := `[' &lt;primitive-pp&gt; `[' &lt;matcher&gt;* `]' `{' &lt;primitive-data-clause&gt;* `}' `]'
+&lt;primitive-data-clause&gt;     := `[' &lt;primitive-dp&gt; &lt;body&gt; `]'
+&lt;primitive-pp&gt;              := `$'                                             (primitive-pattern-variable)
+                             | `,$' &lt;identifier&gt;                               (value-pattern-pattern)
+                             |  `&lt;' &lt;identifier&gt; &lt;primitive-pp&gt;* `&gt;'           (primitive-inductive-pattern)
+&lt;primitive-dp&gt;              := `_'                                             (wildcard)
+                             | `$' &lt;identifier&gt;                                (primitive-data-variable)
+                             | `&lt;' &lt;Identifier&gt; &lt;primitive-dp&gt;* `&gt;'            (primitive-inductive-data)
+                             | `{}'                                            (primitive-null-collection)
+                             | `{' &lt;primitive-dp&gt; @&lt;primitive-dp&gt; `}'          (primitive-cons-collection)
+                             | `{' @&lt;primitive-dp&gt; &lt;primitive-dp&gt; `}'          (primitive-snoc-collection)
+</code></pre>
+
+<p>
+Here, <code>&lt;body&gt;</code> is a formula of Egison.
+<code>&lt;primitive-pp&gt;</code> and <code>&lt;primitive-dp&gt;</code> are abbreviations of <code>&lt;primitive-pattern-pattern&gt;</code> and <code>&lt;primitive-data-pattern&gt;</code>, respectively.
+</p>
+
+<h2 id="simple">Definitions of Simple Matchers</h2>
+
+<p>
+A matcher determines how to do pattern-matching.
+Generally speaking, given a pattern and an object, a matcher returns the candidates of <code>match-all</code> with the pattern and the object.
+<code>match</code> returns one of them, if it isn't null.
+Given a pattern and an object, what Egison does is the followings.
+<ol>
+<li>Find a <code>&lt;primitive-pattern-pattern&gt;</code> matched by the pattern.
+If the <code>&lt;primitive-pattern-pattern&gt;</code> contains variables, they are bound to the associated values in the pattern.
+</li>
+<li>
+If found, find a <code>&lt;primitive-data-pattern&gt;</code> in the associated <code>&lt;primitive-data-clause&gt;</code> matched by the object.
+If the <code>&lt;primitive-data-pattern&gt;</code> contains variables, they are bound to the associated values in the object.
+</li>
+<li>
+If found, return the result of an evaluation of the associated <code>&lt;body&gt;</code>.
+</li>
+</ol>
+
+In the section, we explain the basics of matcher using <code>ordering</code>.
+</p>
+
+<pre><code>(define $ordering
+  (matcher
+    {[,$val []
+      {[$tgt (match [val tgt] [ordering ordering]
+               {[[&lt;less&gt; &lt;less&gt;] {[]}]
+                [[&lt;equal&gt; &lt;equal&gt;] {[]}]
+                [[&lt;greater&gt; &lt;greater&gt;] {[]}]
+                [[_ _] {}]})]}]
+     [&lt;less&gt; []
+      {[&lt;Less&gt; {[]}]
+       [_ {}]}]
+     [&lt;equal&gt; []
+      {[&lt;Equal&gt; {[]}]
+       [_ {}]}]
+     [&lt;greater&gt; []
+      {[&lt;Greater&gt; {[]}]
+       [_ {}]}]
+     [$ [something]
+      {[$tgt {tgt}]}]
+     }))
+</code></pre>
+
+<p>
+Note that we use neither <code>(primitive-null-collection)</code>, <code>(primitive-cons-collection)</code>, nor <code>(primitive-snoc-collection)</code>, in the definition of <code>ordering</code>.
+They are described in the next section.
+</p>
+
+<p>
+We start to explain the behaviour from step 1 in the above list.
+In the step, Egison examines whether the pattern-matches a <code>&lt;primitive-pattern-pattern&gt;</code> or not.
+See the definitions of <code>&lt;primitive-pattern-pattern&gt;</code>.
+Any value pattern and inductive pattern-match <code>(value-pattern-pattern)</code> and <code>(primitive-inductive-pattern)</code>, respectively.
+<code>(primitive-pattern-variable)</code> is matched by any pattern.
+For example, consider evaluating the following code.
+</p>
+
+<pre><code>(match-all &lt;Equal&gt; ordering [,&lt;Less&gt; #t])
+(match-all &lt;Equal&gt; ordering [,&lt;Equal&gt; #t])
+(match-all &lt;Equal&gt; ordering [&lt;equal&gt; #t])
+(match-all &lt;Equal&gt; ordering [$x x])
+</code></pre>
+
+<p>
+Since the patterns in the first two piece of code are both value patterns, they match <code>,$val</code>.
+Then, <code>val</code> is bound to <code>&lt;Less&gt;</code> or <code>&lt;Equal&gt;</code>.
+In the third case, <code>&lt;equal&gt;</code> matches neither <code>,$val</code> nor <code>&lt;less&gt;</code>, but <code>&lt;equal&gt;</code>, because they are exactly the same.
+In the last one, <code>$x</code> matches the last <code>&lt;primitive-pattern-pattern&gt;</code>, namely, <code>$</code>.
+</p>
+
+<p>
+Let's move to the step 2.
+Like the step 1, Egison examines whether the object matches a <code>&lt;primitive-data-pattern&gt;</code> or not.
+Since <code>&lt;primitive-data-pattern&gt;</code>s in <code>ordering</code> are limited, it isn't difficult to understand which <code>&lt;primitive-data-pattern&gt;</code> the object matches.
+We emphasise that <code>Identifier</code> in <code>(primitive-inductive-data)</code> starts with uppercase, and then just inductive data match it.
+In the first two and last examples, the <code>&lt;primitive-data-pattern&gt;</code>s are all <code>$tgt</code>, and then <code>tgt</code> is bound to <code>&lt;Equal&gt;</code>.
+In the rest, namely, the third one, the object matches the first <code>&lt;primitive-data-pattern&gt;</code>, <code>&lt;Equal&gt;</code>.
+</p>
+
+<p>
+Now, we see the last step.
+In the third example, the body is <code>{[]}</code>, and then returns it.
+For a moment, assume that the result is <code>{[]}</code> if the pattern-matching succeeds, or <code>{}</code> otherwise.
+With the assumption, you can get the result of the first two examples.
+They do pattern-matching for <code>[&lt;Less&gt; &lt;Equal&gt;]</code> and <code>[&lt;Equal&gt; &lt;Equal&gt;]</code>.
+Obviously, the first example returns <code>{}</code> and the second one returns <code>{[]}</code>.
+The body of the last one is <code>{tgt}</code>, and then returns <code>{&lt;Equal&gt;}</code>.
+If the tuple of matchers in the <code>&lt;primitive-pattern-clause&gt;</code> isn't null, then Egison does the next pattern-matching with a tuple of patterns that match <code>$</code> and an object in the result using the tuple of matchers.
+In the example, the pattern is <code>$x</code>, the object is <code>&lt;Equal&gt;</code>, and the matcher is <code>something</code>.
+Here, <code>something</code> is the unique built-in matcher, which contains only wildcard and variables.
+Since <code>$x</code> is a variable, <code>x</code> is bound to <code>&lt;Equal&gt;</code>, and then the result of the formula is <code>{&lt;Equal&gt;}</code>.
+Now, we can drop the assumption.
+Since the tuple of matchers in the <code>primitive-pattern-clause</code> is null, the result of successful pattern-matching is <code>{[]}</code>, and Egison considers the pattern-matching successful.
+</p>
+
+<p>
+We feel it's a bit difficult to understand what happens if the tuple of matchers isn't null.
+Then, we give another matcher, <code>integer-tree</code>.
+</p>
+
+<pre><code>(define $integer-tree
+  (matcher
+    {[,$val []
+      {[$tgt (match [val tgt] [integer-tree integer-tree]
+               {[[&lt;leaf $n&gt; &lt;leaf ,n&gt;] {[]}]
+                [[&lt;node $l $r&gt; &lt;node ,l ,r&gt;] {[]}]
+                [[_ _] {}]})]}]
+     [&lt;leaf $&gt; [integer]
+      {[&lt;Leaf $n&gt; {n}]
+       [_ {}]}]
+     [&lt;node $ $&gt; [integer-tree integer-tree]
+      {[&lt;Node $l $r&gt; {[l r]}]
+       [_ {}]}]
+     [$ [something]
+      {[$tgt {tgt}]}]}))
+</code></pre>
+
+<p>
+  Consider executing the following example.
+</p>
+
+<pre><code>
+(match-all &lt;Node &lt;Leaf 3&gt; &lt;Node &lt;Leaf 4&gt; &lt;Leaf 5&gt;&gt;&gt; integer-tree [&lt;node &lt;leaf $n&gt; &lt;node _ _&gt;&gt; n])
+</code></pre>
+
+<p>
+  Since the pattern is <code>&lt;node &lt;leaf $n&gt; &lt;node _ _&gt;&gt;</code>, it matches <code>&lt;node $ $&gt;</code>. the first <code>$</code> and the second <code>$</code> are "bound" to <code>&lt;leaf $n&gt;</code> and <code>&lt;node _ _&gt;</code>, respectively.
+  The binding in the <code>&lt;primitive-data-pattern&gt;</code> is that <code>l</code> is <code>&lt;Leaf 3&gt;</code> and <code>r</code> is <code>&lt;Node &lt;Leaf 4&gt; &lt;Leaf 5&gt;&gt;</code>. Then, in the next, Egison does pattern-matching for the object <code>[&lt;Leaf 3&gt; &lt;Node &lt;Leaf 4&gt; &lt;Leaf 5&gt;&gt;]</code> with the pattern <code>[&lt;leaf $n&gt; &lt;node _ _&gt;]</code> using the matcher <code>[integer-tree integer-tree]</code>.
+When a result of current pattern-matching contains an element, next pattern-matching is done in series.
+</p>
+
+<p>
+By the way, Egison provides syntactic sugar <code>algebraic-data-matcher</code> for such a definition of a matcher.
+Actually, in the library "base.egi", the matcher <code>ordering</code> is defined using <code>algebraic-data-matcher</code>.
+The following code has the same meaning as the above definitions of <code>ordering</code> and <code>integer-tree</code>.
+</p>
+
+<pre><code>(define $ordering
+  (algebraic-data-matcher 
+    {&lt;less&gt; &lt;equal&gt; &lt;greater&gt;}))
+(define $integer-tree
+  (algebraic-data-matcher 
+    {&lt;leaf integer&gt; &lt;node integer-tree integer-tree&gt;}))
+</code></pre>
+
+<h2 id="collection">Definitions of Matchers for Collection Data</h2>
+
+<p>
+We will explain how to define matchers for collection data, such as list, multiset, and set.
+In this section, we show the definition of list as example, and explain the behaviour of it.
+</p>
+
+<pre><code>(define $list
+  (lambda [$a]
+    (matcher
+      {[,$val []
+        {[$tgt (match [val tgt] [(list a) (list a)]
+                 {[[&lt;nil&gt; &lt;nil&gt;] {[]}]
+                  [[&lt;cons $x $xs&gt; &lt;cons ,x ,xs&gt;] {[]}]
+                  [[_ _] {}]})]}]
+       [&lt;nil&gt; []
+        {[{} {[]}]
+         [_ {}]}]
+       [&lt;cons $ $&gt; [a (list a)]
+        {[{$x @$xs} {[x xs]}]
+         [_ {}]}]
+       [&lt;snoc $ $&gt; [a (list a)]
+        {[{@$xs $x} {[x xs]}]
+         [_ {}]}]
+       [&lt;join ,$pxs $&gt; [(list a)]
+        {[$tgt (letrec {[$helper (lambda [$pxs $tgt]
+                                   (match [pxs tgt] [(list a) (list a)]
+                                     {[[&lt;nil&gt; _] {tgt}]
+                                      [[&lt;cons $x $xs&gt; &lt;cons ,x $ys&gt;] (helper xs ys)]
+                                      [[_ _] {}]}))]}
+                 (helper pxs tgt))]}]
+       [&lt;join $ $&gt; [(list a) (list a)]
+        {[$tgt (letrec {[$helper (lambda [$xs $ys]
+                                   (match ys (list a)
+                                     {[&lt;nil&gt; {[xs {}]}]
+                                      [&lt;cons $z $zs&gt; {[xs ys] @(helper {@xs z} zs)}]}))]}
+                 (helper {} tgt))]}]
+       [&lt;nioj ,$pxs $&gt; [(list a)]
+        {[$tgt (letrec {[$helper (lambda [$pxs $tgt]
+                                   (match [pxs tgt] [(list a) (list a)]
+                                     {[[&lt;nil&gt; _] {tgt}]
+                                      [[&lt;snoc $x $xs&gt; &lt;snoc ,x $ys&gt;] (helper xs ys)]
+                                      [[_ _] {}]}))]}
+                 (helper pxs tgt))]}]
+       [&lt;nioj $ $&gt; [(list a) (list a)]
+        {[$tgt (letrec {[$helper (lambda [$xs $ys]
+                                   (match ys (list a)
+                                     {[&lt;nil&gt; {[{} xs]}]
+                                      [&lt;cons $z $zs&gt; {[ys xs] @(helper {@xs z} zs)}]}))]}
+                 (helper {} tgt))]}]
+       [$ [something]
+        {[$tgt {tgt}]}]
+       })))
+</code></pre>
+
+<p>
+A definition of a matcher for collection data may contains <code>(primitive-null-collection)</code>, <code>(primitive-cons-collection)</code>, and <code>(primitive-snoc-collection)</code>.
+Indeed, the above examples contains all of them.
+In the following, we explain the behaviour of them.
+</p>
+
+<p>
+As is evident, all matches <code>(primitive-null-collection)</code> is the null collection.
+Any non-null collection matches both <code>(primitive-cons-collection)</code> and <code>(primitive-snoc-collection)</code>.
+The difference between <code>(primitive-cons-collection)</code> and <code>(primitive-snoc-collection)</code> is how to deconstruct the collection.
+Recall they take the two arguments.
+In <code>(primitive-cons-collection)</code>, the head of the collection matches the first argument, and the rest match the second one.
+In contrast, the tail matches the second argument, and the rest do the first one in <code>(primitive-snoc-collection)</code>.
+</p>
+
+<pre><code>(match-all {1 2 3 4} (list integer) [&lt;cons $x $xs&gt; [x xs]])
+</code></pre>
+
+<p>
+We deconstruct <code>{1 2 3 4}</code> by <code>(primitive-cons-collection)</code>.
+In the above example, <code>&lt;cons $x $xs&gt;</code> matches <code>(primitive-inductive-pattern)</code>, and then Egison examines whether <code>{1 2 3 4}</code> matches <code>(primitive-inductive-pattern)</code>, <code>{$x @$xs}</code>.
+Recalling their behaviour, the pattern-matching succeeds, and <code>x</code> and <code>xs</code> are bound to <code>1</code> and <code>{2 3 4}</code>, respectively.
+By contrast, if you substitute <code>&lt;snoc $x $xs&gt;</code> for <code>&lt;cons $x $xs&gt;</code> in the above example, <code>x</code> is bound to the last element, <code>4</code>, and <code>xs</code> is bound to <code>{1 2 3}</code>.
+Note that the null collection matches neither <code>(primitive-cons-collection)</code> nor <code>(primitive-snoc-collection)</code>. For example, when you evaluate the following code, you will get the null collection <code>{}</code>.
+</p>
+
+<pre><code>(match-all {} (list integer) [&lt;cons $x $xs&gt; [x xs]])
+</code></pre>
+
+<p>
+Now, you know how to define matchers, and then you can write your own matchers.
+We recommend you to read libraries such as <code>lib/collection.egi</code>.
+There we have written many matchers, which are good examples for you.
+</p>
+
         </div>
 
       </div><!--/row-->
