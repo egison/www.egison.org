@@ -16,7 +16,7 @@ CodeMirror.defineMode("clojure", function () {
     var atoms = makeKeywords("true false nil");
 
     var keywords = makeKeywords(
-      "define test let letrec do lambda match-lambda match match-all pattern-function matcher algebraic-data-matcher if _ , & | @ loop something undefined main");
+      "define test let letrec do lambda match-lambda match match-all pattern-function matcher algebraic-data-matcher if _ , & | @ loop something undefined main return");
 
     var builtins = makeKeywords(
         "bool integer list multiset set nil cons join snoc nioj");
