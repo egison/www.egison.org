@@ -18,17 +18,48 @@
 
       <div class="row">
 
-        <div class="col-md-8" role="main">
+        <div class="col-md-12" role="main">
+          <h3 id="what-is-egison">What is Egison?</h3>
 
+          <p>
+            Egison is the world's first programming language that can directly represent pattern-matching against <i>unfree data types</i>.<br/>
+            An unfree data type is a data types whose data have no starndard form.<br/>
+            For example, a type of sets is a unfree data type.<br/>
+            This is because a collection <i>{a, b, c}</i> is equal with <i>{b, a, c}</i> and <i>{a, a, b, c}</i>, when we see them as sets.<br/>
+            The pattern-matching of the exisiting programming languages only support data types whose data have a standard form, such as lists.<br/>
+            Therefore, we need to translate and regard them as data which have a canonical form when we treat unfree data types.<br/>
+            For example, a set would be always treated as a list.<br/>
+            Many programmers think this is unavoidable, and in fact, it is a latent stress of programming.<br/>
+            Egison gets rid of this restriction and makes programming dramatically simple!
+          </p>
+
+          <h3 id="why-new-language">Why new language?</h3>
+
+          <p>
+            I think the pattern-matching of Egison is the big innovation in programming languages.<br/>
+            Implementation of the Egison pattern-matching has big influence for whole design of the programming language.<br/>
+            The patterns and the new notions <i>matchers</i>, which defines how to pattern-matching for each data type, have really important role as functions.<br/>
+            What was the best design changes by introducing new pattern-matching.<br/>
+            Additionally, I had to do a lot of experiments to theorize it.<br/>
+          </p>
+          
+          <h3 id="how-to-contriubute">How to contribute?</h3>
+          
+          <p>
+            Please try Egison and give <a href="/~egi/">me</a> feedback.<br/>
+            If it is interesting for you, please talk and tweet about Egison.<br/>
+            What is the happiest thing for me is to read new Egison code by the people with vairous backgrouds.<br/>
+            I believe Egison will be helpful and give breakthrough for the various fields in the way I've never imagine.<br/>
+          </p>
+          <p>
+            I really appericiate if you could create the extensions of the other languages such as Haskell, Ruby and Python.<br/>
+            I think these work will have great impact.<br/>
+            I'd like to do that by myself.<br/>
+            But I don't have thorough knowledge of each language to implement extensions, yet.<br/>
+          </p>
+          
         </div>
 
-        <div class="col-md-4">
-          <div data-spy="affix" class="bs-sidebar hidden-print" role="complementary" data-offset-top="100" data-offset-bottom="100">
-            <ul class="nav bs-sidenav">
-            </ul>
-          </div>
-        </div>
-      
       </div><!--/row-->
     
     </div><!-- /.container -->
