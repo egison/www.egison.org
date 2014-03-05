@@ -18,60 +18,75 @@
 
       <div class="row">
 
-        <div class="col-md-8" role="main">
+        <div class="col-md-12" role="main">
 
-          <div class="row featurette">
-            <div class="col-md-7">
-              <h2 class="featurette-heading">Moduralization of Pattern-matching</h2>
-              <p class="lead">
-                We can define the way of pattern-matching for each data types.<br/>
-              </p>
-            </div>
-            <div class="col-md-5">
-              <img class="featurette-image img-responsive" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
-            </div>
-          </div>
+          <h2>Why a new language?</h2>
 
-          <hr class="featurette-divider">
+          <p>
+            Egison is the world's first programming language that can directly represent pattern-matching against unfree data types.<br/>
+            An unfree data type is a data types whose data have no standard form.<br/>
+            For example, a type of sets is a unfree data type.<br/>
+            This is because a collection {a, b, c} is equal with {b, a, c} and {a, a, b, c}, when we see them as sets.<br/>
+            The pattern-matching of the existing programming languages only support data types whose data have a standard form, such as lists.<br/>
+            Therefore, we need to translate and regard them as data which have a canonical form when we treat unfree data types.<br/>
+            For example, a set would be always treated as a list.<br/>
+            Many programmers think this is unavoidable, and in fact, it is a latent stress of programming.<br/>
+            I've created Egison to get rid of this restriction and makes programming dramatically simple.
+          </p>
 
-          <div class="row featurette">
-            <div class="col-md-7">
-              <h2 class="featurette-heading">Non-linear Pattern-matching</h2>
-              <p class="lead">
-                Bindings in a pattern can be referred in the same pattern.<br/>
-                It is necessary to write useful patterns for pattern-matching against unfree data types.<br/>
-                The backtracking mechanism enables this feature.
-              </p>
-            </div>
-            <div class="col-md-5">
-              <img class="featurette-image img-responsive" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
-            </div>
-          </div>
+          <p>
+            Creation of a new programming language with an essentially new feature is to fill a hole in the abstraction of the existing languages.<br/>
+            If there is a hole of abstraction in a language, there is something we can't represent directly and intuitively in the language.
+            The ideal programming language is the language that filled all holes.<br/>
+            I think <b>modularization of pattern-matching</b> is the biggest hole remained.<br/>
+            (And I'm believing it is the last hole remained.)<br/>
+          </p>
 
-          <hr class="featurette-divider">
+          <p>
+            To realize molularization of pattern-matching, I've designed pattern-matching system that has all following features.
+          </p>
+ 
+          <dl>
+            <dt>Modularization of the way of pattern-matching</dt>
+            <dd>
+              We can define the way of pattern-matching for each data types.<br/>
+              For example, we can define how to pattern-match against lists, multiset, and sets respectively.<br/>
+            </dd>
+            
+            <dt>Multiple pattern-matching results</dt>
+            <dd>
+              We can handle pattern-matching that has multiple results with backtracking.<br/>
+              This feature is necessary to pattern-match with unfree data types.<br/>
+              Because unfree data have many forms for same data, so there are multiple ways of destruction.<br/>
+            </dd>
+            
+            <dt>Non-linear patterns</dt>
+            <dd>
+              Bindings in a pattern can be refer in the same pattern.<br/>
+              It is necessary to write useful patterns for unfree data types.<br/>
+            </dd>
+            
+            <dt>Patterns have lexical scoping</dt>
+            <dd>
+              We can modularize usefule patterns with <i>pattern-functions</i>, functions that receive patterns and return a pattern.<br/>
+              Since a pattern-function has lexical scoping, bindings for pattern-variables in the argument patterns and the body of pattern-functions don't conflict.<br/>
+              Useful patterns can be reused in many places in a program without worry of name clash.<br/>
+            </dd>
+          </dl>
 
-          <div class="row featurette">
-            <div class="col-md-7">
-              <h2 class="featurette-heading">Pattern Modularization</h2>
-              <p class="lead">
-                We can modularize useful patterns with <i>pattern-functions</i>.<br/>
-                Since a pattern-function has lexical scoping, we can reuse useful patterns in many places without worry of name clash.
-              </p>
-            </div>
-            <div class="col-md-5">
-              <img class="featurette-image img-responsive" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
-            </div>
-          </div>
+          <p>
+            Finally, I'd like to demonstrate the following short programs that show the elegance of Egison.
+          </p>
+ 
 
-          <hr class="featurette-divider">
 
-        </div>
+          <h2 id="next">What to do next...</h2>
+          
+          <p>
+            <a class="btn btn-lg btn-primary" href="../getting-started.html" role="button">Install Egison!</a>
+            <a class="btn btn-lg btn-primary" href="thirty-minutes.html" role="button">Learn Basics of Egison</a>
+          </p>
 
-        <div class="col-md-4">
-          <div data-spy="affix" class="bs-sidebar hidden-print" role="complementary" data-offset-top="100" data-offset-bottom="100">
-            <ul class="nav bs-sidenav">
-            </ul>
-          </div>
         </div>
         
       </div><!--/row-->

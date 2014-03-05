@@ -23,10 +23,10 @@
 
           <p>
             Egison is the world's first programming language that can directly represent pattern-matching against <i>unfree data types</i>.<br/>
-            An unfree data type is a data types whose data have no starndard form.<br/>
+            An unfree data type is a data types whose data have no standard form.<br/>
             For example, a type of sets is a unfree data type.<br/>
             This is because a collection <i>{a, b, c}</i> is equal with <i>{b, a, c}</i> and <i>{a, a, b, c}</i>, when we see them as sets.<br/>
-            The pattern-matching of the exisiting programming languages only support data types whose data have a standard form, such as lists.<br/>
+            The pattern-matching of the existing programming languages only support data types whose data have a standard form, such as lists.<br/>
             Therefore, we need to translate and regard them as data which have a canonical form when we treat unfree data types.<br/>
             For example, a set would be always treated as a list.<br/>
             Many programmers think this is unavoidable, and in fact, it is a latent stress of programming.<br/>
@@ -48,14 +48,23 @@
           <p>
             Please try Egison and give <a href="/~egi/">me</a> feedback.<br/>
             If it is interesting for you, please talk and tweet about Egison.<br/>
-            What is the happiest thing for me is to read new Egison code by the people with vairous backgrouds.<br/>
+            What is the happiest thing for me is to read new Egison code by the people with various backgrounds.<br/>
             I believe Egison will be helpful and give breakthrough for the various fields in the way I've never imagine.<br/>
           </p>
           <p>
-            I really appericiate if you could create the extensions of the other languages such as Haskell, Ruby and Python.<br/>
+            I really appreciate if you could create the extensions of the other languages such as Haskell, Ruby and Python.<br/>
             I think these work will have great impact.<br/>
             I'd like to do that by myself.<br/>
             But I don't have thorough knowledge of each language to implement extensions, yet.<br/>
+          </p>
+          
+          <h3 id="logic-programming">What is a difference between logic programming?</h3>
+          
+          <p>
+            Pattern-matching of Egison is realized with backtracking as Prolog.<br/>
+            The difference is that Egison realized these strong expression in pattern-matching.<br/>
+            The pattern-matching itself of Prolog is similar with ordinal pattern-matching of the other functional languages.<br/>
+            The mechanism of pattern-matching is briefly written <a href="/manual/mechanism.html">here</a>.
           </p>
           
         </div>
