@@ -61,7 +61,7 @@
           </p>
 
 <pre><code>% cabal update
-% cabal install egison
+% cabal install egison egison-tutorial
 ...
 Installing executable(s) in /home/xxx/.cabal/bin
 Registering egison-X.X.X...</code></pre>
@@ -101,7 +101,7 @@ Leaving Egison Interpreter.</code></pre>
           </p>
 
 <pre><code>% cabal update
-% cabal install egison</code></pre>
+% cabal install egison egison-tutorial</code></pre>
 
           <h2 id="egison-mode">How to use Egison mode on your emacs</h2>
           
@@ -123,36 +123,27 @@ Leaving Egison Interpreter.</code></pre>
           <h2 id="egison-tutorial">Egison Tutorial Command</h2>
           
           <p>
-            We have preapared <code>egison-tutorial</code> command for this purpose.
+            We have preapared <code>egison-tutorial</code> command.
             It is distributed as a <a href="http://hackage.haskell.org/packages/hackage.html">Hackage</a> package.
-            Therefore, you can install it with the following commands.
+            The command <code>egison-tutorial</code> also should have been installed in the above process.
           </p>
 
-<pre><code>% cabal update
-% cabal install egison-tutorial
-</code></pre>
-
 <pre><code>% egison-tutorial
-Egison Tutorial for Version 3.0.3 (C) 2013 Satoshi Egi
+Egison Tutorial for Version X.X.X (C) 2013-2014 Satoshi Egi
 http://www.egison.org
 Welcome to Egison Tutorial!
-====================
-Select a section to learn.
-1: Lv1 - Buildin data
-2: Lv2 - Functions
-3: Lv3 - Pattern-matching
-4: Lv4 - Infinite collections (Play with prime numbers)
-5: Lv5 - Loop-patterns
-====================
-(1-5): 1
-====================
-There are two boolean value `#t` and `#f`.
-e.g.
-  #t
-  #f
-====================
+==============================
+List of sections in the tutorial
+1: Calculate numbers
+2: Basics of functional programming
+3: Define your own functions
+4: Basic of pattern-matching
+5: Pattern-matching against infinite collections
+6: Writing scripts in Egison
+==============================
+Choose a section to learn.
+(1-6):
 &gt;</code></pre>
-
           
           <h2 id="next">What to do next...</h2>
           
