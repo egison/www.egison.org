@@ -34,17 +34,29 @@
             Egison gets rid of this restriction and makes programming dramatically simple!
           </p>
 
-          <h2 id="why-new-language">Why new language?</h2>
-
           <p>
-            I think the pattern-matching of Egison is the big innovation in programming languages.<br/>
-            Implementation of the Egison pattern-matching has big influence for whole design of the programming language.<br/>
-            The patterns and the new notions <i>matchers</i>, which defines how to pattern-matching for each data type, have really important role as functions.<br/>
-            What was the best design changes by introducing new pattern-matching.<br/>
-            Additionally, I had to do a lot of experiments to theorize it.<br/>
+            The following code is the shortest demonstration of Egison.<br/>
+            You can edit and run following code.<br/>
           </p>
 
-          <h2 id="features">Four features of pattern-matching of Egison</h2>
+          <textarea id="egison-program1" name="code"></textarea>
+
+          <button id="run-egison1" class="btn btn-lg btn-primary" data-loading-text="Loading..." role="button">Run</button>
+
+          <pre id="egison-result1"></pre>
+            
+
+          <p>
+            The following code is more interesting demonstration, pattern-matching against infinite lists.
+          </p>
+          
+          <textarea id="egison-program2" name="code"></textarea>
+
+          <button id="run-egison2" class="btn btn-lg btn-primary" data-loading-text="Loading..." role="button">Run</button>
+
+          <pre id="egison-result2"></pre>
+            
+<h2 id="features">Four features of pattern-matching of Egison</h2>
 
           <p>
             To realize molularization of pattern-matching, I've designed pattern-matching system that has all following features.
@@ -78,18 +90,6 @@
             </dd>
           </dl>
 
-          <h2 id="demonstration">Short demonstration</h2>
-
-          <p>
-            Finally, I'd like to demonstrate the following short code that shows the elegance of Egison.
-          </p>
- 
-          <textarea id="egison-program" name="code"></textarea>
-
-          <button id="run-egison" class="btn btn-lg btn-primary" data-loading-text="Loading..." role="button">Run</button>
-
-          <pre id="egison-result"></pre>
-            
           <h2 id="next">What to do next...</h2>
           
           <p>
@@ -105,11 +105,11 @@
     
     <!--# include file="/templates/footer.html" -->
     <script>
-      var editor;
-      $.get("/api/source", { path: "sample/one-minute.egi"}, function(data) {
-        var e = document.getElementById("egison-program");
+      var editor1;
+      $.get("/api/source", { path: "sample/one-minute-first.egi"}, function(data) {
+        var e = document.getElementById("egison-program1");
         e.value = data.content;
-        editor = CodeMirror.fromTextArea(document.getElementById("egison-program"), {
+        editor1 = CodeMirror.fromTextArea(document.getElementById("egison-program1"), {
           matchBrackets: true,
           lineNumbers: true,
           viewportMargin: Infinity
@@ -119,15 +119,41 @@
       $(document).ready(function(){
         $('.btn').button()
 
-        $('#run-egison').click(function() {
-          $('#run-egison').prop("disabled", true);
-          $('#run-egison').html("Running...");
-          $.post("/api/eval", { program: editor.getValue() }, function(data) {
+        $('#run-egison1').click(function() {
+          $('#run-egison1').prop("disabled", true);
+          $('#run-egison1').html("Running...");
+          $.post("/api/eval", { program: editor1.getValue() }, function(data) {
             data.output = data.output.replace(/</g, "&lt;");
             data.output = data.output.replace(/>/g, "&gt;");
-            $('#egison-result').html(data.output);
-            $('#run-egison').html("Run");
-            $('#run-egison').prop("disabled", false);
+            $('#egison-result1').html(data.output);
+            $('#run-egison1').html("Run");
+            $('#run-egison1').prop("disabled", false);
+          }, "json");
+        });
+      });
+      var editor2;
+      $.get("/api/source", { path: "sample/one-minute-second.egi"}, function(data) {
+        var e = document.getElementById("egison-program2");
+        e.value = data.content;
+        editor2 = CodeMirror.fromTextArea(document.getElementById("egison-program2"), {
+          matchBrackets: true,
+          lineNumbers: true,
+          viewportMargin: Infinity
+        });
+      }, "json");
+      
+      $(document).ready(function(){
+        $('.btn').button()
+
+        $('#run-egison2').click(function() {
+          $('#run-egison2').prop("disabled", true);
+          $('#run-egison2').html("Running...");
+          $.post("/api/eval", { program: editor2.getValue() }, function(data) {
+            data.output = data.output.replace(/</g, "&lt;");
+            data.output = data.output.replace(/>/g, "&gt;");
+            $('#egison-result2').html(data.output);
+            $('#run-egison2').html("Run");
+            $('#run-egison2').prop("disabled", false);
           }, "json");
         });
       });
