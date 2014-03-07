@@ -14,7 +14,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="New document 1">
+   sodipodi:docname="favicon.svg">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -29,7 +29,7 @@
      inkscape:cy="520"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
-     showgrid="true"
+     showgrid="false"
      inkscape:window-width="1458"
      inkscape:window-height="980"
      inkscape:window-x="3"
@@ -47,7 +47,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -59,9 +59,9 @@
        id="rect2991"
        width="220"
        height="200"
-       x="80.831451"
-       y="191.84897"
-       style="fill:#2659ff;fill-opacity:1" />
+       x="84.514473"
+       y="173.43385"
+       style="fill:#493759;fill-opacity:1" />
     <flowRoot
        xml:space="preserve"
        id="flowRoot3779"
@@ -69,11 +69,13 @@
        transform="translate(357.6875,23.718517)"><flowRegion
          id="flowRegion3781"><rect
            id="rect3783"
-           width="259.99927"
-           height="199.68263"
+           width="469.99927"
+           height="289.68265"
            x="-277.68677"
            y="168.96103"
            style="font-size:144px;fill:#ffffff;fill-opacity:1" /></flowRegion><flowPara
-         id="flowPara3785">Egi</flowPara><flowPara
-         id="flowPara3787" /></flowRoot>  </g>
+         id="flowPara3785"
+         style="font-size:115px">.egi</flowPara><flowPara
+         id="flowPara3787"
+         style="font-size:115px" /></flowRoot>  </g>
 </svg>
