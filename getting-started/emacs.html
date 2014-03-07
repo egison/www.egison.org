@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!--# include file="/templates/header.html" -->
+  </head>
+  <body data-spy="scroll" data-target=".bs-sidebar" data-offset="0">
+    <!--# include file="/templates/navbar.html" -->
+
+    <div class="container manual">
+
+      <div class="row">
+
+        <div class="col-md-12" id="top" role="complementary">
+          <h1>Emacs mode for Egison</h1>
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-12" role="main">
+
+          <h2>Setting up Egison mode on your Emacs</h2>
+          
+          <p>
+            To use Egison mode on your Emacs, you should copy a file <code>egison-mode.el</code>, which exists in <code>~/.cabal/share/</code>,
+            to load-path of your emacs, and add following lines in your <code>.emacs</code>.
+          </p>
+
+<pre><code>(autoload 'egison-mode "egison-mode" "Major mode for editing Egison code." t)
+(setq auto-mode-alist
+(cons `("\\.egi$" . egison-mode) auto-mode-alist))</code></pre>
+
+          <p>
+            The following is a sample of Egison mode on Emacs.
+          </p>
+
+          <img src="/images/xml.png" width="730px">
+
+          <h2 id="next">What to do next...</h2>
+          
+          <p>
+            <a class="btn btn-lg btn-primary" href="tutorials/thirty-minutes.html" role="button">Learn Basics of Egison</a>
+          </p>
+      
+        </div>
+
+      </div><!--/row-->
+    
+    </div><!-- /.container -->
+    
+    <!--# include file="/templates/footer.html" -->
+  </body>
+</html>

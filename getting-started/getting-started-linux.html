@@ -11,30 +11,16 @@
       <div class="row">
 
         <div class="col-md-12" id="top" role="complementary">
-          <h1>Getting Started!!</h1>
+          <h1>How to install Egison for Linux users</h1>
         </div>
 
       </div>
 
       <div class="row">
 
-        <div class="col-md-8" role="main">
+        <div class="col-md-12" role="main">
           
-          <h2 id="how-to-install">How to install for MacOSX</h2>
-
-          <p>
-            Here is an install package for Mac Users!
-          </p>
-
-          <p>
-            <a href="/download/Egison-3.2.23-20140304.pkg">Egison-3.2.23-20140304.pkg (for Mac)</a>
-          </p>
-
-          <p>
-            You can install <code>egison</code> and <code>egison-tutorial</code> commands with it.
-          </p>
-          
-          <h2 id="how-to-install">How to install for Linux</h2>
+          <h2 id="how-to-install">How to install Egison</h2>
 
           <h3>1. Install Haskell Platform</h3>
           
@@ -49,10 +35,6 @@
 
 <pre><code>% sudo apt-get update
 % sudo apt-get install haskell-platform</code></pre>
-
-          <p>
-            If you are using Windows or MacOSX, then you can download an installer from <a href="http://hackage.haskell.org/platform/">here</a>.
-          </p>
 
           <h3>2. Install Egison via Hackage</h3>
           
@@ -77,14 +59,11 @@ Registering egison-X.X.X...</code></pre>
 <pre><code>% echo "PATH=\$PATH:/home/xxx/.cabal/bin" &gt;&gt; ~/.bashrc
 % source ~/.bashrc</code></pre>
 
-          <p>
-            If your OS is Windows, you don't need to configure the path of the shell.
-          </p>
-
-          <h3>4. Execute Egison!</h3>
+          
+          <h2 id="how-to-start">How to start Egison</h3>
           
           <p>
-            Then, you can run Egison interpreter with a command <code>egison</code>.
+            Now, you can run Egison interpreter with a command <code>egison</code>.
             Type Control-D to terminate the interpreter.
           </p>
           
@@ -95,37 +74,11 @@ Welcome to Egison Interpreter!
 &gt; ^D
 Leaving Egison Interpreter.</code></pre>
 
-          <h2 id ="how-to-update">How to update</h2>
           <p>
-            You can update Egison with the following commands.
-          </p>
-
-<pre><code>% cabal update
-% cabal install egison egison-tutorial</code></pre>
-
-          <h2 id="egison-mode">How to use Egison mode on your emacs</h2>
-          
-          <p>
-            To use Egison mode on your Emacs, you should copy a file <code>egison-mode.el</code>, which exists in <code>~/.cabal/share/</code>,
-            to load-path of your emacs, and add following lines in your <code>.emacs</code>.
-          </p>
-
-<pre><code>(autoload 'egison-mode "egison-mode" "Major mode for editing Egison code." t)
-(setq auto-mode-alist
-(cons `("\\.egi$" . egison-mode) auto-mode-alist))</code></pre>
-
-          <p>
-            The following is a sample of Egison mode on Emacs.
-          </p>
-
-          <img src="/images/xml.png" width="730px">
-
-          <h2 id="egison-tutorial">Egison Tutorial Command</h2>
-          
-          <p>
-            We have preapared <code>egison-tutorial</code> command.
-            It is distributed as a <a href="http://hackage.haskell.org/packages/hackage.html">Hackage</a> package.
-            The command <code>egison-tutorial</code> also should have been installed in the above process.
+            You can run <code>egison-tutorial</code> command, too.
+            Type Control-D to terminate the tutorial.<br/>
+            This is a tutorial command for beginner.
+            Please try it first!
           </p>
 
 <pre><code>% egison-tutorial
@@ -142,7 +95,14 @@ List of sections in the tutorial
 6: Writing scripts in Egison
 ==============================
 Choose a section to learn.
-(1-6):
+(1-6): 5
+====================
+We can write a pattern-matching against infinite lists even if that has infinite results.
+Note that Egison really enumurate all pairs of two natural numbers in the following example.
+
+Examples:
+  (take 10 (match-all nats (set integer) [<cons $m <cons $n _>> [m n]]))
+====================
 &gt;</code></pre>
           
           <h2 id="next">What to do next...</h2>
@@ -153,17 +113,6 @@ Choose a section to learn.
       
         </div>
 
-        <div class="col-md-4">
-          <div data-spy="affix" class="bs-sidebar hidden-print" role="complementary" data-offset-top="100" data-offset-bottom="100">
-            <ul class="nav bs-sidenav">
-              <li><a href="#how-to-install">How to install</a></li>
-              <li><a href="#how-to-update">How to update</a></li>
-              <li><a href="#egison-mode">Egison mode on your Emacs</a></li>
-              <li><a href="#egison-tutorial">Egison tutorial command</a></li>
-            </ul>
-          </div>
-        </div>
-      
       </div><!--/row-->
     
     </div><!-- /.container -->
