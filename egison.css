@@ -151,7 +151,14 @@ sidenav, .bs-sidebar.affix .bs-sidenav {
     height: 280px;
 }
 
+.jumbotron {
+    color: #ffffff;
+    background-color: #493759;
+}
 
+.jumbotron h1 {
+    font-size: 36px;
+}
 
 /* MARKETING CONTENT
    -------------------------------------------------- */
