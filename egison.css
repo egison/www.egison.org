@@ -246,10 +246,112 @@ sidenav, .bs-sidebar.affix .bs-sidenav {
 /* For CodeMirror
    -------------------------------------------------- */
 .CodeMirror {
+    font-size: 16px;
     border: 1px solid #eee;
     height: auto;
+    margin: 0 0 10px;
 }
 .CodeMirror-scroll {
     overflow-y: hidden;
     overflow-x: auto;
+}
+
+.btn {
+    margin: 0 0 10px;
+}
+
+/* btn-egison */
+
+.btn-primary {
+  color: #ffffff;
+  background-color: #493759;
+  border-color: #392749;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open .dropdown-toggle.btn-primary {
+  color: #ffffff;
+  background-color: #392749;
+  border-color: #352245;
+}
+
+.btn-primary:active,
+.btn-primary.active,
+.open .dropdown-toggle.btn-primary {
+  background-image: none;
+}
+
+.btn-primary.disabled,
+.btn-primary[disabled],
+fieldset[disabled] .btn-primary,
+.btn-primary.disabled:hover,
+.btn-primary[disabled]:hover,
+fieldset[disabled] .btn-primary:hover,
+.btn-primary.disabled:focus,
+.btn-primary[disabled]:focus,
+fieldset[disabled] .btn-primary:focus,
+.btn-primary.disabled:active,
+.btn-primary[disabled]:active,
+fieldset[disabled] .btn-primary:active,
+.btn-primary.disabled.active,
+.btn-primary[disabled].active,
+fieldset[disabled] .btn-primary.active {
+  background-color: #493759;
+  border-color: #392749;
+}
+
+.btn-primary .badge {
+  color: #493759;
+  background-color: #fff;
+}
+
+/* btn-github */
+
+.btn-github {
+  color: #ffffff;
+  background-color: #414FA3;
+  border-color: #313F93;
+}
+
+.btn-github:hover,
+.btn-github:focus,
+.btn-github:active,
+.btn-github.active,
+.open .dropdown-toggle.btn-github {
+  color: #ffffff;
+  background-color: #313F93;
+  border-color: #263A88;
+}
+
+.btn-github:active,
+.btn-github.active,
+.open .dropdown-toggle.btn-github {
+  background-image: none;
+}
+
+.btn-github.disabled,
+.btn-github[disabled],
+fieldset[disabled] .btn-github,
+.btn-github.disabled:hover,
+.btn-github[disabled]:hover,
+fieldset[disabled] .btn-github:hover,
+.btn-github.disabled:focus,
+.btn-github[disabled]:focus,
+fieldset[disabled] .btn-github:focus,
+.btn-github.disabled:active,
+.btn-github[disabled]:active,
+fieldset[disabled] .btn-github:active,
+.btn-github.disabled.active,
+.btn-github[disabled].active,
+fieldset[disabled] .btn-github.active {
+  background-color: #414FA3;
+  border-color: #313F93;
+}
+
+.btn-github .badge {
+  color: #414FA3;
+  background-color: #fff;
 }

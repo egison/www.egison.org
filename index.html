@@ -14,6 +14,9 @@
           We can directly represent pattern-matching against lists, multisets, sets, trees, graphs and any kind of data types.<br/>
           Egison makes programming dramatically simple!
         </p>
+
+        <textarea id="egison-program" name="code"></textarea>
+        
         <!--
         <p>
           <a href="#" class="btn btn-primary btn-lg" role="button">Learn more &raquo;</a>
@@ -36,7 +39,7 @@
             <li>2014-01-24: Egison package for Mac is relased!</li>
             <li>2013-11-15: The creator started to work in <a href="http://rit.rakuten.co.jp/index_en.html">Rakuten Institute of Technology</a>.</li>
           </ul>
-          <a class="btn btn-default btn-info" href="https://twitter.com/Egison_Lang" role="button" target="_blank">View More on Twitter</a>
+          <a class="btn btn-default btn-github" href="https://twitter.com/Egison_Lang" role="button" target="_blank">View More on Twitter</a>
         </div><!-- /.col-lg-4 -->
         <div class="col-lg-4">
           <h2>Download</h2>
@@ -53,11 +56,11 @@
         </div><!-- /.col-lg-4 -->
         <div class="col-lg-4">
           <h2>Code and Documentations</h2>
-          <a class="btn btn-default btn-info" href="https://github.com/egison/egison" role="button" target="_blank">Code on GitHub</a>
+          <a class="btn btn-default btn-github" href="https://github.com/egison/egison" role="button" target="_blank">Code on GitHub</a>
           <a class="btn btn-default btn-primary" href="/presentation.pdf" role="button">Presentation</a>
           <a class="btn btn-default btn-primary" href="/contact.html#paper" role="button">Paper (Draft)</a>
           <h2>Development Status</h2>
-          <a class="btn btn-default btn-info" href="https://github.com/egison/egison/releases" role="button" target="_blank">ChangeLog on GitHub</a>
+          <a class="btn btn-default btn-github" href="https://github.com/egison/egison/releases" role="button" target="_blank">ChangeLog on GitHub</a>
           <a class="btn btn-default btn-primary" href="/milestones.html" role="button">Milestones</a>
         </div><!-- /.col-lg-4 -->
       </div><!-- /.row -->
@@ -136,5 +139,16 @@
     </div><!-- /.container -->
     
     <!--# include file="/templates/footer.html" -->
+    <script>
+      var editor;
+      $.get("/api/source", { path: "sample/www/demo1.egi"}, function(data) {
+        var e = document.getElementById("egison-program");
+        e.value = data.content;
+        editor = CodeMirror.fromTextArea(document.getElementById("egison-program"), {
+          matchBrackets: true,
+          viewportMargin: Infinity
+        });
+      }, "json");
+    </script>
   </body>
 </html>
