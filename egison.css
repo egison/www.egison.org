@@ -152,6 +152,10 @@ sidenav, .bs-sidebar.affix .bs-sidenav {
 }
 
 .jumbotron {
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 30px;
+    padding-buttom: 30px;
     color: #ffffff;
     background-color: #493759;
 }
@@ -210,6 +214,10 @@ sidenav, .bs-sidebar.affix .bs-sidenav {
 
     /* Remove the edge padding needed for mobile */
     .marketing {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .jumbotron {
         padding-left: 0;
         padding-right: 0;
     }
