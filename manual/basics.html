@@ -18,7 +18,7 @@
 
       <div class="row">
 
-        <div class="col-md-8" role="main">
+        <div class="col-md-12" role="main">
 
 <p>
   In this and the next chapters, we briefly explain the syntax of Egison.
@@ -46,7 +46,7 @@
   </ul>
   <li><a href="#objects">Objects</a></li>
   <ul>
-    <li><a href="#enclosures">Five Enclosures</a></li>
+    <li><a href="#enclosures">Six Enclosures</a></li>
     <li><a href="#inductive-data">Inductive Data</a></li>
     <li><a href="#tuple">Tuples (Multiple Values)</a></li>
     <li><a href="#collection">Collections</a></li>
@@ -196,14 +196,14 @@
 
 <h2 id="objects">Objects</h2>
 
-<h3 id="enclosures">Five Enclosures</h3>
+<h3 id="enclosures">Six Enclosures</h3>
 
 <p>
 First of all, we explain the enclosures of Egison.
 Perhaps you are surprised at how many kinds of enclosures in Egison when you first see code of Egison.
-In Egison, there are five kinds of enclosures, i.e. parentheses <code>(</code> <code>)</code>, brackets <code>&lt;</code> <code>&gt;</code>, square brackets <code>[</code> <code>]</code>, braces <code>{</code> <code>}</code>, and double brackets <code>[|</code> <code>|]</code>.
-They represents procedure call, an <a href="#inductive-data">inductive datum</a>, a <a href="#tuple">tuple</a>, a <a href="#collection">collection</a>, and an <a href="#array">array</a>.
-Roughly speaking, you should use parentheses as LISP, brackets when you want to create patterns or your own data, and double brackets to create an array.
+In Egison, there are five kinds of enclosures, i.e. parentheses <code>(</code> <code>)</code>, brackets <code>&lt;</code> <code>&gt;</code>, square brackets <code>[</code> <code>]</code>, braces <code>{</code> <code>}</code>, double brackets <code>[|</code> <code>|]</code>, and double braces <code>{|</code> <code>|}</code>.
+They represents procedure call, an <a href="#inductive-data">inductive datum</a>, a <a href="#tuple">tuple</a>, a <a href="#collection">collection</a>, an <a href="#array">array</a>, and a <a href="#hash">hash</a>.
+Roughly speaking, you should use parentheses as LISP, brackets when you want to create patterns or your own data, double brackets to create an array, and double braces to create an hash.
 Square brackets and braces are both used to collect values.
 The difference between them is the number of values.
 The former are used to collect the fixed number of values, but the latter are used to collect the others.
