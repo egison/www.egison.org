@@ -18,7 +18,7 @@
 
       <div class="row">
 
-        <div class="col-md-8" role="main">
+        <div class="col-md-12" role="main">
 
 <p>
   Patterns occupy important positions in Egison.
@@ -47,7 +47,7 @@
     <li><a href="#and-patterns">And-Patterns</a></li>
     <li><a href="#or-patterns">Or-Patterns</a></li>
     <li><a href="#not-patterns">Not-Patterns</a></li>
-    <li><a href="#loop patterns">Loop-Patterns</a></li>
+    <li><a href="#loop-patterns">Loop-Patterns</a></li>
   </ul>
   <li><a href="#syntax">Syntax using Patterns</a></li>
   <ul>
@@ -309,7 +309,7 @@ This is simple but useful usage of not-patterns.
 &gt; (match {1 1 2} (multiset integer) {[&lt;cons ^,1 _&gt; #t] [_ #f]})
 #t</code></pre>
 
-<h3 id="loop patterns">Loop-Patterns</h3>
+<h3 id="loop-patterns">Loop-Patterns</h3>
 
 <p>
   Can you write a function <code>comb2</code> that takes a collection as the argument, and returns the 2-combinations of it?
@@ -341,12 +341,12 @@ This is simple but useful usage of not-patterns.
   You can do such a thing using a loop-pattern.
 </p>
 
-<pre><code> (loop <i>variable</i> <i>collection</i> <i>formula</i> <i>formula</i>)
+<pre><code> (loop <i>variable</i> <i>range</i> <i>formula</i> <i>formula</i>)
 </code></pre>
 
 <p>
 The arguments of a loop-pattern represent an index-variable, a range of the index, a pattern repeated, and a pattern representing the end.
-When the second argument is null, a loop-pattern is "the same as" the last argument.
+When the pattern ran all range, a loop-pattern is "the same as" the last argument.
 Otherwise, it is "the same as" the third argument substituted itself for <code>...</code> and the head of the second argument for the index-variable with removing the head of the second argument.
 It is probably difficult to understand what it means.
 Then, we give <code>comb</code> as an example, and will describe the meaning of a loop-pattern using the example.
@@ -356,7 +356,7 @@ It's roughly correct and easier to understand.
 <pre><code>&gt; (define $comb
     (lambda [$xs $n]
       (match-all xs (list something)
-        [(loop $i (between 1 n)
+        [(loop $i [1 n]
            &lt;join _ &lt;cons $a_i ...&gt;&gt;
            _)
          a])))
@@ -378,7 +378,7 @@ When the range of the index is non-null, a loop-pattern "returns" the third argu
 Since <code>{1 2 3}</code> isn't null, the above example is "evaluated to"
 </p>
 
-<pre><code>&lt;join _ &lt;cons $a_1 (loop $i {2 3}
+<pre><code>&lt;join _ &lt;cons $a_1 (loop $i [2 3]
   &lt;join _ &lt;cons $a_i ...&gt;&gt;
   _)&gt;&gt;</code></pre>
 
@@ -389,7 +389,7 @@ That is, <code>{1 2 3}</code> is "replaced with" <code>{2 3}</code>
 Repeating this "evaluation", 
 </p>
 
-<pre><code>&lt;join _ &lt;cons $a_1 &lt;join _ &lt;cons $a_2 &lt;join _ &lt;cons $a_3 (loop $i {}
+<pre><code>&lt;join _ &lt;cons $a_1 &lt;join _ &lt;cons $a_2 &lt;join _ &lt;cons $a_3 (loop $i [3 3]
            &lt;join _ &lt;cons $a_i ...&gt;&gt;
            _)&gt;&gt;&gt;&gt;&gt;&gt;</code></pre>
 
@@ -420,14 +420,14 @@ In such a case, Egison regards the last argument is <code>^_</code>, which is a 
 For example,
 </p>
 
-<pre><code>(loop $i (between 1 n)
+<pre><code>(loop $i [1 n]
   &lt;join _ &lt;cons $a_i ...&gt;&gt;)</code></pre>
 
 <p>
 is interpreted as 
 </p>
 
-<pre><code>(loop $i (between 1 n)
+<pre><code>(loop $i [1 n]
   &lt;join _ &lt;cons $a_i ...&gt;&gt;
   ^_)</code></pre>
 
@@ -450,7 +450,7 @@ You can use a last-argument-less loop-pattern to avoid this difficulty.
          &lt;cons $a_1 &lt;nil&gt;&gt;
          &lt;cons $a_1
                &lt;cons $a_2
-                     (loop $i (from 3)
+                     (loop $i [3 $n]
                            (| &lt;nil&gt; 
                               &lt;cons (&amp; ,(+ a_(- i 2) a_(- i 1)) $a_i) ...&gt;))&gt;&gt;) 
         #t]
@@ -481,7 +481,7 @@ Since a variable <code>a</code> is bound to an array, we can return it and show 
          &lt;cons $a_1 &lt;nil&gt;&gt;
          &lt;cons $a_1
                &lt;cons $a_2
-                     (loop $i (from 3)
+                     (loop $i [3 $n]
                            (| &lt;nil&gt; 
                               &lt;cons (&amp; ,(+ a_(- i 2) a_(- i 1)) $a_i) ...&gt;))&gt;&gt;) 
            a]
