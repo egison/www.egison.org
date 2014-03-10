@@ -268,7 +268,7 @@ sidenav, .bs-sidebar.affix .bs-sidenav {
     margin: 0 0 10px;
 }
 
-/* btn-egison */
+/* btn-primary */
 
 .btn-primary {
   color: #ffffff;
@@ -281,6 +281,11 @@ sidenav, .bs-sidebar.affix .bs-sidenav {
 .btn-primary:active,
 .btn-primary.active,
 .open .dropdown-toggle.btn-primary {
+  /*
+  color: #493759;
+  background-color: #ffffff;
+  border-color: #493759;
+  */
   color: #ffffff;
   background-color: #392749;
   border-color: #352245;
@@ -312,6 +317,60 @@ fieldset[disabled] .btn-primary.active {
 }
 
 .btn-primary .badge {
+  color: #493759;
+  background-color: #fff;
+}
+
+/* btn-top */
+
+.btn-top {
+  color: #ffffff;
+  background-color: #493759;
+  border-color: #ffffff;
+}
+
+.btn-top:hover,
+.btn-top:focus,
+.btn-top:active,
+.btn-top.active,
+.open .dropdown-toggle.btn-top {
+  /*
+  color: #493759;
+  background-color: #ffffff;
+  border-color: #493759;
+  */
+  color: #ffffff;
+  background-color: #392749;
+  border-color: #ffffff;
+}
+
+.btn-top:active,
+.btn-top.active,
+.open .dropdown-toggle.btn-top {
+  background-image: none;
+}
+
+.btn-top.disabled,
+.btn-top[disabled],
+fieldset[disabled] .btn-top,
+.btn-top.disabled:hover,
+.btn-top[disabled]:hover,
+fieldset[disabled] .btn-top:hover,
+.btn-top.disabled:focus,
+.btn-top[disabled]:focus,
+fieldset[disabled] .btn-top:focus,
+.btn-top.disabled:active,
+.btn-top[disabled]:active,
+fieldset[disabled] .btn-top:active,
+.btn-top.disabled.active,
+.btn-top[disabled].active,
+fieldset[disabled] .btn-top.active {
+  color: #ffffff;
+  background-color: #493759;
+  border-color: #ffffff;
+}
+
+.btn-top .badge {
   color: #493759;
   background-color: #fff;
 }
