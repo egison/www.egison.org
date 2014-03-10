@@ -146,7 +146,8 @@
         e.value = data.content;
         editor = CodeMirror.fromTextArea(document.getElementById("egison-program"), {
           matchBrackets: true,
-          viewportMargin: Infinity
+          viewportMargin: Infinity,
+          readOnly: true
         });
       }, "json");
     </script>
