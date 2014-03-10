@@ -23,12 +23,12 @@
           <h2 id="what-is-egison">What is Egison?</h2>
 
           <p>
-            Egison is the world's first programming language that can directly represent pattern-matching against <i>unfree data types</i>.<br/>
-            An unfree data type is a data types whose data have no standard form.<br/>
-            For example, a type of sets is a unfree data type.<br/>
-            This is because a collection <i>{a, b, c}</i> is equal with <i>{b, a, c}</i> and <i>{a, a, b, c}</i>, when we see them as sets.<br/>
-            The pattern-matching of the existing programming languages only support data types whose data have a standard form, such as lists.<br/>
-            Therefore, we need to translate and regard them as data which have a canonical form when we treat unfree data types.<br/>
+            Egison is the world's first programming language that realized non-linear pattern-matching with backtracking.<br/>
+            It enables us to represent pattern-matching against lists, multisets, sets, trees, graphs and any kind of data types, directly.<br/>
+            For example, we can represent a pattern-matching against sets.<br/>
+            It is difficult in the existing languages because a collection <i>{a, b, c}</i> is equal with <i>{b, a, c}</i> and <i>{a, a, b, c}</i>, when we see them as sets, and
+            the pattern-matching of the existing programming languages only support data types whose data have a standard form, such as lists.<br/>
+            Therefore, we need to translate and regard them as data which have a canonical form when we treat these kinds of data.
             For example, a set would be always treated as a list.<br/>
             Many programmers think this is unavoidable, and in fact, it is a latent stress of programming.<br/>
             Egison gets rid of this restriction and makes programming dramatically simple!
@@ -39,27 +39,16 @@
             You can edit and run following code.<br/>
           </p>
 
-          <textarea id="egison-program1" name="code"></textarea>
+          <textarea id="egison-program" name="code"></textarea>
 
-          <button id="run-egison1" class="btn btn-lg btn-primary" data-loading-text="Loading..." role="button">Run</button>
+          <button id="run-egison" class="btn btn-lg btn-primary" data-loading-text="Loading..." role="button">Run</button>
 
-          <pre id="egison-result1"></pre>
-            
-
-          <p>
-            The following code is more interesting demonstration, pattern-matching against infinite lists.
-          </p>
-          
-          <textarea id="egison-program2" name="code"></textarea>
-
-          <button id="run-egison2" class="btn btn-lg btn-primary" data-loading-text="Loading..." role="button">Run</button>
-
-          <pre id="egison-result2"></pre>
+          <pre id="egison-result"></pre>
             
 <h2 id="features">Four features of pattern-matching of Egison</h2>
 
           <p>
-            To realize molularization of pattern-matching, I've designed pattern-matching system that has all following features.
+            To realize molularization of pattern-matching, We have designed pattern-matching system that has all following features.
           </p>
  
           <dl>
@@ -72,14 +61,12 @@
             <dt>Multiple pattern-matching results</dt>
             <dd>
               We can handle pattern-matching that has multiple results with backtracking.<br/>
-              This feature is necessary to pattern-match with unfree data types.<br/>
-              Because unfree data have many forms for same data, so there are multiple ways of destruction.<br/>
+              This feature is necessary to pattern-matching against data types whose data have no standard form.<br/>
             </dd>
             
             <dt>Non-linear patterns</dt>
             <dd>
-              Bindings in a pattern can be refer in the same pattern.<br/>
-              It is necessary to write useful patterns for unfree data types.<br/>
+              We can handle multiple occurece of same variables in a pattern.
             </dd>
             
             <dt>Lexical scoping of patterns</dt>
@@ -105,11 +92,11 @@
     
     <!--# include file="/templates/footer.html" -->
     <script>
-      var editor1;
+      var editor;
       $.get("/api/source", { path: "sample/one-minute-first.egi"}, function(data) {
-        var e = document.getElementById("egison-program1");
+        var e = document.getElementById("egison-program");
         e.value = data.content;
-        editor1 = CodeMirror.fromTextArea(document.getElementById("egison-program1"), {
+        editor = CodeMirror.fromTextArea(document.getElementById("egison-program"), {
           matchBrackets: true,
           lineNumbers: true,
           viewportMargin: Infinity
@@ -119,41 +106,15 @@
       $(document).ready(function(){
         $('.btn').button()
 
-        $('#run-egison1').click(function() {
-          $('#run-egison1').prop("disabled", true);
-          $('#run-egison1').html("Running...");
-          $.post("/api/eval", { program: editor1.getValue() }, function(data) {
+        $('#run-egison').click(function() {
+          $('#run-egison').prop("disabled", true);
+          $('#run-egison').html("Running...");
+          $.post("/api/eval", { program: editor.getValue() }, function(data) {
             data.output = data.output.replace(/</g, "&lt;");
             data.output = data.output.replace(/>/g, "&gt;");
-            $('#egison-result1').html(data.output);
-            $('#run-egison1').html("Run");
-            $('#run-egison1').prop("disabled", false);
-          }, "json");
-        });
-      });
-      var editor2;
-      $.get("/api/source", { path: "sample/one-minute-second.egi"}, function(data) {
-        var e = document.getElementById("egison-program2");
-        e.value = data.content;
-        editor2 = CodeMirror.fromTextArea(document.getElementById("egison-program2"), {
-          matchBrackets: true,
-          lineNumbers: true,
-          viewportMargin: Infinity
-        });
-      }, "json");
-      
-      $(document).ready(function(){
-        $('.btn').button()
-
-        $('#run-egison2').click(function() {
-          $('#run-egison2').prop("disabled", true);
-          $('#run-egison2').html("Running...");
-          $.post("/api/eval", { program: editor2.getValue() }, function(data) {
-            data.output = data.output.replace(/</g, "&lt;");
-            data.output = data.output.replace(/>/g, "&gt;");
-            $('#egison-result2').html(data.output);
-            $('#run-egison2').html("Run");
-            $('#run-egison2').prop("disabled", false);
+            $('#egison-result').html(data.output);
+            $('#run-egison').html("Run");
+            $('#run-egison').prop("disabled", false);
           }, "json");
         });
       });
