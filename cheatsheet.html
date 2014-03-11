@@ -10,13 +10,33 @@
 
       <div class="row">
 
-        <div class="col-md-12" id="top" role="complementary">
+        <div class="col-md-6" id="top" role="complementary">
           <h1>Egison Cheat Sheet</h1>
         </div>
 
       </div>
 
       <div class="row">
+
+        <div class="col-md-12" role="main">
+<ul>
+  <li><a href="#top-expressions">Top Expressions</a></li>
+  <ul>
+    <li><a href="#define-and-test"><code>define</code> and <code>test</code> expressions</a></li>
+    <li><a href="#load"><code>load</code> and <code>load-file</code> expressions</a></li>
+  </ul>
+  <li><a href="#objects">Objects</a></li>
+  <ul>
+    <li><a href="#builtin">Builtin data</a></li>
+    <li><a href="#composed">Composed data</a></li>
+    <li><a href="#user-defined">User-defined objects</a></li>
+  </ul>
+  <li><a href="#syntax">Syntax</a></li>
+  <ul>
+    <li></li>
+  </ul>
+</ul>          
+        </div>
 
         <div class="col-md-6" role="main">
 <h2 id="top-expressions">Top Expressions</h2>
@@ -29,7 +49,7 @@
 (define $f (lambda [$x $y] [(+ x y) (* x y)]))
 (test (f 2 4));=>[6 8]</textarea>
 
-<h3 id="load"><code>load</code> expressions</h3>
+<h3 id="load"><code>load</code> and <code>load-file</code> expressions</h3>
 
 <textarea class="code">; Load Egison library
 (load "lib/core/number.egi")
@@ -62,7 +82,7 @@
 ;; Strings
 "Hello world!"</textarea>
 
-<h3 id="builtin">Composed data</h3>
+<h3 id="composed">Composed data</h3>
 
 <p>
   We have five ways to compose data, <i>inductive data</i>, <i>tuples</i>, <i>collections</i>, <i>arrays</i>, and <i>hashes</i>.
@@ -76,11 +96,15 @@
 []
 [1 2]
 [#t "abc" 4]
+[1];=>1
+[[[[[[[[[[["too many"]]]]]]]]]]];=>"too many"
 
 ;; Collections
 {}
 {1 2 3 4 5}
 {'a' 'b' 'c'};=>"abc"
+{1 @{2 3}};=>{1 2 3}
+{@{@{1}} @{2 @{3}}};=>{1 2 3}
 
 ;; Arrays
 (define $xa [| 1 2 3 4 5 |])
@@ -98,28 +122,30 @@ xh_4;=>14</textarea>
 </p>
 
 <textarea class="code">[1];=>1
-[[[[[[[[[[["too many"]]]]]]]]]]];=>"too many"
-</textarea>
+[[[[[[[[[[["too many"]]]]]]]]]]];=>"too many"</textarea>
 
 <p>
-  We can splice collections using <code>@</code> inside a collection.
+  Note that we can splice collections using <code>@</code> inside a collection.
 </p>
 
 <textarea class="code">{1 @{2 3}};=>{1 2 3}
-{@{@{1}} @{2 @{3}}};=>{1 2 3}
-</textarea>
+{@{@{1}} @{2 @{3}}};=>{1 2 3}</textarea>
+
+<h3 id="user-defined">User-defined objects</h3>
+
+<textarea class="code">;; Functions
+(lambda [$x] x)
+(lambda [$x $y] (* (+ x y) (- x y)))
+
+;; Matcher
+something
+integer
+(list integer)
+(multiset integer)
+(set integer)
+(list (multiset integer))</textarea>
 
 <h2 id="syntax">Syntax</h2>
-
-<h3 id="if"><code>if</code> expressions</h3>
-
-<p>
-  It's ordinary <code>if</code>.
-  But, note the result of an evaluation of the first argument must be a boolean value (i.e. <code>#t</code> or <code>#f</code>).
-</p>
-
-<textarea class="code">(if #t "YES" "NO");=>"YES"
-(if #f "YES" "NO");=>"NO"</textarea>
 
 <h3 id="lambda"><code>lambda</code> expressions</h3>
 
@@ -140,7 +166,7 @@ xh_4;=>14</textarea>
 ((* $1 $1) 5);=>25
 ((map $2 $1) {1 2 3} (+ $ 1))=>{2 3 4}</textarea>
 
-<h3 id="let"><code>let</code> expressions</h3>
+<h3 id="let"><code>let</code> and <code>letrec</code> expressions</h3>
 
 <p>
 A let expression takes two arguments.
@@ -152,12 +178,6 @@ Since a formula in the first argument is evaluated with the original environment
 <textarea class="code">(let {[$x 1] [$y 2]} (+ x y));=>3</textarea>
 
 <p>
-Note the latter example works even if x is unbound, since Egison uses lazy evaluation.
-</p>
-
-<h3 id="letrec"><code>letrec</code> expressions</h3>
-
-<p>
   A letrec expression is the same as a let expression except the fact that you can use recursive definition in the first argument.
   Mutual recursion is also allowed.
 </p>
@@ -165,549 +185,132 @@ Note the latter example works even if x is unbound, since Egison uses lazy evalu
 <textarea class="code">> (letrec {[$x #t] [$y x]} (not y))
 #f</textarea>
 
-<h3 id="apply"><code>apply</code> expressions</h3>
-
-<textarea class="code">(apply + [1 2]);=>3</textarea>
-
-        </div>
-        
-        <div class="col-md-6" role="main">
-<h2 id="patterns">Various Patterns</h2>
+<h3 id="if"><code>if</code> expressions</h3>
 
 <p>
-  In the following, we show various patterns of Egison.
+  It's ordinary <code>if</code>.
+  But, note the result of an evaluation of the first argument must be a boolean value (i.e. <code>#t</code> or <code>#f</code>).
 </p>
 
-<h3 id="wildcard">Wildcard</h3>
-
-<p>
-  Here, we explain the special pattern <i>wildcard</i> <code>_</code>.
-  Any object matches this pattern.
-  We use <a href="#match"><code>match</code> expressions</a> and <a href="#match-all"><code>match-all</code> expressions</a>.
-  Roughly speaking, they are syntax for pattern-matching.
-  You should read the explanations of these expressions at the same time.
-</p>
-
-<textarea class="code">> (match 1 something {[_ <OK>]})
-<OK>
-> (match #f something {[_ <OK>]})
-<OK>
-> (match 'a' something {[_ <OK>]})
-<OK>
-> (match "KO" something {[_ <OK>]})
-<OK></textarea>
-
-<h3 id="inductive-patterns">Inductive Patterns</h3>
-
-<textarea class="code">  <<i>identifier</i> <i>value</i> ...></textarea>
-
-<p>
-  As a datum, a pattern can be defined inductively.
-  Notation of inductive patterns is similar to ones of <a href="basics.html#inductive-data">inductive data</a>.
-  The exception is, in inductive patterns, the head of an identifier is lowercase.
-  The behaviour of inductive patterns is defined in a matcher.
-  Then, matchers sometimes define inductive patterns having the same name.
-  Indeed, the inductive pattern <code>cons</code> is defined in matchers <code>list</code>, <code>multiset</code>, and <code>set</code>.
-</p>
-
-<textarea class="code"><nil>
-<cons <nil> <nil>></textarea>
-
-<h3 id="variable-patterns">Variable Patterns</h3>
-
-<textarea class="code">  <i>variable</i></textarea>
-
-<p>
-You can use variables as patterns.
-These patterns are called "variable patterns".
-Any object matches this pattern, and then the variable is locally bound to the object.
-In particular, you can use the pattern in inductive patterns.
-This usage allows us to deconstruct an object.
-</p>
-
-<textarea class="code">> (match 1 something {[$x x]})
-1
-> (match #t something {[$z (not z)]})
-#f
-> (match {1 2 3} (list integer) {[<nil> #f] [<cons $x $xs> [x xs]]})
-[1 {2 3}]
-> (match {1} (list integer) {[<nil> #f] [<cons $x $xs> [x xs]]})
-[1 {}]</textarea>
-
-<h3 id="indexed-patterns">Indexed Variable Patterns</h3>
-
-<textarea class="code">  <i>variable</i>_<i>integer</i> </textarea>
-
-<p>
-An indexed variable pattern is a special variable pattern.
-In this pattern, the <i>variable</i> is regarded as an <a href="./basics.html#array">array</a>, and then the <i>integer</i>-th element is bound to the matching object.
-Note that an <i>integer</i> is arbitrary.
-</p>
-
-<textarea class="code">> (match 1 something {[$x_1 x]})
-[|1|]
-> (match 1 something {[$x_1 x_1]})
-1
-> (match #t something {[$x_3 x]})
-[|#t|]
-> (match #t something {[$x_3 x_1]})
-undefined
-> (match #t something {[$x_3 x_3]})
-#t
-> (match {1 2 3} (list integer) {[<nil> #f] [<cons $a_2 $a_1> a]})
-[|{2 3} 1|]</textarea>
-
-<h3 id="value-patterns">Value Patterns</h3>
-
-<textarea class="code">  ,<i>value</i></textarea>
-
-<p>
-  A value pattern is a pattern that objects equal to a particular object match.
-  The meaning of "equal" is defined in matchers, and then varies by matcher.
-  You shouldn't forget to place COMMA before a value.
-</p>
-
-<textarea class="code">> (match 1 integer {[,1 <OK>] [_ <KO>]})
-<OK>
-> (match 0 integer {[,1 <OK>] [_ <KO>]})
-<KO>
-> (match {1 2 3} (list integer) {[,{1 2 3} <OK>] [_ <KO>]})
-<OK>
-> (match {1 2 3} (list integer) {[<cons _ <cons ,2 _>> <OK>] [_ <KO>]})
-<OK>
-> (match {1 4 3} (list integer) {[<cons _ <cons ,2 _>> <OK>] [_ <KO>]})
-<KO></textarea>
-
-<h3 id="let-patterns">Let Patterns</h3>
-
-<textarea class="code">  (let {[<i>variable</i> <i>formula</i>] ...} <i>pattern</i>)</textarea>
-
-As pointed above, syntax for usual objects and patterns is rigorously separated.
-The let patterns seem to be the exception of it.
-This is similar to <a href="./basics.html#let"><code>let</code> expressions</a>.
-Each <i>variable</i> is locally bound to each <i>formula</i>, and the <i>variable</i>s can be used in the <i>pattern</i>.
-Note that you cannot use a <i>variable</i> in <i>formula</i>e.
-The pattern is a "let" pattern, and not is a "letrec" pattern.
-
-<textarea class="code">> (define $f
-    (lambda [$x]
-      (match x (multiset integer)
-        {[(let {[$n (size x)]}
-               <cons ,n <cons ,n _>>)
-            #t]
-         [_ #f]})))
-> (f {1 2 2})
-#f
-> (f {3 3 2})
-#t
-> (f {1 2 3 4})
-#f
-> (f {1 4 3 4})
-#t
-</textarea>
-
-<h3 id="predicate-patterns">Predicate Patterns</h3>
-
-<textarea class="code">  ?function</textarea>
-
-<p>
-Here, <code>function</code> is a function that takes an argument and returns a Boolean value.
-A predicate pattern is a pattern that an object matches if the result of application of <code>function</code> and the object is <code>#t</code>.
-</p>
-
-<textarea class="code">> (match-all {1 2 3 4 5 6} (list integer) [<join $xs <cons ?(lt-n? $ 4) $ys>> {@xs @ys}])
-{{2 3 4 5 6} {1 3 4 5 6} {1 2 4 5 6}}
-> (match-all {1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987} (multiset integer) [<cons (&amp; ?(lambda [$x] (eq? (modulo x 2) 0)) $x) _> x])
-{2 8 34 144 610}</textarea>
-
-<h3 id="and-patterns">And-Patterns</h3>
-
-<textarea class="code">  (& <i>pattern</i> ...)</textarea>
-
-<p>
-When you have patterns, you sometimes want to get a pattern that is matched, if and only if, all of the patterns are matched.
-Such a pattern is called an "and-pattern".
-</p>
-
-<textarea class="code">(& <cons ,1 _> <snoc ,2 _>)
-(&)</textarea>
-
-<textarea class="code">> (match {1 3 2} (list integer) {[<cons ,1 _> <OK>] [_ <KO>]})
-<OK>
-> (match {1 3 2} (list integer) {[<snoc ,2 _> <OK>] [_ <KO>]})
-<OK>
-> (match {1 3 2} (list integer) {[(& <cons ,1 _> <snoc ,2 _>) <OK>] [_ <KO>]})
-<OK>
-> (match {1 3 3} (list integer) {[<snoc ,2 _> <OK>] [_ <KO>]})
-<KO>
-> (match {1 3 3} (list integer) {[(& <cons ,1 _> <snoc ,2 _>) <OK>] [_ <KO>]})
-<KO>
-> (match #t something {[(&) <OK>] [_ <KO>]})
-<OK></textarea>
-
-<p>
-  The most common usage of and-pattern is "matching and binding".
-  When you need to get a value matching the pattern, it is useful.
-  For example, any non-empty collection matches the following and-pattern, and then the variable "xs" is bound to it.
-</p>
-
-<textarea class="code">(& <cons _ _> $xs)</textarea>
-
-<textarea class="code">> (match {1 2} (list integer) {[(& <cons _ _> $xs) xs] [_ #f]})
-{1 2}
-> (match {} (list integer) {[(& <cons _ _> $xs) xs] [_ #f]})
-#f</textarea>
-
-<h3 id="or-patterns">Or-Patterns</h3>
-
-<textarea class="code">  (| <i>pattern</i> ...)</textarea>
-
-<p>
-  Or-patterns are the dual of and-patterns.
-  If you want to get an object that matches one of given patterns, you should use or-pattern.
-</p>
-
-<textarea class="code">(| ,1 ,2 ,3)
-(| ,#t ,#f)
-(|)</textarea>
-
-<textarea class="code">> (match {1 3 3} (list integer) {[(| <cons ,1 _> <snoc ,2 _>) <OK>] [_ <KO>]})
-<OK>
-> (match #t something {[(|) <OK>] [_ <KO>]})
-<KO></textarea>
-
-<p>
-  The following is an interesting example of or-pattern.
-  <code>(f)</code> is the pattern that any collection consisting of 1 matches.
-  You should refer to <a href="#pattern-function">pattern-function</a>.
-</p>
-
-<textarea class="code">> (define $f (pattern-function [] (| <nil> <cons ,1 (f)>)))
-> (match-all {1} (list integer) [(f) <OK>])
-{<OK>}
-> (match-all {1 1 1 1 1 1} (list integer) [(f) <OK>])
-{<OK>}
-> (match-all {} (list integer) [(f) <OK>])
-{<OK>}
-> (match-all {1 1 1 2 1 1} (list integer) [(f) <OK>])
-{}</textarea>
-
-<h3 id="not-patterns">Not-Patterns</h3>
-
-<textarea class="code">  ^<i>pattern</i></textarea>
-
-<p>
-  Interestingly, Egison allows us to write a pattern that represents failure of pattern-matching.
-  When the pattern-matching using <code><i>pattern</i></code> fails, the pattern-matching using the whole pattern <code>^<i>pattern</i></code> succeeds.
-</p>
-
-<textarea class="code">> (match 1 integer {[,2 #t] [_ #f]})
-#f
-> (match 1 integer {[^,2 #t] [_ #f]})
-#t</textarea>
-
-<p>
-Using the patterns, we can write a pattern that represents "a collection doesn't contain any element satisfying some property" or "some element of a collection doesn't satisfy some property".
-This is simple but useful usage of not-patterns.
-</p>
-
-<textarea class="code">> (match {2 3 4} (multiset integer) {[<cons ,1 _> #t] [_ #f]})
-#f
-> (match {2 3 4} (multiset integer) {[^<cons ,1 _> #t] [_ #f]})
-#t
-> (match {1 1 2} (multiset integer) {[^<cons ,1 _> #t] [_ #f]})
-#f
-> (match {1 1 2} (multiset integer) {[<cons ^,1 _> #t] [_ #f]})
-#t</textarea>
-
-<h3 id="loop-patterns">Loop-Patterns</h3>
-
-<p>
-  Can you write a function <code>comb2</code> that takes a collection as the argument, and returns the 2-combinations of it?
-  This is an easy exercise, and our answer is as follows.
-</p>
-
-<textarea class="code">> (define $comb2
-      (lambda [$xs]
-        (match-all xs (list something) 
-          [<join _ <cons $a_1 <join _ <cons $a_2 _>>>> a])))
-> (comb2 {1 2 3 4 5})
-{[|1 2|] [|1 3|] [|2 3|] [|1 4|] [|2 4|] [|3 4|] [|1 5|] [|2 5|] [|3 5|] [|4 5|]}</textarea>
-
-<p>
-  Next, can you write a <code>comb3</code>?
-  You will easily rewrite <code>comb2</code> to <code>comb3</code> as follows.
-</p>
-
-<textarea class="code">> (define $comb3
-      (lambda [$xs]
-        (match-all xs (list something) 
-          [<join _ <cons $a_1 <join _ <cons $a_2 <join _ <cons $a_3 _>>>>>> a])))
-> (comb3 {1 2 3 4 5})
-{[|1 2 3|] [|1 2 4|] [|1 3 4|] [|2 3 4|] [|1 2 5|] [|1 3 5|] [|1 4 5|] [|2 3 5|] [|2 4 5|] [|3 4 5|]}</textarea>
-
-<p>
-  If you can, how about <code>comb4</code>, <code>comb5</code>, and so on?
-  Patterns in these <code>combX</code> have the same form, <code><join _ <cons $a_1 <join _ <cons $a_2 ... _>...>>></code> and then it seems to be possible to generalise them.
-  You can do such a thing using a loop-pattern.
-</p>
-
-<textarea class="code"> (loop <i>variable</i> <i>range</i> <i>formula</i> <i>formula</i>)
-</textarea>
-
-<p>
-The arguments of a loop-pattern represent an index-variable, a range of the index, a pattern repeated, and a pattern representing the end.
-When the pattern ran all range, a loop-pattern is "the same as" the last argument.
-Otherwise, it is "the same as" the third argument substituted itself for <code>...</code> and the head of the second argument for the index-variable with removing the head of the second argument.
-It is probably difficult to understand what it means.
-Then, we give <code>comb</code> as an example, and will describe the meaning of a loop-pattern using the example.
-It's roughly correct and easier to understand.
-</p>
-
-<textarea class="code">> (define $comb
-    (lambda [$xs $n]
-      (match-all xs (list something)
-        [(loop $i [1 n]
-           <join _ <cons $a_i ...>>
-           _)
-         a])))
-> (comb {1 2 3 4 5} 3)
-{[|1 2 3|] [|1 2 4|] [|1 3 4|] [|2 3 4|] [|1 2 5|] [|1 3 5|] [|1 4 5|] [|2 3 5|] [|2 4 5|] [|3 4 5|]}
-</textarea>
-
-<p>
-We consider the case <code>n</code> is three.
-Then, a loop-pattern is 
-</p>
-
-<textarea class="code">(loop $i {1 2 3}
-  <join _ <cons $a_i ...>>
-  _)</textarea>
-
-<p>
-When the range of the index is non-null, a loop-pattern "returns" the third argument regarding <code>...</code> in the argument as the loop-pattern itself.
-Since <code>{1 2 3}</code> isn't null, the above example is "evaluated to"
-</p>
-
-<textarea class="code"><join _ <cons $a_1 (loop $i [2 3]
-  <join _ <cons $a_i ...>>
-  _)>></textarea>
-
-<p>
-Note that in the "evaluation", the index-variable <code>i</code> is "replaced with" the head of the collection, <code>1</code> in the example.
-Moreover, the collection argument of the loop-pattern loses its head.
-That is, <code>{1 2 3}</code> is "replaced with" <code>{2 3}</code>
-Repeating this "evaluation", 
-</p>
-
-<textarea class="code"><join _ <cons $a_1 <join _ <cons $a_2 <join _ <cons $a_3 (loop $i [3 3]
-           <join _ <cons $a_i ...>>
-           _)>>>>>></textarea>
-
-<p>
-In the case, the second argument of the loop-pattern is null, Egison "evaluates" the last argument <code>_</code>. Then,
-</p>
-
-<textarea class="code"><join _ <cons $a_1 <join _ <cons $a_2 <join _ <cons $a_3 _>>>>>></textarea>
-
-<p>
-It is the same as what we used in <code>comb3</code>!
-Actually, since a loop-pattern is just a pattern, Egison doesn't evaluate a loop-pattern.
-However, a claim that the above patterns are the same is true.
-Then, recalling "the result of evaluation", you can use a loop-pattern.
-</p>
-
-<p>
-In the above, we omit explanation of restriction.
-<code>...</code> must be placed at the end of the second argument.
-For example, <code><cons ... <nil>></code> is prohibited.
-This restriction decides which loop-patterns a given <code>...</code> belongs to, and then allows us to write nested loop-patterns.
-You can find an example of nested loop-patterns in <a href="./n-queen.html">Example : N-Queen</a>.
-</p>
-
-<p>
-By the way, you can omit the last argument of a loop-pattern.
-In such a case, Egison regards the last argument is <code>^_</code>, which is a pattern that no objects match.
-For example,
-</p>
-
-<textarea class="code">(loop $i [1 n]
-  <join _ <cons $a_i ...>>)</textarea>
-
-<p>
-is interpreted as 
-</p>
-
-<textarea class="code">(loop $i [1 n]
-  <join _ <cons $a_i ...>>
-  ^_)</textarea>
-
-<p>
-How to use this special loop pattern?
-Imagine a list where an element is calculated using the previous elements (e.g., arithmetic sequences, geometric sequences, and the fibonacci numbers).
-We will write a pattern that any initial subsequence of such a list matches.
-
-Recall a pattern that any collection consisting of 1 matches, which is described in <a href="#or-patterns">or-patterns</a>.
-This seems to be ths special case of what we want to get.
-However, since the definition of this pattern uses a pattern-function, it is difficult to extend the pattern.
-How to refer the previous elements?
-How to return the matched object?
-You can use a last-argument-less loop-pattern to avoid this difficulty.
-</p>
-
-<textarea class="code">(define $fibseq
-  (match-lambda (list integer)
-    {[(| <nil>
-         <cons $a_1 <nil>>
-         <cons $a_1
-               <cons $a_2
-                     (loop $i [3 $n]
-                           (| <nil> 
-                              <cons (&amp; ,(+ a_(- i 2) a_(- i 1)) $a_i) ...>))>>) 
-        #t]
-     [_ #f]}))</textarea>
-
-<p>
-The above describes a pattern that any initial subsequence of fibonacci-like sequences matches, which means any element is the sum of the two previous.
-You can notice that, in such a case, the last argument of a loop-pattern is meaningless even if it is.
-</p>
-
-<textarea class="code">> (fibseq {1 1 2 3 5 8 13 21 34 55 89 144 233 377})
-#t
-> (fibseq {1 1 2 3 5 8 13 21 34 55 89 144 233 377 610})
-#t
-> (fibseq {1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 887})
-#f
-> (fibseq {1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987})
-#t
-</textarea>
-
-<p>
-Since a variable <code>a</code> is bound to an array, we can return it and show an initial sequence.
-</p>
-
-<textarea class="code">(define $fibseq2
-  (match-lambda (multiset integer)
-    {[(| <nil>
-         <cons $a_1 <nil>>
-         <cons $a_1
-               <cons $a_2
-                     (loop $i [3 $n]
-                           (| <nil> 
-                              <cons (&amp; ,(+ a_(- i 2) a_(- i 1)) $a_i) ...>))>>) 
-           a]
-     [_ [||]]}))</textarea>
-
-<textarea class="code">> (fibseq2 {8 13 5 233 2 55 610 21 34 89 1 3 144})
-[||]
-> (fibseq2 {8 13 377 5 233 2 55 610 21 34 89 1 3 144})
-[|1 2 3 5 8 13 21 34 55 89 144 233 377 610|]</textarea>
-
-<h2 id="syntax">Syntax using Patterns</h2>
-
-<h3 id="match"><code>match</code> expressions</h3>
-
-<textarea class="code">  (match <i>formula</i> <i>matcher</i> {[<i>pattern</i> <i>formula</i>] ...})</textarea>
-
-<p>
-This expression do pattern matching of the first argument.
-The fist argument is regarded as a data of the second argument and compared with the patterns of the third argument.
-When it matches a pattern in the third argument, the associated formula will be evaluated.
-If the pattern includes variable, they are locally bound and then the formula will be evaluated with them.
-This binding isn't necessarily unique.
-But, unlike the below, this expression returns just one of the cases.
-For the details, see the next chapter.
-</p>
-
-<textarea class="code">> (match {1 2 3 4} (list integer) {[<nil> #f] [<cons $x $xs> [x xs]]})
-[1 {2 3 4}]
-> (match {1 2 3 4} (set integer) {[<nil> #f] [<cons $x $xs> [x xs]]})
-[1 {1 2 3 4}]</textarea>
+<textarea class="code">(if #t "YES" "NO");=>"YES"
+(if #f "YES" "NO");=>"NO"</textarea>
 
 <h3 id="match-all"><code>match-all</code> expressions</h3>
 
-<textarea class="code">  (match-all <i>formula</i> <i>matcher</i> [<i>pattern</i> <i>formula</i>])</textarea>
+<textarea class="code">(match-all {1 2 3} (list integer)
+  [<cons $x $xs> [x xs]]);=>{[1 {2 3}]}
 
-<p>
-  Like a <code>match</code> expression, a <code>match-all</code> expression also do pattern matching.
-  However, this expression returns all cases of binding.
-  For the details, see the next chapter.
-</p>
+(match-all {1 2 3} (multiset integer)
+  [<cons $x $xs> [x xs]])
+;=>{[1 {2 3}] [2 {1 3}] [3 {1 2}]}
 
-<textarea class="code">> (match-all {1 2 3 4} (list integer) [<cons $x $xs> [x xs]])
-{[1 {2 3 4}]}
-> (match-all {1 2 3 4} (set integer) [<cons $x $xs> [x xs]])
-{[1 {1 2 3 4}] [2 {1 2 3 4}] [3 {1 2 3 4}] [4 {1 2 3 4}]}</textarea>
+(match-all {1 2 3} (set integer)
+  [<cons $x $xs> [x xs]])
+;=>{[1 {1 2 3}] [2 {1 2 3}] [3 {1 2 3}]}</textarea>
+
+<h3 id="match"><code>match</code> expressions</h3>
+
+<textarea class="code">(match {1 2 3 4} (list integer)
+  {[<nil> #f]
+   [<cons $x $xs> [x xs]]});=>[1 {2 3 4}]
+
+(match {1 2 3 4} (set integer)
+  {[<nil> #f]
+   [<cons $x $xs> [x xs]]});=>[1 {1 2 3 4}]</textarea>
 
 <h3 id="matcher"><code>matcher</code> expressions</h3>
 
-This expression is used to create a matcher.
-Since this is complicated, we don't explain this expression here, but do in another chapter.
-If you want to know this expression, see <a href="./how-to-define-matchers.html">How to Define Matchers</a>.
+<p>
+  This expression is used to define how to pattern-match for each data type.<br/>
+  It's too complicated to explain here, so please read <a href="/manual/matchers.html">the manaul</a> for that.
+</p>
+        </div>
+        
+        <div class="col-md-6" role="main">
+          
+<h2 id="patterns">Patterns</h2>
 
-<h3 id="match-lambda"><code>match-lambda</code> expressions</h3>
+<h3 id="sytax">Syntax for patterns</h2>
 
-<textarea class="code">  (match-lambda <i>matcher</i> {[<i>pattern</i> <i>formula</i>] ...})</textarea>
+<textarea class="code">;; Wildcard
+_
+
+;; Pattern-variables
+$x
+$y_1
+$z_1_(+ 1 2)
+$w_n
+
+;; Value-patterns
+,1
+,(+ n 10)
+,(id 10)
+
+;; Predicate-patterns
+?(eq? $ 10);=>,10
+?(lt? $ 10)
+?even?
+  
+;; Inductive patterns
+<nil>
+<cons $x $xs>
+<join $xs $ys>
+<join _ <cons $x_1 <join _ <cons $x_2 _>>>>
+
+;; Not-patterns
+^_
+^,10
+<cons $x ^<cons ,x _>>
+
+;; And-patterns
+(& ,3 $n)
+
+;; Or-patterns
+(| ,3 ,4)
+
+;; Loop-patterns
+(loop $i [3 {4 5} $n] <cons $x_i ...> _)
+;=><cons $x_3 <cons $x_4 (| _ <cons $x_5 _>)>>
+
+; Syntax sugars for loop-patterns
+(loop $i [3 {4 5}] <cons $x_i ...> _)
+;=>(loop $i [3 {4 5} _] <cons $x_i ...> _)
+
+(loop $i [3 5] <cons $x_i ...> _)
+;=>(loop $i [3 {5} _] <cons $x_i ...> _)
+
+(loop $i [3 $n] <cons $x_i ...> _)
+;=>(loop $i [3 {3 4 5 ...} $n] <cons $x_i ...> _)
+
+;; Pattern-functions
+(pattern-function [$pat] pat)
+
+(pattern-function [$pat1 $pat2]
+    <cons (& $pat pat1) <cons ,pat pat2>>)</textarea>
+
+<h2 id="pattern-matching">Pattern-matching</h2>
+
+
+<h3 id="non-linear">Non-linear patterns</h3>
+
+<h3 id="loop-patterns">Loop-patterns</h3>
+
+<h3 id="pattern-function">Modularization of patterns</h3>
 
 <p>
-Like a <code>lambda</code> expression, a <code>match-lambda</code> expression creates a function with an argument.
-Pattern matching is done with the argument.
-Roughly speaking,
-<code>(match-lambda <i>X</i> {[<i>Y</i> <i>Z</i>] ...})</code> 
-and <code>(lambda [$x] (match x <i>X</i> {[<i>Y</i> <i>Z</i>] ...}))</code>
-are the same.
+  We can reuse useful patterns with <i>pattern-functions</i>, functions that take patterns and return a pattern.
 </p>
 
-<textarea class="code">> (letrec {[$count (match-lambda (list something) {[<nil> 0] [<cons _ $xs> (+ (count xs) 1)]})]} (count {1 2 3}))
-3</textarea>
+<textarea class="code">(define $twin
+  (pattern-function [$pat1 $pat2]
+    <cons (& $pat pat1) <cons ,pat pat2>>))
 
+(match-all {1 1 2 3} (list integer)
+  [(twin $n _) n]);=>{1}
 
-<h3 id="pattern-function"><code>pattern-function</code> expressions</h3>
+(match-all {1 2 1 3} (multiset integer)
+  [(twin $n _) n]);=>{1 1}</textarea>
 
-<textarea class="code">  (pattern-function [<i>variable</i> ...] <i>formula</i>)</textarea>
-
-<p>
-  You probably want to reuse your own pattern.
-  Egison prepares pattern-functions for such a purpose.
-  You may notice that it is similar to <code>lambda</code> expressions.
-  Actually, a pattern-function is a function that takes patterns and returns a pattern.
-  (Note that you cannot create such a function using <code>lambda</code> expressions.)
-</p>
-<p>
-  Shown as follows, you can reuse a pattern via a pattern-function.
-  Since a pattern-function has lexical scoping as a normal function by <code>lambda</code>,
-  bindings for pattern-variables in the argument patterns and the body of pattern-functions don't conflict.
-  Then, you don't have to care about which pattern-variable occurs in a pattern-function.
-</p>
-
-<textarea class="code">> (define $p (pattern-function [] <cons $x $xs>))
-> (match {1 2 3} (list integer) {[(p) #t] [_ #f]})
-#t
-> (match-all {{1 2 3} {4 5 6}} (list (list integer)) [<cons (p) <cons <cons $x $xs> <nil>>> [x xs]])
-{[4 {5 6}]}
-> (match-all {{1 2 3} {4 5 6}} (list (list integer)) [<cons (p) <cons <cons $y $ys> <nil>>> [y ys]])
-{[4 {5 6}]}
-> (match-all {{1 2 3} {4 5 6}} (list (list integer)) [<cons <cons $x $xs> <cons (p) <nil>>> [x xs]])
-{[1 {2 3}]}
-> (match-all {{1 2 3} {4 5 6}} (list (list integer)) [<cons (p) <cons <cons $y $ys> <nil>>> [x xs]])
-Unbound variable: x</textarea>
-
-<p>
-  The last result means that you cannot use bindings for the pattern-variables that occur in the body of a pattern-function applied in a pattern.
-</p>
-
-<textarea class="code">> (define $twin (pattern-function [$pat1 $pat2] <cons (&amp; $pat pat1) <cons ,pat pat2>>))
-> (match-all {1 2 1 3} (multiset integer) [<cons _ (twin $n _)> n])
-{1 1 1 1}
-> (match-all {1 2 1 3} (multiset integer) [<cons _ (twin ,1 _)> #t])
-{#t #t #t #t}
-> (match-all {2 2 1 3} (multiset integer) [<cons _ (twin ,1 _)> #t])
-{}</textarea>
-
-<p>
-Although Egison restricts use of patterns in a match-clause, what you can do isn't limited at all.
-On the contrary, you can reuse your own patterns with parameters.
-</p>
         </div>
         
       </div><!--/row-->
@@ -719,6 +322,8 @@ On the contrary, you can reuse your own patterns with parameters.
       $('.code').each(function() {
         var $this = $(this);
         var myCodeMirror = CodeMirror.fromTextArea(this, {
+          readOnly: "nocursor",
+          lineWrapping: true
         });
       });
     </script>
