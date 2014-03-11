@@ -141,7 +141,7 @@
     <!--# include file="/templates/footer.html" -->
     <script>
       var editor;
-      $.get("/api/source", { path: "sample/www/demo1.egi"}, function(data) {
+      $.get("/api/source", { path: "sample/demo1.egi"}, function(data) {
         var e = document.getElementById("egison-program");
         e.value = data.content;
         editor = CodeMirror.fromTextArea(document.getElementById("egison-program"), {
