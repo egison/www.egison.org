@@ -147,7 +147,8 @@
         editor = CodeMirror.fromTextArea(document.getElementById("egison-program"), {
           matchBrackets: true,
           viewportMargin: Infinity,
-          readOnly: true
+          readOnly: "nocursor",
+          lineWrapping: true
         });
       }, "json");
     </script>
