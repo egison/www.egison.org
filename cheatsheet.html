@@ -57,11 +57,15 @@
   <ul>
     <li><a href="#calculate-numbers">Calculate numbers</a></li>
     <li><a href="#strings">Strings</a></li>
-    <li><a href="#types">Types</a></li>
+    <li><a href="#type-predicates">Type predicates</a></li>
   </ul>
   <li><a href="#libraries">Libraries</a></li>
   <ul>
     <li><a href="#library-collection">Collections</a></li>
+  </ul>
+  <li><a href="#tips">Programming Tips</a></li>
+  <ul>
+    <li><a href="#infinite-collections">Infinite collections</a></li>
   </ul>
 </ul>
         </div> <!-- col-md-6 -->
@@ -325,9 +329,77 @@ $w_n
 
 <h3 id="list-multiset-set"><code>list</code>,<code>multiset</code>, and <code>set</code></h3>
 
+<p>
+  The <code>cons</code> pattern is used to divide a collection into a element and the rest of the collection.
+</p>
+
+<textarea class="code">(match-all {1 2 3} (list integer)
+  [<cons $x $xs> [x xs]])
+;=>{[1 {2 3}]}
+
+(match-all {1 2 3} (multiset integer)
+  [<cons $x $xs> [x xs]])
+;=>{[1 {2 3}] [2 {1 3}] [3 {1 2}]}
+
+(match-all {1 2 3} (set integer)
+  [<cons $x $xs> [x xs]])
+;=>{[1 {1 2 3}] [2 {1 2 3}] [3 {1 2 3}]}</textarea>
+
+<p>
+  The <code>join</code> pattern is used to divide a collection into two collections.
+</p>
+
+<textarea class="code">(match-all {1 2 3} (list integer)
+  [<join $xs $ys> [xs ys]])
+;=>{[{} {1 2 3}] [{1} {2 3}] [{1 2} {3}] [{1 2 3} {}]}
+
+(match-all {1 2 3} (multiset integer)
+  [<join $xs $ys> [xs ys]])
+;=>{[{} {1 2 3}] [{1} {2 3}] [{2} {1 3}] [{3} {1 2}] [{1 2} {3}] [{1 3} {2}] [{2 3} {1}] [{1 2 3} {}]}
+
+(match-all {1 2 3} (set integer)
+  [<join $xs $ys> [xs ys]])
+;=>{[{} {1 2 3}] [{1} {1 2 3}] [{2} {1 2 3}] [{3} {1 2 3}] [{1 2} {1 2 3}] [{1 3} {1 2 3}] [{2 1} {1 2 3}] [{2 3} {1 2 3}] [{3 1} {1 2 3}] [{1 2 3} {1 2 3}] [{3 2} {1 2 3}] [{1 3 2} {1 2 3}] [{2 1 3} {1 2 3}] [{2 3 1} {1 2 3}] [{3 1 2} {1 2 3}] [{3 2 1} {1 2 3}]}</textarea>
+
+<p>
+  The <code>nil</code> pattern matches if a collection is empty.
+</p>
+
+<textarea class="code">(match {} (list integer)
+  {[<nil> #t]
+   [_ #f]});=>#t</textarea>
+
 <h3 id="non-linear">Non-linear patterns</h3>
 
+<p>
+  We can write non-linear patterns.
+</p>
+
+<textarea class="code">(match-all {1 1 2 3 2} (list integer)
+  [<cons $x <cons ,x _>> x])
+;=>{1}
+
+(match-all {1 1 2 3 2} (multiset integer)
+  [<cons $x <cons ,x _>> x])
+;=>{1 1 2 2}
+
+(match-all {1 1 2 3 2} (multiset integer)
+  [<cons $x ^<cons ,x _>> x])
+;=>{3}</textarea>
+
 <h3 id="loop-patterns">Loop-patterns</h3>
+
+<textarea class="code">(match-all {1 2 3 4 5} (list integer)
+  [(loop $i [1 3] <join _ <cons $xh_i ...>> _)
+   xh])
+
+(match-all {1 2 3 4 5} (list integer)
+  [(loop $i [1 $n] <join _ <cons $xh_i ...>> _)
+   xh])
+
+(match-all {1 2 3 4 5} (list integer)
+  [(loop $i [1 {2 4} $n] <join _ <cons $xh_i ...>> _)
+   [n xh]])</textarea>
 
 <h3 id="pattern-function">Modularization of patterns</h3>
 
@@ -366,12 +438,83 @@ $w_n
 
 <h3 id="strings">Strings</h3>
 
-<h3 id="types">Types</h3>
+<p>
+  A string is a collection of characters in Egison.
+  Therefore, we can use <a href="#library-collection">functions for collections</a> to handle strings.
+</p>
+
+<h3 id="type-predicates">Type predicates</h3>
+
+<textarea class="code">(bool? #t);=>#t
+(integer? 12);=>#t
+(rational? 2/3);=>#t
+(float? 3.2);=>#t
+(char? 'a');=>#t
+(tuple? 2 [1 2]);=>#t
+(tuple? 0 []);=>#t
+(tuple? 1 3);=>#t
+(collection? {});=>#t
+(collection? {1 2});=>#t</textarea>
 
 <h2 id="libraries">Libraries</h2>
 
 <h3 id="library-collection">Collections</h3>
 
+<p>
+  With the <code>take</code> function, we can extract a head part of the collection.
+</p>
+
+<textarea class="code">(take 0 {1 2 3 4 5});=>{}
+(take 3 {1 2 3 4 5});=>{1 2 3}</textarea>
+
+<p>
+  With the <code>map</code> function, we can operate each element of the collection at onece.
+</p>
+
+<textarea class="code">(map (+ $ 10) {1 2 3 4 5});=>{11 12 13 14 15}
+(map (* $ 2) {1 2 3 4 5});=>{2 4 6 8 10}</textarea>
+
+<p>
+  With the <code>foldl</code> function, we can gather together all elements of the collection using an operator we like.
+</p>
+
+<textarea class="code">(foldl + 0 {1 2 3 4 5});=>15
+(foldl * 1 {1 2 3 4 5});=>120</textarea>
+
+<p>
+  The <code>nats</code> is a collection that contains all natural numbers.<br/>
+  The <code>primes</code> is a collection that contains all natural numbers.<br/>
+  We can play with them.
+</p>
+
+<textarea class="code">(take 10 nats);=>{1 2 3 4 5 6 7 8 9 10}
+(take 10 primes);=>{2 3 5 7 11 13 17 19 23 29}</textarea>
+
+<h2 id="tips">Programming Tips</h2>
+
+<h3 id="infinite-collections">Infinite collections</h3>
+
+<p>
+  We can generate infinite collections recursively.
+</p>
+
+<textarea class="code">(define $ones {1 @ones})
+(take 10 ones);=>{1 1 1 1 1 1 1 1 1 1}
+
+(define $evens {2 @(map (+ $ 2) evens)})
+(take 10 evens);=>{2 4 6 8 10 12 14 16 18 20}</textarea>
+
+<p>
+  The results of <code>match-all</code> can be infinite.
+</p>
+
+<textarea class="code">(define $twin-primes
+  (match-all primes (list integer)
+    [<join _ <cons $p <cons ,(+ p 2) _>>>
+     [p (+ p 2)]]))
+
+(take 10 twin-primes)
+;=>{[3 5] [5 7] [11 13] [17 19] [29 31] [41 43] [59 61] [71 73] [101 103] [107 109]}</textarea>
 
         </div>
         
