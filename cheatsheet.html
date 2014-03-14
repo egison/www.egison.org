@@ -29,8 +29,7 @@
   <ul>
     <li><a href="#builtin">Builtin data</a></li>
     <li><a href="#composed">Composed data</a></li>
-    <li><a href="#lambda"><code>lambda</code> expressions</a></li>
-    <li><a href="#matcher"><code>matcher</code> expressions</a></li>
+    <li><a href="#user-defined">User-defined objects</a></li>
   </ul>
   <li><a href="#patterns">Patterns</a></li>
   <li><a href="#syntax">Syntax</a></li>
@@ -169,15 +168,16 @@ xh_4;=>14</textarea>
 
 <h3 id="user-defined">User-defined objects</h3>
 
-<h3 id="lambda"><code>lambda</code> expressions</h3>
-
 <p>
   <code>lambda</code> expressions make functions as other functional programming languages.
 </p>
 
-<textarea class="code">
-((lambda [$x $y] (+ x y)) 3 7);=>10
-((lambda $x (not x)) #t);=>#f</textarea>
+<p>
+  We can define our own matcher using a <code>matcher</code> expression is used to define how to pattern-match for each data type.
+  It's too complicated to explain here, so please read <a href="/manual/matchers.html">the manaul</a> for that.<br/>
+  The following matchers are defined in the core libraries.
+  <code>something</code> is an only buitin matcher.
+</p>
 
 <textarea class="code">;; Functions
 (lambda [$x] x)
@@ -191,12 +191,6 @@ integer
 (set integer)
 (list (multiset integer))</textarea>
 
-<h3 id="matcher"><code>matcher</code> expressions</h3>
-
-<p>
-  This expression is used to define how to pattern-match for each data type.<br/>
-  It's too complicated to explain here, so please read <a href="/manual/matchers.html">the manaul</a> for that.
-</p>
 
 <h2 id="patterns">Patterns</h2>
 
