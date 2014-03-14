@@ -48,7 +48,7 @@
 <ul>
   <li><a href="#pattern-matching">Pattern-matching</a></li>
   <ul>
-    <li><a href="#list-multiset-set"><code>list</code>,<code>multiset</code>, and <code>set</code></a></li>
+    <li><a href="#cons-join-nil"><code>cons</code>,<code>join</code>, and <code>nil</code></a></li>
     <li><a href="#non-linear">Non-linear patterns</a></li>
     <li><a href="#loop-patterns">Loop-patterns</a></li>
     <li><a href="#pattern-function">Modularization of patterns</a></li>
@@ -56,6 +56,7 @@
   <li><a href="#builtin-functions">Builtin functions</a></li>
   <ul>
     <li><a href="#calculate-numbers">Calculate numbers</a></li>
+    <li><a href="#compare-numbers">Compare numbers</a></li>
     <li><a href="#strings">Strings</a></li>
     <li><a href="#type-predicates">Type predicates</a></li>
   </ul>
@@ -327,7 +328,7 @@ $w_n
           
 <h2 id="pattern-matching">Pattern-matching</h2>
 
-<h3 id="list-multiset-set"><code>list</code>,<code>multiset</code>, and <code>set</code></h3>
+<h3 id="cons-join-nil"><code>cons</code>,<code>join</code>, and <code>nil</code></h3>
 
 <p>
   The <code>cons</code> pattern is used to divide a collection into a element and the rest of the collection.
@@ -389,17 +390,25 @@ $w_n
 
 <h3 id="loop-patterns">Loop-patterns</h3>
 
-<textarea class="code">(match-all {1 2 3 4 5} (list integer)
+<p>
+  We can write a pattern that include <code>...</code>.
+</p>
+
+<textarea class="code">(match-all {1 2 3 4} (list integer)
   [(loop $i [1 3] <join _ <cons $xh_i ...>> _)
    xh])
+;=>{{|[1 1] [2 2] [3 3]|} {|[1 1] [2 2] [3 4]|} {|[1 1] [2 3] [3 4]|} {|[1 2] [2 3] [3 4]|}}
 
-(match-all {1 2 3 4 5} (list integer)
+(match-all {1 2 3 4} (list integer)
   [(loop $i [1 $n] <join _ <cons $xh_i ...>> _)
-   xh])
+   [n xh]])
+;=>{[0 {||}] [1 {|[1 1]|}] [1 {|[1 2]|}] [1 {|[1 3]|}] [1 {|[1 4]|}] [2 {|[1 1] [2 2]|}] [2 {|[1 1] [2 3]|}] [2 {|[1 2] [2 3]|}] [2 {|[1 1] [2 4]|}] [2 {|[1 2] [2 4]|}] [2 {|[1 3] [2 4]|}] [3 {|[1 1] [2 2] [3 3]|}] [3 {|[1 1] [2 2] [3 4]|}] [3 {|[1 1] [2 3] [3 4]|}] [3 {|[1 2] [2 3] [3 4]|}] [4 {|[1 1] [2 2] [3 3] [4 4]|}]}
 
-(match-all {1 2 3 4 5} (list integer)
+(match-all {1 2 3 4} (list integer)
   [(loop $i [1 {2 4} $n] <join _ <cons $xh_i ...>> _)
-   [n xh]])</textarea>
+   [n xh]])
+;=>{[2 {|[1 1] [2 2]|}] [2 {|[1 1] [2 3]|}] [2 {|[1 2] [2 3]|}] [2 {|[1 1] [2 4]|}] [2 {|[1 2] [2 4]|}] [2 {|[1 3] [2 4]|}] [4 {|[1 1] [2 2] [3 3] [4 4]|}]}
+</textarea>
 
 <h3 id="pattern-function">Modularization of patterns</h3>
 
@@ -425,6 +434,7 @@ $w_n
 (- 30 15);=>15
 (* 10 20);=>200
 (/ 20 5);=>4
+(modulo 17 4);=>1
 (power 2 10);=>1024
 
 (+ 2/3 1/5);=>13/15
@@ -435,6 +445,18 @@ $w_n
 
 (rtof 1/5);=>0.2
 (rtof 1/100);=>1.0e-2</textarea>
+
+<h3 id="compare-numbers">Compare numbers</h3>
+
+<p>
+  We can compare numbers using the <code>eq?</code>, <code>gt?</code>, <code>lt?</code>, <code>gte?</code>, and <code>lte?</code> function.
+</p>
+
+<textarea class="code">(eq? 1 1);=>#t ; equal
+(gt? 1 1);=>#f ; greater than
+(lt? 1 1);=>#f ; less than
+(gte? 1 1);=>#t ; greater than or equal
+(lte? 1 1);->#t ; less than or equal</textarea>
 
 <h3 id="strings">Strings</h3>
 
@@ -461,11 +483,14 @@ $w_n
 <h3 id="library-collection">Collections</h3>
 
 <p>
+  The <code>nats</code> is a collection that contains all natural numbers.<br/>
+  The <code>primes</code> is a collection that contains all natural numbers.<br/>
+  We can play with them.<b4/>
   With the <code>take</code> function, we can extract a head part of the collection.
 </p>
 
-<textarea class="code">(take 0 {1 2 3 4 5});=>{}
-(take 3 {1 2 3 4 5});=>{1 2 3}</textarea>
+<textarea class="code">(take 10 nats);=>{1 2 3 4 5 6 7 8 9 10}
+(take 10 primes);=>{2 3 5 7 11 13 17 19 23 29}</textarea>
 
 <p>
   With the <code>map</code> function, we can operate each element of the collection at onece.
@@ -482,13 +507,18 @@ $w_n
 (foldl * 1 {1 2 3 4 5});=>120</textarea>
 
 <p>
-  The <code>nats</code> is a collection that contains all natural numbers.<br/>
-  The <code>primes</code> is a collection that contains all natural numbers.<br/>
-  We can play with them.
+  With the <code>filter</code> function, we can extract all elements that satisfy the predicate.
 </p>
 
-<textarea class="code">(take 10 nats);=>{1 2 3 4 5 6 7 8 9 10}
-(take 10 primes);=>{2 3 5 7 11 13 17 19 23 29}</textarea>
+<textarea class="code">(take 20 (filter (lambda [$p] (eq? (modulo p 4) 1)) primes))
+;=>{5 13 17 29 37 41 53 61 73 89 97 101 109 113 137 149 157 173 181 193}</textarea>
+
+<p>
+  With the <code>while</code> function, we can extract all head elements that satisfy the predicate.
+</p>
+
+<textarea class="code">(while (lt? $ 100) primes)
+;=>{2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59 61 67 71 73 79 83 89 97}</textarea>
 
 <h2 id="tips">Programming Tips</h2>
 
