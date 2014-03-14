@@ -29,17 +29,16 @@
   <ul>
     <li><a href="#builtin">Builtin data</a></li>
     <li><a href="#composed">Composed data</a></li>
-    <li><a href="#user-defined">User-defined objects</a></li>
+    <li><a href="#lambda"><code>lambda</code> expressions</a></li>
+    <li><a href="#matcher"><code>matcher</code> expressions</a></li>
   </ul>
   <li><a href="#patterns">Patterns</a></li>
   <li><a href="#syntax">Syntax</a></li>
   <ul>
-    <li><a href="#lambda"><code>lambda</code> expressions</a></li>
-    <li><a href="#let"></a><code>let</code> and <code>letrec</code> expressions</li>
+    <li><a href="#let"><code>let</code> and <code>letrec</code> expressions</a></li>
     <li><a href="#if"><code>if</code> expressions</a></li>
     <li><a href="#match-all"><code>match-all</code> expressions</a></li>
     <li><a href="#match"><code>match</code> expressions</a></li>
-    <li><a href="#matcher"><code>matcher</code> expressions</a></li>
   </ul>
 </ul>
         </div> <!-- col-md-6 -->
@@ -170,6 +169,16 @@ xh_4;=>14</textarea>
 
 <h3 id="user-defined">User-defined objects</h3>
 
+<h3 id="lambda"><code>lambda</code> expressions</h3>
+
+<p>
+  <code>lambda</code> expressions make functions as other functional programming languages.
+</p>
+
+<textarea class="code">
+((lambda [$x $y] (+ x y)) 3 7);=>10
+((lambda $x (not x)) #t);=>#f</textarea>
+
 <textarea class="code">;; Functions
 (lambda [$x] x)
 (lambda [$x $y] (* (+ x y) (- x y)))
@@ -181,6 +190,13 @@ integer
 (multiset integer)
 (set integer)
 (list (multiset integer))</textarea>
+
+<h3 id="matcher"><code>matcher</code> expressions</h3>
+
+<p>
+  This expression is used to define how to pattern-match for each data type.<br/>
+  It's too complicated to explain here, so please read <a href="/manual/matchers.html">the manaul</a> for that.
+</p>
 
 <h2 id="patterns">Patterns</h2>
 
@@ -242,16 +258,6 @@ $w_n
 
 <h2 id="syntax">Syntax</h2>
 
-<h3 id="lambda"><code>lambda</code> expressions</h3>
-
-<p>
-  <code>lambda</code> expressions make functions as other functional programming languages.
-</p>
-
-<textarea class="code">
-((lambda [$x $y] (+ x y)) 3 7);=>10
-((lambda $x (not x)) #t);=>#f</textarea>
-
 <p>
   We support partial evaluations.
 </p>
@@ -259,7 +265,7 @@ $w_n
 <textarea class="code">((+ $ $) 3 4);=>7
 ((+ $1 $2) 3 4);=>7
 ((* $1 $1) 5);=>25
-((map $2 $1) {1 2 3} (+ $ 1))=>{2 3 4}</textarea>
+((map $2 $1) {1 2 3} (+ $ 1));=>{2 3 4}</textarea>
 
 <h3 id="let"><code>let</code> and <code>letrec</code> expressions</h3>
 
@@ -316,12 +322,6 @@ $w_n
   {[<nil> #f]
    [<cons $x $xs> [x xs]]});=>[1 {1 2 3 4}]</textarea>
 
-<h3 id="matcher"><code>matcher</code> expressions</h3>
-
-<p>
-  This expression is used to define how to pattern-match for each data type.<br/>
-  It's too complicated to explain here, so please read <a href="/manual/matchers.html">the manaul</a> for that.
-</p>
         </div>
         
         <div class="col-md-6" role="main">
