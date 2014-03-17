@@ -1,47 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="shortcut icon" href="/favicon.ico?v=2">
-
-    <title>Egison Editor</title>
-    
-    <link href="/vendors/codemirror/lib/codemirror.css" type="text/css" rel="stylesheet" />
-    <link href="/vendors/codemirror/addon/display/fullscreen.css" type="text/css" rel="stylesheet" />
+    <!--# include file="/templates/header.html" -->
   </head>
   <body>
+    <!--# include file="/templates/navbar.html" -->
 
-    <textarea id="egison-program" name="code"></textarea>
+    <div class="container manual">
+
+      <div class="row">
+
+        <div class="col-md-12" id="top" role="complementary">
+          <h1>Online Egison Editor</h1>
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-12" role="main">
+
+          <p>
+            You can write and run Egison programs. Enjoy Egison programming!
+          </p>
+          
+          <textarea id="egison-program" name="code"></textarea>
+
+          <button id="run-egison" class="btn btn-lg btn-primary" data-loading-text="Loading..." role="button">Run</button>
+
+          <pre id="egison-result"></pre>
+            
+        </div>
+
+      </div><!--/row-->
     
-    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="/vendors/codemirror/lib/codemirror.js"></script>
-    <script src="/vendors/codemirror/addon/edit/matchbrackets.js"></script>
-    <script src="/vendors/codemirror/addon/display/fullscreen.js"></script>
-    <script src="/vendors/codemirror/mode/egison/egison.js"></script>
+    </div><!-- /.container -->
+    
+    <!--# include file="/templates/footer.html" -->
     <script>
-      var editor = CodeMirror.fromTextArea(document.getElementById("egison-program"), {
-          matchBrackets: true,
-          fullScreen: true,
-          lineNumbers: true,
-          viewportMargin: Infinity
-      });
-      /*
-      var sourcePath; // TODO define
-      $.get("/api/source", { path: sourcePath}, function(data) {
+      var editor;
+      $.get("/api/source", { path: "sample/sequence.egi"}, function(data) {
         var e = document.getElementById("egison-program");
         e.value = data.content;
         editor = CodeMirror.fromTextArea(document.getElementById("egison-program"), {
           matchBrackets: true,
-          fullScreen: true,
           lineNumbers: true,
-          viewportMargin: Infinity
+          lineWrapping: true,
+          viewportMargin: Infinity,
+          readOnly: "nocursor"
         });
       }, "json");
-      */
+      
+      $(document).ready(function(){
+        $('.btn').button()
+
+        $('#run-egison').click(function() {
+          $('#run-egison').prop("disabled", true);
+          $('#run-egison').html("Running...");
+          $.post("/api/eval", { program: editor.getValue() }, function(data) {
+            data.output = data.output.replace(/</g, "&lt;");
+            data.output = data.output.replace(/>/g, "&gt;");
+            $('#egison-result').html(data.output);
+            $('#run-egison').html("Run");
+            $('#run-egison').prop("disabled", false);
+          }, "json");
+        });
+      });
     </script>
   </body>
 </html>
