@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Online Egison Interpreter</title>
+    <style>
+    html, body {
+      background-color: #333;
+      color: white;
+      font-family: monospace;
+      margin: 0;
+      padding: 0;
+    }
+    /* The console container element */
+    #console {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      height: auto;
+      z-index: 9;
+      background-color: black;
+      border: 2px solid #CCC;
+      margin: 0 auto;
+      font-size: 16px;
+    }
+    /* The inner console element. */
+    .jqconsole {
+        padding: 10px;
+    }
+    /* The cursor. */
+    .jqconsole-cursor {
+        background-color: gray;
+    }
+    /* The cursor color when the console looses focus. */
+    .jqconsole-blurred .jqconsole-cursor {
+        background-color: #666;
+    }
+    /* The current prompt text color */
+    .jqconsole-prompt {
+        color: #0d0;
+    }
+    /* The command history */
+    .jqconsole-old-prompt {
+        color: #0d0;
+        font-weight: normal;
+    }
+    /* The text color when in input mode. */
+    .jqconsole-input {
+        color: #dd0;
+    }
+    /* Previously entered input. */
+    .jqconsole-old-input {
+        color: #bb0;
+        font-weight: normal;
+    }
+    /* The text color of the output. */
+    .jqconsole-output {
+        color: white;
+    }
+    .paren {
+      color: #FF00FF;
+    }
+    </style>
+  </head>
+  <body>
+    <div id="console"></div>
+    <script src="/vendors/jquery-2.1.0.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/vendors/jqconsole/lib/jqconsole.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+      $(function () {
+        var prompt = '> ';
+        var inputs = '';
+        var jqconsole = $('#console').jqconsole('Online Egison Interprter\nEgison Version 3.3.2 (C) 2011-2014 Satoshi Egi\nhttp://www.egison.org\nWelcome to Egison Interpreter!\n', prompt);
+        // Move to line start Ctrl+A.
+        jqconsole.RegisterShortcut('A', function() {
+          jqconsole.MoveToStart();
+          handler();
+        });
+        // Move to line end Ctrl+E.
+        jqconsole.RegisterShortcut('E', function() {
+          jqconsole.MoveToEnd();
+          handler();
+        });
+        jqconsole.RegisterMatching('(', ')', 'paren');
+        jqconsole.RegisterMatching('<', '>', 'paren');
+        jqconsole.RegisterMatching('[', ']', 'paren');
+        jqconsole.RegisterMatching('{', '}', 'paren');
+        var startPrompt = function () {
+          // Start the prompt with history enabled.
+          jqconsole.Prompt(true, function (input) {
+            $.post("/api/eval", { program: (inputs + '\n' + input) }, function(data) {
+              // Output input with the class jqconsole-output.
+              if (data.output != "") {
+                jqconsole.Write(data.output + '\n', 'jqconsole-output');
+              }
+              // Append to next input if the input is a definition
+              if (data.output == "") {
+                inputs = inputs + input + '\n';
+              }
+              // Restart the prompt.
+              startPrompt();
+            }, "json");
+          });
+        };
+        startPrompt();
+      });
+    </script>
+  </body>
+</html>
