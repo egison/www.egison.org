@@ -32,13 +32,20 @@ We don't describe precise behaviour of them, but give simply examples.
 
 <dl>
 <dt><code>+</code></dt>
-<dd><pre><code>(+ 13 21)</code></pre></dd>
+<dd><pre><code>(+ 13 21)
+(+ 3.14159 2.71828)</code></pre></dd>
 
 <dt><code>-</code></dt>
-<dd><pre><code>(- 13 21)</code></pre></dd>
+<dd><pre><code>(- 13 21)
+(- 3.14159 2.71828)</code></pre></dd>
 
 <dt><code>*</code></dt>
-<dd><pre><code>(* 13 21)</code></pre></dd>
+<dd><pre><code>(* 13 21)
+(* 3.14159 2.71828)</code></pre></dd>
+
+<dt><code>/</code></dt>
+<dd><pre><code>(/ 13 21)
+(/ 3.14159 2.71828)</code></pre></dd>
 
 <dt><code>modulo</code></dt>
 <dd><pre><code>(modulo -21 13)</code></pre></dd>
@@ -48,48 +55,6 @@ We don't describe precise behaviour of them, but give simply examples.
 
 <dt><code>remainder</code></dt>
 <dd><pre><code>(remainder -21 13)</code></pre></dd>
-
-<dt><code>eq-i?</code></dt>
-<dd><pre><code>(eq-i? 2 -5)</code></pre></dd>
-
-<dt><code>lt-i?</code></dt>
-<dd><pre><code>(lt-i? 2 -5)</code></pre></dd>
-
-<dt><code>lte-i?</code></dt>
-<dd><pre><code>(lte-i? 2 -5)</code></pre></dd>
-
-<dt><code>gt-i?</code></dt>
-<dd><pre><code>(gt-i? 2 -5)</code></pre></dd>
-
-<dt><code>gte-i?</code></dt>
-<dd><pre><code>(gte-i? 2 -5)</code></pre></dd>
-
-<dt><code>+f</code></dt>
-<dd><pre><code>(+f 3.14159 2.71828)</code></pre></dd>
-
-<dt><code>-f</code></dt>
-<dd><pre><code>(-f 3.14159 2.71828)</code></pre></dd>
-
-<dt><code>*f</code></dt>
-<dd><pre><code>(*f 3.14159 2.71828)</code></pre></dd>
-
-<dt><code>/f</code></dt>
-<dd><pre><code>(/f 3.14159 2.71828)</code></pre></dd>
-
-<dt><code>eq-f?</code></dt>
-<dd><pre><code>(eq-f? 3.14159 2.71828)</code></pre></dd>
-
-<dt><code>lt-f?</code></dt>
-<dd><pre><code>(lt-f? 3.14159 2.71828)</code></pre></dd>
-
-<dt><code>lte-f?</code></dt>
-<dd><pre><code>(lte-f? 3.14159 2.71828)</code></pre></dd>
-
-<dt><code>gt-f?</code></dt>
-<dd><pre><code>(gt-f? 3.14159 2.71828)</code></pre></dd>
-
-<dt><code>gte-f?</code></dt>
-<dd><pre><code>(gte-f? 3.14159 2.71828)</code></pre></dd>
 
 <dt><code>neg</code></dt>
 <dd><pre><code>(neg -89)</code></pre></dd>
@@ -158,24 +123,25 @@ We don't describe precise behaviour of them, but give simply examples.
 <dd><pre><code>(itof 3)</code></pre></dd>
 
 <dt><code>eq?</code></dt>
-<dd><pre><code>(eq? 3.14159 "This is pi.")
-(eq? "Can you use Egison?" 'Y')
-(eq? 1 1.0)</code></pre></dd>
+<dd><pre><code>(eq? 2 -5)
+(eq? 3.14159 2.71828)
+</code></pre></dd>
 
 <dt><code>lt?</code></dt>
-<dd><pre><code>(lt? 3.14159 144)</code></pre></dd>
+<dd><pre><code>(lt? 2 -5)
+(lt? 3.14159 2.71828)</code></pre></dd>
 
 <dt><code>lte?</code></dt>
-<dd><pre><code>(lte? 3.14159 144)</code></pre></dd>
+<dd><pre><code>(lte? 2 -5)
+(lte? 3.14159 2.71828)</code></pre></dd>
 
 <dt><code>gt?</code></dt>
-<dd><pre><code>(gt? 3.14159 144)</code></pre></dd>
+<dd><pre><code>(gt? 2 -5)
+(gt? 3.14159 2.71828)</code></pre></dd>
 
 <dt><code>gte?</code></dt>
-<dd><pre><code>(gte? 3.14159 144)</code></pre></dd>
-
-<dt><code>string-append</code></dt>
-<dd><pre><code>(string-append "That's nothing but list of examples using the primitive functions.\n" "If you want to get more examples, you will find it in libraries.")</code></pre></dd>
+<dd><pre><code>(gte? 2 -5)
+(gte? 3.14159 2.71828)</code></pre></dd>
 
 </dl>
 
