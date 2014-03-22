@@ -31,8 +31,8 @@
 <ul>
   <li><a href="#top">Top Expressions</a></li>
   <ul>
-    <li><a href="#define">Define and Test Expressions</a></li>
-    <li><a href="#load">Load Expressions</a></li>
+    <li><a href="#define"><code>define</code> and <code>test</code> Expressions</a></li>
+    <li><a href="#load"><code>load</code> and <code>load-file</code> Expressions</a></li>
   </ul>
   <li><a href="#built-in">Built-in Data</a></li>
   <ul>
@@ -69,48 +69,40 @@
 
 <h2 id="top">Top Expressions</h2>
 
-<h3 id="define">Define and Test Expressions</h3>
+<h3 id="define"><code>define</code> and <code>test</code> Expressions</h3>
 
 <p>
-  Give some input to Egison as below.
-</p>
-
-<pre><code>&gt; (define $x 2)
-&gt; (test (+ x 3))
-5
-&gt; (define $f (lambda [$x $y] [(+ x y) (* x y)]))
-&gt; (test (f x 4))
-[6 8]</code></pre>
-
-<p>
-  There are two kinds of <i>top expressions</i> in above input, <code>define</code> expressions and <code>test</code> expressions.
+  We first explain two kinds of <i>top expressions</i>, <code>define</code> expressions and <code>test</code> expressions.
   A <code>define</code> expression binds the variable to the value or the function.
   A <code>test</code> expression evaluates the given expression.
-  On the interpreter, you can omit <code>test</code>.
-  That is, you can write as follows.
+  We can try a function defined with a <code>define</code> expression using a <code>test</code> expression.
+  We can omit <code>test</code>.
 </p>
 
-<pre><code>&gt; (define $x 2)
-&gt; (+ x 3)
-5
-&gt; (define $f (lambda [$x $y] [(+ x y) (* x y)]))
-&gt; (f x 4)
-[6 8]</code></pre>
+<textarea class="code">(define $x 2)
+(test (+ x 3));=>5
+  
+(define $f (lambda [$x $y] [(+ x y) (* x y)]))
+(test (f 2 4));=>[6 8]
+; We can omit 'test'.
+(f 2 4);=>[6 8]</textarea>
 
-<h3 id="load">Load Expressions</h3>
+<h3 id="load"><code>load</code> and <code>load-file</code> Expressions</h3>
 
 <p>
-  You can load Egison Libraries with <code>load</code> expressions.
+  We can load Egison libraries with <code>load</code> expressions.
 </p>
 
-<pre><code>&gt; (load "lib/core/base.egi")
-&gt; (load "lib/core/number.egi")
-&gt; (load-file "/home/xxx/code/egison/myfile.egi")</code></pre>
-
 <p>
-  To load your own program, you can use <code>load-file</code> expressions.
+  To load your own program, we can use <code>load-file</code> expressions.
   A <code>load-file</code> expression takes a full-path to the Egison program file.
 </p>
+
+<textarea class="code">; Load Egison library
+(load "lib/core/number.egi")
+
+; Load your program
+(load-file "/home/xxx/code/egison/myfile.egi")</textarea>
 
 <h2 id="built-in">Built-in Data</h2>
 
@@ -125,8 +117,9 @@
   <code>#f</code> represents false.<br/>
 </p>
 
-<pre><code>#t
-#f</code></pre>
+<textarea class="code">;; Boolean values
+#t ; True
+#f ; False</textarea>
 
 <h3 id="integers">Integers</h3>
 
@@ -135,10 +128,10 @@
   An integer literal is a number literal or concatenation of <code>-</code> and a number literal.
 </p>
 
-<pre><code>1
+<textarea class="code">;; Integers
+1
 0
--100
-...</code></pre>
+-100</textarea>
 
 <h3 id="floats">Floats</h3>
 
@@ -146,10 +139,9 @@
   A floating-point literal is concatenation of an integer literal, <code>.</code>, and a number literal.
 </p>
 
-<pre><code>1.0
-0.0
--100.012001
-...</code></pre>
+<textarea class="code">;; Float numbers
+10.2
+-100.1</textarea>
 
 <h3 id="characters">Characters</h3>
 
@@ -157,10 +149,10 @@
   A character literal is a character enclosed in single quotes.
 </p>
 
-<pre><code>'a'
-'b'
-'c'
-...</code></pre>
+<textarea class="code">;; Characters
+'a'
+'1'
+'\n'</textarea>
 
 <h3 id="strings">Strings</h3>
 
@@ -169,9 +161,8 @@
   It is treated as a list of characters.
 </p>
 
-<pre><code>"abc"
-"cde\n"
-...</code></pre>
+<textarea class="code">;; Strings
+"Hello world!\n"</textarea>
 
 <h3 id="undefined">Undefined</h3>
 
@@ -183,7 +174,7 @@
   Of course, you can use <code>undefined</code> in any other case.
 </p>
 
-<pre><code>undefined</code></pre>
+<textarea class="code">undefined</textarea>
 
 <h2 id="objects">Objects</h2>
 
@@ -205,7 +196,7 @@ The former are used to collect the fixed number of values, but the latter are us
 <pre><code>  &lt;<i>Identifier</i> <i>value</i> ...&gt;</code></pre>
 
 <p>
-  You can create an object whose name you want.
+  We can create an new object combining objects.
   It is called an inductive datum.
   An inductive datum can have values.
   In particular, it can have any inductive data.
@@ -213,9 +204,9 @@ The former are used to collect the fixed number of values, but the latter are us
   Note that the name has to start with uppercase.
 </p>
 
-<pre><code>&lt;A&gt;
-&lt;Abc 1 #t "Hello, World!\n"&gt;
-&lt;Cons &lt;Cons &lt;Nil&gt;&gt; &lt;Nil&gt;&gt;</code></pre>
+<textarea class="code">;; Inductive data
+<Card <Diamond> 13>
+<Node 3 <Node <Leaf 1> <Leaf 2>> <Leaf 4>></textarea>
 
 <h3 id="tuple">Tuples (Multiple Values)</h3>
 
@@ -225,19 +216,17 @@ The former are used to collect the fixed number of values, but the latter are us
 A tuple is expressed as a sequence of elements enclosed in square brackets.
 </p>
 
-<pre><code>[]
+<textarea class="code">;; Tuples
+[]
 [1 2]
-[#t "abc" 4]
-[1]</code></pre>
+[#t "abc" 4]</textarea>
 
 <p>
 If a tuple consists of an element, the tuple and the element are the same.
 </p>
 
-<pre><code>&gt; (eq? [1] 1)
-#t
-&gt; (eq? [[[[[[[[[[["too many"]]]]]]]]]]] "too many")
-#t</code></pre>
+<textarea class="code">[1];=>1
+[[[[[[[[[[["too many"]]]]]]]]]]];=>"too many"</textarea>
 
 <h3 id="collection">Collections</h3>
 
@@ -248,10 +237,10 @@ A collection is a sequence of elements enclosed in braces.
 Unlike a tuple, a collection of an element and its unique element differ.
 </p>
 
-<pre><code>{}
-{1 2}
-{#t "abc" 4}
-{1}</code></pre>
+<textarea class="code">;; Collections
+{}
+{1 2 3 4 5}
+{'a' 'b' 'c'};=>"abc"</textarea>
 
 <p>
 A collection may contain a collection as its element.
@@ -261,10 +250,8 @@ Then, an element of a collection with <code>@</code> that is an element of a col
 Using this notation, you can construct a collection from subcollections.
 </p>
 
-<pre><code>&gt; {1 @{2 3}}
-{1 2 3}
-&gt; {@{@{1}} @{2 @{3}}}
-{1 2 3}</code></pre>
+<textarea class="code">{1 @{2 3}};=>{1 2 3}
+{@{@{1}} @{2 @{3}}};=>{1 2 3}</textarea>
 
 <h3 id="array">Array</h3>
 
@@ -273,29 +260,29 @@ Using this notation, you can construct a collection from subcollections.
 <p>
 An array is a sequence of elements enclosed in double brackets.
 Adding an underscore <code>_</code> and an index at the end, you can get the associated element of an array.
-If the index is larger than the size of an array, (which can be got by <a href="#array-size">array-size</a>) you will get <a href="#undefined">undefined</a>.
+If the index is larger than the size of an array, you will get <a href="#undefined">undefined</a>.
 </p>
 
-<pre><code>&gt; (array-size [| 1 2 3 4 5 |])
-5
-&gt; [| 1 2 3 4 5 |]_0
-1
-&gt; [| 1 2 3 4 5 |]_4
-5
-&gt; [| 1 2 3 4 5 |]_8
-undefined</code></pre>
+<textarea class="code">;; Arrays
+(define $xa [| 1 2 3 4 5 |])
+(array-size xa);=>5
+xa_0;=>1
+xa_4;=>5
+xa_8;=>undefined</textarea>
+
+<p>
+We can get the size of an array with <a href="#array-size">array-size</a>.
+</p>
+
+<textarea class="code">(array-size [| 1 2 3 4 5 |]);=>5</textarea>
 
 <p>
 An array can have another array as its element.
 It allows us to use multi-dimensional arrays.
 </p>
 
-<pre><code>&gt; [| [| 1 2 3 |] [| 4 5 6 |] [| 7 8 9 |] |]
-[|[|1 2 3|] [|4 5 6|] [|7 8 9|]|]
-&gt; [| [| 1 2 3 |] [| 4 5 6 |] [| 7 8 9 |] |]_1
-[|4 5 6|]
-&gt; [| [| 1 2 3 |] [| 4 5 6 |] [| 7 8 9 |] |]_1_2
-6</code></pre>
+<textarea class="code">[| [| 1 2 3 |] [| 4 5 6 |] [| 7 8 9 |] |]_1;=>[|4 5 6|]
+[| [| 1 2 3 |] [| 4 5 6 |] [| 7 8 9 |] |]_1_2;=>6</textarea>
 
 <p>
 Egison prepares special syntax for arrays.
@@ -310,16 +297,13 @@ The details are described in each subsection.
 
 <p>
 A hash is a sequence of key-value pairs enclosed in double braces.
-Adding an underscore <code>_</code> and an index at the end, you can get the associated element of a hash.
-If the index is not a key of a hash, you will get <a href="#undefined">undefined</a>.
+Adding an underscore <code>_</code> and an index at the end, we can get the associated element of a hash.
+If the index is not a key of a hash, we will get <a href="#undefined">undefined</a>.
 </p>
 
-<pre><code>&gt; {| [1 11] [2 12] [3 13] [4 14] [5 15] |}_1
-11
-&gt; {| [1 11] [2 12] [3 13] [4 14] [5 15] |}_4
-14
-&gt; {| [1 11] [2 12] [3 13] [4 14] [5 15] |}_8
-undefined</code></pre>
+<textarea class="code">{| [1 11] [2 12] [3 13] [4 14] [5 15] |}_1;=>11
+{| [1 11] [2 12] [3 13] [4 14] [5 15] |}_4;=>14
+{| [1 11] [2 12] [3 13] [4 14] [5 15] |}_8;=>undefined</textarea>
 
 <h2 id="syntax">Syntax of Egison</h2>
 
@@ -335,12 +319,8 @@ Note <code>[$x]</code> and <code>$x</code> are the same.
 The second argument is a formula, which is the body of the function.
 </p>
 
-<pre><code>&gt; (lambda [$x $y] (+ x y))
-(lambda [x y] ...)
-&gt; ((lambda [$x $y] (+ x y)) 3 7)
-10
-&gt; ((lambda $x (not x)) #t)
-#f</code></pre>
+<textarea class="code">((lambda [$x $y] (+ x y)) 3 7);=>10
+((lambda $x (not x)) #t);=>#f</textarea>
 
 <p>
   From ver.3.0, a lambda expression is equipped with simpler notation.
@@ -354,14 +334,10 @@ The second argument is a formula, which is the body of the function.
   For example, you can't write <code>(+ $1 (* $2 2))</code> or <code>(if $1 #f #t)</code>
 </p>
 
-<pre><code>&gt; ((+ $1 $2) 3 4)
-7
-&gt; ((+ $ $) 3 4)
-7
-&gt; ((* $1 $1) 5)
-25
-&gt; ((map $2 $1) {1 2 3} (+ $ 1))
-{2 3 4}</code></pre>
+<textarea class="code">((+ $1 $2) 3 4);=>7
+((+ $ $) 3 4);=>7
+((* $1 $1) 5);=>25
+((map $2 $1) {1 2 3} (+ $ 1));=>{2 3 4}</textarea>
 
 <h3 id="let"><code>let</code> expressions</h3>
 
@@ -374,12 +350,7 @@ These formulae will be evaluated when the associated variable is needed in an ev
 Since a formula in the first argument is evaluated with the original environment, you can't use variables in the first argument in the formula.
 </p>
 
-<pre><code>&gt; (let {[$x 1] [$y 2]} (+ x y))
-3
-&gt; (let {[$x #t] [$y x]} (not x))
-#f
-&gt; x
-Unbound variable: x</code></pre>
+<textarea class="code">(let {[$x 1] [$y 2]} (+ x y));=>3</textarea>
 
 <p>
 Note the latter example works even if x is unbound, since Egison uses lazy evaluation.
@@ -394,8 +365,16 @@ Note the latter example works even if x is unbound, since Egison uses lazy evalu
   Mutual recursion is also allowed.
 </p>
 
-<pre><code>&gt; (letrec {[$x #t] [$y x]} (not y))
-#f</code></pre>
+<textarea class="code">(letrec {[$x #t] [$y x]} (not y));=>#f
+
+(letrec {[$evens {2 @(map (+ $ 2) evens)}]}
+  (take 10 evens))
+;=>{2 4 6 8 10 12 14 16 18 20}
+
+(letrec {[$odds {1 @(map (+ $ 1) evens)}]
+         [$evens (map (+ $ 1) odds)]}
+  (take 10 evens))
+;=>{2 4 6 8 10 12 14 16 18 20}</textarea>
 
 <h3 id="if"><code>if</code> expressions</h3>
 
@@ -406,10 +385,8 @@ Note the latter example works even if x is unbound, since Egison uses lazy evalu
   But, note the result of an evaluation of the first argument must be a boolean value (i.e. <code>#t</code> or <code>#f</code>).
 </p>
 
-<pre><code>&gt; (if #f "YES" "NO")
-NO
-&gt; (if #t 1 ((lambda $x (x x)) (lambda $x (x x))))
-1</code></pre>
+<textarea class="code">(if #t "YES" "NO");=>"YES"
+(if #f "YES" "NO");=>"NO"</textarea>
 
 <h3 id="apply"><code>apply</code> expressions</h3>
 
@@ -421,8 +398,7 @@ The result of the evaluation of an apply expression is the result of application
 That is, <code>(apply f [x<sub>0</sub> x<sub>1</sub> x<sub>2</sub>])</code> is the same thing as <code>(f x<sub>0</sub> x<sub>1</sub> x<sub>2</sub>)</code>.
 </p>
 
-<pre><code>&gt; (apply + [1 2])
-3</code></pre>
+<textarea class="code">(apply + [1 2]);=>3</textarea>
 
 <h3 id="generate-array"><code>generate-array</code> expressions</h3>
 
@@ -434,10 +410,10 @@ One is to write elements explicitly using double brackets <code>[|</code> <code>
 The other is this <code>generate-array</code> expression.
 </p>
 
-<pre><code>&gt; (generate-array [$x] [5] x)
-[|1 2 3 4 5|]
-&gt; (generate-array [$x] [5] (* x 2))
-[|2 4 6 8 10|]</code></pre>
+<textarea class="code">(generate-array [$x] [5] x)
+;=>[|1 2 3 4 5|]
+(generate-array [$x] [5] (* x 2))
+;=>[|2 4 6 8 10|]</textarea>
 
 <p>
 The first argument is the index variable, the second is the size of each dimension, and the third argument determines each element of the array.
@@ -445,12 +421,12 @@ Note the first argument and the second argument have the same number of elements
 For example, the above and the followings are examples to create an array whose size is 5 and 5&times;3, respectively.
 </p>
 
-<pre><code>&gt; (generate-array [$x $y] [5 3] (* x y))
-[|[|1 2 3|] [|2 4 6|] [|3 6 9|] [|4 8 12|] [|5 10 15|]|]
-&gt; (generate-array [$x $y] [5 3] (+ (* 10 x) y))
-[|[|11 12 13|] [|21 22 23|] [|31 32 33|] [|41 42 43|] [|51 52 53|]|]
-&gt; (generate-array [$x $y] [5 3] [x y])
-[|[|[1 1] [1 2] [1 3]|] [|[2 1] [2 2] [2 3]|] [|[3 1] [3 2] [3 3]|] [|[4 1] [4 2] [4 3]|] [|[5 1] [5 2] [5 3]|]|]</code></pre>
+<textarea class="code">(generate-array [$x $y] [5 3] (* x y))
+;=>[|[|1 2 3|] [|2 4 6|] [|3 6 9|] [|4 8 12|] [|5 10 15|]|]
+(generate-array [$x $y] [5 3] (+ (* 10 x) y))
+;=>[|[|11 12 13|] [|21 22 23|] [|31 32 33|] [|41 42 43|] [|51 52 53|]|]
+(generate-array [$x $y] [5 3] [x y])
+;=>[|[|[1 1] [1 2] [1 3]|] [|[2 1] [2 2] [2 3]|] [|[3 1] [3 2] [3 3]|] [|[4 1] [4 2] [4 3]|] [|[5 1] [5 2] [5 3]|]|]</textarea>
 
 <h3 id="array-size"><code>array-size</code> expressions</h3>
 
@@ -460,41 +436,11 @@ For example, the above and the followings are examples to create an array whose 
 An <code>array-size</code> expression tells us the number of elements in a given array.
 </p>
 
-<pre><code>&gt; (array-size [| 1 2 3 4 5 6 |])
-6
-&gt; (array-size [| 1 2 3 6 |])
-4
-&gt; (array-size [| 1 2 3 |])
-3
-&gt; (array-size [| |])
-0
-&gt; (array-size [| [| 1 2 3 |] |])
-1</code></pre>
-
-<p>
-Note that an <code>array-size</code> expression returns not the maximum index but the NUMBER of ELEMENTS.
-See the followings.
-</p>
-
-<pre><code>&gt; (match 2 integer {[$a_2 a]})
-[|2|]
-&gt; (match 2 integer {[$a_2 (array-size a)]})
-1</code></pre>
-
-<p>
-To understand the above, you have to read the next chapter.
-Here, you can assume these code binds the second element of <code>a</code> to <code>2</code>, the former shows such <code>a</code>, and the latter shows <code>array-size</code> of <code>a</code>.
-</p>
-
-<pre><code>&gt; (match 2 integer {[$a_2 a_1]})
-undefined
-&gt; (match 2 integer {[$a_2 a_2]})
-2</code></pre>
-
-<p>
-The above show <code>a</code> does not have the first element, but have the second element
-You should be careful how to use <code>array-size</code>.
-</p>
+<textarea class="code">(array-size [| 1 2 3 4 5 6 |]);=>6
+(array-size [| 1 2 3 6 |]);=>4
+(array-size [| 1 2 3 |]);=>3
+(array-size [| |]);=>0
+(array-size [| [| 1 2 3 |] |]);=>1</textarea>
 
         </div>
 
@@ -504,5 +450,14 @@ You should be careful how to use <code>array-size</code>.
     </div><!-- /.container -->
     
     <!--# include file="/templates/footer.html" -->
+    <script>
+      $('.code').each(function() {
+        var $this = $(this);
+        var myCodeMirror = CodeMirror.fromTextArea(this, {
+          readOnly: "nocursor",
+          lineWrapping: true
+        });
+      });
+    </script>
   </body>
 </html>
