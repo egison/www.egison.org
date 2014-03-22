@@ -143,6 +143,18 @@ We don't describe precise behaviour of them, but give simply examples.
 <dd><pre><code>(gte? 2 -5)
 (gte? 3.14159 2.71828)</code></pre></dd>
 
+<dt><code>read</code></dt>
+<dd><pre><code>(read "3")
+(read "3.14159")
+(read "{1 2}")
+(read "\"Hello world!\n\"")</code></pre></dd>
+
+<dt><code>show</code></dt>
+<dd><pre><code>(show 3)
+(show 3.14159)
+(show {1 2})
+(show "Hello world!\n")</code></pre></dd>
+
 </dl>
 
 <h2 id="ioprimitives">I/O Primitive Functions</h2>
