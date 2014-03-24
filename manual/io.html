@@ -29,6 +29,7 @@ Since Egison is purely functional, Egison I/O has its own special syntax.
 
 <ul>
   <li><a href="#main">The function <code>main</code></a></li>
+  <li><a href="#args">The Command Line Arguments</a></li>
   <li><a href="#do"><code>do</code> Expressions</a></li>
 </ul>
 
@@ -38,29 +39,33 @@ Since Egison is purely functional, Egison I/O has its own special syntax.
 
 <p>
 In honour to the tradition of programming languages, we greet the world using Egison.
+The following is a "Hello world" program in Egison.
 </p>
 
-<pre><code>&gt; (define $main
-    (lambda [$argv]
-      (write-string "Hello, World!\n")))
-&gt; (execute)
-Hello, World!</code></pre>
+<textarea class="code">;; Save this code as a "hello.egi" file
+(define $main
+  (lambda [$args]
+    (write "Hello, World!\n")))</textarea>
 
 <p>
-Egison I/O works via a function named <code>main</code> and a top expression <code>execute</code>.
-In <code>main</code>, you can use I/O functions such as <code>write-string</code>, which you cannot use in the others. (The list of I/O primitive functions is given in the next chapter <a href="./primitives.html">Primitive Functions</a>.)
-You can call <code>main</code> not directly but through an <code>execute</code> expression, which calls <code>main</code>.
-An <code>execute</code> takes several strings as its argument.
-The collection of them is given for <code>main</code> as its argument.
+We can execute the above program as follow.
 </p>
 
-<pre><code>&gt; (execute "This" "is" "an" "argument" ".")
-Hello World!
-&gt; (define $main
-    (lambda [$argv]
-      (write argv)))
-&gt; (execute "This" "is" "an" "argument" ".")
-{This is an argument .}</code></pre>
+<pre><code>% egison hello.egi
+Hello, World!
+% </code></pre>
+
+<p>
+Egison I/O works via a function named <code>main</code>.
+In <code>main</code>, we can use I/O functions such as <code>write</code>, which we cannot use in the others. (The list of I/O primitive functions is given in the next chapter <a href="./primitives.html">Primitive Functions</a>.)
+We cannot call <code>main</code> directly in a program.
+</p>
+
+<h2 id="args">The Command Line Arguments</h2>
+
+<p>
+The collection of them is given for <code>main</code> as its argument.
+</p>
 
 <p>
 If you run the interpreter with a filename as its first argument, the interpreter executes the function <code>main</code>.
@@ -68,23 +73,22 @@ Like the above case, the arguments other than the filename hand <code>main</code
 </p>
 
 <p>
-For instance, assume we create <code>argv.egi</code>.
+For instance, assume we create <code>args.egi</code>.
 </p>
 
-<pre><code>argv.egi : 
+<textarea class="code">;; Save this code as a "args.egi" file
 (define $main
-  (lambda [$argv]
-    (write argv)))</code></pre>
+  (lambda [$args]
+    (write (show args))))</textarea>
 
 <p>
-Then, executing the following commands, you can find the arguments are given for <code>main</code> as <code>$argv</code>.
+Then, executing the following commands, you can find the arguments are given for <code>main</code> as <code>$args</code>.
 </p>
 
-<pre><code>$ egison argv.egi; echo
+<pre><code>$ egison args.egi
 {}
-$ egison argv.egi This is an argument . ; echo
-{This is an argument .}</code></pre>
-
+$ egison args.egi We can write scripts in Egison
+{"We" "can" "write" "scripts" "in" "Egison"}</code></pre>
 
 <h2 id="do"><code>do</code> Expressions</h2>
 
@@ -98,16 +102,40 @@ Recall many I/O functions have no return values.
 In such cases, you can omit to write <code><i>variable</i></code> as follows.
 </p>
 
-<pre><code>(define $main
-  (lambda [$argv]
-    (do {[(write-string "argv: ")]
-         [(write argv)]
-         [(write "\n")]}
-      [])))</code></pre>
+<textarea class="code">;; Save this code as a "interactive.egi" file
+(define $repl
+  (lambda []
+    (do {[(write "input: ")]
+         [(flush)]
+         [$input (read-line)]
+         [(write input)]
+         [(print "")]
+         [(repl)]
+         }
+      [])))
+
+(define $main
+  (lambda [$args]
+    (do {[(repl)]}
+      [])))</textarea>
+
+<p>
+Then, execute it as follow.
+</p>
+
+<pre><code>$ egison interactive.egi
+input: Hi
+Hi
+input: Hello
+Hello
+input: Repl
+Repl
+input: ^C
+$ </code></pre>
 
 <p>
 Let's see the above code. 
-When the code is executed, <code>(write-string "argv: ")</code>, <code>(write argv)</code> and <code>(write "\n")</code> are executed in the order.
+When the code is executed, <code>(write-string "args: ")</code>, <code>(write args)</code> and <code>(write "\n")</code> are executed in the order.
 Note any <code>do</code> expression cannot be used out of <code>main</code>.
 </p>
 
@@ -118,13 +146,6 @@ But, this is meaningless.
 You can return any value as follows.
 </p>
 
-<pre><code>(define $main
-  (lambda [$argv]
-    (do {[$line (read-line)]
-         [(write-string line)]
-         [(write-char '\n')]}
-      #t)))</code></pre>
-
         </div>
 
       </div><!--/row-->
@@ -132,5 +153,14 @@ You can return any value as follows.
     </div><!-- /.container -->
     
     <!--# include file="/templates/footer.html" -->
+    <script>
+      $('.code').each(function() {
+        var $this = $(this);
+        var myCodeMirror = CodeMirror.fromTextArea(this, {
+          readOnly: "nocursor",
+          lineWrapping: true
+        });
+      });
+    </script>
   </body>
 </html>
