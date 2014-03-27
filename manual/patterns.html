@@ -265,10 +265,10 @@ An and-pattern is a pattern that is matched, if and only if, all of the patterns
 <textarea class="code">(define $comb2
   (lambda [$xs]
     (match-all xs (list something) 
-      [<join _ <cons $a_1 <join _ <cons $a_2 _>>>> a])))
+      [<join _ <cons $a_1 <join _ <cons $a_2 _>>>> [a_1 a_2]])))
 
 (comb2 {1 2 3 4 5})
-;=>{[|1 2|] [|1 3|] [|2 3|] [|1 4|] [|2 4|] [|3 4|] [|1 5|] [|2 5|] [|3 5|] [|4 5|]}</textarea>
+;=>{[1 2] [1 3] [2 3] [1 4] [2 4] [3 4] [1 5] [2 5] [3 5] [4 5]}</textarea>
 
 <p>
   Next, can you write a <code>comb3</code>?
@@ -278,10 +278,10 @@ An and-pattern is a pattern that is matched, if and only if, all of the patterns
 <textarea class="code">(define $comb3
   (lambda [$xs]
     (match-all xs (list something) 
-      [<join _ <cons $a_1 <join _ <cons $a_2 <join _ <cons $a_3 _>>>>>> a])))
+      [<join _ <cons $a_1 <join _ <cons $a_2 <join _ <cons $a_3 _>>>>>> [a_1 a_2 a_3]])))
 
 (comb3 {1 2 3 4 5})
-;=>{[|1 2 3|] [|1 2 4|] [|1 3 4|] [|2 3 4|] [|1 2 5|] [|1 3 5|] [|1 4 5|] [|2 3 5|] [|2 4 5|] [|3 4 5|]}</textarea>
+;=>{[1 2 3] [1 2 4] [1 3 4] [2 3 4] [1 2 5] [1 3 5] [1 4 5] [2 3 5] [2 4 5] [3 4 5]}</textarea>
 
 <p>
   If you can, how about <code>comb4</code>, <code>comb5</code>, and so on?
@@ -307,10 +307,10 @@ It's roughly correct and easier to understand.
       [(loop $i [1 n]
          <join _ <cons $a_i ...>>
          _)
-       a])))
+       (map (lambda [$i] a_i) (between 1 n))])))
 
 (comb {1 2 3 4 5} 3)
-;=>{[|1 2 3|] [|1 2 4|] [|1 3 4|] [|2 3 4|] [|1 2 5|] [|1 3 5|] [|1 4 5|] [|2 3 5|] [|2 4 5|] [|3 4 5|]}
+;=>{{1 2 3} {1 2 4} {1 3 4} {2 3 4} {1 2 5} {1 3 5} {1 4 5} {2 3 5} {2 4 5} {3 4 5}}
 </textarea>
 
 <p>
@@ -360,7 +360,6 @@ In the above, we omit explanation of restriction.
 <code>...</code> must be placed at the end of the second argument.
 For example, <code>&lt;cons ... &lt;nil&gt;&gt;</code> is prohibited.
 This restriction decides which loop-patterns a given <code>...</code> belongs to, and then allows us to write nested loop-patterns.
-You can find an example of nested loop-patterns in <a href="./n-queen.html">Example : N-Queen</a>.
 </p>
 
 <p>
