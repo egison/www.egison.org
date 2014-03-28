@@ -1,23 +1,33 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <link rel="logo" type="image/png" href="demo.png" />
-      <title>Demo Radar chart D3</title>
-      <style>
-      body{font-family: sans-serif}
-      </style>
-</head>
-<body>
- <div style='width:100%;display:block;'>
-  <h4>Lisp, Scheme, ML</h4>
-  <div id="chart-lisp-scheme-ml"></div>
-  <h4>Egison</h4>
-  <div id="chart-egison"></div>
- </div>
-<script src="http://d3js.org/d3.v3.min.js"></script>
-<script src="/vendors/radar-chart-d3/src/radar-chart.js"></script>
-<script>
+<html lang="en">
+  <head>
+    <!--# include file="/templates/header.html" -->
+  </head>
+  <body data-spy="scroll" data-target=".bs-sidebar" data-offset="0">
+    <!--# include file="/templates/navbar.html" -->
+
+    <div class="container manual">
+
+      <div class="row">
+
+        <div class="col-md-8" id="top" role="complementary">
+          
+          <h4>Lisp, Scheme, ML</h4>
+          <div id="chart-lisp-scheme-ml"></div>
+          
+          <h4>Egison</h4>
+          <div id="chart-egison"></div>
+
+        </div>
+        
+      </div><!--/row-->
+    
+    </div><!-- /.container -->
+    
+    <!--# include file="/templates/footer.html" -->
+    <script src="/vendors/d3.min.js"></script>
+    <script src="/vendors/radar-chart-d3/src/radar-chart.js"></script>
+    <script>
 var data1 = [[{axis: "Function modularity", value: 5}, 
            {axis: "Typing system", value: 4}, 
            {axis: "Pattern matching", value: 1}
@@ -40,6 +50,6 @@ var data4 = [[{axis: "Function modularity", value: 5},
            ]];
 
 RadarChart.draw("#chart-egison", data4, {maxValue: 5, color:d3.scale.ordinal().range(["#ff7f0e", "#1f77b4"])});
-</script>
-</body>
+    </script>
+  </body>
 </html>
