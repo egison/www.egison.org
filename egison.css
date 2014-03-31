@@ -376,6 +376,55 @@ fieldset[disabled] .btn-top.active {
   background-color: #fff;
 }
 
+/* btn-top-github */
+
+.btn-top-github {
+  color: #ffffff;
+  background-color: #414FA3;
+  border-color: #ffffff;
+}
+
+.btn-top-github:hover,
+.btn-top-github:focus,
+.btn-top-github:active,
+.btn-top-github.active,
+.open .dropdown-toggle.btn-top-github {
+  color: #ffffff;
+  background-color: #313F93;
+  border-color: #ffffff;
+}
+
+.btn-top-github:active,
+.btn-top-github.active,
+.open .dropdown-toggle.btn-top-github {
+  background-image: none;
+}
+
+.btn-top-github.disabled,
+.btn-top-github[disabled],
+fieldset[disabled] .btn-top-github,
+.btn-top-github.disabled:hover,
+.btn-top-github[disabled]:hover,
+fieldset[disabled] .btn-top-github:hover,
+.btn-top-github.disabled:focus,
+.btn-top-github[disabled]:focus,
+fieldset[disabled] .btn-top-github:focus,
+.btn-top-github.disabled:active,
+.btn-top-github[disabled]:active,
+fieldset[disabled] .btn-top-github:active,
+.btn-top-github.disabled.active,
+.btn-top-github[disabled].active,
+fieldset[disabled] .btn-top-github.active {
+  color: #ffffff;
+  background-color: #414FA3;
+  border-color: #313F93;
+}
+
+.btn-top-github .badge {
+  color: #414FA3;
+  background-color: #fff;
+}
+
 /* btn-github */
 
 .btn-github {
