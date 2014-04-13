@@ -1,3 +1,14 @@
+/* Color Code
+#493759, => #0f2350
+#392749, => #091340
+#352245, => #060838
+
+#414FA3
+#313F93
+#263A88
+*/
+
+
 /* GLOBAL STYLES
    -------------------------------------------------- */
 /* Padding below the footer and lighter body text */
@@ -157,7 +168,7 @@ sidenav, .bs-sidebar.affix .bs-sidenav {
     padding-top: 30px;
     padding-buttom: 30px;
     color: #ffffff;
-    background-color: #493759;
+    background-color: #0f2350;
 }
 
 .jumbotron h1 {
@@ -273,8 +284,8 @@ sidenav, .bs-sidebar.affix .bs-sidenav {
 
 .btn-primary {
   color: #ffffff;
-  background-color: #493759;
-  border-color: #392749;
+  background-color: #0f2350;
+  border-color: #091340;
 }
 
 .btn-primary:hover,
@@ -282,14 +293,9 @@ sidenav, .bs-sidebar.affix .bs-sidenav {
 .btn-primary:active,
 .btn-primary.active,
 .open .dropdown-toggle.btn-primary {
-  /*
-  color: #493759;
-  background-color: #ffffff;
-  border-color: #493759;
-  */
   color: #ffffff;
-  background-color: #392749;
-  border-color: #352245;
+  background-color: #091340;
+  border-color: #060838;
 }
 
 .btn-primary:active,
@@ -313,12 +319,12 @@ fieldset[disabled] .btn-primary:active,
 .btn-primary.disabled.active,
 .btn-primary[disabled].active,
 fieldset[disabled] .btn-primary.active {
-  background-color: #493759;
-  border-color: #392749;
+  background-color: #0f2350;
+  border-color: #091340;
 }
 
 .btn-primary .badge {
-  color: #493759;
+  color: #0f2350;
   background-color: #fff;
 }
 
@@ -326,7 +332,7 @@ fieldset[disabled] .btn-primary.active {
 
 .btn-top {
   color: #ffffff;
-  background-color: #493759;
+  background-color: #0f2350;
   border-color: #ffffff;
 }
 
@@ -335,13 +341,8 @@ fieldset[disabled] .btn-primary.active {
 .btn-top:active,
 .btn-top.active,
 .open .dropdown-toggle.btn-top {
-  /*
-  color: #493759;
-  background-color: #ffffff;
-  border-color: #493759;
-  */
   color: #ffffff;
-  background-color: #392749;
+  background-color: #091340;
   border-color: #ffffff;
 }
 
@@ -367,12 +368,12 @@ fieldset[disabled] .btn-top:active,
 .btn-top[disabled].active,
 fieldset[disabled] .btn-top.active {
   color: #ffffff;
-  background-color: #493759;
+  background-color: #0f2350;
   border-color: #ffffff;
 }
 
 .btn-top .badge {
-  color: #493759;
+  color: #0f2350;
   background-color: #fff;
 }
 
