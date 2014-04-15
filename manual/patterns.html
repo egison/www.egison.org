@@ -23,13 +23,12 @@
 <p>
   Patterns occupy important positions in Egison.
   They are distinguished from the other objects, and form their own rich world.
-  You cannot substitute a pattern for an object, and vice versa.
   This chapter explains various kinds of patterns and syntax using patterns.
   To explain the syntax and its operational semantics, we give simple Egison code as examples.
   Since these chapters are so simple, you perhaps cannot understand the details of Egison.
   Then, we strongly recommend you to read other chapters after reading this chapter.
-  The readers that want to master pattern matching should read the next chapter "<a href="./pattern-matching.html">Pattern Matching</a>".
-  If you want to create your own matcher, see the chapter "<a href="./how-to-define-matchers.html">How to Define Matchers</a>".
+  The readers that want to master pattern matching should read the next chapter <i><a href="./pattern-matching.html">Pattern Matching</a></i>.
+  If you want to create your own matcher, see the chapter <i><a href="./matchers.html">Matchers</a></i>.
 </p>
 
 <hr/>
@@ -71,11 +70,8 @@
 <h3 id="wildcard">Wildcard</h3>
 
 <p>
-  Here, we explain the special pattern <i>wildcard</i> <code>_</code>.
+  Here, we explain the special pattern <b><i>wildcard</i></b> <code>_</code>.
   Any object matches this pattern.
-  We use <a href="#match"><code>match</code> expressions</a> and <a href="#match-all"><code>match-all</code> expressions</a>.
-  Roughly speaking, they are syntax for pattern-matching.
-  You should read the explanations of these expressions at the same time.
 </p>
 
 <textarea class="code">(match #t bool {[_ <OK>]});=><OK>
@@ -87,7 +83,7 @@
 
 <p>
 We can bind values to variables in pattern-matching.
-For this purpose, we use "pattern variables".
+For this purpose, we use <b><i>pattern variables</i></b>.
 Any object matches this pattern, and then the variable is locally bound to the object.
 In particular, we can use the pattern in inductive patterns.
 This usage allows us to deconstruct an object.
@@ -104,7 +100,7 @@ This usage allows us to deconstruct an object.
 <pre><code>  $<i>variable</i>_<i>integer</i> </code></pre>
 
 <p>
-An indexed pattern variable is a special pattern variable.
+<b><i>Indexed pattern variables</i></b> are special pattern variables.
 In this pattern, the <i>variable</i> is regarded as an <a href="./basics.html#hash">hash</a>, and then the matching object is bound to the value of the hash associated the <i>integer</i> key.
 </p>
 

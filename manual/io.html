@@ -28,14 +28,14 @@ Since Egison is purely functional, Egison I/O has its own special syntax.
 <hr/>
 
 <ul>
-  <li><a href="#main">The function <code>main</code></a></li>
+  <li><a href="#main">The <code>main</code> function</a></li>
   <li><a href="#args">The Command Line Arguments</a></li>
   <li><a href="#do"><code>do</code> Expressions</a></li>
 </ul>
 
 <hr/>
 
-<h2 id="main">The function <code>main</code></h2>
+<h2 id="main">The <code>main</code> function</h2>
 
 <p>
 In honour to the tradition of programming languages, we greet the world using Egison.
@@ -57,7 +57,7 @@ Hello, World!
 
 <p>
 Egison I/O works via a function named <code>main</code>.
-In <code>main</code>, we can use I/O functions such as <code>write</code>, which we cannot use in the others. (The list of I/O primitive functions is given in the next chapter <a href="./primitives.html">Primitive Functions</a>.)
+In <code>main</code>, we can use I/O functions such as <code>write</code>, which we cannot use in the others. (The list of I/O primitive functions is given in the next chapter <i><a href="./primitives.html#ioprimitives">Primitive Functions</a></i>.)
 We cannot call <code>main</code> directly in a program.
 </p>
 
@@ -95,11 +95,11 @@ $ egison args.egi We can write scripts in Egison
 <pre><code>  (do {[<i>variable</i> <i>formula</i>] ...} <i>formula</i>)</code></pre>
 
 <p>
-To do more complicated I/O tasks, you can use <code>do</code> expressions, which is similar to <code>let</code> and <code>letrec</code> expressions.
+To do more complicated I/O tasks, we can use <code>do</code> expressions, which is similar to <code>let</code> and <code>letrec</code> expressions.
 The most special feature of <code>do</code> expressions is serial execution.
-If you know Haskell, you probably realise that it is the same as do in Haskell.
+If you know Haskell, you probably notice that it is the same with <code>do</code> expressions in Haskell.
 Recall many I/O functions have no return values.
-In such cases, you can omit to write <code><i>variable</i></code> as follows.
+In such cases, we can omit to write <code><i>variable</i></code> as follows.
 </p>
 
 <textarea class="code">;; Save this code as a "interactive.egi" file
@@ -135,15 +135,12 @@ $ </code></pre>
 
 <p>
 Let's see the above code. 
-When the code is executed, <code>(write-string "args: ")</code>, <code>(write args)</code> and <code>(write "\n")</code> are executed in the order.
-Note any <code>do</code> expression cannot be used out of <code>main</code>.
+When the code is executed, <code>(write "args: ")</code>, <code>(read-line)</code> and <code>(write input)</code> are executed in the order.
 </p>
 
 <p>
-There are several samples in the directory "sample/io/".
-You may notice that the last argument of <code>do</code> is always <code>[]</code>.
-But, this is meaningless.
-You can return any value as follows.
+There are several samples in the directory <a href="https://github.com/egison/egison/tree/master/sample/io"><code>sample/io/</code></a>.
+Please check them.
 </p>
 
         </div>
