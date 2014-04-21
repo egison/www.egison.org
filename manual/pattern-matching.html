@@ -34,14 +34,17 @@
 <hr/>
 
 <ul>
-  <li><a href="#pattern-matching">Let's do Pattern Matching for Collections!!</a></li>
-  <li><a href="#non-linear-patterns">Non-linear Patterns</a></li>
+  <li><a href="#pattern-matching1">Pattern Matching with Backtracking</a></li>
+  <li><a href="#pattern-matching2">Non-linear Pattern Matching with Backtracking!!</a></li>
+  <li><a href="#loop-patterns">Loop-Patterns</a></li>
   <li><a href="#first-class-pattern-functions">First Class Pattern-Functions</a></li>
 </ul>
 
 <hr/>
 
-<h2 id="pattern-matching">Let's do Pattern Matching for Collections!!</h2>
+
+
+<h2 id="pattern-matching1">Pattern Matching with Backtracking</h2>
 
 <p>
   In this section, we show various basic pattern matching for collections, such as lists, multisets, and sets.
@@ -49,7 +52,7 @@
   We explain its meaning later.
 </p>
 
-<pre><code>&gt; (match-all {1 2 3 4} (list integer)
+<textarea class="code">&gt; (match-all {1 2 3 4} (list integer)
           [&lt;cons $x $xs&gt; [x xs]])
 {[1 {2 3 4}]}
 
@@ -59,7 +62,7 @@
 
 &gt; (match-all {1 2 3 4} (set integer)
           [&lt;cons $x $xs&gt; [x xs]])
-{[1 {1 2 3 4}] [2 {1 2 3 4}] [3 {1 2 3 4}] [4 {1 2 3 4}]}</code></pre>
+{[1 {1 2 3 4}] [2 {1 2 3 4}] [3 {1 2 3 4}] [4 {1 2 3 4}]}</textarea>
 
 <p>
   All of them say "take an element from the collection <code>{1 2 3 4}</code>".
@@ -95,7 +98,7 @@
   Here is another example, <code>join</code>.
 </p>
 
-<pre><code>&gt; (match-all {1 2 3} (list integer)
+<textarea class="code">&gt; (match-all {1 2 3} (list integer)
           [&lt;join ,{1} $xs&gt; xs])
 {{2 3}}
 &gt; (match-all {1 2 3} (multiset integer)
@@ -106,7 +109,7 @@
 {}
 &gt; (match-all {2 1 3} (multiset integer)
           [&lt;join ,{1} $xs&gt; xs])
-{{2 3}}</code></pre>
+{{2 3}}</textarea>
 
 <p>
 <code>join</code> is a pattern that divides a collection into two collections, the two arguments of it.
@@ -127,13 +130,13 @@
   Note that there is no guarantee that <code>div2</code> divides elements from the head.
 </p>
 
-<pre><code>&gt; (define $div2
+<textarea class="code">&gt; (define $div2
      (lambda [$x]
         (match x (list integer)
            {[&lt;join $xs &lt;cons (&amp; ?(lambda [$x] (eq? (modulo x 2) 0)) $y) $zs&gt;&gt;  (div2 {@xs (quotient y 2) @zs})]
             [_ x]})))
 &gt; (div2 {1 1 2 3 5 8 13 21 34 55 89 144 233 377 610})
-{1 1 1 3 5 1 13 21 17 55 89 9 233 377 305}</code></pre>
+{1 1 1 3 5 1 13 21 17 55 89 9 233 377 305}</textarea>
 
 <p>
   The matcher <code>list</code> can deconstruct a collection into the tail and the others.
@@ -142,13 +145,13 @@
   Similarly, <code>list</code> also has the "dual", <code>nioj</code>, of <code>join</code>.
 </p>
 
-<pre><code>&gt; (match-all {1 2 3} (list integer)
+<textarea class="code">&gt; (match-all {1 2 3} (list integer)
           [&lt;snoc $x $xs&gt; [x xs]])
 {[3 {1 2}]}
       
 &gt; (match-all {1 2 3} (list integer)
           [&lt;nioj $xs $ys&gt; [xs ys]])
-{[{1 2 3} {}] [{2 3} {1}] [{3} {1 2}] [{} {1 2 3}]}</code></pre>
+{[{1 2 3} {}] [{2 3} {1}] [{3} {1 2}] [{} {1 2 3}]}</textarea>
 
 <p>
   The arguments of <code>snoc</code> matches with the last element of a target collection and the rest of it.
@@ -159,7 +162,7 @@
   The order of pattern matching is important when we do pattern matching using non-linear patterns, which we will discuss in the next section.
 </p>
 
-<h2 id="non-linear-patterns">Non-linear Patterns</h2>
+<h2 id="pattern-matching2">Non-linear Pattern Matching with Backtracking!!</h2>
 
 <p>
   Egison allows programmers to "bind and use" variables in a pattern.
@@ -168,9 +171,9 @@
   The following is an example of non-linear patterns.
 </p>
 
-<pre><code>&gt; (match-all {1 2 3 1 2} (multiset integer)
+<textarea class="code">&gt; (match-all {1 2 3 1 2} (multiset integer)
           [&lt;cons $n &lt;cons ,n _&gt;&gt; n])
-{1 2 1 2}</code></pre>
+{1 2 1 2}</textarea>
 
 
 <p>
@@ -194,15 +197,141 @@
   You can do the task using the following simple code.
 </p>
 
-<pre><code>&gt; (match-all {{1 2 3 4 5} {4 5 1} {6 1 7 4}} (list (multiset integer))
+<textarea class="code">&gt; (match-all {{1 2 3 4 5} {4 5 1} {6 1 7 4}} (list (multiset integer))
           [&lt;cons &lt;cons $n _&gt; &lt;cons &lt;cons ,n _&gt; &lt;cons &lt;cons ,n _&gt; &lt;nil&gt;&gt;&gt;&gt; n])
-{1 4}</code></pre>
+{1 4}</textarea>
 
 <p>
   Probably, you understand how strong the pattern matching of Egison is.
   In this chapter, we show the inductive patterns of the matchers <code>list</code>, <code>multiset</code>, and <code>set</code>.
   If you want to make your own matcher or understand matchers more deeply, you should read the next chapter.
 </p>
+
+<hr/>
+
+<h3 id="loop-patterns">Loop-Patterns</h3>
+
+<p>
+  Can you write a function <code>comb2</code> that takes a collection as the argument, and returns the 2-combinations of it?
+  This is an easy exercise, and our answer is as follows.
+</p>
+
+<textarea class="code">(define $comb2
+  (lambda [$xs]
+    (match-all xs (list something) 
+      [<join _ <cons $a_1 <join _ <cons $a_2 _>>>> [a_1 a_2]])))
+
+(comb2 {1 2 3 4 5})
+;=>{[1 2] [1 3] [2 3] [1 4] [2 4] [3 4] [1 5] [2 5] [3 5] [4 5]}</textarea>
+
+<p>
+  Next, can you write a <code>comb3</code>?
+  You will easily rewrite <code>comb2</code> to <code>comb3</code> as follows.
+</p>
+
+<textarea class="code">(define $comb3
+  (lambda [$xs]
+    (match-all xs (list something) 
+      [<join _ <cons $a_1 <join _ <cons $a_2 <join _ <cons $a_3 _>>>>>> [a_1 a_2 a_3]])))
+
+(comb3 {1 2 3 4 5})
+;=>{[1 2 3] [1 2 4] [1 3 4] [2 3 4] [1 2 5] [1 3 5] [1 4 5] [2 3 5] [2 4 5] [3 4 5]}</textarea>
+
+<p>
+  If you can, how about <code>comb4</code>, <code>comb5</code>, and so on?
+  Patterns in these <code>combX</code> have the same form, <code>&lt;join _ &lt;cons $a_1 &lt;join _ &lt;cons $a_2 ... _&gt;...&gt;&gt;&gt;</code> and then it seems to be possible to generalise them.
+  We can do such a thing using a loop-pattern.
+</p>
+
+<pre><code> (loop <i>variable</i> <i>range</i> <i>formula</i> <i>formula</i>)
+</code></pre>
+
+<p>
+The arguments of a loop-pattern represent an index-variable, a range of the index, a pattern repeated, and a pattern representing the end.
+When the pattern ran all range, a loop-pattern is "the same as" the last argument.
+Otherwise, it is "the same as" the third argument substituted itself for <code>...</code> and the head of the second argument for the index-variable with removing the head of the second argument.
+It is probably difficult to understand what it means.
+Then, we give <code>comb</code> as an example, and will describe the meaning of a loop-pattern using the example.
+It's roughly correct and easier to understand.
+</p>
+
+<textarea class="code">(define $comb
+  (lambda [$xs $n]
+    (match-all xs (list something)
+      [(loop $i [1 n]
+         <join _ <cons $a_i ...>>
+         _)
+       (map (lambda [$i] a_i) (between 1 n))])))
+
+(comb {1 2 3 4 5} 3)
+;=>{{1 2 3} {1 2 4} {1 3 4} {2 3 4} {1 2 5} {1 3 5} {1 4 5} {2 3 5} {2 4 5} {3 4 5}}
+</textarea>
+
+<p>
+We consider the case <code>n</code> is three.
+Then, a loop-pattern is 
+</p>
+
+<textarea class="code">(loop $i {1 2 3}
+  <join _ <cons $a_i ...>>
+  _)</textarea>
+
+<p>
+When the range of the index is non-null, a loop-pattern "returns" the third argument regarding <code>...</code> in the argument as the loop-pattern itself.
+Since <code>{1 2 3}</code> isn't null, the above example is "evaluated to"
+</p>
+
+<textarea class="code"><join _ <cons $a_1 (loop $i [2 3]
+  <join _ <cons $a_i ...>>
+  _)>></textarea>
+
+<p>
+Note that in the "evaluation", the index-variable <code>i</code> is "replaced with" the head of the collection, <code>1</code> in the example.
+Moreover, the collection argument of the loop-pattern loses its head.
+That is, <code>{1 2 3}</code> is "replaced with" <code>{2 3}</code>
+Repeating this "evaluation", 
+</p>
+
+<textarea class="code"><join _ <cons $a_1 <join _ <cons $a_2 <join _ <cons $a_3 (loop $i [3 3]
+  <join _ <cons $a_i ...>>
+  _)>>>>>></textarea>
+
+<p>
+In the case, the second argument of the loop-pattern is null, Egison "evaluates" the last argument <code>_</code>. Then,
+</p>
+
+<textarea class="code"><join _ <cons $a_1 <join _ <cons $a_2 <join _ <cons $a_3 _>>>>>></textarea>
+
+<p>
+It is the same as what we used in <code>comb3</code>!
+Actually, since a loop-pattern is just a pattern, Egison doesn't evaluate a loop-pattern.
+However, a claim that the above patterns are the same is true.
+Then, recalling "the result of evaluation", you can use a loop-pattern.
+</p>
+
+<p>
+In the above, we omit explanation of restriction.
+<code>...</code> must be placed at the end of the second argument.
+For example, <code>&lt;cons ... &lt;nil&gt;&gt;</code> is prohibited.
+This restriction decides which loop-patterns a given <code>...</code> belongs to, and then allows us to write nested loop-patterns.
+</p>
+
+<p>
+By the way, you can omit the last argument of a loop-pattern.
+In such a case, Egison regards the last argument is <code>^_</code>, which is a pattern that no objects match.
+For example,
+</p>
+
+<textarea class="code">(loop $i [1 n]
+  <join _ <cons $a_i ...>>)</textarea>
+
+<p>
+is interpreted as 
+</p>
+
+<textarea class="code">(loop $i [1 n]
+  <join _ <cons $a_i ...>>
+  ^_)</textarea>
 
 <hr/>
 
@@ -243,5 +372,14 @@ We recomment you to read the chapter <i><a href="./mechanism.html">Pattern Match
     </div><!-- /.container -->
     
     <!--# include file="/templates/footer.html" -->
+    <script>
+      $('.code').each(function() {
+        var $this = $(this);
+        var myCodeMirror = CodeMirror.fromTextArea(this, {
+          readOnly: "nocursor",
+          lineWrapping: true
+        });
+      });
+    </script>
   </body>
 </html>
