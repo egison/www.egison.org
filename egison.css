@@ -14,9 +14,29 @@
 /* Padding below the footer and lighter body text */
 
 body {
+    font-family: 'Oxygen', sans-serif;
     padding-top: 50px;
     color: #5a5a5a;
 }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  font-family: 'Oxygen', sans-serif;
+  font-weight: 500;
+  line-height: 1.1;
+  color: inherit;
+}
+
 
 .manual h1 {
     padding-top: 80px;
@@ -165,14 +185,15 @@ sidenav, .bs-sidebar.affix .bs-sidenav {
 .jumbotron {
     padding-left: 0;
     padding-right: 0;
-    padding-top: 30px;
-    padding-buttom: 30px;
+    padding-top: 20px;
+    padding-buttom: 20px;
     color: #ffffff;
     background-color: #0f2350;
 }
 
 .jumbotron h1 {
     font-size: 36px;
+    margin-bottom: 20px;
 }
 
 /* MARKETING CONTENT
