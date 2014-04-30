@@ -47,7 +47,7 @@ h6,
     margin-top: -45px;
 }
 .manual h3 {
-    padding-top: 80px;
+    padding-top: 65px;
     margin-top: -45px;
 }
 
@@ -73,6 +73,10 @@ pre.prettyprint {
     left: 0;
     right: 0;
     z-index: 20;
+}
+
+.navbar {
+    opacity:0.95;
 }
 
 .navbar-inverse .navbar-brand {
@@ -280,7 +284,7 @@ sidenav, .bs-sidebar.affix .bs-sidenav {
 .footer {
     background-color: #222222;
     color: #fff;
-    margin-top: 80px;
+    margin-top: 40px;
     padding: 12px 8px 8px 8px;
     text-align: center;
     font-size: 95%;
