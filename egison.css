@@ -188,7 +188,9 @@ sidenav, .bs-sidebar.affix .bs-sidenav {
     padding-top: 20px;
     padding-buttom: 20px;
     color: #ffffff;
-    background-color: #0f2350;
+/*    background-color: #0f2350; */
+    background-image: url(/images/texture_bg.jpg);
+    background-repeat:repeat;
 }
 
 .jumbotron h1 {
@@ -241,6 +243,12 @@ sidenav, .bs-sidebar.affix .bs-sidenav {
 
 /* RESPONSIVE CSS
    -------------------------------------------------- */
+
+@media (max-width: 992px) {
+    .pull-right {
+        display: none;
+    }
+}
 
 @media (min-width: 768px) {
 
