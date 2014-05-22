@@ -60,6 +60,10 @@ h6,
     font-size: 22px;
 }
 
+.blog li {
+    font-size: 17px;
+}
+
 pre.prettyprint {
     padding-left: 10px;
     font-size: 15px;
