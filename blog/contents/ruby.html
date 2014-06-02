@@ -1,0 +1,202 @@
+<h1 id="ruby">The Ruby Gem for Ultra Super Pattern Matching</h1>
+
+<div id="blog-date">June *, 2014</div>
+
+<p>I've implemeted a Ruby Gem that provides the ultra super pattern-matching to Ruby.
+We can directly express non-linear pattern-matching against lists, multisets, and sets using this gem.
+Today, I'd like introduce the power of this gem.</p>
+
+<h2>Installation</h2>
+
+<pre><code>$ gem install egison</code></pre>
+
+<p>or</p>
+
+<pre><code>$ gem install bundler (if you need)
+$ echo "gem 'egison'" &gt; Gemfile
+$ bundle install</code></pre>
+
+<h2>Basic Usage</h2>
+
+<p>The library provides <code>Kernel#match_all</code> and  <code>Kernel#match</code>.</p>
+
+<textarea class="ruby-code">require 'egison'
+
+match_all(object) do
+  with(pattern) do
+    ...
+  end
+end
+
+match(object) do
+  with(pattern) do
+    ...
+  end
+  with(pattern) do
+    ...
+  end
+  ...
+end</textarea>
+
+<p>If a pattern matches, a block passed to <code>with</code> is called and returns its result.</p>
+
+<p>In our pattern-matching system, there are cases that pattern-matching has multiple results.
+<code>match_all</code> calls the block passed to <code>with</code> for each pattern-matching result and returns all results as an array.
+<code>match_all</code> takes one single match-clause.</p>
+
+<p>On the other hand, <code>match</code> takes multiple match-clauses.
+It pattern-matches from the first match-clause.
+If a pattern matches, it calls the block passed to the matched match-clause and returns a result for the first pattern-matching result.</p>
+
+<h2>Patterns</h2>
+
+<h3>Element patterns and subcollection patterns</h3>
+
+<p>An <i>element pattern</i> matches the element of the target array.</p>
+
+<p>A <i>subcollection pattern</i> matches the subcollection of the target array.
+A subcollection pattern has <code>*</code> ahead.</p>
+
+<p>A literal that contain <code>_</code> ahead is a <i>pattern-variable</i>.
+We can refer the result of pattern-matching through them.</p>
+
+<textarea class="ruby-code">match_all([1, 2, 3]) do
+  with(List.(*_hs, _x, *_ts)) do
+    [hs, x, ts]
+  end
+end  #=> [[[],1,[2,3]],[[1],2,[3]],[[1,2],3,[]]</textarea>
+
+<h3>Three matchers: List, Multiset, Set</h3>
+
+<p>We can write pattern-matching against lists, multisets, and sets.
+When we regard an array as a multiset, the order of elements is ignored.
+When we regard an array as a set, the duplicates and order of elements are ignored.</p>
+
+<p><code>_</code> is a <i>wildcard</i>.
+It matches with any object.
+Note that <code>__</code> and <code>___</code> are also interpreted as a wildcard.
+This is because <code>_</code> and <code>__</code> are system variables and sometimes have its own meaning.</p>
+
+<textarea class="ruby-code">match_all([1, 2, 3]) do
+  with(List.(_a, _b, *_)) do
+    [a, b]
+  end
+end  #=> [[1, 2]]
+
+match_all([1, 2, 3]) do
+  with(Multiset.(_a, _b, *_)) do
+    [a, b]
+  end
+end  #=> [[1, 2], [1, 3], [2, 1], [2, 3], [3, 1], [3, 2]]
+
+match_all([1, 2, 3]) do
+  with(Set.(_a, _b, *_)) do
+    [a, b]
+  end
+end  #=> [[1, 1],[1, 2],[1, 3],[2, 1],[2, 2],[2, 3],[3, 1],[3, 2],[3, 3]]</textarea>
+
+<p>Note that <code>_[]</code> is provided as syntactic sugar for <code>List.()</code>.</p>
+
+<textarea class="ruby-code">match_all([1, 2, 3]) do
+  with(_[_a, _b, *_]) do
+    [a, b]
+  end
+end  #=> [[1, 2]]</textarea>
+
+<h3>Non-linear patterns</h3>
+
+<p>Non-linear pattern is the most important feature of our pattern-matching system.
+Our pattern-matching system allows users multiple occurrences of same variables in a pattern.
+A Pattern whose form is <code>__("...")</code> is a value pattern.
+In the place of <code>...</code>, we can write any ruby expression we like.
+It matches the target when the target is equal with the value that <code>...</code> evaluated to.</p>
+
+<textarea class="ruby-code">match_all([5, 3, 4, 1, 2]) do
+  with(Multiset.(_a, __("a + 1"), __("a + 2"), *_)) do
+    a
+  end
+end  #=> [1,2,3]</textarea>
+
+<p>When, the expression in the place of <code>...</code> is a single variable, we can omit <code>("</code> and <code>")</code> as follow.</p>
+
+<textarea class="ruby-code">match_all([1, 2, 3, 2, 5]) do
+  with(Multiset.(_a, __a, *_)) do
+    a
+  end
+end  #=> [2,2]</textarea>
+
+<h2>Demonstrations</h2>
+
+<h3>Combinations</h3>
+
+<p>We can enumerates all combinations of the elements of a collection with pattern-matching.</p>
+
+<textarea class="ruby-code">require 'egison'</p>
+
+p(match_all([1,2,3,4,5]) do with(List.(*_, _x, *_, _y, *_)) { [x, y] } end)
+#=> [[1, 2], [1, 3], [1, 4], [1, 5], [2, 3], [2, 4], [2, 5], [3, 4], [3, 5], [4, 5]]
+
+p(match_all([1,2,3,4,5]) do with(List.(*_, _x, *_, _y, *_, _z, *_)) { [x, y, z] } end)
+#=> [[1, 2, 3], [1, 2, 4], [1, 2, 5], [1, 3, 4], [1, 3, 5], [1, 4, 5], [2, 3, 4], [2, 3, 5], [2, 4, 5], [3, 4, 5]]</textarea>
+
+<h3>Poker Hands</h3>
+
+<p>We can write patterns for all poker-hands in one single pattern.
+It is as follow.
+Isn't it exciting?</p>
+
+<textarea class="ruby-code">require 'egison'
+
+def poker_hands cs
+  match(cs) do
+    with(Multiset.(_[_s, _n], _[__s, __("n+1")], _[__s, __("n+2")], _[__s, __("n+3")], _[__s, __("n+4")])) do
+      "Straight flush"
+    end
+    with(Multiset.(_[_, _n], _[_, __n], _[_, __n], _[_, __n], _)) do
+      "Four of kind"
+    end
+    with(Multiset.(_[_, _m], _[_, __m], _[_, __m], _[_, _n], _[_, __n])) do
+      "Full house"
+    end
+    with(Multiset.(_[_s, _], _[__s, _], _[__s, _], _[__s, _], _[__s, _])) do
+      "Flush"
+    end
+    with(Multiset.(_[_, _n], _[_, __("n+1")], _[_, __("n+2")], _[_, __("n+3")], _[_, __("n+4")])) do
+      "Straight"
+    end
+    with(Multiset.(_[_, _n], _[_, __n], _[_, __n], _, _)) do
+      "Three of kind"
+    end
+    with(Multiset.(_[_, _m], _[_, __m], _[_, _n], _[_, __n], _)) do
+      "Two pairs"
+    end
+    with(Multiset.(_[_, _n], _[_, __n], _, _, _)) do
+      "One pair"
+    end
+    with(Multiset.(_, _, _, _, _)) do
+      "Nothing"
+    end
+  end
+end
+
+p(poker_hands([["diamond", 1], ["diamond", 3], ["diamond", 5], ["diamond", 4], ["diamond", 2]])) #=> "Straight flush"
+p(poker_hands([["diamond", 1], ["club", 2], ["club", 1], ["heart", 1], ["diamond", 2]])) #=> "Full house"
+p(poker_hands([["diamond", 4], ["club", 2], ["club", 5], ["heart", 1], ["diamond", 3]])) #=> "Straight"
+p(poker_hands([["diamond", 4], ["club", 10], ["club", 5], ["heart", 1], ["diamond", 3]])) #=> "Nothing"</textarea>
+
+<p>You can find more demonstrations in the <a href="https://github.com/egison/egison-ruby/tree/master/sample"><code>sample</code></a> directory.</p>
+
+<h2>Background</h2>
+
+<p>If you get to love the above pattern-matching, please try <a href="http://www.egison.org">the Egison programming language</a>, too.
+Egison is the pattern-matching oriented pure functional programming language.
+Actually, the original pattern-matching system of Egison is more powerful.
+For example, we can do following things in the original Egison.</p>
+
+<ul>
+<li>We can pattern-match against infinite lists.</li>
+<li>We can define new pattern-constructors.</li>
+<li>We can modularize useful patterns.</li>
+</ul>
+
+<p>There is a new programming world!</p>

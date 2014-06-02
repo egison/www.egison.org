@@ -60,6 +60,28 @@ h6,
     font-size: 22px;
 }
 
+.blog h1 {
+    font-size: 32px;
+}
+
+.col-md-12 h1 {
+    font-size: 36px;
+}
+
+.blog h2 {
+    font-size: 27px;
+    padding-top: 65px;
+    margin-top: -45px;
+}
+
+.blog h3 {
+    font-size: 22px;
+}
+
+.blog h4 {
+    font-size: 17px;
+}
+
 .blog li {
     font-size: 17px;
 }
