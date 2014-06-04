@@ -65,6 +65,8 @@ match(object) do
   ...
 end</textarea>
 
+<p><code>object</code>, the argument of the <code>match-all</code> or <code>match</code> expression is pattern-matched with <code>pattern</code>, the argument of <code>with</code>.</p>
+
 <p>If a pattern matches, a block passed to <code>with</code> is called and returns its result.</p>
 
 <p>In our pattern-matching system, there are cases that pattern-matching has multiple results.
@@ -97,12 +99,12 @@ end  #=> [[[],1,[2,3]],[[1],2,[3]],[[1,2],3,[]]</textarea>
 
 <p>We can write pattern-matching against lists, multisets, and sets.
 When we regard an array as a multiset, the order of elements is ignored.
-When we regard an array as a set, the duplicates and order of elements are ignored.</p>
+When we regard an array as a set, both of the duplicates and order of elements are ignored.</p>
 
 <p><code>_</code> is a <i>wildcard</i>.
 It matches with any object.
 Note that <code>__</code> and <code>___</code> are also interpreted as a wildcard.
-This is because <code>_</code> and <code>__</code> are system variables and sometimes have its own meaning.</p>
+This is because <code>_</code> and <code>__</code> are system variables and sometimes have its own meaning in IRB.</p>
 
 <textarea class="ruby-code">match_all([1, 2, 3]) do
   with(List.(_a, _b, *_)) do
