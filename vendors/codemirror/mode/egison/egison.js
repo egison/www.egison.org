@@ -33,7 +33,7 @@ CodeMirror.defineMode("clojure", function () {
         sign: /[+-]/,
         exponent: /e/i,
         keyword_char: /[^\s\(\[\;\)\]]/,
-        symbol: /[\w*+!\-\._?:\/]/
+        symbol: /[\w*+!'\-\._?:\/]/
     };
 
     function stateStack(indent, type, prev) { // represents a state stack object
@@ -119,6 +119,7 @@ CodeMirror.defineMode("clojure", function () {
             var returnType = null;
 
             switch(state.mode){
+                /*
                 case "string-2":
                     var next = false;
                     while ((next = stream.next()) != null) {
@@ -130,6 +131,7 @@ CodeMirror.defineMode("clojure", function () {
                     }
                     returnType = CHARACTER; // continue on in character mode
                     break;
+                */
                 case "string": // multi-line string parsing mode
                     var next, escaped = false;
                     while ((next = stream.next()) != null) {
@@ -148,9 +150,11 @@ CodeMirror.defineMode("clojure", function () {
                     if (ch == "\"") {
                         state.mode = "string";
                         returnType = STRING;
+                    /*
                     } else if (ch == "'") {
                         state.mode = "string-2";
                         returnType = CHARACTER;
+                    */
                     } else if (ch == ";") { // comment
                         stream.skipToEnd(); // rest of the line is a comment
                         returnType = COMMENT;
