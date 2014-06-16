@@ -62,6 +62,39 @@ We don't describe precise behaviour of them, but give simply examples.
 <dt><code>abs</code></dt>
 <dd><pre><code>(abs -89)</code></pre></dd>
 
+<dt><code>eq?</code></dt>
+<dd><pre><code>(eq? 2 -5)
+(eq? 3.14159 2.71828)
+</code></pre></dd>
+
+<dt><code>lt?</code></dt>
+<dd><pre><code>(lt? 2 -5)
+(lt? 3.14159 2.71828)</code></pre></dd>
+
+<dt><code>lte?</code></dt>
+<dd><pre><code>(lte? 2 -5)
+(lte? 3.14159 2.71828)</code></pre></dd>
+
+<dt><code>gt?</code></dt>
+<dd><pre><code>(gt? 2 -5)
+(gt? 3.14159 2.71828)</code></pre></dd>
+
+<dt><code>gte?</code></dt>
+<dd><pre><code>(gte? 2 -5)
+(gte? 3.14159 2.71828)</code></pre></dd>
+
+<dt><code>round</code></dt>
+<dd><pre><code>(round -2.71828)</code></pre></dd>
+
+<dt><code>floor</code></dt>
+<dd><pre><code>(floor -2.71828)</code></pre></dd>
+
+<dt><code>ceiling</code></dt>
+<dd><pre><code>(ceiling -2.71828)</code></pre></dd>
+
+<dt><code>truncate</code></dt>
+<dd><pre><code>(truncate -2.71828)</code></pre></dd>
+
 <dt><code>sqrt</code></dt>
 <dd><pre><code>(sqrt 2.71828)</code></pre></dd>
 
@@ -107,41 +140,11 @@ We don't describe precise behaviour of them, but give simply examples.
 <dt><code>atanh</code></dt>
 <dd><pre><code>(atanh 3.14159)</code></pre></dd>
 
-<dt><code>round</code></dt>
-<dd><pre><code>(round -2.71828)</code></pre></dd>
-
-<dt><code>floor</code></dt>
-<dd><pre><code>(floor -2.71828)</code></pre></dd>
-
-<dt><code>ceiling</code></dt>
-<dd><pre><code>(ceiling -2.71828)</code></pre></dd>
-
-<dt><code>truncate</code></dt>
-<dd><pre><code>(truncate -2.71828)</code></pre></dd>
-
 <dt><code>itof</code></dt>
 <dd><pre><code>(itof 3)</code></pre></dd>
 
-<dt><code>eq?</code></dt>
-<dd><pre><code>(eq? 2 -5)
-(eq? 3.14159 2.71828)
-</code></pre></dd>
-
-<dt><code>lt?</code></dt>
-<dd><pre><code>(lt? 2 -5)
-(lt? 3.14159 2.71828)</code></pre></dd>
-
-<dt><code>lte?</code></dt>
-<dd><pre><code>(lte? 2 -5)
-(lte? 3.14159 2.71828)</code></pre></dd>
-
-<dt><code>gt?</code></dt>
-<dd><pre><code>(gt? 2 -5)
-(gt? 3.14159 2.71828)</code></pre></dd>
-
-<dt><code>gte?</code></dt>
-<dd><pre><code>(gte? 2 -5)
-(gte? 3.14159 2.71828)</code></pre></dd>
+<dt><code>rtof</code></dt>
+<dd><pre><code>(itof 3/2)</code></pre></dd>
 
 <dt><code>read</code></dt>
 <dd><pre><code>(read "3")
@@ -154,6 +157,39 @@ We don't describe precise behaviour of them, but give simply examples.
 (show 3.14159)
 (show {1 2})
 (show "Hello world!\n")</code></pre></dd>
+
+<dt><code>empty?</code></dt>
+<dd><pre><code>(empty? {})</code></pre></dd>
+
+<dt><code>uncons</code></dt>
+<dd><pre><code>(uncons {1 2})</code></pre></dd>
+
+<dt><code>unsnoc</code></dt>
+<dd><pre><code>(unsnoc {1 2})</code></pre></dd>
+
+<dt><code>bool?</code></dt>
+<dd><pre><code>(bool? #t)</code></pre></dd>
+
+<dt><code>integer?</code></dt>
+<dd><pre><code>(integer? 1)</code></pre></dd>
+
+<dt><code>rational?</code></dt>
+<dd><pre><code>(rational? 1/2)</code></pre></dd>
+
+<dt><code>char?</code></dt>
+<dd><pre><code>(char? '1')</code></pre></dd>
+
+<dt><code>tuple?</code></dt>
+<dd><pre><code>(tuple? [1 2])</code></pre></dd>
+
+<dt><code>collection?</code></dt>
+<dd><pre><code>(collection? {})</code></pre></dd>
+
+<dt><code>array?</code></dt>
+<dd><pre><code>(array? [|1 2 3|])</code></pre></dd>
+
+<dt><code>hash?</code></dt>
+<dd><pre><code>(hash? {|[1 1] [2 12]|})</code></pre></dd>
 
 </dl>
 
