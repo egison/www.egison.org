@@ -66,7 +66,40 @@
             The pattern-matching itself of Prolog is similar with ordinal pattern-matching of the other functional languages.<br/>
             The mechanism of pattern-matching is briefly written <a href="/manual/mechanism.html">here</a>.
           </p>
-          
+
+          <h3 id="related-work">What is the advantage of Egison over existing work?</h3>
+
+          <p>
+            There are <a target="_blank" href="https://ghc.haskell.org/trac/ghc/wiki/ViewPatterns#Relatedwork">a lot of existing work</a> for pattern-matching.
+          </p>
+
+          <p>
+            The advantage of Egison is that it realized <b>all of the following features</b> at the same time.
+          </p>
+
+          <ul>
+            <li>Modularization of the way of pattern-matching for each data type</li>
+            <li>Pattern-matching with multiple results (backtracking)</li>
+            <li>Non-linear pattern-matching</li>
+          </ul>
+
+          <p>
+            It enables us to express non-linear pattern-matching against unfree data types intuitively as above demonstrations.
+          </p>
+
+          <p>
+            Furthermore, Egison realized the following feature.
+            We can even modularize patterns like functions keeping above features.
+          </p>
+
+          <ul>
+            <li>Non-linear pattern-matching with <b>lexical scoping</b></li>
+          </ul>
+
+          <p>
+            The <a target="_blank" href="http://www.egison.org/manual/mechanism.html">Pattern-Matching Mechanism</a> section in Egison developer's manual explains how we realized that.
+          </p>
+
         </div>
 
       </div><!--/row-->

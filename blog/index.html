@@ -14,6 +14,11 @@
         
         <div class="col-md-8" role="main">
 
+          <!--# include file="/blog/contents/ruby-toc.html" -->
+          <p>
+            <a href="/blog/ruby.html">Read this article...</a><br/><br/>
+          </p>
+          <hr class="divider">
           <!--# include file="/blog/contents/six-langs.html" -->
           <hr class="divider">
           <!--# include file="/blog/contents/evolution.html" -->
@@ -37,7 +42,7 @@
     <!--# include file="/templates/footer.html" -->
     <script src="/vendors/codemirror/mode/ruby/ruby.js"></script>
     <script>
-      $('code').each(function() {
+      $('.code').each(function() {
         var $this = $(this);
         var myCodeMirror = CodeMirror.fromTextArea(this, {
           readOnly: "nocursor",
