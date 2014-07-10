@@ -32,8 +32,14 @@
           
           <p>
             We have a maling list to share the current status and issues.<br/>
-            If you would like to subscribe it, please contact <a href="/~egi/">Satoshi Egi</a>.
+            If you would like to subscribe, please contact <a href="/~egi/">Satoshi Egi</a> or enter your mail address in the form below and push subscribe button.
           </p>
+
+          <div style="margin-top:10px;">
+            <label style="font-size:14px;">Email address</label><br/>
+            <input id="email" style="width: 250px;">
+            <button id="subscribe" class="btn btn-lg btn-primary" data-loading-text="Processing..." role="button">Subscribe &raquo;</button>
+          </div>
 
           <h2>SNS</h2>
           
@@ -72,5 +78,19 @@
     </div><!-- /.container -->
     
     <!--# include file="/templates/footer.html" -->
+    <script>
+      $(document).ready(function(){
+        $('.btn').button()
+
+        $('#subscribe').click(function() {
+          $('#subscribe').prop("disabled", true);
+          $('#subscribe').html("Processing...");
+          $.post("/api/subscribe", { email: document.getElementById("email").value }, function(data) {
+            $('#subscribe').html("Accepted!");
+            $('#subscribe').prop("disabled", true);
+          }, "json");
+        });
+      });
+    </script>
   </body>
 </html>
