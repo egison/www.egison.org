@@ -348,7 +348,8 @@ sidenav, .bs-sidebar.affix .bs-sidenav {
     font-size: 16px;
     border: 1px solid #eee;
     height: auto;
-    margin: 0 0 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 .CodeMirror-scroll {
     overflow-y: hidden;
