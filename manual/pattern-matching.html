@@ -100,7 +100,7 @@
 <h3>The <code>join</code> Pattern Constructor</h3>
 
 <p>
-  There is anoother pattern-constructor <code>join</code> for collections.
+  There is another pattern-constructor <code>join</code> for collections.
   <code>join</code> is a pattern that divides a collection into two collections.
 </p>
 
@@ -115,6 +115,18 @@
 (match-all {1 2 3} (set integer)
   [<join $xs $ys> [xs ys]])
 ;=>{[{} {1 2 3}] [{1} {1 2 3}] [{2} {1 2 3}] [{3} {1 2 3}] [{1 2} {1 2 3}] [{1 3} {1 2 3}] [{2 1} {1 2 3}] [{2 3} {1 2 3}] [{3 1} {1 2 3}] [{1 2 3} {1 2 3}] [{3 2} {1 2 3}] [{1 3 2} {1 2 3}] [{2 1 3} {1 2 3}] [{2 3 1} {1 2 3}] [{3 1 2} {1 2 3}] [{3 2 1} {1 2 3}]}</textarea>
+
+<p>
+  You might wonder about the order of results of pattern-matching.
+  Specifically, why is not the result of the first expression as follow?
+</p>
+
+<textarea class="code">{[{1 2 3} {}] [{1 2} {3}] [{1} {2 3}] [{} {1 2 3}]}</textarea>
+
+<p>
+  The reason is there is a case that the target collection is an infinite list.
+  We cannot return any answers if we adopted the latter order.
+</p>
 
 <h3>The <code>snoc</code> and <code>nioj</code> Pattern Constructor</h3>
 
