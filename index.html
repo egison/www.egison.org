@@ -285,15 +285,33 @@
         $.getJSON("/api/tutorial/table", function(data) {
           var table = data.output;
           var jqconsole = $('#console').jqconsole('Online Egison Tutorial 3.3.5 (C) 2013-2014 Satoshi Egi\nWelcome to Egison Tutorial!\n', prompt, prompt2);
-          // Move to line start Ctrl+A.
+          // Ctrl+F.
+          jqconsole.RegisterShortcut('F', function() {
+            jqconsole._MoveRight();
+          });
+          // Ctrl+B.
+          jqconsole.RegisterShortcut('B', function() {
+            jqconsole._MoveLeft();
+          });
+          // Ctrl+A.
           jqconsole.RegisterShortcut('A', function() {
             jqconsole.MoveToStart();
-            handler();
           });
-          // Move to line end Ctrl+E.
+          // Ctrl+E.
           jqconsole.RegisterShortcut('E', function() {
             jqconsole.MoveToEnd();
-            handler();
+          });
+          // Ctrl+D.
+          jqconsole.RegisterShortcut('D', function() {
+            jqconsole._Delete();
+          });
+          // Ctrl+P.
+          jqconsole.RegisterShortcut('P', function() {
+            jqconsole._HistoryPrevious();
+          });
+          // Ctrl+N.
+          jqconsole.RegisterShortcut('N', function() {
+            jqconsole._HistoryNext();
           });
           jqconsole.RegisterMatching('(', ')', 'paren');
           jqconsole.RegisterMatching('<', '>', 'paren');
