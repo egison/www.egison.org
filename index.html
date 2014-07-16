@@ -305,6 +305,15 @@
           jqconsole.RegisterShortcut('D', function() {
             jqconsole._Delete();
           });
+          // Ctrl+K.
+          jqconsole.RegisterShortcut('K', function() {
+            pos1 = jqconsole.GetColumn();
+            jqconsole.MoveToEnd();
+            pos2 = jqconsole.GetColumn();
+      　　　for (var i = pos2 - pos1; i > 0; i--) {
+              jqconsole._Backspace();
+            }
+          });
           // Ctrl+P.
           jqconsole.RegisterShortcut('P', function() {
             jqconsole._HistoryPrevious();
