@@ -1,12 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!--# include file="/templates/header.html" -->
+    <!--# include file="/templates/header-exp.html" -->
+    <style>
+      pre {
+      background-color: #222;
+      border: 0px;
+      border-radius: 4px;
+      }
+    /* The console container element */
+    #console {
+      position: relative;
+      height: 320px;
+      z-index: 9;
+      background-color: #222 !important;
+      border: 2px solid #222
+      margin: 0 auto;
+      font-size: 16px;
+    }
+    /* The inner console element. */
+    .jqconsole {
+        white-space: pre-wrap;
+        padding: 10px;
+    }
+    /* The cursor. */
+    .jqconsole-cursor {
+        background-color: #888;
+    }
+    /* The cursor color when the console looses focus. */
+    .jqconsole-blurred .jqconsole-cursor {
+        background-color: #222 !important;
+    }
+    /* The current prompt text color */
+    .jqconsole-prompt {
+        color: #0d0;
+    }
+    /* The command history */
+    .jqconsole-old-prompt {
+        color: #0d0;
+        font-weight: normal;
+    }
+    /* The text color when in input mode. */
+    .jqconsole-input {
+        color: #dd0;
+    }
+    /* Previously entered input. */
+    .jqconsole-old-input {
+        color: #bb0;
+        font-weight: normal;
+    }
+    /* The text color of the output. */
+    .jqconsole-output, .jqconsole-header {
+        color: white;
+    }
+    .paren {
+      color: #FF00FF;
+    }
+    </style>
   </head>
   <body>
     <!--# include file="/templates/navbar.html" -->
 
-    <div class="jumbotron">
+    <div class="jumbotron" style="margin-bottom:0px; padding-bottom:20px;">
       <a href="https://github.com/egison/egison" target="_blank"><img style="position: absolute; top: 50px; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
       <!--
       <a href="https://github.com/egison/egison" target="_blank"><img style="position: absolute; top: 50px; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
@@ -22,11 +77,15 @@
         <textarea id="egison-program" name="code"></textarea>
         
         <p>
-          <a href="http://try.egison.org" class="btn btn-lg btn-top" role="button" target="_blank">Online Egison Tutorial!</a>
+          <a href="/demonstrations/poker-hands.html" class="btn btn-lg btn-top" role="button">More Online Demonstrations &raquo;</a>
           <a href="/cheatsheet.html" class="btn btn-lg btn-top" role="button">Egison Cheat Sheet</a>
-          <a href="/demonstrations/poker-hands.html" class="btn btn-lg btn-top" role="button">More Demonstrations &raquo;</a>
+          <a href="/community.html" class="btn btn-lg btn-top" role="button">Join Our Community!</a>
         </p>
       </div>
+    </div>
+
+    <div class="jumbotron" style="padding:0px;">
+      <div id="console"></div>
     </div>
 
     <div class="container marketing">
@@ -38,9 +97,11 @@
         </div><!-- /.col-lg-6 -->
         <div class="col-lg-6">
           <h2><i class="fa fa-inbox"></i> What's New</h2>
+          <!--
           <p>
-            Egison 3.3.7 is the latest version.
+            Egison 3.3.8 is the latest version.
           </p>
+          -->
           <ul>
             <li>We've put <a href="http://arxiv.org/abs/1407.0729" target="_blank">the paper on Egison on arXiv.org</a>. [2014/07/04]</li>
             <li>We've released <a href="https://github.com/egison/egison-ruby" target="_blank">Ruby Extension</a> to access Egison pattern-matching from Ruby! [2014/05/05]</li>
@@ -173,7 +234,7 @@
         <div class="col-lg-4">
           <h3><i class="fa fa-users"></i> Community</h3>
           <p>
-            We have a <a href="/community.html#mailing-list">mailing list</a>!<br/>
+            We have <a href="/community.html#mailing-list">a mailing list</a>!<br/>
             Egison on
             <!-- <a href="https://kiwiirc.com/client/irc.freenode.net/#egison" target="_blank">Freenode</a>, -->
             <a href="https://twitter.com/Egison_Lang" target="_blank">Twitter</a>,
@@ -200,6 +261,7 @@
     </div><!-- /.container -->
     
     <!--# include file="/templates/footer.html" -->
+    <script src="/vendors/jqconsole/lib/jqconsole.js" type="text/javascript" charset="utf-8"></script>
     <script>
       var editor;
       $.get("/api/source", { path: "sample/demo1.egi"}, function(data) {
@@ -212,6 +274,93 @@
           lineWrapping: true
         });
       }, "json");
+    </script>
+    <script>
+      $(function () {
+        var prompt = '> ';
+        var prompt2 = '. ';
+        var inputs = '';
+        var sn = 1;
+        var ssn = 1;
+        $.getJSON("/api/tutorial/table", function(data) {
+          var table = data.output;
+          var jqconsole = $('#console').jqconsole('Online Egison Tutorial 3.3.5 (C) 2013-2014 Satoshi Egi\nWelcome to Egison Tutorial!\n', prompt, prompt2);
+          // Move to line start Ctrl+A.
+          jqconsole.RegisterShortcut('A', function() {
+            jqconsole.MoveToStart();
+            handler();
+          });
+          // Move to line end Ctrl+E.
+          jqconsole.RegisterShortcut('E', function() {
+            jqconsole.MoveToEnd();
+            handler();
+          });
+          jqconsole.RegisterMatching('(', ')', 'paren');
+          jqconsole.RegisterMatching('<', '>', 'paren');
+          jqconsole.RegisterMatching('[', ']', 'paren');
+          jqconsole.RegisterMatching('{', '}', 'paren');
+          var startPrompt = function () {
+            // Start the prompt with history enabled.
+            jqconsole.Prompt(true, function (input) {
+              if (input == "") {
+                 var history = jqconsole.GetHistory();
+                 history.pop();
+                 jqconsole.SetHistory(history);
+                 jqconsole.SetPromptLabel('Do you want to proceed next? (Y/n): ');
+                 jqconsole.Prompt(false, function (input) {
+                   jqconsole.SetPromptLabel(prompt)
+                   if (input == "" || input.match(/^(y|Y)/)) {
+                     ssn = ssn + 1;
+                     startSession();
+                   } else {
+                     startPrompt();
+                   }
+                 });
+              } else {
+                $.post("/api/eval", { program: (inputs + '\n' + input) }, function(data) {
+                  // Output input with the class jqconsole-output.
+                  if (data.output != "") {
+                    jqconsole.Write(data.output + '\n', 'jqconsole-output');
+                  }
+                  // Append to next input if the input is a definition
+                  if (data.output == "") {
+                    inputs = inputs + input + '\n';
+                  }
+                  // Restart the prompt.
+                  startPrompt();
+                }, "json");
+              }
+            });
+          };
+          var startSession = function () {
+            $.getJSON("/api/tutorial?sn=" + sn + "&ssn=" + ssn, function(data) {
+              if (data.output.match(/^error/)) {
+                jqconsole.Write('You have finished this section.\nThank you!\n', 'jqconsole-output');
+                  startTutorial();
+                } else {
+                  jqconsole.Write(data.output + '\n', 'jqconsole-output');
+                  startPrompt();
+                }
+              });
+          };
+          var startTutorial = function () {
+            jqconsole.Write('==============================\n' + table + '\n==============================\n', 'jqconsole-output');
+            jqconsole.Write("** Information **\n1. To procceed the next in the tuturial, please press just 'Enter'.\n2. You can input a multi-line expression using 'Shift+Enter'.\n*****************\n", 'jqconsole-output');
+            jqconsole.SetPromptLabel('Choose a section to learn.\n(1-4): ')
+            jqconsole.Prompt(false, function (input) {
+              jqconsole.SetPromptLabel(prompt)
+                if (input == "1" || input == "2" || input == "3" || input == "4") {
+                  sn = parseInt(input);
+                  ssn = 1;
+                  startSession();
+                } else {
+                  startTutorial();
+                }
+             });
+          }
+          startTutorial();
+        });
+      });
     </script>
   </body>
 </html>
