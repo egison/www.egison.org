@@ -284,7 +284,7 @@
         var ssn = 1;
         $.getJSON("/api/tutorial/table", function(data) {
           var table = data.output;
-          var jqconsole = $('#console').jqconsole('Online Egison Tutorial 3.3.5 (C) 2013-2014 Satoshi Egi\nWelcome to Egison Tutorial!\n', prompt, prompt2);
+          var jqconsole = $('#console').jqconsole('Online Egison Tutorial 3.3.6 (C) 2013-2014 Satoshi Egi\nWelcome to Egison Tutorial!\n', prompt, prompt2);
           // Ctrl+F.
           jqconsole.RegisterShortcut('F', function() {
             jqconsole._MoveRight();
@@ -362,7 +362,7 @@
           var startSession = function () {
             $.getJSON("/api/tutorial?sn=" + sn + "&ssn=" + ssn, function(data) {
               if (data.output.match(/^error/)) {
-                jqconsole.Write('You have finished this section.\nThank you!\n', 'jqconsole-output');
+                //jqconsole.Write('You have finished this section.\nThank you!\n', 'jqconsole-output');
                   startTutorial();
                 } else {
                   jqconsole.Write(data.output + '\n', 'jqconsole-output');
@@ -372,7 +372,7 @@
           };
           var startTutorial = function () {
             jqconsole.Write('==============================\n' + table + '\n==============================\n', 'jqconsole-output');
-            jqconsole.Write("** Information **\n1. To procceed the next in the tuturial, please press just 'Enter'.\n2. You can input a multi-line expression using 'Shift+Enter'.\n*****************\n", 'jqconsole-output');
+            jqconsole.Write("** Information **\n1. To procceed the next in the tuturial, please press just 'Enter'.\n2. You can input a multi-line expression using 'Shift+Enter'.\n3. We support Emacs key bindings to move cursor.\n*****************\n", 'jqconsole-output');
             jqconsole.SetPromptLabel('Choose a section to learn.\n(1-4): ')
             jqconsole.Prompt(false, function (input) {
               jqconsole.SetPromptLabel(prompt)
