@@ -1,0 +1,114 @@
+    <script>
+      $(function () {
+        var prompt = '> ';
+        var prompt2 = '. ';
+        var inputs = '';
+        var sn = 1;
+        var ssn = 1;
+        $.getJSON("/api/tutorial/table", function(data) {
+          var table = data.output;
+          var jqconsole = $('#console').jqconsole('Online Egison Tutorial 3.3.6 (C) 2013-2014 Satoshi Egi\nWelcome to Egison Tutorial!\n', prompt, prompt2);
+          // Ctrl+F.
+          jqconsole.RegisterShortcut('F', function() {
+            jqconsole._MoveRight();
+          });
+          // Ctrl+B.
+          jqconsole.RegisterShortcut('B', function() {
+            jqconsole._MoveLeft();
+          });
+          // Ctrl+A.
+          jqconsole.RegisterShortcut('A', function() {
+            jqconsole.MoveToStart();
+          });
+          // Ctrl+E.
+          jqconsole.RegisterShortcut('E', function() {
+            jqconsole.MoveToEnd();
+          });
+          // Ctrl+D.
+          jqconsole.RegisterShortcut('D', function() {
+            jqconsole._Delete();
+          });
+          // Ctrl+K.
+          jqconsole.RegisterShortcut('K', function() {
+            pos1 = jqconsole.GetColumn();
+            jqconsole.MoveToEnd();
+            pos2 = jqconsole.GetColumn();
+      　　　for (var i = pos2 - pos1; i > 0; i--) {
+              jqconsole._Backspace();
+            }
+          });
+          // Ctrl+P.
+          jqconsole.RegisterShortcut('P', function() {
+            jqconsole._HistoryPrevious();
+          });
+          // Ctrl+N.
+          jqconsole.RegisterShortcut('N', function() {
+            jqconsole._HistoryNext();
+          });
+          jqconsole.RegisterMatching('(', ')', 'paren');
+          jqconsole.RegisterMatching('<', '>', 'paren');
+          jqconsole.RegisterMatching('[', ']', 'paren');
+          jqconsole.RegisterMatching('{', '}', 'paren');
+          var startPrompt = function () {
+            // Start the prompt with history enabled.
+            jqconsole.Prompt(true, function (input) {
+              if (input == "") {
+                 var history = jqconsole.GetHistory();
+                 history.pop();
+                 jqconsole.SetHistory(history);
+                 jqconsole.SetPromptLabel('Do you want to proceed next? (Y/n): ');
+                 jqconsole.Prompt(false, function (input) {
+                   jqconsole.SetPromptLabel(prompt)
+                   if (input == "" || input.match(/^(y|Y)/)) {
+                     ssn = ssn + 1;
+                     startSession();
+                   } else {
+                     startPrompt();
+                   }
+                 });
+              } else {
+                $.post("/api/eval2", { program: (inputs + '\n' + input) }, function(data) {
+                  // Output input with the class jqconsole-output.
+                  if (data.output != "") {
+                    jqconsole.Write(data.output + '\n', 'jqconsole-output');
+                  }
+                  // Append to next input if the input is a definition
+                  if (data.output == "") {
+                    inputs = inputs + input + '\n';
+                  }
+                  // Restart the prompt.
+                  startPrompt();
+                }, "json");
+              }
+            });
+          };
+          var startSession = function () {
+            $.getJSON("/api/tutorial?sn=" + sn + "&ssn=" + ssn, function(data) {
+              if (data.output.match(/^error/)) {
+                //jqconsole.Write('You have finished this section.\nThank you!\n', 'jqconsole-output');
+                  startTutorial();
+                } else {
+                  jqconsole.Write(data.output + '\n', 'jqconsole-output');
+                  startPrompt();
+                }
+              });
+          };
+          var startTutorial = function () {
+            jqconsole.Write('==============================\n' + table + '\n==============================\n', 'jqconsole-output');
+            jqconsole.Write("** Information **\n1. To procceed the next in the tuturial, please press just 'Enter'.\n2. You can input a multi-line expression using 'Shift+Enter'.\n3. We support Emacs key bindings to move cursor.\n*****************\n", 'jqconsole-output');
+            jqconsole.SetPromptLabel('Choose a section to learn.\n(1-4): ')
+            jqconsole.Prompt(false, function (input) {
+              jqconsole.SetPromptLabel(prompt)
+                if (input == "1" || input == "2" || input == "3" || input == "4") {
+                  sn = parseInt(input);
+                  ssn = 1;
+                  startSession();
+                } else {
+                  startTutorial();
+                }
+             });
+          }
+          startTutorial();
+        });
+      });
+    </script>
