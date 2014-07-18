@@ -1238,34 +1238,42 @@ Licensed under the MIT license
     };
 
     JQConsole.prototype._ScrollToEnd = function() {
-      var pos;
-      this.$container.scrollTop(this.$container[0].scrollHeight);
-      pos = this.$prompt_cursor.position();
-      this.$input_container.css({
-        left: pos.left,
-        top: pos.top
-      });
-      return setTimeout(this.ScrollWindowToPrompt.bind(this), 50);
+      if (!this.IsDisabled()) {
+        var pos;
+        this.$container.scrollTop(this.$container[0].scrollHeight);
+        pos = this.$prompt_cursor.position();
+        this.$input_container.css({
+          left: pos.left,
+          top: pos.top
+        });
+        return setTimeout(this.ScrollWindowToPrompt.bind(this), 50);
+      } else {
+        return;
+      }
     };
 
     JQConsole.prototype.ScrollWindowToPrompt = function() {
-      var doc_height, line_height, optimal_pos, pos, screen_left, screen_top;
-      line_height = this.$prompt_cursor.height();
-      screen_top = this.$window.scrollTop();
-      screen_left = this.$window.scrollLeft();
-      doc_height = document.documentElement.clientHeight;
-      pos = this.$prompt_cursor.offset();
-      optimal_pos = pos.top - (2 * line_height);
-      if (this.isMobile && (typeof orientation !== "undefined" && orientation !== null)) {
-        if (screen_top < pos.top || screen_top > pos.top) {
-          return this.$window.scrollTop(optimal_pos);
+      if (!this.IsDisabled()) {
+        var doc_height, line_height, optimal_pos, pos, screen_left, screen_top;
+        line_height = this.$prompt_cursor.height();
+        screen_top = this.$window.scrollTop();
+        screen_left = this.$window.scrollLeft();
+        doc_height = document.documentElement.clientHeight;
+        pos = this.$prompt_cursor.offset();
+        optimal_pos = pos.top - (2 * line_height);
+        if (this.isMobile && (typeof orientation !== "undefined" && orientation !== null)) {
+          if (screen_top < pos.top || screen_top > pos.top) {
+            return this.$window.scrollTop(optimal_pos);
+          }
+        } else {
+          if (screen_top + doc_height < pos.top) {
+            return this.$window.scrollTop(pos.top - doc_height + line_height);
+          } else if (screen_top > optimal_pos) {
+            return this.$window.scrollTop(pos.top);
+          }
         }
       } else {
-        if (screen_top + doc_height < pos.top) {
-          return this.$window.scrollTop(pos.top - doc_height + line_height);
-        } else if (screen_top > optimal_pos) {
-          return this.$window.scrollTop(pos.top);
-        }
+        return;
       }
     };
 
