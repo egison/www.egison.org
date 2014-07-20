@@ -1,0 +1,41 @@
+    <script>
+      $(function () {
+        var prompt = '> ';
+        var prompt2 = '. ';
+        var inputs = '';
+        var jqconsole = $('#console').jqconsole('Online Egison Interprter\nEgison Version 3.3.8 (C) 2011-2014 Satoshi Egi\nWelcome to Egison Interpreter!\n', prompt, prompt2);
+        jqconsole.Write("** Information **\n1. To proceed the next in the tutorial, please press just 'Enter'.\n2. We are supporting Emacs key bindings to move cursor.\n*****************\n", 'jqconsole-output');
+        // Move to line start Ctrl+A.
+        jqconsole.RegisterShortcut('A', function() {
+          jqconsole.MoveToStart();
+          handler();
+        });
+        // Move to line end Ctrl+E.
+        jqconsole.RegisterShortcut('E', function() {
+          jqconsole.MoveToEnd();
+          handler();
+        });
+        jqconsole.RegisterMatching('(', ')', 'paren');
+        jqconsole.RegisterMatching('<', '>', 'paren');
+        jqconsole.RegisterMatching('[', ']', 'paren');
+        jqconsole.RegisterMatching('{', '}', 'paren');
+        var startPrompt = function () {
+          // Start the prompt with history enabled.
+          jqconsole.Prompt(true, function (input) {
+            $.post("/api/eval", { program: (inputs + '\n' + input) }, function(data) {
+              // Output input with the class jqconsole-output.
+              if (data.output != "") {
+                jqconsole.Write(data.output + '\n', 'jqconsole-output');
+              }
+              // Append to next input if the input is a definition
+              if (data.output == "") {
+                inputs = inputs + input + '\n';
+              }
+              // Restart the prompt.
+              startPrompt();
+            }, "json");
+          });
+        };
+        startPrompt();
+      });
+    </script>
