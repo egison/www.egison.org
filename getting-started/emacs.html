@@ -23,8 +23,9 @@
           <h2>Setting up Egison mode on your Emacs</h2>
           
           <p>
-            To use Egison mode on your Emacs, you should copy a file <code>egison-mode.el</code>, which exists in <code>~/.cabal/share/</code>,
-            to load-path of your emacs, and add following lines in your <code>.emacs</code>.
+            <a href="/source/elisp/egison-mode.el">Here</a> is the newest version of <code>egison-mode.el</code>.
+            Please put it in your load-path of Emacs.<br/>
+            Then, add the following lines in your <code>.emacs</code>.<br/>
           </p>
 
 <pre><code>(autoload 'egison-mode "egison-mode" "Major mode for editing Egison code." t)
@@ -32,7 +33,7 @@
 (cons `("\\.egi$" . egison-mode) auto-mode-alist))</code></pre>
 
           <p>
-            The following is a sample of Egison mode on Emacs.
+            The following is a sample view of Egison mode on Emacs.
           </p>
 
           <img src="/images/xml.png" width="730px">
