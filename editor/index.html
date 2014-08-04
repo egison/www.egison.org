@@ -39,7 +39,7 @@
     <!--# include file="/templates/footer.html" -->
     <script>
       var editor;
-      $.get("/api/source", { path: "sample/sequence.egi"}, function(data) {
+      $.get("/api/source", { path: "sample/primes.egi"}, function(data) {
         var e = document.getElementById("egison-program");
         e.value = data.content;
         editor = CodeMirror.fromTextArea(document.getElementById("egison-program"), {
