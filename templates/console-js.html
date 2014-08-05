@@ -1,9 +1,10 @@
     <script>
+      var jqconsole;
       $(function () {
         var prompt = '> ';
         var prompt2 = '. ';
         var inputs = '';
-        var jqconsole = $('#console').jqconsole('Online Egison Interprter\nEgison Version 3.3.8 (C) 2011-2014 Satoshi Egi\nWelcome to Egison Interpreter!\n', prompt, prompt2);
+        jqconsole = $('#console').jqconsole('Online Egison Interprter Version 3.3.8 (C) 2011-2014 Satoshi Egi\nWelcome to Egison Interpreter!\n', prompt, prompt2);
         jqconsole.Write("** Information **\nWe are supporting Emacs key bindings to move cursor.\n*****************\n", 'jqconsole-output');
         // Ctrl+F.
         jqconsole.RegisterShortcut('F', function() {
@@ -46,6 +47,7 @@
         jqconsole.RegisterMatching('<', '>', 'paren');
         jqconsole.RegisterMatching('[', ']', 'paren');
         jqconsole.RegisterMatching('{', '}', 'paren');
+        jqconsole.Disable();
         var startPrompt = function () {
           // Start the prompt with history enabled.
           jqconsole.Prompt(true, function (input) {
