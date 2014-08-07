@@ -385,7 +385,7 @@ We recomment you to read the chapter <a href="./mechanism.html">Pattern Matching
       $('.code').each(function() {
         var $this = $(this);
         var myCodeMirror = CodeMirror.fromTextArea(this, {
-          readOnly: "nocursor",
+          readOnly: true,
           lineWrapping: true
         });
       });

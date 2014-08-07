@@ -469,7 +469,7 @@ An <code>array-size</code> expression tells us the number of elements in a given
       $('.code').each(function() {
         var $this = $(this);
         var myCodeMirror = CodeMirror.fromTextArea(this, {
-          readOnly: "nocursor",
+          readOnly: true,
           lineWrapping: true
         });
       });
