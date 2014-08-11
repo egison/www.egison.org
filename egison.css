@@ -37,7 +37,15 @@ h6,
   color: inherit;
 }
 
-
+.manual dt {
+        font-size: 17px;
+}
+.manual dd {
+        font-size: 17px;
+        padding-left:20px;
+        margin-top:7px;
+        margin-bottom:7px;
+}
 .manual h1 {
     padding-top: 80px;
     margin-top: -45px;

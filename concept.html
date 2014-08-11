@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!--# include file="/templates/header-exp.html" -->
+    <style>
+.version {
+    padding-top: 10px;
+    color: #888;
+}
+.version2 {
+    padding-top: 0px;
+    color: #888;
+}
+.CodeMirror {
+    margin-top: 0px;
+}
+    </style>
+    <title>Egison - Concept</title>
+  </head>
+  <body data-spy="scroll" data-target=".bs-sidebar" data-offset="0">
+    <!--# include file="/templates/navbar.html" -->
+
+    <div class="container manual">
+
+      <div class="row">
+
+        <div class="col-md-12" id="top" role="complementary">
+          <h1>Concept of Egison</h1>
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-12" role="main">
+
+          <hr/>
+          <p>
+            The aim of this document is to explain the concept of Egison as quickly as possible.<br/>
+          </p>
+          <hr/>
+
+          <h2>Syntax of pattern-matching</h2>
+          
+          <p>
+            Let us introduce the syntax of the <code>match-all</code> expression.<br/>
+            We can explain the concept of Egison with only this expression.
+          </p>
+
+          <div class="version">Egison version</div>
+          <textarea class="code">(match-all
+  {1 2 3}                ; Target
+  (list integer)         ; Matcher
+  [<cons $x $xs> [x xs]] ; Match-Clause: [Pattern Body]
+  )
+;=>{[1 {2 3}]}           ; Result</textarea>
+
+          <p>
+            The <code>match-all</code> expression takes 3 arguments, a target, a matcher and a match-clause which is a tuple of a pattern and a body expression.<br/>
+            Our interpreter matches the target with the pattern as the type specified with the matcher and returns the values bound to the variables in the pattern.
+          </p>
+
+          <p>
+            If we wrote the same meaning code in Haskell, it will be as follow. (<b>The following code does not run because Haskell does not support such kind of syntax for now.</b>)
+          </p>
+          
+          <div class="version">Haskell version</div>
+          <textarea class="haskell-code">matchAll [1, 2, 3] as (List Integer) of x:xs -> (x, xs)
+-->[(1,[2,3])]</textarea>
+          
+          <h2>Modularization of the way of pattern-matching</h2>
+          
+          <p>
+            We can define the way of pattern-matching for each data types.<br/>
+            For example, we can define how to pattern-match against lists, multiset, and sets respectively.
+          </p>
+
+
+          <div class="version">Egison version</div>
+          <textarea class="code">(match-all {1 2 3} (list integer) [<cons $x $xs> [x xs]])
+;=>{[1 {2 3}]}
+(match-all {1 2 3} (multiset integer) [<cons $x $xs> [x xs]])
+;=>{[1 {2 3}] [2 {1 3}] [3 {1 2}]}
+(match-all {1 2 3} (set integer) [<cons $x $xs> [x xs]])
+;=>{[1 {1 2 3}] [2 {1 2 3}] [3 {1 2 3}]}</textarea>
+          <div class="version2">Haskell version</div>
+          <textarea class="haskell-code">matchAll [1, 2, 3] as (List Integer) of x:xs -> (x, xs)
+-->[(1,[2,3])]
+matchAll [1, 2, 3] as (Multiset Integer) of x:xs -> (x, xs)
+-->[(1,[2,3]),(2,[1,3]),(3,[1,2])]
+matchAll [1, 2, 3] as (Set Integer) of x:xs -> (x, xs)
+-->[(1,[1,2,3]),(2,[1,2,3]),(3,[1,2,3])]</textarea>
+
+          <p>
+            Please note that we can handle pattern-matching that has <b>multiple results</b>.<br/>
+            This feature is necessary to pattern-matching against data types whose data have no standard form.
+          </p>
+          
+          <div class="version">Egison version</div>
+          <textarea class="code">(match-all {1 2 3} (list integer) [<cons $x <cons $y _>> [x y]])
+;=>{[1 2]}
+(match-all {1 2 3} (multiset integer) [<cons $x <cons $y _>> [x y]])
+;=>{[1 2] [1 3] [2 1] [2 3] [3 1] [3 2]}
+(match-all {1 2 3} (set integer) [<cons $x <cons $y _>> [x y]])
+;=>{[1 1] [1 2] [2 1] [1 3] [2 2] [3 1] [2 3] [3 2] [3 3]}</textarea>
+          <div class="version2">Haskell version</div>
+          <textarea class="haskell-code">matchAll [1, 2, 3] as (List Integer) of x:y:_ -> (x, y)
+-->[(1,[2,3])]
+matchAll [1, 2, 3] as (Multiset Integer) of x:y:_ -> (x, y)
+-->[(1,2),(1,3),(2,1),(2,3),(3,1),(3,2)]
+matchAll [1, 2, 3] as (Set Integer) of x:y:_ -> (x, y)
+-->[(1,1),(1,2),(2,1),(1,3),(2,2),(3,1),(2,3),(3,2),(3,3)]</textarea>
+            
+          <div class="version">Egison version</div>
+          <textarea class="code">(match-all {1 2 3} (list integer) [<join $xs $ys> [xs ys]])
+;=>{[{} {1 2 3}] [{1} {2 3}] [{1 2} {3}] [{1 2 3} {}]}
+(match-all {1 2 3} (multiset integer) [<join $xs $ys> [xs ys]])
+;=>{[{} {1 2 3}] [{1} {2 3}] [{2} {1 3}] [{3} {1 2}] [{1 2} {3}] [{1 3} {2}] [{2 3} {1}] [{1 2 3} {}]}</textarea>
+          <div class="version2">Haskell version</div>
+          <textarea class="haskell-code">matchAll [1, 2, 3] as (List Integer) of
+  xs ++ ys -> (xs, ys)
+-->[([],[1,2,3]),([1],[2,3]),([1,2],[3]),([1,2,3],[])]
+matchAll [1, 2, 3] as (Multiset Integer) of
+  xs ++ ys -> (xs, ys)
+-->[([],[1,2,3]),([1],[2,3]),([2],[1,3]),([3],[1,2]),([1,2],[3]),([1,3],[2]),([2,3],[1]),([1,2,3],[])]</textarea>
+          
+          <p>
+            Let us emphasize that <b>we can define matchers such as <code>list</code>, <code>multiset</code> and <code>set</code> and pattern-constructors such as <code>cons</code> and  <code>join</code> by ourselves</b>.
+          </p>
+
+          <h2>Non-linear patterns</h2>
+          
+          <p>
+            We can handle multiple occurrence of same variables in a pattern.
+          </p>
+
+          <div class="version">Egison version</div>
+          <textarea class="code">(match-all {1 2 3 3 2 4} (multiset integer) [<cons $x <cons ,x _>> x])
+;=>{2 3 3 2}</textarea>
+          <div class="version2">Haskell version</div>
+          <textarea class="haskell-code">matchAll [1, 2, 3, 3, 2, 4] as (Multiset Integer) of x:x:_ -> x
+-->[2,3,3,2]</textarea>
+
+          <p>
+            Egison is purely functional programming language.
+            We can handle pattern-matching against <b>infinite collections</b> as Haskell.
+          </p>
+
+          <div class="version">Egison version</div>
+          <textarea class="code">(take 10 (match-all primes (list integer)
+           [<join _ <cons $p <cons ,(+ p 2) _>>> [p (+ p 2)]]))
+;=>{[3 5] [5 7] [11 13] [17 19] [29 31] [41 43] [59 61] [71 73] [101 103] [107 109]}</textarea>
+          <div class="version2">Haskell version</div>
+          <textarea class="haskell-code">take 10 (matchAll primes as (List Integer) of (_ ++ (p : p+2 : _))) -> (p, p+2))
+-->[(3,5),(5,7),(11,13),(17,19),(29,31),(41,43),(59,61),(71,73),(101,103),(107,109)]</textarea>
+
+          <p>
+            Non-linear patterns extend the expressive of power of pattern-matching so much.<br/>
+            It eliminates nested <code>if</code> expressions inside deeply nested loops.<br/>
+            Please check our <a href="/demonstrations/poker-hands.html" role="button">Poker Hands Demonstration</a>.
+          </p>
+
+          <p style="margin-top:30px; margin-bottom:0px; font-size: 15px;">
+            Note.
+          </p>
+          <p style="padding-left:20px; margin-top:0px; font-size: 15px;">
+            We define the equality of each data type in the matcher.<br/>
+            Therefore, we can do pattern-matching against not only integers and lists but also multisets, sets, multisets of multisets and so on.
+          <p>
+            
+          <h2>Lexical scoping of patterns</h2>
+          
+          <p>
+            We can modularize useful patterns with <i>pattern-functions</i>, functions that receive patterns and return a pattern.<br/>
+            Since a pattern-function has lexical scoping, bindings for pattern-variables in the argument patterns and the body of pattern-functions don't conflict.<br/>
+            Useful patterns can be reused in many places in a program without worry of name clash.<br/>
+          </p>
+
+          <div class="version">Egison version</div>
+          <textarea class="code">(define $twin
+  (pattern-function [$pat1 $pat2]
+    <cons (& $pat pat1)
+     <cons ,pat
+      pat2>>))
+
+(take 1 (match-all {1 2 1 3 2} (multiset integer)
+          [(twin $m (twin $n _)) [m n]]))
+;=>{[1 2]}</textarea>
+          
+          <p>
+            This feature enables us to write complex patterns very simply.<br/>
+            Please check our <a href="/demonstrations/mahjong.html" role="button">Mahjong Demonstration</a>.
+          </p>
+            
+          <h2>Conclusion</h2>
+
+          <p>
+            The combination of <strong>all of the following features</strong> realizes intuitive powerful pattern-matching.
+          </p>
+          
+          <dl style="margin-top:14px;">
+            <dt>Modularization of the way of pattern-matching</dt>
+            <dd>
+              We can define the way of pattern-matching for each data types.<br/>
+              For example, we can define how to pattern-match against lists, multiset, and sets respectively.<br/>
+            </dd>
+
+            <dt>Multiple pattern-matching results</dt>
+            <dd>
+              We can handle pattern-matching that has multiple results with backtracking.<br/>
+              This feature is necessary to pattern-matching against data types whose data have no standard form.<br/>
+            </dd>
+
+            <dt>Non-linear patterns</dt>
+            <dd>
+              We can handle multiple occurrence of same variables in a pattern.
+            </dd>
+
+            <dt>Lexical scoping of patterns</dt>
+            <dd>
+              We can modularize useful patterns with <i>pattern-functions</i>, functions that receive patterns and return a pattern.<br/>
+              Since a pattern-function has lexical scoping, bindings for pattern-variables in the argument patterns and the body of pattern-functions don't conflict.<br/>
+              Useful patterns can be reused in many places in a program without worry of name clash.<br/>
+            </dd>
+          </dl>
+
+          <p>
+            Please refer to <a href="http://arxiv.org/pdf/1407.0729.pdf" target="_blank">our paper</a> about the mechanism of pattern-matching.<br/>
+          </p>
+          
+          <h2 id="next">What to do next...</h2>
+          
+          <p>
+            <a class="btn btn-lg btn-github" href="http://arxiv.org/pdf/1407.0729.pdf" role="button" target="_blank">Egison Paper on arXiv.org &raquo;</a>
+            <a class="btn btn-lg btn-primary" href="/demonstrations/poker-hands.html" role="button">View More Demonstrations</a>
+            <a class="btn btn-lg btn-primary" href="/" role="button">Back to Home</a>
+          </p>
+
+        </div>
+        
+      </div><!--/row-->
+    
+    </div><!-- /.container -->
+    
+    <!--# include file="/templates/footer.html" -->
+    <script src="/vendors/codemirror/mode/haskell/haskell.js"></script>
+    <script>
+      $('.code').each(function() {
+        var $this = $(this);
+        var myCodeMirror = CodeMirror.fromTextArea(this, {
+          readOnly: true,
+          lineWrapping: true
+        });
+      });
+      $('.haskell-code').each(function() {
+        var $this = $(this);
+        var myCodeMirror = CodeMirror.fromTextArea(this, {
+          readOnly: true,
+          lineWrapping: true,
+          mode: "haskell"
+        });
+      });
+    </script>
+  </body>
+</html>
