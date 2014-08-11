@@ -72,9 +72,11 @@
           
           <p>
             We can define the way of pattern-matching for each data types.<br/>
-            For example, we can define how to pattern-match against lists, multiset, and sets respectively.
+            For example, we can define how to pattern-match against lists, multiset, and sets respectively.<br/>
+            In the following example, we do pattern-matching against collection as a list, multiset, set respectively.<br/>
+            The meaning of <code>cons</code> varies for each matcher.<br/>
+            The pattern constructor <code>cons</code> divides a collection into an element and the rest.
           </p>
-
 
           <div class="version">Egison version</div>
           <textarea class="code">(match-all {1 2 3} (list integer) [<cons $x $xs> [x xs]])
@@ -93,7 +95,11 @@ matchAll [1, 2, 3] as (Set Integer) of x:xs -> (x, xs)
 
           <p>
             Please note that we can handle pattern-matching that has <b>multiple results</b>.<br/>
-            This feature is necessary to pattern-matching against data types whose data have no standard form.
+            This feature is necessary to pattern-matching against data types whose data have no standard form such as multisets and sets.
+          </p>
+          
+          <p>
+            We can extract two elements from a collection with nested <code>cons</code> pattern.
           </p>
           
           <div class="version">Egison version</div>
@@ -110,7 +116,12 @@ matchAll [1, 2, 3] as (Multiset Integer) of x:y:_ -> (x, y)
 -->[(1,2),(1,3),(2,1),(2,3),(3,1),(3,2)]
 matchAll [1, 2, 3] as (Set Integer) of x:y:_ -> (x, y)
 -->[(1,1),(1,2),(2,1),(1,3),(2,2),(3,1),(2,3),(3,2),(3,3)]</textarea>
-            
+
+          <p>
+            We have the <code>join</code> pattern constructor, which divides a collection into two collections.<br/>
+            The meaning of <code>join</code> also varies for each matcher.<br/>
+          </p>
+
           <div class="version">Egison version</div>
           <textarea class="code">(match-all {1 2 3} (list integer) [<join $xs $ys> [xs ys]])
 ;=>{[{} {1 2 3}] [{1} {2 3}] [{1 2} {3}] [{1 2 3} {}]}
