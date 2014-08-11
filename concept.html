@@ -65,8 +65,11 @@
           </p>
           
           <div class="version">Haskell version</div>
-          <textarea class="haskell-code">matchAll [1, 2, 3] as (List Integer) of x:xs -> (x, xs)
--->[(1,[2,3])]</textarea>
+          <textarea class="haskell-code">matchAll
+  [1, 2, 3] as      -- Target  ('as' is a reserved word for pattern-matching)
+  (List Integer) of -- Matcher ('of' is a reserved word for pattern-matching)
+  x:xs -> (x, xs)   -- Match-Clause: Pattern -> Body
+-- =>[(1,[2,3])]      -- Result</textarea>
           
           <h2>Modularization of the way of pattern-matching</h2>
           
@@ -87,11 +90,11 @@
 ;=>{[1 {1 2 3}] [2 {1 2 3}] [3 {1 2 3}]}</textarea>
           <div class="version2">Haskell version</div>
           <textarea class="haskell-code">matchAll [1, 2, 3] as (List Integer) of x:xs -> (x, xs)
--->[(1,[2,3])]
+-- =>[(1,[2,3])]
 matchAll [1, 2, 3] as (Multiset Integer) of x:xs -> (x, xs)
--->[(1,[2,3]),(2,[1,3]),(3,[1,2])]
+-- =>[(1,[2,3]),(2,[1,3]),(3,[1,2])]
 matchAll [1, 2, 3] as (Set Integer) of x:xs -> (x, xs)
--->[(1,[1,2,3]),(2,[1,2,3]),(3,[1,2,3])]</textarea>
+-- =>[(1,[1,2,3]),(2,[1,2,3]),(3,[1,2,3])]</textarea>
 
           <p>
             Please note that we can handle pattern-matching that has <b>multiple results</b>.<br/>
@@ -111,11 +114,11 @@ matchAll [1, 2, 3] as (Set Integer) of x:xs -> (x, xs)
 ;=>{[1 1] [1 2] [2 1] [1 3] [2 2] [3 1] [2 3] [3 2] [3 3]}</textarea>
           <div class="version2">Haskell version</div>
           <textarea class="haskell-code">matchAll [1, 2, 3] as (List Integer) of x:y:_ -> (x, y)
--->[(1,[2,3])]
+-- =>[(1,[2,3])]
 matchAll [1, 2, 3] as (Multiset Integer) of x:y:_ -> (x, y)
--->[(1,2),(1,3),(2,1),(2,3),(3,1),(3,2)]
+-- =>[(1,2),(1,3),(2,1),(2,3),(3,1),(3,2)]
 matchAll [1, 2, 3] as (Set Integer) of x:y:_ -> (x, y)
--->[(1,1),(1,2),(2,1),(1,3),(2,2),(3,1),(2,3),(3,2),(3,3)]</textarea>
+-- =>[(1,1),(1,2),(2,1),(1,3),(2,2),(3,1),(2,3),(3,2),(3,3)]</textarea>
 
           <p>
             We have the <code>join</code> pattern constructor, which divides a collection into two collections.<br/>
@@ -130,10 +133,10 @@ matchAll [1, 2, 3] as (Set Integer) of x:y:_ -> (x, y)
           <div class="version2">Haskell version</div>
           <textarea class="haskell-code">matchAll [1, 2, 3] as (List Integer) of
   xs ++ ys -> (xs, ys)
--->[([],[1,2,3]),([1],[2,3]),([1,2],[3]),([1,2,3],[])]
+-- =>[([],[1,2,3]),([1],[2,3]),([1,2],[3]),([1,2,3],[])]
 matchAll [1, 2, 3] as (Multiset Integer) of
   xs ++ ys -> (xs, ys)
--->[([],[1,2,3]),([1],[2,3]),([2],[1,3]),([3],[1,2]),([1,2],[3]),([1,3],[2]),([2,3],[1]),([1,2,3],[])]</textarea>
+-- =>[([],[1,2,3]),([1],[2,3]),([2],[1,3]),([3],[1,2]),([1,2],[3]),([1,3],[2]),([2,3],[1]),([1,2,3],[])]</textarea>
           
           <p>
             Let us emphasize that <b>we can define matchers such as <code>list</code>, <code>multiset</code> and <code>set</code> and pattern-constructors such as <code>cons</code> and  <code>join</code> by ourselves</b>.
@@ -150,7 +153,7 @@ matchAll [1, 2, 3] as (Multiset Integer) of
 ;=>{2 3 3 2}</textarea>
           <div class="version2">Haskell version</div>
           <textarea class="haskell-code">matchAll [1, 2, 3, 3, 2, 4] as (Multiset Integer) of x:x:_ -> x
--->[2,3,3,2]</textarea>
+-- =>[2,3,3,2]</textarea>
 
           <p>
             Egison is purely functional programming language.
@@ -163,7 +166,7 @@ matchAll [1, 2, 3] as (Multiset Integer) of
 ;=>{[3 5] [5 7] [11 13] [17 19] [29 31] [41 43] [59 61] [71 73] [101 103] [107 109]}</textarea>
           <div class="version2">Haskell version</div>
           <textarea class="haskell-code">take 10 (matchAll primes as (List Integer) of (_ ++ (p : p+2 : _))) -> (p, p+2))
--->[(3,5),(5,7),(11,13),(17,19),(29,31),(41,43),(59,61),(71,73),(101,103),(107,109)]</textarea>
+-- =>[(3,5),(5,7),(11,13),(17,19),(29,31),(41,43),(59,61),(71,73),(101,103),(107,109)]</textarea>
 
           <p>
             Non-linear patterns extend the expressive of power of pattern-matching so much.<br/>
