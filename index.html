@@ -91,17 +91,45 @@
         </div><!-- /.col-lg-6 -->
         <div class="col-lg-6">
           <h2><i class="fa fa-book"></i> Documentations</h2>
-          <a class="btn btn-default btn-primary" href="/manual/" role="button">Egison Manual</a>
-          <a class="btn btn-default btn-primary" href="/cheatsheet.html" role="button">Egison Cheat Sheet</a>
-          <a class="btn btn-default btn-github" href="http://arxiv.org/pdf/1407.0729.pdf" role="button" target="_blank">Egison Paper on arXiv.org</a>
           <!--
-          <a class="btn btn-default btn-github" href="https://github.com/egison/egison" role="button" target="_blank">Code on GitHub <i class="fa fa-github-square"></i></a>
-          <a class="btn btn-default btn-primary" href="/milestones.html" role="button">Milestones</a>
-          -->
+              <a class="btn btn-default btn-primary" href="/manual/" role="button">Egison Manual</a>
+              <a class="btn btn-default btn-primary" href="/cheatsheet.html" role="button">Egison Cheat Sheet</a>
+              <a class="btn btn-default btn-github" href="http://arxiv.org/pdf/1407.0729.pdf" role="button" target="_blank">Egison Paper on arXiv.org</a>
+              <a class="btn btn-default btn-github" href="https://github.com/egison/egison" role="button" target="_blank">Code on GitHub <i class="fa fa-github-square"></i></a>
+              <a class="btn btn-default btn-primary" href="/milestones.html" role="button">Milestones</a>
+              -->
+          <div class="col-lg-6">
+            <p>
+              <ul>
+                <li>Egison User's Manual</li>
+                <ul>
+                  <!--# include file="/templates/manual.html" -->
+                </ul>
+              </ul>
+            </p>
+          </div>
+          <div class="col-lg-6">
+            <p>
+              <ul>
+                <li>Egison Developer's Manual</li>
+                <ul>
+                  <li><a href="/manual/mechanism.html">Pattern Matching Mechanism</a></li>
+                </ul>
+                <li>Egison Cheat Sheet</li>
+                <ul>
+                  <li><a href="/cheatsheet.html">Egison Cheat Sheet</a></li>
+                </ul>
+                <li>Egison Paper</li>
+                <ul>
+                  <li><a href="http://arxiv.org/pdf/1407.0729.pdf" target="_blank">Egison Paper on arXiv.org</a></li>
+                </ul>
+              </ul>
+            </p>
+          </div>
         </div>
         <div class="col-lg-6">
           <h2><i class="fa fa-tree"></i> Try Egison Online</h2>
-          <div  style="height: 260px; border-radius: 10px; background-color:#222; border: 2px solid #222; padding: 0px; margin-bottom: 10px;">
+          <div  style="height: 120px; border-radius: 5px; background-color:#222; border: 2px solid #222; padding: 0px; margin-bottom: 10px;">
             <div id="console" onclick="jqconsole.Enable();"></div>
           </div>
           <a class="btn btn-default btn-primary" href="http://try.egison.org" role="button" target="_blank">Online Egison Tutorial</a>
