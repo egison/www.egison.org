@@ -25,7 +25,7 @@
             You can edit and run the following code. Enjoy Egison programming!
           </p>
 
-          <textarea id="egison-program" name="code"></textarea>
+          <textarea id="egison-program" class="code"><!--# include file="/source/sample/primes.egi" --></textarea>
 
           <button id="run-egison" class="btn btn-lg btn-primary" data-loading-text="Loading..." role="button">Run</button>
 
@@ -51,34 +51,6 @@
     </div><!-- /.container -->
     
     <!--# include file="/templates/footer.html" -->
-    <script>
-      var editor;
-      $.get("/api/source", { path: "sample/primes.egi"}, function(data) {
-        var e = document.getElementById("egison-program");
-        e.value = data.content;
-        editor = CodeMirror.fromTextArea(document.getElementById("egison-program"), {
-          matchBrackets: true,
-          lineNumbers: true,
-          lineWrapping: true,
-          viewportMargin: Infinity
-        });
-      }, "json");
-      
-      $(document).ready(function(){
-        $('.btn').button()
-
-        $('#run-egison').click(function() {
-          $('#run-egison').prop("disabled", true);
-          $('#run-egison').html("Running...");
-          $.post("/api/eval", { program: editor.getValue() }, function(data) {
-            data.output = data.output.replace(/</g, "&lt;");
-            data.output = data.output.replace(/>/g, "&gt;");
-            $('#egison-result').html(data.output);
-            $('#run-egison').html("Run");
-            $('#run-egison').prop("disabled", false);
-          }, "json");
-        });
-      });
-    </script>
+    <!--# include file="/templates/demonstrations-js.html" -->
   </body>
 </html>

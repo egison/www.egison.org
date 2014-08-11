@@ -21,7 +21,7 @@
           Egison makes programming dramatically simple!
         </p>
 
-        <textarea id="egison-program" name="code"></textarea>
+        <textarea id="egison-program" class="code"><!--# include file="/source/sample/demo1.egi" --></textarea>
         
         <div class="container marketing" style="color:#5a5a5a; font-size:14px; line-height:1.428571429; padding-left:0px; padding-right:0px;">
           <div class="col-lg-4" style="padding:0px;">
@@ -186,17 +186,13 @@
     <!--# include file="/templates/footer.html" -->
     <script src="/vendors/jqconsole/lib/jqconsole.js" type="text/javascript" charset="utf-8"></script>
     <script>
-      var editor;
-      $.get("/api/source", { path: "sample/demo1.egi"}, function(data) {
-        var e = document.getElementById("egison-program");
-        e.value = data.content;
-        editor = CodeMirror.fromTextArea(document.getElementById("egison-program"), {
-          matchBrackets: true,
-          viewportMargin: Infinity,
+      $('.code').each(function() {
+        var $this = $(this);
+        var myCodeMirror = CodeMirror.fromTextArea(this, {
           readOnly: true,
           lineWrapping: true
         });
-      }, "json");
+      });
     </script>
     <!--# include file="/templates/console-js.html" -->  </body>
 </html>
