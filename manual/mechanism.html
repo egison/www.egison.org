@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!--# include file="/templates/header.html" -->
+    <!--# include file="/templates/header-exp.html" -->
     <title>Egison Manual - Mechanism of Pattern-Matching</title>
   </head>
   <body data-spy="scroll" data-target=".bs-sidebar" data-offset="0" onload="prettyPrint()">
@@ -21,504 +21,357 @@
 
         <div class="col-md-12" role="main">
 
+<hr/>
+
+<ul>
+  <li><a href="#notions">Notions</a></li>
+  <li><a href="#examples">Examples</a></li>
+  <ul>
+    <li><a href="#example1">Example 1. Non-Linear Patterns</a></li>
+    <li><a href="#example2">Example 2. Or-Patterns</a></li>
+    <li><a href="#example3">Example 3. And-Patterns</a></li>
+    <li><a href="#example4">Example 4. Not-Patterns</a></li>
+    <li><a href="#example5">Example 5. Application of Pattern Function Inside Pattern</a></li>
+  </ul>
+  <li><a href="#infinite-results">Pattern-Matching with Infinite Results</a></li>
+</ul>
+
+<hr/>
+
+
 <h2 id ="notions">Notions</h2>
 
 <p>
-  We need to introduce several notations to explain Egison pattern matching mechanism.<br/>
+  We introduce several notations to explain Egison pattern matching mechanism.<br/>
   Here is a really brief explanation of each notation.<br/>
-  You can understand the meaning of these notations more deeply, examining the examples in the next section.<br/>
+  We will deepen the understanding of these notions, examining the examples in the following sections.
 </p>
 
 <h3>Matching State</h3>
 
-<p>
+<p style="padding-left:20px;">
   Egison's pattern matching is reduction of a collection of <i>matching states</i>.<br/>
-  Each matching state has a stack of <i>matching atoms</i> and <i>matching nodes</i>.<br/>
+  Each matching-state has a stack of <i>matching-trees</i> and data to proceed pattern-matching.
+</p>
+
+<h3>Matching Tree</h3>
+
+<p style="padding-left:20px;">
+  A <i>matching-tree</i> has two kinds of forms, a matching-atom and a matching-node.
 </p>
 
 <h3>Matching Atom</h3>
 
-<p>
-  A matching atom is a tuple of a pattern, target, and matcher.<br/>
+<p style="padding-left:20px;">
+  A matching atom is a tuple of a pattern, a target, and a matcher.
 </p>
 
 <h3>Matching Node</h3>
 
-<p>
-  A matching node is similar with a matching state.<br/>
-  Each matching state has a stack of matching atoms and matching nodes.<br/>
+<p style="padding-left:20px;">
+  A <i>matching-node</i> has a stack of matching-trees as a matching-state.<br/>
+  The structure of matching-node is similar with a matching state.
 </p>
 
 <hr/>
 
 <h2 id="examples">Examples</h2>
 
-<h3>Example 1. Non-linear Pattern</h3>
+<h3 id="example1">Example 1. Non-Linear Patterns</h3>
 
 <p>
-  Let's examine what will happen when Egison evaluates following pattern matching expressions.<br/>
+  Let us examine what will happen when Egison evaluates following pattern matching expressions.<br/>
 </p>
 
-<pre><code>&gt; (test (match-all {2 8 7 2 7} (multiset integer)
-          [&lt;cons $m &lt;cons ,m _&gt;&gt; m]))
-</code></pre>
+<textarea class="code">(match-all {2 8 2} (multiset integer)
+  [<cons $m <cons ,m _>> m])
+;=>{2 2}</textarea>
 
 <p>
-  At first, the initial matching state is generated.<br/>
+  At first, the initial matching-state is generated.
   It is as follow.<br/>
-  Matching atoms are represented with a notation like `<code>[p : ... t : ... m : ...]</code>'.<br/>
-  `<code>p</code>' represents pattern.<br/>
-  `<code>t</code>' represents target.<br/>
-  `<code>m</code>' represents matcher.<br/>
-  `<code>env</code>' is the environment when the evaluation process enters the `<code>match-all</code>' expression.<br/>
+  The data constructor <code>MState</code> takes three arguments, a stack of matching-trees, an environment, and a result in the middle of the pattern-matching.<br/>
+  The <code>env</code> is the environment when the evaluation process enters the <code>match-all</code> expression.<br/>
+  The stack of matching-tree contains a single matching-atom whose pattern, target and matcher are same with the arguments of <code>match-all</code>.
 </p>
 
-<pre><code>MState [stack : {[p : &lt;cons $m &lt;cons ,m _&gt;&gt;
-                  t : {2 8 7 2 7}
-                  m : (multiset integer)]}]
-       [env : env]
-       [result : {}]
-</code></pre>
+<textarea class="code">MState {[<cons $m <cons ,m _>> {2 8 2} (multiset integer)]}
+       env {}</textarea>
 
 <p>
-  The stack of the matching state contains only one matching atom.<br/>
-  This matching atom is reduced with the matcher `<code>(multiset integer)</code>' as specified in the matching atom.<br/>
-  Matching states increases to 5 with this reduction as following.<br/>
+  The stack of the matching state-contains only one matching-atom.<br/>
+  This matching atom is reduced with the matcher <code>(multiset integer)</code> as specified in the matching-atom.<br/>
+  The matching-states increases to 3 with this reduction as follow.<br/>
 </p>
 
-<pre><code>MState [stack : {[p : $m
-                  t : 2
-                  m : integer]
-                 [p : &lt;cons ,m _&gt;
-                  t : {8 7 2 7}
-                  m : (multiset integer)]}]
-       [env : env]
-       [result : {}]
+<textarea class="code">MState {[$m 2 integer]
+        [<cons ,m _> {8 2} (multiset integer)]}
+       env {}
 
-MState [stack : {[p : $m
-                  t : 8
-                  m : integer]
-                 [p : &lt;cons ,m _&gt;
-                  t : {2 7 2 7}
-                  m : (multiset integer)]}]
-       [env : env]
-       [result : {}]
+MState {[$m 8 integer] [<cons ,m _> {2 2} (multiset integer)]}
+       env {}
 
-MState [stack : {[p : $m
-                  t : 7
-                  m : integer]
-                 [p : &lt;cons ,m _&gt;
-                  t : {2 8 2 7}
-                  m : (multiset integer)]}]
-       [env : env]
-       [result : {}]
-
-MState [stack : {[p : $m
-                  t : 2
-                  m : integer]
-                 [p : &lt;cons ,m _&gt;
-                  t : {2 8 7 7}
-                  m : (multiset integer)]}]
-       [env : env]
-       [result : {}]
-
-MState [stack : {[p : $m
-                  t : 7
-                  m : integer]
-                 [p : &lt;cons ,m _&gt;
-                  t : {2 8 7 2}
-                  m : (multiset integer)]}]
-       [env : env]
-       [result : {}]
-</code></pre>
+MState {[$m 2 integer] [<cons ,m _> {2 8} (multiset integer)]}
+       env {}</textarea>
 
 <p>
   We focus on the first matching state, for now.<br/>
-  It is following one.
+  It is the following one.
 </p>
 
-<pre><code>MState [stack : {[p : $m
-                  t : 2
-                  m : integer]
-                 [p : &lt;cons ,m _&gt;
-                  t : {8 7 2 7}
-                  m : (multiset integer)]}]
-       [env : env]
-       [result : {}]
-</code></pre>
+<textarea class="code">MState {[$m 2 integer]
+        [<cons ,m _> {8 2} (multiset integer)]}
+       env {}</textarea>
 
 <p>
-  This matching state is reduced as follow in the next reduction step.<br/>
-  The matcher of the matching atom of the top of the stack is changed to `<code>something</code>' from `<code>integer</code>'.<br/>
-  `<code>something</code>' is the built-in matcher of Egison.<br/>
+  This matching-state is reduced as follow in the next reduction step.<br/>
+  The matcher of the matching-atom of the top of the stack is changed to <code>something</code> from <code>integer</code>.<br/>
+  <code>something</code> is the built-in matcher of Egison.<br/>
   It can match with a wildcard or a pattern variable.<br/>
 </p>
 
-<pre><code>MState [stack : {[p : $m
-                  t : 2
-                  m : something]
-                 [p : &lt;cons ,m _&gt;
-                  t : {8 7 2 7}
-                  m : (multiset integer)]}]
-       [env : env]
-       [result : {}]
-</code></pre>
-
+<textarea class="code">MState {[$m 2 something]
+        [<cons ,m _> {8 2} (multiset integer)]}
+       env {}</textarea>
 
 <p>
-  This matching state is reduced as follow in the next reduction step.<br/>
-  The matching atom of the top of the stack is popped out, and a new binding is added to the result of pattern matching.<br/>
+  This matching-state is reduced as follow in the next reduction step.<br/>
+  The matching atom of the top of the stack is popped out, and a new binding <code>[m 2]</code> is appended to the result of the middle of pattern-matching.<br/>
+  <code>something</code> can only append a new binding to the result of pattern-matching.
 </p>
 
-<pre><code>MState [stack : {[p : &lt;cons ,m _&gt;
-                  t : {8 7 2 7}
-                  m : (multiset integer)]}]
-       [env : env]
-       [result : {[m 2]}]
-</code></pre>
+<textarea class="code">MState {[<cons ,m _> {8 2} (multiset integer)]}
+       env {[m 2]}</textarea>
 
 <p>
-  This matching state is reduced as follow in the next reduction step.<br/>
-  The expression in the value pattern `<code>,m</code>' is evaluated with `<code>env</code>' the environment of the matching state, extended with `<code>{[m 2]}</code>' the result of pattern matching in progress.<br/>
+  This matching-state is reduced as follow in the next reduction step.<br/>
+  The matching-states increases to 2 with this reduction.
 </p>
 
-<pre><code>MState [stack : {[p : ,m
-                  t : 8
-                  m : integer]
-                 [p : _
-                  t : {7 2 7}
-                  m : (multiset integer)]}]
-       [env : env]
-       [result : {[m 2]}]
+<textarea class="code">MState {[,m 2 integer]
+        [_ {8} (multiset integer)]}
+       env {[m 2]}
 
-MState [stack : {[p : ,m
-                  t : 7
-                  m : integer]
-                 [p : _
-                  t : {8 2 7}
-                  m : (multiset integer)]}]
-       [env : env]
-       [result : {[m 2]}]
-
-MState [stack : {[p : ,m
-                  t : 2
-                  m : integer]
-                 [p : _
-                  t : {8 7 7}
-                  m : (multiset integer)]}]
-       [env : env]
-       [result : {[m 2]}]
-
-MState [stack : {[p : ,m
-                  t : 7
-                  m : integer]
-                 [p : _
-                  t : {8 7 2}
-                  m : (multiset integer)]}]
-       [env : env]
-       [result : {[m 2]}]
-</code></pre>
+MState {[,m 8 integer]
+        [_ {2} (multiset integer)]}
+       env {[m 2]}</textarea>
 
 <p>
-  All matching process except third matching state fails and vanishes in the next step.<br/>
-  Third matching state is reduced as follow.<br/>
-  The matching atom of the top of the stack is popped out.<br/>
+  In the above matching-states, <code>,m</code> is pattern-matched with <code>8</code> and <code>2</code> respectively as <code>integer</code>.<br/>
+  When we do pattern-matching with the value pattern, the result of the middle of pattern-matching is used to evaluate it.<br/>
+  Therefore, in this case, <code>m</code> is evaluated to <code>2</code>.<br/>
+  The first matching-state fails to pattern-match.<br/>
+  The second matching-state succeeds in pattern-matching and be reduced as follow in the next reduction step.
 </p>
 
-<pre><code>MState [stack : {[p : _
-                  t : {8 7 7}
-                  m : (multiset integer)]}]
-       [env : env]
-       [result : {[m 2]}]
-</code></pre>
+<textarea class="code">MState {[_ {8} (multiset integer)]}
+       env {[m 2]}</textarea>
 
 <p>
-  This matching state is reduced as follow.<br/>
-  The stack is empty now.<br/>
-  This is the end of pattern matching.<br/>
-  The result of pattern matching of this matching state is `<code>{[m 2]}</code>'.<br/>
+  This matching-state is reduced as follow in the next reduction step.<br/>
+  The pattern is a wildcard and matches with any object.<br/>
+  No new binding is appended to the result of pattern-matching.
 </p>
 
-<pre><code>MState [stack : {}
-       [env : env]
-       [result : {[m 2]}]
-</code></pre>
+<textarea class="code">MState {}
+       env {[m 2]}</textarea>
 
 <p>
-  The result of other matching states which we ignored at second step is `<code>{[m 7]}</code>'.<br/>
-  Therefore, the result of the whole pattern matching is `<code>{[m 2]}</code>' and `<code>{[m 7]}</code>'.<br/>
+  When the matching-tree stack is empty, the reduction finish.<br/>
+  This result of pattern-matching <code>{[m 2]}</code> is added to the final result.
 </p>
 
-<h3>Example 2. Application of Pattern Function Inside Pattern</h3>
+<h3 id="example2">Example 2. Or-Patterns</h3>
 
-<pre><code>(define $twin
+<p>
+  Let us examine what will happen when our system evaluates the following pattern-matching expression.
+</p>
+
+<textarea class="code">(match-all {1 1 2} (list integer)
+   [<cons $m (| <nil> <cons ,m _>)> m])
+;=>{1}</textarea>
+
+<p>
+  Our system reaches the following matching-state.
+</p>
+
+<textarea class="code">MState {[(| <nil> <cons ,m _>) {1 2} (list integer)]}
+       env {[m 1]}</textarea>
+
+<p>
+  This matching-state is reduced as follow in the next reduction step.
+</p>
+
+<textarea class="code">MState {[<nil> {1 2} (list integer)]} env {[m 1]}
+
+MState {[<cons ,m _> {1 2} (list integer)]}
+       env {[m 1]}</textarea>
+
+<h3 id="example3">Example 3. And-Patterns</h3>
+
+<p>
+  Let us examine what will happen when our system evaluates the following pattern-matching expression.
+</p>
+
+<textarea class="code">(match-all {1 2 3} (list integer)
+   [<cons $n (& <cons _ _> $rs)> [n rs]])
+;=>{[1 {2 3}]}</textarea>
+
+<p>
+  Our system reaches the following matching-state.
+</p>
+
+<textarea class="code">MState {[(& <cons _ _> $rs) {2 3} (list integer)]}
+     env {[n 1]}</textarea>
+
+<p>
+  This matching-state is reduced as follow in the next reduction step.
+</p>
+
+<textarea class="code">MState {[<cons _ _> {2 3} (list integer)]
+        [$rs        {2 3} (list integer)]}
+       env {[n 1]}</textarea>
+
+<h3 id="example4">Example 4. Not-Patterns</h3>
+
+<p>
+  Let us examine what will happen when our system evaluates the following pattern-matching expression.
+</p>
+
+<textarea class="code">(match-all {2 8 2} (multiset integer)
+   [<cons $m (& ^<cons ,m _> $rs)> [m rs]])
+;=>{[8 {2 2}]}</textarea>
+
+<p>
+  Our system reaches the following matching-state.
+</p>
+
+<textarea class="code">MState {[^<cons ,m _> {2 2} (multiset integer)]
+        [$rs          {2 2} (multiset integer)]}
+       env {[m 8]}</textarea>
+
+<p>
+  When our system reaches the matching-state whose top matching-atom is a not-pattern,
+  our system generates a new matching-state which contains only the matching-atom with the not-pattern as follow.
+  All information of the matching-state and the matching-nodes except about the rest of matching-tree stack are retained.
+</p>
+
+<textarea class="code">MState {[<cons ,m _> {2 2} (multiset integer)]}
+       env {[m 8]}</textarea>
+
+<p>
+  Our system proceeds the pattern-matching on the new generated matching-state,
+  and if it fails pattern-matching our system pops out the matching-atom of the not-pattern from the original matching-state as follow and proceeds the pattern-matching.
+  Otherwise our system fails the pattern-matching.
+</p>
+
+<p>
+  In this case, the above matching-state succeeds pattern-matching.
+  Therefore, the matching-state with the not-pattern is reduced as follow.
+</p>
+
+<textarea class="code">MState {[$rs {2 2} (multiset integer)]}
+       env {[m 8]}</textarea>
+
+<h3 id="example5">Example 5. Application of Pattern Function Inside Pattern</h3>
+
+<p>
+  We explain how our system deals with modularization of patterns with this example.<br/>
+  Let us examine what will happen when our system evaluates the following pattern-matching expression.
+</p>
+
+<textarea class="code">(define $twin
   (pattern-function [$pat1 $pat2]
-    &lt;cons (& $pat pat1)
-     &lt;cons ,pat
-      pat2&gt;&gt;))
+    <cons (& $pat pat1)
+     <cons ,pat
+      pat2>>))
 
-(test (match-all {1 2 1 3} (multiset integer)
-        [&lt;cons $m (twin $n _)&gt; [m n]]))
-</code></pre>
-
-<p>
-  The initial matching state is as follow.<br/>
-</p>
-
-<pre><code>MState [stack : {[p : &lt;cons $m (twin $n _)&gt;
-                  t : {1 2 1 3}
-                  m : (multiset integer)]}]
-       [env : env]
-       [result : {}]
-</code></pre>
+(match-all {1 2 1 3} (multiset integer)
+  [<cons $m (twin $n _)> [m n]])
+;=>{[2 1] [3 1] [2 1] [3 1]}</textarea>
 
 <p>
-  This matching state is reduced as follow.<br/>
+  Our system reaches the following matching-state.
 </p>
 
-<pre><code>MState [stack : {[p : $m
-                  t : 1
-                  m : integer]
-                 [p : (twin $n _)
-                  t : {2 1 3}
-                  m : (multiset integer)]}]
-       [env : env]
-       [result : {}]
-
-MState [stack : {[p : $m
-                  t : 2
-                  m : integer]
-                 [p : (twin $n _)
-                  t : {1 1 3}
-                  m : (multiset integer)]}]
-       [env : env]
-       [result : {}]
-
-MState [stack : {[p : $m
-                  t : 1
-                  m : integer]
-                 [p : (twin $n _)
-                  t : {1 2 3}
-                  m : (multiset integer)]}]
-       [env : env]
-       [result : {}]
-
-MState [stack : {[p : $m
-                  t : 3
-                  m : integer]
-                 [p : (twin $n _)
-                  t : {1 2 1}
-                  m : (multiset integer)]}]
-       [env : env]
-       [result : {}]
-</code></pre>
+<textarea class="code">MState {[(twin $n _) {1 1 3} (multiset integer)]}
+       env {[m 2]}</textarea>
 
 <p>
-  We focused on second matching state, because first matching state fails and vanishes.<br/>
+  This matching-state is reduced as follow in the next reduction step.
+  A matching-node has extra information, a <i>pattern-environment</i>.
+  In this case, the pattern-environment is <code>{[pat1 $n] [pat2 _]}</code>.
 </p>
 
-<pre><code>MState [stack : {[p : $m
-                  t : 2
-                  m : integer]
-                 [p : (twin $n _)
-                  t : {1 1 3}
-                  m : (multiset integer)]}]
-       [env : env]
-       [result : {}]
-</code></pre>
+<textarea class="code">MState {(MNode {[<cons (& $pat pat1) <cons ,pat pat2>>
+                 {1 1 3} (multiset integer)]}
+               env1 {} {[pat1 $n] [pat2 _]})}
+       env {[m 2]}</textarea>
 
 <p>
-  This matching state is reduced as follow.<br/>
+  Our system reaches the following matching-state.
+  When the top of the matching-tree stack of the matching-state is a matching-node, our system pops the matching-atom of the top of the matching-tree stack of the matching-node.
+  If the top of the matching-tree stack of the matching-node is a matching-node again, our system pops out the matching-atom from the top of the matching-tree stack of that matching-node.
 </p>
 
-<pre><code>MState [stack : {[p : $m
-                  t : 2
-                  m : something]
-                 [p : (twin $n _)
-                  t : {1 1 3}
-                  m : (multiset integer)]}]
-       [env : env]
-       [result : {}]
-</code></pre>
+<textarea class="code">MState {(MNode {[pat1 1 integer]
+                [<cons ,pat pat2> {1 3} (multiset integer)]}
+               env1 {[pat 1]} {[pat1 $n] [pat2 _]})}
+       env {[m 2]}</textarea>
+  
+<p>
+  This matching-state is reduced as follow in the next reduction step.<br/>
+  <code>pat1</code> is called a <i>variable-pattern</i>.<br/>
+  It can appear only in the body of pattern-functions.<br/>
+  When the matching-atom whose pattern is a variable-pattern is popped out,
+  our system gets what pattern is bound to the variable-pattern from the pattern-environment,
+  and push a new matching-atom to the matching-tree stack of the one level upper matching-node or matching-state.
+</p>
+
+<textarea class="code">MState {[$n 1 integer]
+        (MNode {[<cons ,pat pat2> {1 3} (multiset integer)]}
+               env1 {[pat 1]} {[pat1 $n] [pat2 _]})}
+       env {[m 2]}</textarea>
 
 <p>
-  This matching state is reduced as follow.<br/>
+  The arguments of a pattern-function are handled in special way as above.
+  This is the reason why the pattern-function can take only patterns.
+  A pattern must be bound to a variable-pattern.
 </p>
-
-<pre><code>MState [stack : {[p : (twin $n _)
-                  t : {1 1 3}
-                  m : (multiset integer)]}]
-       [env : env]
-       [result : {[m 2]}]
-</code></pre>
-
-<p>
-  This matching state is reduced as follow.<br/>
-</p>
-
-<pre><code>MState [stack : {(MNode [stack : {[p : &lt;cons (& $pat pat1) &lt;cons ,pat pat2&gt;&gt;
-                                   t : {1 1 3}
-                                   m : (multiset integer)]}]
-                        [penv : {[pat1 $n] [pat2 _]}]
-                        [env : env1]
-                        [result : {}])}]
-       [env : env]
-       [result : {[m 2]}]
-</code></pre>
-
-<p>
-  This matching state is reduced as follow.<br/>
-</p>
-
-<pre><code>MState [stack : {(MNode [stack : {[p : (& $pat pat1)
-                                   t : 1
-                                   m : integer]
-                                  [p : &lt;cons ,pat pat2&gt;
-                                   t : {1 3}
-                                   m : (multiset integer)]}]
-                        [penv : {[pat1 $n] [pat2 _]}]
-                        [env : env1]
-                        [result : {}])}]
-       [env : env]
-       [result : {[m 2]}]
-
-MState [stack : {(MNode [stack : {[p : (& $pat pat1)
-                                   t : 1
-                                   m : integer]
-                                  [p : &lt;cons ,pat pat2&gt;
-                                   t : {1 3}
-                                   m : (multiset integer)]}]
-                        [penv : {[pat1 $n] [pat2 _]}]
-                        [env : env1]
-                        [result : {}])}]
-       [env : env]
-       [result : {[m 2]}]
-
-MState [stack : {(MNode [stack : {[p : (& $pat pat1)
-                                   t : 3
-                                   m : integer]
-                                  [p : &lt;cons ,pat pat2&gt;
-                                   t : {1 1}
-                                   m : (multiset integer)]}]
-                        [penv : {[pat1 $n] [pat2 _]}]
-                        [env : env1]
-                        [result : {}])}]
-       [env : env]
-       [result : {[m 2]}]
-</code></pre>
-
-<p>
-  We focused on first matching state.<br/>
-</p>
-
-<pre><code>MState [stack : {(MNode [stack : {[p : (& $pat pat1)
-                                   t : 1
-                                   m : integer]
-                                  [p : &lt;cons ,pat pat2&gt;
-                                   t : {1 3}
-                                   m : (multiset integer)]}]
-                        [penv : {[pat1 $n] [pat2 _]}]
-                        [env : env1]
-                        [result : {}])}]
-       [env : env]
-       [result : {[m 2]}]
-</code></pre>
-
-<p>
-  This matching state is reduced as follow.<br/>
-  The <i>and pattern</i> is expanded.<br/>
-</p>
-
-<pre><code>MState [stack : {(MNode [stack : {[p : $pat
-                                   t : 1
-                                   m : integer]
-                                  [p : pat1
-                                   t : 1
-                                   m : integer]
-                                  [p : &lt;cons ,pat pat2&gt;
-                                   t : {1 3}
-                                   m : (multiset integer)]}]
-                        [penv : {[pat1 $n] [pat2 _]}]
-                        [env : env1]
-                        [result : {}])}]
-       [env : env]
-       [result : {[m 2]}]
-</code></pre>
-
-<p>
-  This matching state is reduced as follow.<br/>
-  The matcher of the matching atom is changed to `<code>something</code>' from `<code>integer</code>'.<br/>
-</p>
-
-<pre><code>MState [stack : {(MNode [stack : {[p : pat1
-                                   t : 1
-                                   m : integer]
-                                  [p : &lt;cons ,pat pat2&gt;
-                                   t : {1 3}
-                                   m : (multiset integer)]}]
-                        [penv : {[pat1 $n] [pat2 _]}]
-                        [env : env1]
-                        [result : {[pat 1]}])}]
-       [env : env]
-       [result : {[m 2]}]
-</code></pre>
-
-<p>
-  This matching state is reduced as follow.<br/>
-  When the pattern of the matching atom of the top of the matching node is a variable, the matching atom of the top of the stack of the matching node is pulled out, and a new matching atom is pushed to the stack of the matching state.<br/>
-  The value of the variable is refer from `<code>penv</code>' of the matching node.<br/>
-</p>
-
-<pre><code>MState [stack : {[p : $n
-                  t : 1
-                  m : integer]
-                 (MNode [stack : {[p : &lt;cons ,pat pat2&gt;
-                                   t : {1 3}
-                                   m : (multiset integer)]}]
-                        [penv : {[pat1 $n] [pat2 _]}]
-                        [env : env1]
-                        [result : {[pat 1]}])}]
-       [env : env]
-       [result : {[m 2]}]
-</code></pre>
-
-<p>
-  This matching state is reduced as follow.<br/>
-  The matching atom of the top of the stack is popped out, and a new binding is added to the result of pattern matching.<br/>
-</p>
-
-<pre><code>MState [stack : {[p : $n
-                  t : 1
-                  m : something]
-                 (MNode [stack : {[p : &lt;cons ,pat pat2&gt;
-                                   t : {1 3}
-                                   m : (multiset integer)]}]
-                        [penv : {[pat1 $n] [pat2 _]}]
-                        [env : env1]
-                        [result : {[pat 1]}])}]
-       [env : env]
-       [result : {[m 2]}]
-</code></pre>
-
-<p>
-  This matching state is reduced as follow.<br/>
-</p>
-
-<pre><code>MState [stack : {(MNode [stack : {[p : &lt;cons ,pat pat2&gt;
-                                   t : {1 3}
-                                   m : (multiset integer)]}]
-                        [penv : {[pat1 $n] [pat2 _]}]
-                        [env : env1]
-                        [result : {[pat 1]}])}]
-       [env : env]
-       [result : {[m 2] [n 1]}]
-</code></pre>
 
 <p>
   I'll stop the explanation of pattern matching step here, for now.<br/>
   I've explained most of the essential points, already.<br/>
 </p>
 
+<h2 id="infinite-results">Pattern-Matching with Infinite Results</h2>
+
+<p>
+  We explain how our system executes pattern-matching which has infinite results.
+  Let us examine what will happen when our system evaluate the following pattern-matching expression.
+</p>
+
+<textarea class="code">(take 10 (match-all nat (set integer) [<cons $m <cons $n _>> [m n]]))
+{[1 1] [1 2] [2 1] [1 3] [2 2] [3 1] [1 4] [2 3] [3 2] [4 1]}</textarea>
+
+<p>
+  The following picture is the reduction tree of matching-states when we execute the pattern-matching above.
+  Rectangles stand for matching-states.
+  The rectangle at the upper left is the initial matching-state.
+  Circles stand for final matching-states that succeed pattern-matching.
+</p>
+
+<p>
+  The width of a reduction tree of matching-states can be infinite because there are cases that a matching-state is reduced to infinite matching-states.
+  The depth of a reduction tree also can be infinite if we use a recursive pattern-function in a pattern.
+  We need to think on the order of reduction to examine all nodes of a reduction tree.
+  The numbers on rectangles and circles denote the order of reduction.
+  If we see a reduction tree obliquely, it can be regarded as a binary tree.
+  Therefore, we can trace all nodes of reduction trees if we do breadth-first search on the tree, though it will use a lot of memory.
+</p>
+
+<img src="/images/reduction.png" width="500px">
+  
         </div>
 
       </div><!--/row-->
@@ -532,5 +385,14 @@ MState [stack : {(MNode [stack : {[p : (& $pat pat1)
     </div><!-- /.container -->
     
     <!--# include file="/templates/footer.html" -->
+    <script>
+      $('.code').each(function() {
+        var $this = $(this);
+        var myCodeMirror = CodeMirror.fromTextArea(this, {
+          readOnly: true,
+          lineWrapping: true
+        });
+      });
+    </script>
   </body>
 </html>
