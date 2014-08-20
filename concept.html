@@ -41,7 +41,7 @@
           </p>
           <hr/>
 
-          <h2>Syntax of pattern-matching</h2>
+          <h2>Syntax of Pattern-Matching</h2>
           
           <p>
             Let us introduce the syntax of the <code>match-all</code> expression.<br/>
@@ -72,7 +72,7 @@
   x:xs -> (x, xs)   -- Match-Clause: Pattern -> Body
 -- =>[(1,[2,3])]    -- Result</textarea>
           
-          <h2>Modularization of the way of pattern-matching</h2>
+          <h2>Modularization of the Way of Pattern-Matching</h2>
           
           <p>
             We can define the way of pattern-matching for each data types.<br/>
@@ -143,7 +143,7 @@ matchAll [1, 2, 3] as (Multiset Integer) of
             Let us emphasize that <b>we can define matchers such as <code>list</code>, <code>multiset</code> and <code>set</code> and pattern-constructors such as <code>cons</code> and  <code>join</code> by ourselves</b>.
           </p>
 
-          <h2>Non-linear patterns</h2>
+          <h2>Non-Linear Patterns</h2>
           
           <p>
             We can handle multiple occurrence of same variables in a pattern.
@@ -183,7 +183,7 @@ matchAll [1, 2, 3] as (Multiset Integer) of
             Therefore, we can do pattern-matching against not only integers and lists but also multisets, sets, multisets of multisets and so on.
           </p>
             
-          <h2>Lexical scoping of patterns</h2>
+          <h2>Lexical Scoping of Patterns</h2>
           
           <p>
             We can modularize useful patterns with <i>pattern-functions</i>, functions that receive patterns and return a pattern.<br/>
