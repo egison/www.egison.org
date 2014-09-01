@@ -1,0 +1,140 @@
+<textarea class="code">(define $poker-hands
+  (lambda [$cs]
+    (match cs (multiset card)
+      {[<cons <card $s $n>
+         <cons <card ,s ,(- n 1)>
+          <cons <card ,s ,(- n 2)>
+           <cons <card ,s ,(- n 3)>
+            <cons <card ,s ,(- n 4)>
+             <nil>>>>>>
+        <Straight-Flush>]
+       [<cons <card _ $n>
+         <cons <card _ ,n>
+          <cons <card _ ,n>
+            <cons <card _ ,n>
+              <cons _
+                <nil>>>>>>
+        <Four-of-Kind>]
+       [<cons <card _ $m>
+         <cons <card _ ,m>
+          <cons <card _ ,m>
+           <cons <card _ $n>
+            <cons <card _ ,n>
+              <nil>>>>>>
+        <Full-House>]
+       [<cons <card $s _>
+         <cons <card ,s _>
+           <cons <card ,s _>
+             <cons <card ,s _>
+               <cons <card ,s _>
+                 <nil>>>>>>
+        <Flush>]
+       [<cons <card _ $n>
+         <cons <card _ ,(- n 1)>
+          <cons <card _ ,(- n 2)>
+           <cons <card _ ,(- n 3)>
+            <cons <card _ ,(- n 4)>
+             <nil>>>>>>
+        <Straight>]
+       [<cons <card _ $n>
+         <cons <card _ ,n>
+          <cons <card _ ,n>
+           <cons _
+            <cons _
+             <nil>>>>>>
+        <Three-of-Kind>]
+       [<cons <card _ $m>
+         <cons <card _ ,m>
+          <cons <card _ $n>
+            <cons <card _ ,n>
+             <cons _
+               <nil>>>>>>
+        <Two-Pair>]
+       [<cons <card _ $n>
+         <cons <card _ ,n>
+          <cons _
+           <cons _
+            <cons _
+             <nil>>>>>>
+        <One-Pair>]
+       [<cons _
+         <cons _
+          <cons _
+           <cons _
+            <cons _
+             <nil>>>>>>
+        <Nothing>]})))</textarea>
+
+<h2>The Second Moment - Pattern-Matching with Infinite Results</h2>
+
+<p>
+  The second moment is when I succeeded in running <a target="_blank" href="/demonstrations/sequence.html">the program that enumerates all twin primes with pattern-matching against the infinite prime numbers list</a>.
+</p>
+
+<p>
+  Do you think the following code is beautiful?
+  We had needed some new ideas to run the following code.
+</p>
+
+<textarea class="code">(define $twin-primes
+  (match-all primes (list integer)
+    [<join _ <cons $p <cons ,(+ p 2) _>>>
+     [p (+ p 2)]]))
+
+;; Enumerate first 10 twin primes
+(take 10 twin-primes)
+;=>{[3 5] [5 7] [11 13] [17 19] [29 31] [41 43] [59 61] [71 73] [101 103] [107 109]}</textarea>
+
+<h2>The Third Moment - Modularization of Patterns</h2>
+
+<p>
+  The third moment is when I succeeded in running <a target="_blank" href="/demonstrations/mahjong.html">the program that determines whether a mahjong hand is finished or not</a>.<br/>
+</p>
+
+<p>
+  Modularization of patterns keeping lexical scoping was really difficult.<br/>
+  When I got an idea of pattern-functions that only take patterns and return a pattern and succeeded in designing the pattern modularization mechanism, I really felt I've achieved my second historical work.
+</p>
+
+<textarea class="code">(define $twin
+  (pattern-function [$pat1 $pat2]
+    <cons (& $pat pat1)
+     <cons ,pat
+      pat2>>))
+
+(define $shuntsu
+  (pattern-function [$pat1 $pat2]
+    <cons (& <num $s $n> pat1)
+     <cons <num ,s ,(+ n 1)>
+      <cons <num ,s ,(+ n 2)>
+       pat2>>>))
+
+(define $kohtsu
+  (pattern-function [$pat1 $pat2]
+    <cons (& $pat pat1)
+     <cons ,pat
+      <cons ,pat
+       pat2>>>))
+
+(define $agari?
+  (match-lambda (multiset hai)
+    {[(twin $th_1
+       (| (shuntsu $sh_1 (| (shuntsu $sh_2 (| (shuntsu $sh_3 (| (shuntsu $sh_4 <nil>)
+                                                                (kohtsu $kh_1 <nil>)))
+                                              (kohtsu $kh_1 (kohtsu $kh_2 <nil>))))
+                            (kohtsu $kh_1 (kohtsu $kh_2 (kohtsu $kh_3 <nil>)))))
+          (kohtsu $kh_1 (kohtsu $kh_2 (kohtsu $kh_3 (kohtsu $kh_4 <nil>)))))
+       (twin $th_2 (twin $th_3 (twin $th_4 (twin $th_5 (twin $th_6 (twin $th_7 <nil>)))))))
+      #t]
+     [_ #f]}))</textarea>
+
+<h2>Conclusion</h2>
+
+<p>
+  Creating a new programming language with new syntax that simplifies programs essentially is one of the most interesting work in Computer Science.
+</p>
+
+<p>
+  I created Egison to create AI that automatically build mathematical theories and generate programs.<br/>
+  The next exciting moment will be the moment I achieve this work.
+</p>

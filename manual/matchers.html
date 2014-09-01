@@ -44,11 +44,15 @@ First of all, we show the formal definition of <code>matcher</code>.
 </p>
 
 <pre><code>&lt;matcher-sentence&gt;          := `(' "matcher" `{' &lt;primitive-pattern-clause&gt;* `}' `)'
+
 &lt;primitive-pattern-clause&gt;  := `[' &lt;primitive-pp&gt; `[' &lt;matcher&gt;* `]' `{' &lt;primitive-data-clause&gt;* `}' `]'
+
 &lt;primitive-data-clause&gt;     := `[' &lt;primitive-dp&gt; &lt;body&gt; `]'
+
 &lt;primitive-pp&gt;              := `$'                                             (primitive-pattern-variable)
                              | `,$' &lt;identifier&gt;                               (value-pattern-pattern)
                              |  `&lt;' &lt;identifier&gt; &lt;primitive-pp&gt;* `&gt;'           (primitive-inductive-pattern)
+
 &lt;primitive-dp&gt;              := `_'                                             (wildcard)
                              | `$' &lt;identifier&gt;                                (primitive-data-variable)
                              | `&lt;' &lt;Identifier&gt; &lt;primitive-dp&gt;* `&gt;'            (primitive-inductive-data)
@@ -314,8 +318,6 @@ Please check the chapter <i><a href="./mechanism.html">Pattern Matching Mechanis
 </p>
         </div>
 
-        </div>
-
       </div><!--/row-->
     
       <hr class="divider">
@@ -327,5 +329,14 @@ Please check the chapter <i><a href="./mechanism.html">Pattern Matching Mechanis
     </div><!-- /.container -->
     
     <!--# include file="/templates/footer.html" -->
+    <script>
+      $('.code').each(function() {
+        var $this = $(this);
+        var myCodeMirror = CodeMirror.fromTextArea(this, {
+          readOnly: true,
+          lineWrapping: true
+        });
+      });
+    </script>
   </body>
 </html>
