@@ -132,9 +132,16 @@
         </div>
         <div class="col-lg-6">
           <h2><i class="fa fa-tree"></i> Try Egison Online</h2>
-          <div  style="height: 120px; border-radius: 5px; background-color:#222; border: 2px solid #222; padding: 0px; margin-bottom: 10px;">
-            <div id="console" onclick="jqconsole.Enable();"></div>
-          </div>
+          <a target="_blank" href="http://console.egison.org">
+            <!-- console start -->
+            <div id="console" style="height: 120px; border-radius: 5px; background-color:#222; padding: 0px; margin-bottom: 10px;"><div style="top: 0px; left: 0px; right: 0px; bottom: 0px; position: absolute; overflow: auto;"><pre class="jqconsole jqconsole-blurred" style="margin: 0px; position: relative; min-height: 100%; box-sizing: border-box;"><span class="jqconsole-header"><span class="">Online Egison Interprter Version 3.3.8 (C) 2011-2014 Satoshi Egi
+Welcome to Egison Interpreter!
+</span></span><span class="jqconsole-output"><span class="">** Information **
+We are supporting Emacs key bindings to move cursor.
+*****************
+</span></span><span class="jqconsole-prompt "><span></span><span><span>&gt; </span><span></span><span class="jqconsole-cursor" style="color: transparent; display: inline; z-index: 0; position: absolute;">&nbsp;</span><span style="position: relative;"></span></span><span></span></span></pre><div style="position: absolute; width: 1px; height: 0px; overflow: hidden; left: 5px; top: 80px;"><textarea wrap="off" autocapitalize="off" autocorrect="off" spellcheck="false" autocomplete="off" style="position: absolute; width: 2px;"></textarea></div></div></div>
+            <!-- console end -->
+          </a>
           <a class="btn btn-default btn-primary" href="http://console.egison.org" role="button" target="_blank">Online Egison Interpreter</a>
           <a class="btn btn-default btn-primary" href="http://try.egison.org" role="button" target="_blank">Online Egison Tutorial</a>
           <a class="btn btn-default btn-primary" href="/demonstrations/poker-hands.html" role="button">Online Demonstrations &raquo;</a>
@@ -226,7 +233,6 @@
     </div><!-- /.container -->
     
     <!--# include file="/templates/footer.html" -->
-    <script src="/vendors/jqconsole/lib/jqconsole.js" type="text/javascript" charset="utf-8"></script>
     <script>
       $('.code').each(function() {
         var $this = $(this);
@@ -236,5 +242,5 @@
         });
       });
     </script>
-    <!--# include file="/templates/console-js.html" -->  </body>
+</body>
 </html>
