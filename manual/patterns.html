@@ -35,7 +35,7 @@
 <hr/>
 
 <ul>
-  <li><a href="#patterns">Various Patterns</a></li>
+  <li><a href="#patterns">Patterns</a></li>
   <ul>
     <li><a href="#wildcard">Wildcard</a></li>
     <li><a href="#pattern-variables">Pattern Variables</a></li>
@@ -51,18 +51,18 @@
   </ul>
   <li><a href="#syntax">Syntax Related with Patterns</a></li>
   <ul>
-    <li><a href="#match"><code>match</code> expressions</a></li>
-    <li><a href="#match-all"><code>match-all</code> expressions</a></li>
-    <li><a href="#match-lambda"><code>match-lambda</code> expressions</a></li>
-    <li><a href="#match-all-lambda"><code>match-all-lambda</code> expressions</a></li>
-    <li><a href="#pattern-function"><code>pattern-function</code> expressions</a></li>
-    <li><a href="#matcher"><code>matcher</code> expressions</a></li>
+    <li><a href="#match-all"><code>match-all</code> Expressions</a></li>
+    <li><a href="#match"><code>match</code> Expressions</a></li>
+    <li><a href="#match-lambda"><code>match-lambda</code> Expressions</a></li>
+    <li><a href="#match-all-lambda"><code>match-all-lambda</code> Expressions</a></li>
+    <li><a href="#pattern-function"><code>pattern-function</code> Expressions</a></li>
+    <li><a href="#matcher"><code>matcher</code> Expressions</a></li>
   </ul>
 </ul>
 
 <hr/>
 
-<h2 id="patterns">Various Patterns</h2>
+<h2 id="patterns">Patterns</h2>
 
 <p>
   In the following, we show various patterns of Egison.
@@ -71,7 +71,8 @@
 <h3 id="wildcard">Wildcard</h3>
 
 <p>
-  Here, we explain the special pattern <b><i>wildcard</i></b> <code>_</code>.
+  Here, we explain the special pattern <i>wildcard</i>.
+  <code>_</code> represents a wildcard.
   Any object matches this pattern.
 </p>
 
@@ -80,14 +81,16 @@
 
 <h3 id="pattern-variables">Pattern Variables</h3>
 
-<pre><code>  $<i>identifier</i></code></pre>
+<pre><code>$<i>identifier</i></code></pre>
 
 <p>
 We can bind values to variables in pattern-matching.
 For this purpose, we use <b><i>pattern variables</i></b>.
 Any object matches this pattern, and then the variable is locally bound to the object.
+<!--
 In particular, we can use the pattern in inductive patterns.
 This usage allows us to deconstruct an object.
+-->
 </p>
 
 <textarea class="code">(match #t bool {[$x x]});=>#t
@@ -98,7 +101,7 @@ This usage allows us to deconstruct an object.
 
 <h3 id="indexed-pattern-variables">Indexed Pattern Variables</h3>
 
-<pre><code>  $<i>identifier</i>_<i>integer</i> </code></pre>
+<pre><code>$<i>identifier</i>_<i>integer</i> </code></pre>
 
 <p>
 <b><i>Indexed pattern variables</i></b> are special pattern variables.
@@ -107,20 +110,24 @@ In this pattern, the <i>variable</i> is regarded as an <a href="./basics.html#ha
 
 <textarea class="code">(match 1 something {[$x_1 x]});=>{| [1 1] |}
 
-(match {1 2 3} (list integer) {[<cons $a_1 $a_2> a]})
+(match {1 2 3} (list integer) {[<cons $x_1 $x_2> x]})
 ;=> {| [1 1] [2 {2 3}] |}</textarea>
 
 <h3 id="inductive-patterns">Inductive Patterns</h3>
 
-<pre><code>  &lt;<i>identifier</i> <i>value</i> ...&gt;</code></pre>
+<pre><code>&lt;<i>identifier</i> <i>value</i> ...&gt;</code></pre>
 
 <p>
-  As a datum, a pattern can be defined inductively.
-  Notation of inductive patterns is similar to ones of <a href="basics.html#inductive-data">inductive data</a>.
+  Patterns can be defined inductively.
+  The notation of inductive patterns is similar to that of <a href="basics.html#inductive-data">inductive data</a>.
   The exception is, in inductive patterns, the head of an identifier is lowercase.
   The behaviour of inductive patterns is defined in a matcher.
+  <!--
   Then, matchers sometimes define inductive patterns having the same name.
   Indeed, the inductive pattern <code>cons</code> is defined in matchers <code>list</code>, <code>multiset</code>, and <code>set</code>.
+  -->
+  For eample, the <code>cons</code> pattern constructor is used to divide a collection into an element and the rest collection.
+  The behaviour of inductive pattern <code>cons</code> is defined in each matcher.
 </p>
 
 <textarea class="code">(match-all {1 2 3} (list integer)
@@ -152,7 +159,7 @@ In this pattern, the <i>variable</i> is regarded as an <a href="./basics.html#ha
 ;=>{[{} {1 2 3}] [{1} {1 2 3}] [{2} {1 2 3}] [{3} {1 2 3}] [{1 2} {1 2 3}] [{1 3} {1 2 3}] [{2 1} {1 2 3}] [{2 3} {1 2 3}] [{3 1} {1 2 3}] [{1 2 3} {1 2 3}] [{3 2} {1 2 3}] [{1 3 2} {1 2 3}] [{2 1 3} {1 2 3}] [{2 3 1} {1 2 3}] [{3 1 2} {1 2 3}] [{3 2 1} {1 2 3}]}</textarea>
 
 <p>
-  The <code>nil</code> is a pattern constructor without no arguments that matches if a collection is empty.
+  Finally, the <code>nil</code> is a pattern constructor without no arguments that matches if a collection is empty.
 </p>
 
 <textarea class="code">(match {} (list integer)
@@ -161,12 +168,13 @@ In this pattern, the <i>variable</i> is regarded as an <a href="./basics.html#ha
 
 <h3 id="value-patterns">Value Patterns</h3>
 
-<pre><code>  ,<i>expr</i></code></pre>
+<pre><code>,<i>expr</i></code></pre>
 
 <p>
-  A value-pattern is a pattern that objects equal to a particular object match.
-  The meaning of "equal" is defined in matchers, and then varies by matcher.
-  We shouldn't forget to place COMMA before a value.
+  A value-pattern is a pattern that matches with objects equal with the content of the pattern.
+  The expression following <code>,</code> can be any kind of expressions.<br/>
+  The equality is defined in each matcher, and then varies by matcher.
+  We shouldn't forget to place <code>,</code> ahead of the pattern.
 </p>
 
 <textarea class="code">(match 1 integer {[,1 <OK>] [_ <KO>]});=><OK>
@@ -177,11 +185,11 @@ In this pattern, the <i>variable</i> is regarded as an <a href="./basics.html#ha
 
 <h3 id="predicate-patterns">Predicate Patterns</h3>
 
-<pre><code>  ?<i>function</i></code></pre>
+<pre><code>?<i>predicate</i></code></pre>
 
 <p>
-Here, <code>function</code> is a function that takes an argument and returns a Boolean value.
-A predicate pattern is a pattern that an object matches if the result of application of <code>function</code> and the object is <code>#t</code>.
+  A predicate-pattern is a pattern that matches with objects which satisfy the predicate following <code>?</code>.
+  The expression following <code>?</code> should be a function that takes an argument and return a boolean value.
 </p>
 
 <textarea class="code">(match-all {1 2 3 4 5 6} (list integer) [<join $xs <cons ?(lt? $ 4) $ys>> {@xs @ys}])
@@ -191,35 +199,25 @@ A predicate pattern is a pattern that an object matches if the result of applica
 
 <h3 id="not-patterns">Not-Patterns</h3>
 
-<pre><code>  ^<i>pattern</i></code></pre>
+<pre><code>^<i>pattern</i></code></pre>
 
 <p>
-  Egison allows us to write a pattern that represents failure of pattern-matching.
-  When the pattern-matching using <code><i>pattern</i></code> fails, the pattern-matching using the whole pattern <code>^<i>pattern</i></code> succeeds.
+  A not-pattern matches with a object if the object does not matches the pattern following after <code>^</code>.
 </p>
 
 <textarea class="code">(match 1 integer {[,2 #t] [_ #f]});=>#f
-(match 1 integer {[^,2 #t] [_ #f]});=>#t</textarea>
-
-<p>
-Using the patterns, we can write a pattern that represents "a collection doesn't contain any element satisfying some property" or "some element of a collection doesn't satisfy some property".
-This is simple but useful usage of not-patterns.
-</p>
-
-<textarea class="code">(match {2 3 4} (multiset integer) {[<cons ,1 _> #t] [_ #f]});=>#f
-
+(match 1 integer {[^,2 #t] [_ #f]});=>#t
+(match {2 3 4} (multiset integer) {[<cons ,1 _> #t] [_ #f]});=>#f
 (match {2 3 4} (multiset integer) {[^<cons ,1 _> #t] [_ #f]});=>#t
-
 (match {1 1 2} (multiset integer) {[^<cons ,1 _> #t] [_ #f]});=>#f
-
 (match {1 1 2} (multiset integer) {[<cons ^,1 _> #t] [_ #f]});=>#t</textarea>
 
 <h3 id="and-patterns">And-Patterns</h3>
 
-<pre><code>  (& <i>pattern</i> ...)</code></pre>
+<pre><code>(& <i>pattern</i> ...)</code></pre>
 
 <p>
-An and-pattern is a pattern that is matched, if and only if, all of the patterns are matched.
+An and-pattern is a pattern that matches the object, if and only if, all of the patterns are matched.
 </p>
 
 <textarea class="code">(match {1 3 2} (list integer) {[(& <cons ,1 _> <snoc ,2 _>) <OK>] [_ <KO>]})
@@ -228,9 +226,8 @@ An and-pattern is a pattern that is matched, if and only if, all of the patterns
 ;=><OK></textarea>
 
 <p>
-  The most common usage of and-pattern is "matching and binding".
-  When you need to get a value matching the pattern, it is useful.
-  For example, any non-empty collection matches the following and-pattern, and then the variable "xs" is bound to it.
+  We can use and-patterns like <i>as-patterns</i>.
+  For example, any non-empty collection matches the following and-pattern, and then the variable <code>xs</code> is bound to it.
 </p>
 
 <textarea class="code">(match {1 2} (list integer) {[(& <cons _ _> $xs) xs] [_ #f]})
@@ -240,11 +237,10 @@ An and-pattern is a pattern that is matched, if and only if, all of the patterns
 
 <h3 id="or-patterns">Or-Patterns</h3>
 
-<pre><code>  (| <i>pattern</i> ...)</code></pre>
+<pre><code>(| <i>pattern</i> ...)</code></pre>
 
 <p>
-  Or-patterns are the dual of and-patterns.
-  An and-pattern is a pattern that is matched, if the object matches one of given patterns.
+  An or-pattern matches with the object, if the object matches one of given patterns.
 </p>
 
 <textarea class="code">(match {1 3 3} (list integer) {[(| <cons ,1 _> <snoc ,2 _>) <OK>] [_ <KO>]})
@@ -254,15 +250,15 @@ An and-pattern is a pattern that is matched, if and only if, all of the patterns
 
 <h3 id="let-patterns">Let Patterns</h3>
 
-<pre><code>  (let {[<i>variable</i> <i>expr</i>] ...} <i>pattern</i>)</code></pre>
+<pre><code>(let {[<i>variable</i> <i>expr</i>] ...} <i>pattern</i>)</code></pre>
 
 <p>
-As pointed above, syntax for usual objects and patterns is rigorously separated.
-The let patterns seem to be the exception of it.
-This is similar to <a href="./basics.html#let"><code>let</code> expressions</a>.
+This is similar to the <a href="./basics.html#let"><code>let</code> expressions</a>.
 Each <i>variable</i> is locally bound to each <i>expr</i>, and the <i>variable</i>s can be used in the <i>pattern</i>.
+<!--
 Note that you cannot use a <i>variable</i> in <i>expr</i> recursively.
 The pattern is a "let" pattern, and not a "letrec" pattern.
+-->
 </p>
 
 <textarea class="code">(define $f
@@ -281,44 +277,19 @@ The pattern is a "let" pattern, and not a "letrec" pattern.
 <h3 id="loop-patterns">Loop-Patterns</h3>
 
 <p>
-  Loop-patterns are used to express patterns that contains loops and the number of loop changes by the parameters.
+  Loop-patterns are used to express patterns that contains loops and the number of loops changes by the parameters.
   Please read <a href="./pattern-matching.html#loop-patterns">the next chapter</a> for detail.
 </p>
 
 <h2 id="syntax">Syntax Related with Patterns</h2>
 
-<h3 id="match"><code>match</code> expressions</h3>
+<h3 id="match-all"><code>match-all</code> Expressions</h3>
 
-<pre><code>  (match <i>target-expr</i> <i>matcher-expr</i> {[<i>pattern</i> <i>expr</i>] ...})</code></pre>
-
-<p>
-  This expression is used to do pattern-matching.
-  The fist argument is a <i>target</i> of pattern-matching.
-  It is pattern-matched using the second argument <i>matcher</i>.
-  A <i>matcher</i> specifies the way of pattern-matching for each data type.
-  The third argument is a collection of <i>match-clauses</i>.
-  It tries pattern-matching for each <i>pattern</i> from the head of match-clauses.
-  When pattern-matching succeed, the <i>expr</i> of the match-clause will be evaluated.
-  Pattern-matching of Egison has multiple results.
-  However, this expression chooses the first result and they are locally bound and then the formula will be evaluated with them.
-</p>
-
-<textarea class="code">(match {1 2 3 4} (list integer) {[<nil> #f] [<cons $x $xs> [x xs]]})
-;=>[1 {2 3 4}]
-(match {1 2 3 4} (set integer) {[<nil> #f] [<cons $x $xs> [x xs]]})
-;=>[1 {1 2 3 4}]</textarea>
+<pre><code>(match-all <i>target-expr</i> <i>matcher-expr</i> [<i>pattern</i> <i>expr</i>])</code></pre>
 
 <p>
-  Please see the <a href="http://www.egison.org/demonstrations/poker-hands.html">Poker hands</a> demonstration, too.
-</p>
-
-<h3 id="match-all"><code>match-all</code> expressions</h3>
-
-<pre><code>  (match-all <i>target-expr</i> <i>matcher-expr</i> [<i>pattern</i> <i>expr</i>])</code></pre>
-
-<p>
-  Like a <code>match</code> expression, a <code>match-all</code> expression is also used to express pattern-matching.
-  However, the difference is this expression takes a single match-clause and returns all cases of binding.
+  <code>match-all</code> expressions take a single match-clause.
+  <code>match-all</code> expressions return a collection that contains the evaluated value of <i>expr</i> with each result of pattern-matching.
 </p>
 
 <textarea class="code">(match-all {1 2 3} (list integer)
@@ -333,12 +304,34 @@ The pattern is a "let" pattern, and not a "letrec" pattern.
 ;=>{[1 {1 2 3}] [2 {1 2 3}] [3 {1 2 3}]}</textarea>
 
 <p>
+  We have explained about this expression in <a href="/concept.html">Concept of Egison</a>.<br/>
   In <a href="./pattern-matching.html">the next chapter</a>, there are many examples.
 </p>
 
-<h3 id="match-lambda"><code>match-lambda</code> expressions</h3>
+<h3 id="match"><code>match</code> Expressions</h3>
 
-<pre><code>  (match-lambda <i>matcher-expr</i> {[<i>pattern</i> <i>expr</i>] ...})</code></pre>
+<pre><code>(match <i>target-expr</i> <i>matcher-expr</i> {[<i>pattern</i> <i>expr</i>] ...})</code></pre>
+
+<p>
+  The difference from <code>match-all</code> expressions is <code>match</code> expressions take multiple match-clauses.
+  It tries pattern-matching for each <i>pattern</i> from the head of match-clauses.
+  When pattern-matching succeed, the <i>expr</i> of the match-clause will be evaluated.
+  Pattern-matching of Egison has multiple results.
+  However, this expression chooses the first result and they are locally bound and then the formula will be evaluated with them.
+</p>
+
+<textarea class="code">(match {1 2 3 4} (list integer) {[<nil> #f] [<cons $x $xs> [x xs]]})
+;=>[1 {2 3 4}]
+(match {1 2 3 4} (set integer) {[<nil> #f] [<cons $x $xs> [x xs]]})
+;=>[1 {1 2 3 4}]</textarea>
+
+<p>
+  Please also check the <a href="http://www.egison.org/demonstrations/poker-hands.html">Poker Hands</a> demonstration.
+</p>
+
+<h3 id="match-lambda"><code>match-lambda</code> Expressions</h3>
+
+<pre><code>(match-lambda <i>matcher-expr</i> {[<i>pattern</i> <i>expr</i>] ...})</code></pre>
 
 <p>
 Like a <code>lambda</code> expression, a <code>match-lambda</code> expression creates a function with an argument.
@@ -349,9 +342,9 @@ and <code>(lambda [$x] (match x <i>X</i> {[<i>Y</i> <i>Z</i>] ...}))</code>
 are the same.
 </p>
 
-<h3 id="match-all-lambda"><code>match-all-lambda</code> expressions</h3>
+<h3 id="match-all-lambda"><code>match-all-lambda</code> Expressions</h3>
 
-<pre><code>  (match-all-lambda <i>matcher-expr</i> [<i>pattern</i> <i>expr</i>])</code></pre>
+<pre><code>(match-all-lambda <i>matcher-expr</i> [<i>pattern</i> <i>expr</i>])</code></pre>
 
 <p>
 Like a <code>mach-lambda</code> expression, a <code>match-all-lambda</code> expression creates a function with an argument.
@@ -363,9 +356,9 @@ are the same.
 This expression has a simgle match-clause as a <code>match-all</code> expression.
 </p>
 
-<h3 id="pattern-function"><code>pattern-function</code> expressions</h3>
+<h3 id="pattern-function"><code>pattern-function</code> Expressions</h3>
 
-<pre><code>  (pattern-function [<i>variable</i> ...] <i>pattern</i>)</code></pre>
+<pre><code>(pattern-function [<i>variable</i> ...] <i>pattern</i>)</code></pre>
 
 <p>
   A pattern-function is a function that gets only patterns and returns a pattern.
@@ -393,7 +386,7 @@ This expression has a simgle match-clause as a <code>match-all</code> expression
 Although Egison restricts use of patterns in a match-clause, what you can do isn't limited at all.
 </p>
 
-<h3 id="matcher"><code>matcher</code> expressions</h3>
+<h3 id="matcher"><code>matcher</code> Expressions</h3>
 
 This expression is used to create a matcher.
 Since this is complicated, we don't explain this expression here, but do in another chapter.

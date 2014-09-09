@@ -29,17 +29,17 @@ Since Egison is purely functional, Egison I/O has its own special syntax.
 <hr/>
 
 <ul>
-  <li><a href="#main">The <code>main</code> function</a></li>
+  <li><a href="#ehllo">Hello World!</a></li>
   <li><a href="#args">The Command Line Arguments</a></li>
   <li><a href="#do"><code>do</code> Expressions</a></li>
 </ul>
 
 <hr/>
 
-<h2 id="main">The <code>main</code> function</h2>
+<h2 id="hello">Hello World!</h2>
 
 <p>
-In honour to the tradition of programming languages, we greet the world using Egison.
+First of all, let's greet the world using Egison.
 The following is a "Hello world" program in Egison.
 </p>
 
@@ -59,7 +59,6 @@ Hello, World!
 <p>
 Egison I/O works via a function named <code>main</code>.
 In <code>main</code>, we can use I/O functions such as <code>write</code>, which we cannot use in the others. (The list of I/O primitive functions is given in the next chapter <i><a href="./primitives.html#ioprimitives">Primitive Functions</a></i>.)
-We cannot call <code>main</code> directly in a program.
 </p>
 
 <h2 id="args">The Command Line Arguments</h2>
@@ -93,27 +92,28 @@ $ egison args.egi We can write scripts in Egison
 
 <h2 id="do"><code>do</code> Expressions</h2>
 
-<pre><code>  (do {[<i>variable</i> <i>formula</i>] ...} <i>formula</i>)</code></pre>
+<pre><code>(do {<i>statement</i> ...} <i>expr</i>)</code>
+  
+<code>  <i>statement</i> ::= <i>expr</i>
+              | [<i>variable</i> <i>expr</i>]</code></pre>
 
 <p>
-To do more complicated I/O tasks, we can use <code>do</code> expressions, which is similar to <code>let</code> and <code>letrec</code> expressions.
-The most special feature of <code>do</code> expressions is serial execution.
-If you know Haskell, you probably notice that it is the same with <code>do</code> expressions in Haskell.
+To do more complicated I/O tasks, we can use <code>do</code> expressions, which is similar to the <code>let</code> and <code>letrec</code> expressions.
+The feature of the <code>do</code> expressions is serial execution.
+If you know Haskell, you probably notice that it is the same with the <code>do</code> expressions in Haskell.
 Recall many I/O functions have no return values.
-In such cases, we can omit to write <code><i>variable</i></code> as follows.
+In such cases, we can omit to write a <code><i>variable</i></code>.
 </p>
 
-<textarea class="code">;; Save this code as a "interactive.egi" file
+<textarea class="code">;; Save this code as a "repl.egi" file
 (define $repl
   (lambda []
-    (do {[(write "input: ")]
-         [(flush)]
+    (do {(write "input: ")
+         (flush)
          [$input (read-line)]
-         [(write input)]
-         [(print "")]
-         [(repl)]
-         }
-      [])))
+         (write input)
+         (print "")}
+      (repl))))
 
 (define $main
   (lambda [$args]
@@ -124,7 +124,7 @@ In such cases, we can omit to write <code><i>variable</i></code> as follows.
 Then, execute it as follow.
 </p>
 
-<pre><code>$ egison interactive.egi
+<pre><code>$ egison repl.egi
 input: Hi
 Hi
 input: Hello
@@ -135,7 +135,6 @@ input: ^C
 $ </code></pre>
 
 <p>
-Let's see the above code. 
 When the code is executed, <code>(write "args: ")</code>, <code>(read-line)</code> and <code>(write input)</code> are executed in the order.
 </p>
 

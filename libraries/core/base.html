@@ -21,7 +21,7 @@
 
         <div class="col-md-12" role="main">
 
-          <textarea id="egison-program" name="code"></textarea>
+          <textarea id="egison-program" class="code"><!--# include file="/source/lib/core/base.egi" --></textarea>
             
         </div>
 
@@ -30,17 +30,6 @@
     </div><!-- /.container -->
     
     <!--# include file="/templates/footer.html" -->
-    <script>
-      var editor;
-      $.get("/api/source", { path: "lib/core/base.egi"}, function(data) {
-        var e = document.getElementById("egison-program");
-        e.value = data.content;
-        editor = CodeMirror.fromTextArea(document.getElementById("egison-program"), {
-          matchBrackets: true,
-          lineNumbers: true,
-          viewportMargin: Infinity
-        });
-      }, "json");
-    </script>
+    <!--# include file="/templates/libraries-js.html" -->
   </body>
 </html>
