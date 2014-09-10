@@ -37,7 +37,7 @@
           <hr/>
           <p>
             The aim of this document is to explain the concept of Egison as quickly as possible.<br/>
-            We use pseudocode of Haskell to make it easy to understand for Haskellers.<br/>
+            We use pseudocode of Haskell to make it easy to understand for those who don't used to parenthesized syntax.<br/>
           </p>
           <hr/>
 
@@ -58,7 +58,7 @@
 
           <p>
             The difference with pattern-matching expressions of other languages is that our <code>match-all</code> expression takes a matcher.<br/>
-            Our interpreter matches the target with the pattern as the type specified with the matcher.<br/>
+            Our interpreter matches the target with the pattern in the way specified with the matcher.<br/>
             A matcher specifies the way of pattern-matching.
           </p>
 
@@ -78,9 +78,8 @@
           <p>
             We can define the way of pattern-matching for each data type.<br/>
             In the following example, we do pattern-matching against collection as a list, multiset, set respectively.<br/>
-            The meaning of <code>cons</code> varies for each matcher.<br/>
             The pattern constructor <code>cons</code> divides a collection into an element and the rest.<br/>
-            The meaning of <code>cons</code> is defined in Egison libraries for each matcher.
+            The meaning of <code>cons</code> varies for each matcher and is defined in Egison libraries for each matcher.
           </p>
 
           <div class="version">Egison version</div>
@@ -105,7 +104,7 @@ matchAll [1, 2, 3] as (Set Integer) of x:xs -> (x, xs)
           </p>
 
           <p>
-            We can extract two elements from a collection with nested <code>cons</code> pattern.
+            We can extract two elements from a collection with the nested <code>cons</code> pattern.
           </p>
           
           <div class="version">Egison version</div>
@@ -125,8 +124,7 @@ matchAll [1, 2, 3] as (Set Integer) of x:y:_ -> (x, y)
           
           <p>
             We have the <code>join</code> pattern constructor, which divides a collection into two collections.<br/>
-            The meaning of <code>join</code> also varies for each matcher.<br/>
-            The meaning of <code>cons</code> is also defined in Egison libraries for each matcher.
+            The meaning of <code>join</code> also varies for each matcher and is defined in Egison libraries for each matcher.
           </p>
 
           <div class="version">Egison version</div>
@@ -152,7 +150,7 @@ matchAll [1, 2, 3] as (Multiset Integer) of
             We can handle multiple occurrence of same variables in a pattern.<br/>
             Patterns that have <code>,</code> ahead are called <i>value-patterns</i>.
             The equality is checked for a value-pattern.<br/>
-            We can define the equality of each data type for each matcher.
+            We can define the equality for each data type in the matcher.
           </p>
 
           <div class="version">Egison version</div>
@@ -179,7 +177,7 @@ matchAll [1, 2, 3] as (Multiset Integer) of
 
           <p>
             Non-linear patterns extend the expressive of power of pattern-matching so much.<br/>
-            It eliminates nested <code>if</code> expressions inside deeply nested loops.<br/>
+            It eliminates deeply nested loops and conditional branches.<br/>
             Please check our <a href="http://www.egison.org/demonstrations/poker-hands.html">Poker Hands Demonstration</a>.
           </p>
 
