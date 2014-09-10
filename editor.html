@@ -31,6 +31,8 @@
 
           <pre id="egison-result"></pre>
             
+          <textarea id="ruby-program" name="code"></textarea>
+          
         </div>
 
       </div><!--/row-->
@@ -38,18 +40,14 @@
     </div><!-- /.container -->
     
     <!--# include file="/templates/footer.html" -->
+    <script src="/vendors/codemirror/mode/ruby/ruby.js"></script>
     <script>
-      var editor;
-      $.get("/api/source", { path: "sample/primes.egi"}, function(data) {
-        var e = document.getElementById("egison-program");
-        e.value = data.content;
-        editor = CodeMirror.fromTextArea(document.getElementById("egison-program"), {
-          matchBrackets: true,
-          lineNumbers: true,
-          lineWrapping: true,
-          viewportMargin: Infinity
-        });
-      }, "json");
+      var editor = CodeMirror.fromTextArea(document.getElementById("egison-program"), {
+        matchBrackets: true,
+        lineNumbers: true,
+        lineWrapping: true,
+        viewportMargin: Infinity
+      });
       
       $(document).ready(function(){
         $('.btn').button()
@@ -65,6 +63,14 @@
             $('#run-egison').prop("disabled", false);
           }, "json");
         });
+      });
+
+      var editor2 = CodeMirror.fromTextArea(document.getElementById("ruby-program"), {
+        matchBrackets: true,
+        lineNumbers: true,
+        lineWrapping: true,
+        viewportMargin: Infinity,
+        mode: "ruby"
       });
     </script>
   </body>
