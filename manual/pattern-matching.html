@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <!--# include file="/templates/header.html" -->
-    <title>Egison Manual - Pattern Matching</title>
+    <title>Egison Manual - Pattern-Matching</title>
   </head>
   <body>
     <!--# include file="/templates/navbar.html" -->
@@ -12,7 +12,7 @@
       <div class="row">
 
         <div class="col-md-12" id="top" role="complementary">
-          <h1>Pattern Matching</h1>
+          <h1>Pattern-Matching</h1>
         </div>
 
       </div>
@@ -27,17 +27,17 @@
   However, a list differs from a set because it does not ignore the order of elements.
   Then, even if we want to ignore the order, we have to care about it when we represent a set as a list.
   Data types whose data have no normal form such as sets are called <i>unfree data types</i>.
-  Unfortunately, it had been difficult to do pattern matching against them in the programming languages before Egison.
+  Unfortunately, it had been difficult to do pattern-matching against them in the programming languages before Egison.
   Egison gives strong pattern-matching expressive power even against those data types.
-  We demonstrate it here with many examples, which contain pattern matching for lists, multisets, and sets.
+  We demonstrate it here with many examples, which contain pattern-matching for lists, multisets, and sets.
 </p>
 
 <hr/>
 
 <ul>
-  <li><a href="#pattern-matching1">Pattern Matching against Unfree Data Types!</a></li>
-  <li><a href="#pattern-matching2">Non-linear Pattern Matching against Unfree Data Types!!</a></li>
-  <li><a href="#pattern-matching3">Pattern Matching with Lexical Scoping!!</a></li>
+  <li><a href="#pattern-matching1">Pattern-Matching against Unfree Data Types!</a></li>
+  <li><a href="#pattern-matching2">Non-linear Pattern-Matching against Unfree Data Types!!</a></li>
+  <li><a href="#pattern-matching3">Pattern-Matching with Lexical Scoping!!</a></li>
   <li><a href="#loop-patterns">Loop-Patterns</a></li>
 </ul>
 
@@ -45,11 +45,11 @@
 
 
 
-<h2 id="pattern-matching1">Pattern Matching against Unfree Data Types!</h2>
+<h2 id="pattern-matching1">Pattern-Matching against Unfree Data Types!</h2>
 
 
 <p>
-  In this section, we show various basic pattern matching against collections.
+  In this section, we show various basic pattern-matching against collections.
 </p>
 
 <h3>The <code>cons</code> Pattern Constructor</h3>
@@ -150,17 +150,17 @@
   The arguments of <code>snoc</code> matches with the last element of a target collection and the rest of it.
   Note that, in Egison, extraction of an element from the tail of a collection is represented in the same way as the head of it.
   A pattern constructor <code>nioj</code> is similar to <code>join</code>, and used to divide a target collection into two collections.
-  The difference between <code>join</code> and <code>nioj</code> is the order of pattern matching, as its name suggests.
-  In case of <code>nioj</code>, pattern matching is executed from the back-side of a collection.
-  The order of pattern matching is important when we do non-linear pattern matching, which we will discuss in the next section.
+  The difference between <code>join</code> and <code>nioj</code> is the order of pattern-matching, as its name suggests.
+  In case of <code>nioj</code>, pattern-matching is executed from the back-side of a collection.
+  The order of pattern-matching is important when we do non-linear pattern-matching, which we will discuss in the next section.
 </p>
 
-<h2 id="pattern-matching2">Non-linear Pattern Matching against Unfree Data Types!!</h2>
+<h2 id="pattern-matching2">Non-linear Pattern-Matching against Unfree Data Types!!</h2>
 
 <p>
   Egison allows programmers to "bind and use" variables in a pattern.
   A pattern that contains multiple occurrences of the same variables is called a <i>non-linear pattern</i>.
-  Egison is the first programming language that non-linear patterns can be used in pattern matching for unfree data.
+  Egison is the first programming language that non-linear patterns can be used in pattern-matching for unfree data.
 </p>
 
 <h3>The First Example</h3>
@@ -175,12 +175,12 @@
 ;=>{1 2 1 2}</textarea>
 
 <p>
-  Egison executes pattern matching from left to right, and a bound variable can be referred to in its right side of the pattern.
+  Egison executes pattern-matching from left to right, and a bound variable can be referred to in its right side of the pattern.
   In this example, at first, the variable <code>n</code> is bound to any element of the collection.
   Then, Egison examines the pattern <code>,n</code>.
   It places the right side of <code>$n</code>, it is evaluated to the value where <code>n</code> is bound.
   When an object matches the pattern <code>,n</code>, it is equal to the value as  <code>integer</code>.
-  Therefore, after successful pattern matching, <code>n</code> is bound to an element contained at least two in the target collection.
+  Therefore, after successful pattern-matching, <code>n</code> is bound to an element contained at least two in the target collection.
 </p>
 
 <p>
@@ -189,7 +189,7 @@
   Please see <a href="http://www.egison.org/demonstrations/poker-hands.html">Poker Hands</a> demonstration.
 </p>
 
-<h3>Pattern Matching against Nested Data Types</h3>
+<h3>Pattern-Matching against Nested Data Types</h3>
 
 <p>
   Here is another example.
@@ -201,12 +201,12 @@
 ;=>{1 4}</textarea>
 
 <p>
-  Probably, you understand how strong the pattern matching of Egison is.
+  Probably, you understand how strong the pattern-matching of Egison is.
   In this chapter, we show the inductive patterns of the matchers <code>list</code>, <code>multiset</code>, and <code>set</code>.
   If you want to make your own matcher or understand matchers more deeply, please read the next chapter <a href="./matchers.html">Matchers</a>.
 </p>
 
-<h2 id="pattern-matching3">Pattern Matching with Lexical Scoping!!</h2>
+<h2 id="pattern-matching3">Pattern-Matching with Lexical Scoping!!</h2>
 
 <p>
   We can reuse a pattern via a pattern-function.
@@ -357,7 +357,7 @@ is interpreted as
 <hr/>
 
 <p>
-We recomment you to read the chapter <a href="./mechanism.html">Pattern Matching Mechanism</a>, if you are interested in the mechanism pattern matching inside Egison.
+We recomment you to read the chapter <a href="./mechanism.html">Pattern-Matching Mechanism</a>, if you are interested in the mechanism pattern-matching inside Egison.
 </p>
 
 <h2 id="next">What to do next...</h2>
