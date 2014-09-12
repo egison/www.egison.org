@@ -57,7 +57,7 @@
 ;=>{[1 {2 3}]}           ; Result</textarea>
 
           <p>
-            The difference with pattern-matching expressions of other languages is that our <code>match-all</code> expression takes a matcher.<br/>
+            The characteristic of our <code>match-all</code> expression is it takes a <i>matcher</i>.
             Our interpreter matches the target with the pattern in the way specified with the matcher.<br/>
             A matcher specifies the way of pattern-matching.
           </p>
@@ -68,16 +68,16 @@
           
           <div class="version">Haskell version</div>
           <textarea class="haskell-code">matchAll
-  [1, 2, 3] as      -- Target  ('as' is a reserved word for pattern-matching)
-  (List Integer) of -- Matcher ('of' is a reserved word for pattern-matching)
-  x:xs -> (x, xs)   -- Match-Clause: Pattern -> Body
--- =>[(1,[2,3])]    -- Result</textarea>
+  [1, 2, 3] as        -- Target  ('as' is a reserved word for pattern-matching)
+  (List Integer) with -- Matcher ('with' is a reserved word for pattern-matching)
+  x:xs -> (x, xs)     -- Match-Clause: Pattern -> Body
+-- =>[(1,[2,3])]      -- Result</textarea>
           
           <h2>Modularization of the Way of Pattern-Matching</h2>
           
           <p>
             We can define the way of pattern-matching for each data type.<br/>
-            In the following example, we do pattern-matching against collection as a list, multiset, set respectively.<br/>
+            In the following example, we do pattern-matching against a collection as a list, multiset, set respectively.<br/>
             The pattern constructor <code>cons</code> divides a collection into an element and the rest.<br/>
             The meaning of <code>cons</code> varies for each matcher and is defined in Egison libraries for each matcher.
           </p>
@@ -90,11 +90,11 @@
 (match-all {1 2 3} (set integer) [<cons $x $xs> [x xs]])
 ;=>{[1 {1 2 3}] [2 {1 2 3}] [3 {1 2 3}]}</textarea>
           <div class="version2">Haskell version</div>
-          <textarea class="haskell-code">matchAll [1, 2, 3] as (List Integer) of x:xs -> (x, xs)
+          <textarea class="haskell-code">matchAll [1, 2, 3] as (List Integer) with x:xs -> (x, xs)
 -- =>[(1,[2,3])]
-matchAll [1, 2, 3] as (Multiset Integer) of x:xs -> (x, xs)
+matchAll [1, 2, 3] as (Multiset Integer) with x:xs -> (x, xs)
 -- =>[(1,[2,3]),(2,[1,3]),(3,[1,2])]
-matchAll [1, 2, 3] as (Set Integer) of x:xs -> (x, xs)
+matchAll [1, 2, 3] as (Set Integer) with x:xs -> (x, xs)
 -- =>[(1,[1,2,3]),(2,[1,2,3]),(3,[1,2,3])]</textarea>
 
           <p>
@@ -115,11 +115,11 @@ matchAll [1, 2, 3] as (Set Integer) of x:xs -> (x, xs)
 (match-all {1 2 3} (set integer) [<cons $x <cons $y _>> [x y]])
 ;=>{[1 1] [1 2] [2 1] [1 3] [2 2] [3 1] [2 3] [3 2] [3 3]}</textarea>
           <div class="version2">Haskell version</div>
-          <textarea class="haskell-code">matchAll [1, 2, 3] as (List Integer) of x:y:_ -> (x, y)
+          <textarea class="haskell-code">matchAll [1, 2, 3] as (List Integer) with x:y:_ -> (x, y)
 -- =>[(1,[2,3])]
-matchAll [1, 2, 3] as (Multiset Integer) of x:y:_ -> (x, y)
+matchAll [1, 2, 3] as (Multiset Integer) with x:y:_ -> (x, y)
 -- =>[(1,2),(1,3),(2,1),(2,3),(3,1),(3,2)]
-matchAll [1, 2, 3] as (Set Integer) of x:y:_ -> (x, y)
+matchAll [1, 2, 3] as (Set Integer) with x:y:_ -> (x, y)
 -- =>[(1,1),(1,2),(2,1),(1,3),(2,2),(3,1),(2,3),(3,2),(3,3)]</textarea>
           
           <p>
@@ -133,10 +133,10 @@ matchAll [1, 2, 3] as (Set Integer) of x:y:_ -> (x, y)
 (match-all {1 2 3} (multiset integer) [<join $xs $ys> [xs ys]])
 ;=>{[{} {1 2 3}] [{1} {2 3}] [{2} {1 3}] [{3} {1 2}] [{1 2} {3}] [{1 3} {2}] [{2 3} {1}] [{1 2 3} {}]}</textarea>
           <div class="version2">Haskell version</div>
-          <textarea class="haskell-code">matchAll [1, 2, 3] as (List Integer) of
+          <textarea class="haskell-code">matchAll [1, 2, 3] as (List Integer) with
   xs ++ ys -> (xs, ys)
 -- =>[([],[1,2,3]),([1],[2,3]),([1,2],[3]),([1,2,3],[])]
-matchAll [1, 2, 3] as (Multiset Integer) of
+matchAll [1, 2, 3] as (Multiset Integer) with
   xs ++ ys -> (xs, ys)
 -- =>[([],[1,2,3]),([1],[2,3]),([2],[1,3]),([3],[1,2]),([1,2],[3]),([1,3],[2]),([2,3],[1]),([1,2,3],[])]</textarea>
           
@@ -157,7 +157,7 @@ matchAll [1, 2, 3] as (Multiset Integer) of
           <textarea class="code">(match-all {1 2 3 3 2 4} (multiset integer) [<cons $x <cons ,x _>> x])
 ;=>{2 3 3 2}</textarea>
           <div class="version2">Haskell version</div>
-          <textarea class="haskell-code">matchAll [1, 2, 3, 3, 2, 4] as (Multiset Integer) of x:x:_ -> x
+          <textarea class="haskell-code">matchAll [1, 2, 3, 3, 2, 4] as (Multiset Integer) with x:x:_ -> x
 -- =>[2,3,3,2]</textarea>
 
           <p>
@@ -172,27 +172,28 @@ matchAll [1, 2, 3] as (Multiset Integer) of
             [p (+ p 2)]]))
 ;=>{[3 5] [5 7] [11 13] [17 19] [29 31] [41 43] [59 61] [71 73] [101 103] [107 109]}</textarea>
           <div class="version2">Haskell version</div>
-          <textarea class="haskell-code">take 10 (matchAll primes as (List Integer) of (_ ++ (p : p+2 : _))) -> (p, p+2))
+          <textarea class="haskell-code">take 10 (matchAll primes as (List Integer) with (_ ++ (p : p+2 : _))) -> (p, p+2))
 -- =>[(3,5),(5,7),(11,13),(17,19),(29,31),(41,43),(59,61),(71,73),(101,103),(107,109)]</textarea>
 
           <p>
-            Non-linear patterns extend the expressive of power of pattern-matching so much.<br/>
+            Non-linear patterns extend the expressive power of pattern-matching so much.<br/>
             It eliminates deeply nested loops and conditional branches.<br/>
             Please check our <a href="http://www.egison.org/demonstrations/poker-hands.html">Poker Hands Demonstration</a>.
           </p>
 
           <p>
             We can do pattern-matching also against nested data types such as lists of sets and sets and sets.
+            The following code enumerates common elements among collections inside a collection that contains three collections.
           </p>
           
           <div class="version">Egison version</div>
-          <textarea class="code">; Enumerate all elements that appear in more than two collections
-(match-all {{1 2 3} {2 4 6} {3 6 9}} (multiset (multiset integer))
-           [<cons <cons $n _>
-             <cons <cons ,n _>
-              _>>
-            n])
-;=>{2 3 2 6 3 6}</textarea>
+          <textarea class="code">(match-all {{1 2 3 4 5} {4 5 1} {6 1 7 4}} (list (multiset integer))
+  [<cons <cons $n _> <cons <cons ,n _> <cons <cons ,n _> <nil>>>> n])
+;=>{1 4}</textarea>
+          <div class="version2">Haskell version</div>
+          <textarea class="haskell-code">matchAll [[1, 2, 3, 4, 5], [4, 5, 1] [6, 1, 7, 4]] as List (Multiset Integer) with
+  (n:_):(n:_):(n:_):[] -> n
+-- =>{1 4}</textarea>
           
           <h2>Lexical Scoping of Patterns</h2>
           
