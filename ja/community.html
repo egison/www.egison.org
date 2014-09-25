@@ -2,17 +2,17 @@
 <html lang="en">
   <head>
     <!--# include file="/templates/header.html" -->
-    <title>Egison - Community</title>
+    <title>Egison - コミュニティ</title>
   </head>
   <body data-spy="scroll" data-target=".bs-sidebar" data-offset="0">
-    <!--# include file="/templates/navbar.html" -->
+    <!--# include file="/ja/templates/navbar.html" -->
 
     <div class="container manual">
 
       <div class="row">
 
         <div class="col-md-12" id="top" role="complementary">
-          <h1>Egison Community</h1>
+          <h1>Egison コミュニティ</h1>
         </div>
 
       </div>
@@ -20,43 +20,44 @@
       <div class="row">
 
         <div class="col-md-12" role="main">
-          <h2>Mailing List</h2>
+          <h2>メーリングリスト</h2>
           
           <p>
-            We have a maling list to share the current status and issues.<br/>
-            If you would like to subscribe, please contact <a href="/~egi/">Satoshi Egi</a> or enter your mail address in the form below and push the subscribe button.
+            Egison には現状と現状の課題をシェアするためのメーリングリストがあります。<br/>
+            購読ご希望の方は、 <a href="/~egi/index-j.html">Egison 作者</a>にメールするか、下記のフォームからお申込みください。
           </p>
 
           <div style="margin-top:10px;">
-            <label style="font-size:14px;">Email address</label><br/>
+            <label style="font-size:14px;">メールアドレス</label><br/>
             <input id="email" style="width: 250px;">
-            <button id="subscribe" class="btn btn-lg btn-primary" data-loading-text="Processing..." role="button">Subscribe &raquo;</button>
+            <button id="subscribe" class="btn btn-lg btn-primary" data-loading-text="処理中..." role="button">購読する &raquo;</button>
           </div>
 
           <h2>SNS</h2>
           
           <p>
-            Egison on <a href="https://twitter.com/Egison_Lang" target="_blank">Twitter</a>. Please follow us!<br/>
+            Egison は各種SNS上にいます。<br/>
+            Egison on <a href="https://twitter.com/Egison_Lang" target="_blank">Twitter</a>.<br/>
             Egison on <a href="https://plus.google.com/100607965943061517334" target="_blank">Google+</a>.<br/>
             Egison on <a href="https://www.facebook.com/egison.lang" target="_blank">Facebook</a>.<br/>
             Egison on <a href="https://github.com/egison" target="_blank">GitHub</a>.<br/>
             Egison on <a href="http://rosettacode.org/wiki/Category:Egison" target="_blank">Rosseta Code</a>.<br/>
             Egison on <a href="https://hn.algolia.com/?q=egison#!/story/forever/prefix/0/egison%20-edison%20-elison%20-egibson" target="_blank">Hacker News</a>.<br/>
             Egison on <a href="http://www.reddit.com/domain/egison.org/" target="_blank">Reddit</a>.<br/>
-            Please check them!
+            是非チェックしてみてください！
           </p>
 
-          <h2>Workshop</h2>
+          <h2>ワークショップ</h2>
           
           <p>
-            We will hold Egison Workshop in near future in Tokyo.
+            近いうちに東京でワークショップを開きたいと考えています。
           </p>
 
-          <h2>Contact Us!</h2>
+          <h2>フィードバック</h2>
           
           <p>
-            Please give us feedback.
-            Please contact <a href="/~egi/">Satoshi Egi</a>.
+            Egison コミュニティはユーザのフィードバックをお待ちしております。<br/>
+            フィードバックをくださる方は<a href="/~egi/index-j.html">Egison 作者</a>にコンタクトしてください。
           </p>
 
         </div>
@@ -78,9 +79,9 @@
 
         $('#subscribe').click(function() {
           $('#subscribe').prop("disabled", true);
-          $('#subscribe').html("Processing...");
+          $('#subscribe').html("処理中...");
           $.post("/api/subscribe", { email: document.getElementById("email").value }, function(data) {
-            $('#subscribe').html("Accepted!");
+            $('#subscribe').html("登録完了！");
             $('#subscribe').prop("disabled", true);
           }, "json");
         });

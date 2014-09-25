@@ -2,11 +2,11 @@
 <html lang="en">
   <head>
     <!--# include file="/templates/header.html" -->
-    <title>The Egison Programming Language</title>
+    <title>プログラミング言語Egison</title>
     <!--# include file="/templates/console-css.html" -->
   </head>
   <body>
-    <!--# include file="/templates/navbar.html" -->
+    <!--# include file="/ja/templates/navbar.html" -->
 
     <div class="jumbotron" style="margin-bottom:10px; padding-bottom:20px;">
       <!--
@@ -16,51 +16,45 @@
       <a href="https://github.com/egison/egison" target="_blank"><img style="position: absolute; top: 50px; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
       -->
       <div class="container">
-        <h1>The Egison Programming Language</h1>
-        <h2 style="margin-bottom:20px;"> - Express Intuition Directly with Essentially New Syntax -</h2>
-        <p>
-          Egison is the programming language that realized non-linear pattern-matching against unfree data types.<br/>
-          We can directly represent pattern-matching against a wide range of data types such as lists, multisets, sets, trees and graphs.<br/>
-          Egison makes programming dramatically simple!
+        <h1>プログラミング言語 Egison</h1>
+        <h2 style="margin-bottom:20px;"> - 直感をそのまま表現するパターンマッチング -</h2>
+        <p style="font-size:20px;">
+          Egison は1つの定まった標準系を持たないデータに対しても柔軟なパターンマッチが表現可能なプログラミング言語です。<br/>
+          例えば、リストや多重集合、集合、ツリー、グラフなどといった幅広いデータ型に対して、パターンマッチを記述できます。<br/>
+          それにより、Egison プログラマは非常にシンプルにプログラムを記述できるようになります。
         </p>
 
-        <textarea id="egison-program" class="code"><!--# include file="/source/sample/demo1.egi" --></textarea>
+        <textarea id="egison-program" class="code"><!--# include file="/source/sample/demo1-ja.egi" --></textarea>
         
         <div class="container marketing" style="color:#5a5a5a; font-size:14px; line-height:1.428571429; padding-left:0px; padding-right:0px;">
           <div class="col-lg-4" style="padding:0px;">
             <div class="left-col-lg-4">
-              <h2><i class="fa fa-key"></i> Pattern-Matching-Oriented</h2>
+              <h2><i class="fa fa-key"></i> パターンマッチ指向</h2>
               <p>
-                Egison proposes a new paradigm <strong>pattern-matching-oriented</strong>.
-                The combination of <strong>all of the following features</strong> enables intuitive powerful pattern-matching.
+                Egison は<strong>パターンマッチ指向</strong>という新たなパラダイムを提唱しています。
+                <strong>以下の3つの機能</strong>を同時に実現することにより、強力で直感的なパターンマッチを可能にしています。
               </p>
               <ul>
-                <li>Modularization of the way of pattern-matching</li>
-                <li>Pattern-matching with backtracking</li>
-                <li>Non-linear patterns with lexical scoping</li>
+                <li>パターンマッチの方法のモジュール化</li>
+                <li>複数の結果を持つパターンマッチング</li>
+                <li>静的スコープを保つ非線形パターン</li>
               </ul>
               <p>
-                <a class="btn btn-default btn-primary" href="/concept.html" role="button">Concept of Egison (5 min)</a>
-                <!--
-                <a class="btn btn-default btn-github" href="http://arxiv.org/pdf/1407.0729.pdf" role="button" target="_blank">Egison Paper on arXiv.org</a>
-                -->
+                <a class="btn btn-default btn-primary" href="/ja/concept.html" role="button">Egison のコンセプト (5分)</a>
               </p>
             </div>
           </div><!-- /.col-lg-4 -->
           <div class="col-lg-4" style="padding:0px;">
             <div class="middle-col-lg-4">
-              <h2><i class="fa fa-flask"></i> Online Demonstrations</h2>
+              <h2><i class="fa fa-flask"></i> デモンストレーション</h2>
               <p>
-                Pattern-matching against ...
+                多様なパターンマッチを体験してみてください。
               </p>
               <ul>
-                <!--# include file="/templates/demonstrations.html" -->
+                <!--# include file="/ja/templates/demonstrations.html" -->
               </ul>
               <p>
-                <a class="btn btn-default btn-primary" href="http://www.egison.org/demonstrations/poker-hands.html" role="button">View Demonstrations &raquo;</a>
-                <!--
-                <a class="btn btn-default btn-primary" href="http://try.egison.org" role="button" target="_blank">Online Egison Tutorial</a>
-                -->
+                <a class="btn btn-default btn-primary" href="http://www.egison.org/demonstrations/ja/poker-hands.html" role="button">オンライン・デモを試す &raquo;</a>
               </p>
             </div>
           </div><!-- /.col-lg-4 -->
@@ -70,9 +64,9 @@
               <p>
               </p>
               <ul>
-                <!--# include file="/templates/faq.html" -->
+                <!--# include file="/ja/templates/faq.html" -->
               </ul>
-              <p><a class="btn btn-default btn-primary" href="/faq.html" role="button">View Answers &raquo;</a></p>
+              <p><a class="btn btn-default btn-primary" href="/ja/faq.html" role="button">FAQ の答えを見る &raquo;</a></p>
             </div>
           </div><!-- /.col-lg-4 -->
         </div>
@@ -87,7 +81,7 @@
           <!--
           <b>We are working for Egison version 4. Egison will have a static type system from this version!</b>
           -->
-          <b>We are refining Egison paper to propagate the theory of Egison all over the world! Please check <a href="http://arxiv.org/pdf/1407.0729.pdf" target="_blank">the latest copy of the paper</a> on arXiv.org.</b>
+          <b>現在、Egison の理論を世界に広めるために Egison 作者は論文を書いています。<a href="http://arxiv.org/pdf/1407.0729.pdf" target="_blank">最新版の論文</a>を arXiv.org で是非チェックしてみてください。</b>
         </div>
       </div>
       
@@ -96,18 +90,11 @@
           <iframe src="http://www.slideshare.net/slideshow/embed_code/33108928" width="563" height="463" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px 1px 0; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
         </div><!-- /.col-lg-6 -->
         <div class="col-lg-6" style="border: 2px solid #222; background-color:#f5f5f5; border-radius: 10px; padding-bottom:10px;">
-          <h2><i class="fa fa-book"></i> Documentations</h2>
-          <!--
-              <a class="btn btn-default btn-primary" href="/manual/" role="button">Egison Manual</a>
-              <a class="btn btn-default btn-primary" href="/cheatsheet.html" role="button">Egison Cheat Sheet</a>
-              <a class="btn btn-default btn-github" href="http://arxiv.org/pdf/1407.0729.pdf" role="button" target="_blank">Egison Paper on arXiv.org</a>
-              <a class="btn btn-default btn-github" href="https://github.com/egison/egison" role="button" target="_blank">Code on GitHub <i class="fa fa-github-square"></i></a>
-              <a class="btn btn-default btn-primary" href="/milestones.html" role="button">Milestones</a>
-              -->
+          <h2><i class="fa fa-book"></i> ドキュメント</h2>
           <div class="col-lg-6">
             <p>
               <ul>
-                <li>Egison User's Manual</li>
+                <li>Egison ユーザマニュアル (英語)</li>
                 <ul>
                   <!--# include file="/templates/manual.html" -->
                 </ul>
@@ -117,15 +104,15 @@
           <div class="col-lg-6">
             <p>
               <ul>
-                <li>Egison Developer's Manual</li>
+                <li>Egison デベロッパーマニュアル (英語)</li>
                 <ul>
                   <li><a href="/manual/mechanism.html">Pattern Matching Mechanism</a></li>
                 </ul>
-                <li>Egison Cheat Sheet</li>
+                <li>Egison チートシート (英語)</li>
                 <ul>
                   <li><a href="/cheatsheet.html">Egison Cheat Sheet</a></li>
                 </ul>
-                <li>Egison Paper</li>
+                <li>Egison 論文 (英語)</li>
                 <ul>
                   <li><a href="http://arxiv.org/pdf/1407.0729.pdf" target="_blank">Egison Paper on arXiv.org</a></li>
                 </ul>
@@ -134,7 +121,7 @@
           </div>
         </div>
         <div class="col-lg-6">
-          <h2><i class="fa fa-tree"></i> Try Egison Online</h2>
+          <h2><i class="fa fa-tree"></i> Egison オンライン</h2>
           <a target="_blank" href="http://console.egison.org">
             <!-- console start -->
             <div id="console" style="height: 120px; border-radius: 5px; background-color:#222; padding: 0px; margin-bottom: 10px;"><div style="top: 0px; left: 0px; right: 0px; bottom: 0px; position: absolute; overflow: auto;"><pre class="jqconsole jqconsole-blurred" style="margin: 0px; position: relative; min-height: 100%; box-sizing: border-box;"><span class="jqconsole-header"><span class="">Online Egison Interprter Version 3.3.8 (C) 2011-2014 Satoshi Egi
@@ -145,9 +132,9 @@ We are supporting Emacs key bindings to move cursor.
 </span></span><span class="jqconsole-prompt "><span></span><span><span>&gt; </span><span></span><span class="jqconsole-cursor" style="color: transparent; display: inline; z-index: 0; position: absolute;">&nbsp;</span><span style="position: relative;"></span></span><span></span></span></pre><div style="position: absolute; width: 1px; height: 0px; overflow: hidden; left: 5px; top: 80px;"><textarea wrap="off" autocapitalize="off" autocorrect="off" spellcheck="false" autocomplete="off" style="position: absolute; width: 2px;"></textarea></div></div></div>
             <!-- console end -->
           </a>
-          <a class="btn btn-default btn-primary" href="http://console.egison.org" role="button" target="_blank">Online Egison Interpreter</a>
-          <a class="btn btn-default btn-primary" href="http://try.egison.org" role="button" target="_blank">Online Egison Tutorial</a>
-          <a class="btn btn-default btn-primary" href="http://www.egison.org/demonstrations/poker-hands.html" role="button">Online Demonstrations &raquo;</a>
+          <a class="btn btn-default btn-primary" href="http://console.egison.org" role="button" target="_blank">オンライン Egison</a>
+          <a class="btn btn-default btn-primary" href="http://try.egison.org" role="button" target="_blank">オンライン・チュートリアル</a>
+          <a class="btn btn-default btn-primary" href="http://www.egison.org/demonstrations/poker-hands.html" role="button">オンライン・デモ &raquo;</a>
         </div>
       </div>
       
@@ -155,17 +142,17 @@ We are supporting Emacs key bindings to move cursor.
       
       <div class="row">
         <div class="col-lg-3">
-          <h3><i class="fa fa-eye"></i> Aims</h3>
+          <h3><i class="fa fa-eye"></i> 目標</h3>
           <p>
-            We aim at <strong>intuitive representation of algorithms</strong> and <strong>formalization of human recognitions</strong>.<br/>
-            We believe this is the shortest way to the <strong>artificial intelligence</strong>.
+            我々は<strong>人間の直感を直接表現できるプログラミング言語</strong>を目指しています。<br/>
+            我々はそれが<strong>人工知能</strong>を実現するための必要条件だと考えています。
           </p>
         </div><!-- /.col-lg-3 -->
         <div class="col-lg-3">
-          <h3><i class="fa fa-github-square"></i> Open-Source</h3>
+          <h3><i class="fa fa-github-square"></i> オープンソース</h3>
           <p>
-            Developed and maintained on <a href="https://github.com/egison/egison" target="_blank">GitHub</a> by the community.
-            License is <a href="https://github.com/egison/egison/blob/master/LICENSE" target="_blank">MIT</a>.
+            Egison は <a href="https://github.com/egison/egison" target="_blank">GitHub</a> 上で開発されています。
+            <a href="https://github.com/egison/egison/blob/master/LICENSE" target="_blank">MIT</a> ライセンスで公開されています。
           </p>
           <iframe src="http://ghbtns.com/github-btn.html?user=egison&repo=egison&type=watch&count=true" height="30" width="118" frameborder="0" scrolling="0" style="width:100px; height: 30px;" allowTransparency="true"></iframe>
           <iframe src="http://ghbtns.com/github-btn.html?user=egison&repo=egison&type=fork&count=true" height="30" width="118" frameborder="0" scrolling="0" style="width:100px; height: 30px;" allowTransparency="true"></iframe>
@@ -173,13 +160,13 @@ We are supporting Emacs key bindings to move cursor.
         <div class="col-lg-3">
           <h3><i class="icon-haskell"></i> Haskell</h3>
           <p>
-            Egison is written in <a href="http://www.haskell.org" target="_blank">Haskell</a> and being distributed as a <a href="http://hackage.haskell.org/package/egison" target="_blank">Hackage package</a>.<br/>
-            Egison inherits a lot of things from Haskell.
+            Egison は <a href="http://www.haskell.org" target="_blank">Haskell</a> により記述されており、<a href="http://hackage.haskell.org/package/egison" target="_blank">Hackage</a> を用いて配布されています。<br/>
+            Egison は Haskell の機能の多くを継承しています。
           </p>
         </div><!-- /.col-lg-3 -->
         <div class="col-lg-3">
-          <h3><i class="fa fa-globe"></i> Related Projects</h3>
-          <p>Extending other languages to access Egison pattern-matching!</p>
+          <h3><i class="fa fa-globe"></i> 関連プロジェクト</h3>
+          <p>他の言語から Egison のパターンマッチが使えるように拡張しています！</p>
           <ul>
             <li>GHC Extension</li>
             <li>Python Extension</li>
@@ -192,24 +179,24 @@ We are supporting Emacs key bindings to move cursor.
       
       <div class="row">
         <div class="col-lg-4">
-          <h3><i class="fa fa-trophy"></i> Media</h3>
+          <h3><i class="fa fa-trophy"></i> メディア</h3>
           <ul>
             <li><a href="http://www.infoworld.com/slideshow/146094/not-the-usual-suspects-10-plucky-programming-languages-the-rise-240677" target="_blank">InfoWorld article "Not the usual suspects: 10 plucky programming languages on the rise" <i class="fa fa-external-link"></i></a></li>
           </ul>
         </div><!-- /.col-lg-4 -->
         <div class="col-lg-4">
-          <h3><i class="icon-satellite"></i> Links</h3>
+          <h3><i class="icon-satellite"></i> リンク</h3>
           <ul>
-            <li><a href="http://rit.rakuten.co.jp/index_en.html" target="_blank">Rakuten Institute of Technology <i class="fa fa-external-link"></i></a></li>
-            <li><a href="https://www.ipa.go.jp/english/humandev/index.html" target="_blank">IPA: IT Human Resources Development <i class="fa fa-external-link"></i></a></li>
-            <li><a href="http://hagi.is.s.u-tokyo.ac.jp" target="_blank">Hagiya Laboratory in University of Tokyo <i class="fa fa-external-link"></i></a></li>
+            <li><a href="http://rit.rakuten.co.jp/index_en.html" target="_blank">楽天技術研究所 <i class="fa fa-external-link"></i></a></li>
+            <li><a href="https://www.ipa.go.jp/index.html" target="_blank">IPA 情報処理推進機構 <i class="fa fa-external-link"></i></a></li>
+            <li><a href="http://hagi.is.s.u-tokyo.ac.jp/index.html.ja" target="_blank">東京大学萩谷研究室 <i class="fa fa-external-link"></i></a></li>
           </ul>
         </div><!-- /.col-lg-4 -->
         <div class="col-lg-4">
-          <h3><i class="fa fa-users"></i> Community</h3>
+          <h3><i class="fa fa-users"></i> コミュニティ</h3>
           <p>
-            We have <a href="/community.html#mailing-list">a mailing list</a>!<br/>
-            Egison on
+            Egison には<a href="/ja/community.html#mailing-list">メーリングリスト</a>があります。<br/>
+            また、
             <!-- <a href="https://kiwiirc.com/client/irc.freenode.net/#egison" target="_blank">Freenode</a>, -->
             <a href="https://twitter.com/Egison_Lang" target="_blank">Twitter</a>,
             <a href="https://plus.google.com/100607965943061517334" rel="publisher" target="_blank">Google+</a>,
@@ -217,8 +204,8 @@ We are supporting Emacs key bindings to move cursor.
             <a href="https://github.com/egison" target="_blank">GitHub</a>,
             <a href="http://rosettacode.org/wiki/Category:Egison" target="_blank">Rosseta Code</a>,
             <a href="https://hn.algolia.com/?q=egison#!/story/forever/prefix/0/egison%20-edison%20-elison%20-egibson" target="_blank">Hacker News</a>,
-            and <a href="http://www.reddit.com/domain/egison.org/" target="_blank">Reddit</a>.
-            Please check them!
+            <a href="http://www.reddit.com/domain/egison.org/" target="_blank">Reddit</a>
+            上の情報もぜひチェックしてみてください。
           </p>
           <p>
             <a href="https://twitter.com/Egison_Lang" class="twitter-follow-button" data-show-count="false" target="_blank">Follow @Egison_Lang</a>

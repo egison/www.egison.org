@@ -1,0 +1,24 @@
+<script>
+  var editor = CodeMirror.fromTextArea(document.getElementById("egison-program"), {
+      matchBrackets: true,
+      lineNumbers: true,
+      lineWrapping: true,
+      viewportMargin: Infinity
+  });
+   
+  $(document).ready(function(){
+    $('.btn').button()
+
+    $('#run-egison').click(function() {
+      $('#run-egison').prop("disabled", true);
+      $('#run-egison').html("Running...");
+      $.post("/api/eval", { program: editor.getValue() }, function(data) {
+        data.output = data.output.replace(/</g, "&lt;");
+        data.output = data.output.replace(/>/g, "&gt;");
+        $('#egison-result').html(data.output);
+        $('#run-egison').html("Run");
+        $('#run-egison').prop("disabled", false);
+      }, "json");
+    });
+  });
+</script>

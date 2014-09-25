@@ -14,7 +14,7 @@
 /* Padding below the footer and lighter body text */
 
 body {
-    font-family: 'Oxygen', sans-serif;
+    font-family: 'Oxygen', sans-serif, 'ヒラギノ角ゴ Pro', 'Hiragino Kaku Gothic Pro';
     padding-top: 50px;
     color: #5a5a5a;
 }
@@ -31,7 +31,7 @@ h6,
 .h4,
 .h5,
 .h6 {
-  font-family: 'Oxygen', sans-serif;
+  font-family: 'Oxygen', sans-serif, 'ヒラギノ角ゴ Pro', 'Hiragino Kaku Gothic Pro';
   font-weight: 500;
   line-height: 1.1;
   color: inherit;
@@ -376,7 +376,7 @@ sidenav, .bs-sidebar.affix .bs-sidenav {
 .footer {
     background-color: #222222;
     color: #fff;
-    margin-top: 40px;
+    margin-top: 10px;
     padding: 12px 8px 8px 8px;
     text-align: center;
     font-size: 95%;
@@ -390,7 +390,7 @@ sidenav, .bs-sidebar.affix .bs-sidenav {
 /* For CodeMirror
    -------------------------------------------------- */
 .CodeMirror {
-    font-family: 'Oxygen Mono';
+    font-family: 'Oxygen Mono', 'ヒラギノ角ゴ Pro', 'Hiragino Kaku Gothic Pro';
     font-size: 16px;
     font-weight: normal;
     line-height: 1.2;
