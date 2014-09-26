@@ -11,12 +11,12 @@
 
     $('#run-egison').click(function() {
       $('#run-egison').prop("disabled", true);
-      $('#run-egison').html("Running...");
+      $('#run-egison').html("処理中...");
       $.post("/api/eval", { program: editor.getValue() }, function(data) {
         data.output = data.output.replace(/</g, "&lt;");
         data.output = data.output.replace(/>/g, "&gt;");
         $('#egison-result').html(data.output);
-        $('#run-egison').html("Run");
+        $('#run-egison').html("実行");
         $('#run-egison').prop("disabled", false);
       }, "json");
     });

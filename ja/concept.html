@@ -75,10 +75,10 @@
           <h2>パターンマッチの方法のモジュール化</h2>
           
           <p>
-            We can define the way of pattern-matching for each data type.<br/>
-            In the following example, we do pattern-matching against a collection as a list, multiset, set respectively.<br/>
-            The pattern constructor <code>cons</code> divides a collection into an element and the rest.<br/>
-            The meaning of <code>cons</code> varies for each matcher and is defined in Egison libraries for each matcher.
+            Egison プログラマはそれぞれのデータ型に対してパターンマッチの方法を定義できます。<br/>
+            下記の例では、1つのコレクションに対して、リスト、多重集合、集合としてそれぞれパターンマッチを行っています。<br/>
+            パターンコンストラクタ <code>cons</code> はコレクションを1つの要素と残りのコレクションに分解します。<br/>
+            パターンコンストラクタ <code>cons</code> の意味はそれぞれのマッチャー毎に異なり、Egison ライブラリ内でそれぞれのマッチャー毎に定義されています。<br/>
           </p>
 
           <div class="version">Egison version</div>
@@ -97,13 +97,13 @@ matchAll [1, 2, 3] as (Set Integer) with x:xs -> (x, xs)
 -- =>[(1,[1,2,3]),(2,[1,2,3]),(3,[1,2,3])]</textarea>
 
           <p>
-            Please note that we are handling pattern-matching with <b>multiple results</b>.<br/>
-            This feature is necessary to pattern-matching against data types whose data have no standard form such as multisets and sets.<br/>
-            This is because they have multiple ways of destruction.
+            上記のパターンマッチが<b>複数の結果</b>を持っていることに注意してください。<br/>
+            これは、多重集合や集合のような1つの定まった標準形を持たないデータに対するパターンマッチのためには必須の機能です。<br/>
+            なぜなら、これらのデータは複数の分解の方法があるからです。
           </p>
 
           <p>
-            We can extract two elements from a collection with the nested <code>cons</code> pattern.
+            パターンコンストラクタ <code>cons</code> をネストして使うことも可能で、下記の例では2つの要素をコレクションから取り出しています。
           </p>
           
           <div class="version">Egison version</div>
@@ -122,8 +122,8 @@ matchAll [1, 2, 3] as (Set Integer) with x:y:_ -> (x, y)
 -- =>[(1,1),(1,2),(2,1),(1,3),(2,2),(3,1),(2,3),(3,2),(3,3)]</textarea>
           
           <p>
-            We have the <code>join</code> pattern constructor, which divides a collection into two collections.<br/>
-            The meaning of <code>join</code> also varies for each matcher and is defined in Egison libraries for each matcher.
+            コレクションを2つのコレクションに分解するパターンコンストラクタ <code>join</code> も用意されています。<br/>
+            パターンコンストラクタ <code>join</code> の意味もそれぞれのマッチャー毎に Egison ライブラリ内で定義されています。
           </p>
 
           <div class="version">Egison version</div>
@@ -140,16 +140,16 @@ matchAll [1, 2, 3] as (Multiset Integer) with
 -- =>[([],[1,2,3]),([1],[2,3]),([2],[1,3]),([3],[1,2]),([1,2],[3]),([1,3],[2]),([2,3],[1]),([1,2,3],[])]</textarea>
           
           <p>
-            Let us emphasize that <b>we can define matchers such as <code>list</code>, <code>multiset</code> and <code>set</code> and pattern-constructors such as <code>cons</code> and  <code>join</code> by ourselves</b>.
+            <b>上記の <code>list</code>、<code>multiset</code>、<code>set</code> といったマッチャーは全てユーザが自身で定義できます。</b>
           </p>
 
           <h2>非線形パターン</h2>
           
           <p>
-            We can handle multiple occurrence of same variables in a pattern.<br/>
-            Patterns that have <code>,</code> ahead are called <i>value-patterns</i>.
-            The equality is checked for a value-pattern.<br/>
-            We can define the equality for each data type in the matcher.
+            Egison プログラマは1つのパターン内で同じ変数が複数現れるパターンを記述することができます。<br/>
+            パターンの先頭に <code>,</code> が付くパターンは<i>バリューパターン</i>と呼ばれるパターンです。<br/>
+            バリューパターンについては同値性がチェックされます。<br/>
+            それぞれのデータ型の同値性についてはマッチャー毎に定義できます。
           </p>
 
           <div class="version">Egison version</div>
@@ -160,14 +160,14 @@ matchAll [1, 2, 3] as (Multiset Integer) with
 -- =>[2,3,3,2]</textarea>
 
           <p>
-            Egison is purely functional programming language.
-            We can handle pattern-matching against <b>infinite collections</b> as Haskell.<br/>
-            Please also note that, we can write an any expression in a value pattern.
+            Egison は純粋関数型プログラミング言語です。
+            Egison プログラマは無限リストを Haskell のように直接扱うことができます。<br/>
+            バリューパターンには任意の式を記述できることにも注意してください。
           </p>
 
           <div class="version">Egison version</div>
           <textarea class="code">(take 10 (match-all primes (list integer)
-           [<join _ <cons $p <cons ,(+ p 2) _>>> ; patterns for twin primes
+           [<join _ <cons $p <cons ,(+ p 2) _>>> ; 双子素数にマッチするパターン
             [p (+ p 2)]]))
 ;=>{[3 5] [5 7] [11 13] [17 19] [29 31] [41 43] [59 61] [71 73] [101 103] [107 109]}</textarea>
           <div class="version2">Haskell version</div>
@@ -175,14 +175,14 @@ matchAll [1, 2, 3] as (Multiset Integer) with
 -- =>[(3,5),(5,7),(11,13),(17,19),(29,31),(41,43),(59,61),(71,73),(101,103),(107,109)]</textarea>
 
           <p>
-            Non-linear patterns extend the expressive power of pattern-matching so much.<br/>
-            It eliminates deeply nested loops and conditional branches.<br/>
-            Please check our <a href="http://www.egison.org/demonstrations/poker-hands.html">Poker Hands Demonstration</a>.
+            非線形パターンは、パターンの表現力を大きく高めます。<br/>
+            非線形パターンにより、深くネストしたループの中のネストした条件分岐を取り除くことができます。<br/>
+            <a href="http://www.egison.org/ja/demonstrations/poker-hands.html">ポーカーの役判定</a>のデモもぜひ見てみてください。
           </p>
 
           <p>
-            We can do pattern-matching also against nested data types such as lists of sets and sets and sets.
-            The following code enumerates common elements among collections inside a collection that contains three collections.
+            Egison プログラマは、集合のリストや集合の集合などといったネストしたデータ型に対してのパターンマッチも可能です。<br/>
+            下記の例では2重にネストしたコレクションの中の共通要素を取り出しています。
           </p>
           
           <div class="version">Egison version</div>
@@ -197,8 +197,8 @@ matchAll [1, 2, 3] as (Multiset Integer) with
           <h2>パターンの静的スコープ</h2>
           
           <p>
-            We can modularize useful patterns with <i>pattern-functions</i>, functions that receive patterns and return a pattern.<br/>
-            Since a pattern-function has lexical scoping, useful patterns can be reused in many places in a program without worry of name clash.
+            パターンのみを引数に取りパターンを返す関数、<i>パターン関数</i>を用いて、有用なパターンをモジュール化し使いまわすことが可能です。<br/>
+            パターン関数は静的スコープを持つため、変数の衝突を気にすることなくパターンのモジュール化が可能です。
           </p>
 
           <div class="version">Egison version</div>
@@ -213,64 +213,62 @@ matchAll [1, 2, 3] as (Multiset Integer) with
 ;=>{[1 2]}</textarea>
           
           <p>
-            This feature enables us to write complex patterns very simply.<br/>
-            Please check our <a href="http://www.egison.org/demonstrations/mahjong.html">Mahjong Demonstration</a>.
+            この機能は非常に複雑なパターンでも簡潔に書けるようにします。<br/>
+            <a href="http://www.egison.org/ja/demonstrations/mahjong.html">麻雀の上がり判定</a>のデモをぜひ見てみてください。.
           </p>
             
           <h2>まとめ</h2>
 
           <p>
-            The combination of <strong>all of the following features</strong> realizes intuitive powerful pattern-matching.
+            <strong>以下の全ての機能</strong>を同時に実現することにより、強力で直感的なパターンマッチを実現しています。
           </p>
           
           <dl style="margin-top:14px;">
-            <dt>Modularization of the way of pattern-matching</dt>
+            <dt>パターンマッチの方法のモジュール化</dt>
             <dd>
-              We can define the way of pattern-matching for each data types.<br/>
-              For example, we can define how to pattern-match against lists, multiset, and sets respectively.<br/>
+              データ型ごとにパターンマッチの方法を定義できます。<br/>
+              例えば、リスト、多重集合、集合それぞれに対してパターンマッチの方法をユーザが定義できます。
             </dd>
 
-            <dt>Multiple pattern-matching results</dt>
+            <dt>複数の結果を持つパターンマッチング</dt>
             <dd>
-              We can handle pattern-matching that has multiple results with backtracking.<br/>
-              This feature is necessary to pattern-matching against data types whose data have no standard form.<br/>
+              内部的にバックトラックを行うことにより、複数の結果を持つパターンマッチを行うことが可能です。
             </dd>
 
-            <dt>Non-linear patterns</dt>
+            <dt>非線形パターン</dt>
             <dd>
-              We can handle multiple occurrence of same variables in a pattern.
+              1つのパターン内で同じ変数が複数現れるパターンを記述できます。
             </dd>
 
-            <dt>Lexical scoping of patterns</dt>
+            <dt>静的スコープを保ったパターンのモジュール化</dt>
             <dd>
-              We can modularize useful patterns with <i>pattern-functions</i>, functions that receive patterns and return a pattern.<br/>
-              Since a pattern-function has lexical scoping, bindings for pattern-variables in the argument patterns and the body of pattern-functions don't conflict.<br/>
-              Useful patterns can be reused in many places in a program without worry of name clash.<br/>
+              パターンのみを引数に取りパターンを返す関数、<i>パターン関数</i>を用いて、有用なパターンをモジュール化できます。<br/>
+              パターン関数は静的スコープを持ち、変数の衝突を気にすることなくパターンのモジュール化が可能です。
             </dd>
           </dl>
 
-          <h2 id="see-also">See Also ...</h2>
+          <h2 id="see-also">関連記事</h2>
 
           <p>
-            We have written a lot of documentations about Egison pattern-matching.
-            Please refer the following articles, too.
+            Egison のパターンマッチについてのドキュメントはたくさん書かれています。
+            以下の記事も読んでみてください。
           </p>
 
           <ul>
-            <li><a href="/manual/pattern-matching.html">Egison Manual - Pattern Matching</a></li>
-            <li><a href="/blog/moments.html">The 3 Exciting Moments Developing Egison</a></li>
+            <li><a href="/manual/pattern-matching.html">Egison ユーザマニュアル - Pattern Matching (英語)</a></li>
+            <li><a href="/blog/moments.html">ブログ記事 - The 3 Exciting Moments Developing Egison (英語)</a></li>
           </ul>
 
           <p>
-            We also recommend you to read the chapter <a href="./mechanism.html">Pattern-Matching Mechanism</a>, if you are interested in the mechanism pattern-matching inside Egison.
+            また、内部の仕組みに興味をお持ちの方は、 Egison デベロッパーマニュアルの <a href="/manual/mechanism.html">Pattern-Matching Mechanism (英語)</a> の章をご参照ください。
           </p>
 
-          <h2 id="next">What to do next...</h2>
+          <h2 id="next">次に見てほしいもの...</h2>
           
           <p>
-            <a class="btn btn-lg btn-github" href="http://arxiv.org/pdf/1407.0729.pdf" role="button" target="_blank">Egison Paper on arXiv.org &raquo;</a>
-            <a class="btn btn-lg btn-primary" href="http://www.egison.org/demonstrations/poker-hands.html" role="button">View More Demonstrations &raquo;</a>
-            <a class="btn btn-lg btn-primary" href="/" role="button">Back to Home</a>
+            <a class="btn btn-lg btn-github" href="http://arxiv.org/pdf/1407.0729.pdf" role="button" target="_blank">Egison 論文 (英語) &raquo;</a>
+            <a class="btn btn-lg btn-primary" href="http://www.egison.org/ja/demonstrations/poker-hands.html" role="button">オンライン・デモンストレーション &raquo;</a>
+            <a class="btn btn-lg btn-primary" href="/ja/" role="button">トップに戻る</a>
           </p>
 
         </div>

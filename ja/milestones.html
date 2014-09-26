@@ -2,17 +2,17 @@
 <html lang="en">
   <head>
     <!--# include file="/templates/header.html" -->
-    <title>Egison デモ - ポーカーの役判定</title>
+    <title>Egison - マイルストーン</title>
   </head>
-  <body>
+  <body data-spy="scroll" data-target=".bs-sidebar" data-offset="0">
     <!--# include file="/ja/templates/navbar.html" -->
 
     <div class="container manual">
 
       <div class="row">
 
-        <div class="col-md-12" id="top" role="complementary">
-          <h1>ポーカーの役判定</h1>
+        <div class="col-md-8" id="top" role="complementary">
+          <h1>マイルストーン</h1>
         </div>
 
       </div>
@@ -21,36 +21,44 @@
 
         <div class="col-md-12" role="main">
 
+          <h3>Version 3.4.0</h3>
+
           <p>
-            下記のプログラムは編集して実行できます。
+            モジュールシステムの実装。
           </p>
-          
-          <textarea id="egison-program" class="code"><!--# include file="/source/sample/poker-hands.egi" --></textarea>
 
-          <button id="run-egison" class="btn btn-lg btn-primary" data-loading-text="処理中..." role="button">実行</button>
+          <h3>Version 4.0.0</h3>
 
-          <pre id="egison-result"></pre>
-            
+          <p>
+            静的型システムの実装。
+          </p>
+
+          <h3>Version 4.1.0</h3>
+        
+          <p>
+            Haskell の関数を呼び出せるようにする。
+          </p>
+
+          <img src="/images/radar-chart-egison.png" width="500px">
+
           <h2 id="next">次に見てほしいもの...</h2>
           
           <p>
-            <a class="btn btn-lg btn-primary" href="./mahjong.html" role="button">次のデモデモンストレーション</a>
             <a class="btn btn-lg btn-primary" href="/ja/" role="button">トップに戻る</a>
           </p>
           
         </div>
-
+        
       </div><!--/row-->
     
       <hr class="divider">
-
+      
       <div class="row">
         <!--# include file="/templates/disqus-main.html" -->
-      </div><!-- /.row -->
-          
+      </div><!--/row-->
+      
     </div><!-- /.container -->
     
     <!--# include file="/templates/footer.html" -->
-    <!--# include file="/ja/templates/demonstrations-js.html" -->
   </body>
 </html>

@@ -29,103 +29,98 @@
           
           <hr/>
           
-          <h2 id="what-is-egison">What is Egison?</h2>
+          <h2 id="what-is-egison">Egison とはどういうもの？</h2>
 
           <p>
-            Egison is the programming language that realized non-linear pattern-matching against unfree data types.<br/>
-            It enables us to represent pattern-matching against lists, multisets, sets, trees, graphs and any kind of data types, directly.<br/>
-            For example, we can represent a pattern-matching against sets.<br/>
-            It is difficult in the existing languages because a collection <i>{a, b, c}</i> is equal with <i>{b, a, c}</i> and <i>{a, a, b, c}</i>, when we see them as sets, and
-            the pattern-matching of the existing programming languages only support data types whose data have a standard form, such as lists.<br/>
-            Therefore, we need to translate and regard them as data which have a canonical form when we treat these kinds of data.
-            For example, a set would be always treated as a list.<br/>
-            Many programmers think this is unavoidable, and in fact, it is a latent stress of programming.<br/>
-            Egison gets rid of this restriction and makes programming dramatically simple!
+            Egison は1つの定まった標準形を持たないデータに対しても柔軟なパターンマッチが表現可能なプログラミング言語です。<br/>
+            リストや多重集合、集合、ツリー、グラフなどといった幅広いデータ型に対して、パターンマッチが記述できます。<br/>
+            例えば、<i>{a, b, c}</i> というコレクションを集合としてみなすと、<i>{b, a, c}</i> や <i>{c, b, a}</i>、<i>{a, a, b, c}</i> は同じ集合です。<br/>
+            このようなの1つの定まった標準形を持たないデータ型のデータのパターンマッチを行うには、一度これらのデータを正規形を持つデータ型として捉え直して、パターンマッチを行うことが必要です。<br/>
+            例えば、既存のプログラミング言語では集合のパターンマッチを行う際、これをリストとして捉え直してパターンマッチを行います。<br/>
+            多くのプログラマは、この煩雑な作業を当たり前のことだと認識していますが、これは実はかなりのプログラミングの際の潜在的な精神的なストレスになっています。<br/>
+            Egisonでは、正規形を持たないデータ型に対してのパターンマッチの一般的な方法をモジュール化する方法を用意することによってこの問題を解決しました。<br/>
           </p>
 
-          <h2 id="why-the-name-is-egison">Why the name is Egison?</h2>
+          <h2 id="why-the-name-is-egison">Egison の名前の由来は？</h2>
 
           <p>
-            The name <b>Egi-son</b> is given by the creator <a target="_blank" href="/~egi/">Satoshi Egi</a> to make it clear that he (<b>Egi</b>) <b>created</b> that.
-          </p>
-          
-          <h2 id="why-new-language">Why new language?</h2>
-
-          <p>
-            Implementation of the Egison pattern-matching has big influence for whole design of a programming language.<br/>
-            The patterns and the new notions <i>matchers</i>, which defines how to pattern-matching for each data type, have really important role as functions.<br/>
-            What was the best design changes by introducing this new pattern-matching.<br/>
-            Additionally, I had to do a lot of experiments to theorize it.<br/>
-          </p>
-
-          <h2 id="how-to-contribute">How to contribute?</h2>
-          
-          <p>
-            Please try Egison and give <a target="_blank" href="/~egi/">me</a> feedback.<br/>
-            If it is interesting for you, please talk and tweet about Egison.<br/>
-            What is the happiest thing for me is to read Egison code by the people with various backgrounds.<br/>
-            I believe Egison will be helpful and give breakthrough for the various fields.<br/>
-          </p>
-          <p>
-            I really appreciate if you could create the extensions for the other languages such as Haskell, Python and JavaScript.<br/>
-            I think these work will have great impact.<br/>
-            I'd like to do that by myself.<br/>
-            However, I don't have thorough knowledge of each language to implement extensions, yet.<br/>
-            I've already implemented <a target="_blank" href="https://github.com/egison/egison-ruby">the Ruby extension</a>.
+            <b>Egi-son</b> という名前は Egison の作者の名前 <a target="_blank" href="/~egi/">Satoshi Egi</a> に由来して名付けられました。<br/>
+            彼 (<b>Egi</b>) が<b>生み出した</b>ということを明確にする命名になっています。
           </p>
           
-          <h2 id="logic-programming">What is a difference between logic programming?</h2>
+          <h2 id="why-new-language">どうして新しい言語を作ったの？</h2>
+
+          <p>
+            Egison のパターンマッチを組み込むことはプログラミング言語の設計全体に大きな影響があります。<br/>
+            強力な表現力を持つパターンや、パターンマッチの方法をデータ型毎に保持するためのマッチャーという概念は、関数と同じくらい重要な役目を持ちます。<br/>
+            Egison のパターンマッチを導入することにより、設計の際の最良の選択が変わることがありえるのです。<br/>
+            また、色々な実験を気軽に行いたいと考えていたので、自身で新しいプログラミング言語を作りました。
+          </p>
+
+          <h2 id="how-to-contribute">どうすれば貢献できる？</h2>
           
           <p>
-            Pattern-matching of Egison is realized with backtracking as Prolog.<br/>
-            The difference is that Egison realized these strong expression in pattern-matching.<br/>
-            The pattern-matching itself of Prolog is similar with ordinal pattern-matching of the other functional languages.<br/>
-            The mechanism of pattern-matching is briefly written <a href="/manual/mechanism.html">here</a>.
+            <a href="/~egi/index-j.html">Egison 作者</a>にフィードバックをください。<br/>
+            そしてもしよろしければ、Egison について話したり書いてみてください。<br/>
+            Egison 作者にとって一番楽しいことは、様々な背景をもつ方々が書いた Egison プログラムを読むことです。<br/>
+            Egison は作者も想像していない方法で色々な分野で大きく役立つと信じています。
+          </p>
+          <p>
+            もし、他の言語、例えば Haskell や、Python、Javascript で Egison のパターンマッチが使えるようなパターンマッチを書いて頂けると非常に有難いです。<br/>
+            これらの仕事には非常に大きなインパクトがあると Egison の作者は考えています。<br/>
+            また作者自身も実装したいと考えています。<br/>
+            しかし、作者には今のところそれぞれの言語について拡張できるほどの知識がまだ足りていません。<br/>
+            <a target="_blank" href="https://github.com/egison/egison-ruby">Ruby 拡張</a>は Egison 作者により既に作られました。
+          </p>
+          
+          <h2 id="logic-programming">論理型言語との違いは？</h2>
+          
+          <p>
+            Egison のパターンマッチは Prolog と同じくバックトラックを行います。<br/>
+            しかしながら、Egison と Prolog をはじめとした論理型言語との違いは、Egison はパターンマッチ式にその強力な表現力を実現した点です。<br/>
+            Prolog のパターンマッチ式自体は既存の関数型言語のパターンマッチと表現力は変わりません。<br/>
           </p>
 
-          <h2 id="related-work">What is the advantage of Egison over existing work?</h2>
+          <h2 id="related-work">他の関連研究との違いは？</h2>
 
           <p>
-            There are <a target="_blank" href="https://ghc.haskell.org/trac/ghc/wiki/ViewPatterns#Relatedwork">a lot of existing work</a> for pattern-matching.
-          </p>
-
-          <p>
-            The advantage of Egison is that it realized <b>all of the following features</b> at the same time.
+            パターンマッチについての<a target="_blank" href="https://ghc.haskell.org/trac/ghc/wiki/ViewPatterns#Relatedwork">既存研究</a>はたくさんあります。<br/>
+            その中で、Egison の強みは<strong>以下の全ての機能</strong>を同時に実現していることです。
           </p>
 
           <ul>
-            <li>Modularization of the way of pattern-matching for each data type</li>
-            <li>Pattern-matching with multiple results (backtracking)</li>
-            <li>Non-linear pattern-matching</li>
+            <li>パターンマッチの方法のモジュール化</li>
+            <li>複数の結果を持つパターンマッチング</li>
+            <li>非線形パターン</li>
           </ul>
 
           <p>
-            It enables us to express non-linear pattern-matching against unfree data types intuitively as above demonstrations.
+            これにより、強力で直感的なパターンマッチを実現しています。
           </p>
-
+          
           <p>
-            Furthermore, Egison realized the following feature.
-            We can even modularize patterns like functions keeping above features.
+            さらに Egison は以下の機能も実現しています。<br/>
+            上記の機能を持ちながら、パターンのモジュール化も行うことができます。
           </p>
 
           <ul>
-            <li>Non-linear pattern-matching with <b>lexical scoping</b></li>
+            <li>静的スコープを保ったパターンのモジュール化</li>
           </ul>
 
           <p>
-            The <a href="/manual/mechanism.html">Pattern-Matching Mechanism</a> section in Egison developer's manual explains how we realized that.
+            内部の仕組みについては、Egison デベロッパーマニュアルの <a href="/manual/mechanism.html">Pattern-Matching Mechanism</a> 節をご参照ください。
           </p>
 
-          <h2 id="scripting">How to write scripts in Egison?</h2>
+          <h2 id="scripting">Egison でスクリプトはどう書くの？</h2>
 
           <p>
-            Please read the <a href="/manual/io.html">IO</a> section in our manual. We are providing simple examples.
+            Egison ユーザマニュアルの <a href="/manual/io.html">Basics of IO</a> の節をご参照ください。いくつか例も用意してあります。
           </p>
 
-          <h2 id="next">Next Action...</h2>
+          <h2 id="next">次に見てほしいもの...</h2>
           
           <p>
-            <a class="btn btn-lg btn-primary" href="/" role="button">Back to Home</a>
+            <a class="btn btn-lg btn-primary" href="/ja/" role="button">トップに戻る</a>
           </p>
           
         </div>
