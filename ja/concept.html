@@ -37,7 +37,7 @@
           <hr/>
           <p>
             このドキュメントの目的は Egison のコンセプトを出来る限り素早く読者に理解していただくことです。<br/>
-            括弧だらけの構文に慣れていない方々のために、Haskellの構文に似た擬似コードを併用して解説します。<br/>
+            括弧だらけの構文に慣れていない方々のために、Haskellの構文に似た擬似コードも併用して解説します。<br/>
           </p>
           <hr/>
 
@@ -85,9 +85,9 @@
           <textarea class="code">(match-all {1 2 3} (list integer) [<cons $x $xs> [x xs]])
 ;=>{[1 {2 3}]}
 (match-all {1 2 3} (multiset integer) [<cons $x $xs> [x xs]])
-;=>{[1 {2 3}] [2 {1 3}] [3 {1 2}]}
+;=>{[1 {2 3}] [2 {1 3}] [3 {1 2}]}       ; 要素の並びの順番が無視される
 (match-all {1 2 3} (set integer) [<cons $x $xs> [x xs]])
-;=>{[1 {1 2 3}] [2 {1 2 3}] [3 {1 2 3}]}</textarea>
+;=>{[1 {1 2 3}] [2 {1 2 3}] [3 {1 2 3}]} ; 要素の並びの順番と重複度の両方が無視される</textarea>
           <div class="version2">Haskell version</div>
           <textarea class="haskell-code">matchAll [1, 2, 3] as (List Integer) with x:xs -> (x, xs)
 -- =>[(1,[2,3])]

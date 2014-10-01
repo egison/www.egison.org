@@ -93,9 +93,9 @@
           <textarea class="haskell-code">matchAll [1, 2, 3] as (List Integer) with x:xs -> (x, xs)
 -- =>[(1,[2,3])]
 matchAll [1, 2, 3] as (Multiset Integer) with x:xs -> (x, xs)
--- =>[(1,[2,3]),(2,[1,3]),(3,[1,2])]
+-- =>[(1,[2,3]),(2,[1,3]),(3,[1,2])]       ; The order of elements is ignored
 matchAll [1, 2, 3] as (Set Integer) with x:xs -> (x, xs)
--- =>[(1,[1,2,3]),(2,[1,2,3]),(3,[1,2,3])]</textarea>
+-- =>[(1,[1,2,3]),(2,[1,2,3]),(3,[1,2,3])] ; The order and duplication of elements are ignored</textarea>
 
           <p>
             Please note that we are handling pattern-matching with <b>multiple results</b>.<br/>
