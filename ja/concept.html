@@ -192,7 +192,7 @@ matchAll [1, 2, 3] as (Multiset Integer) with
           <div class="version2">Haskell version</div>
           <textarea class="haskell-code">matchAll [[1, 2, 3, 4, 5], [4, 5, 1] [6, 1, 7, 4]] as List (Multiset Integer) with
   (n:_):(n:_):(n:_):[] -> n
--- =>{1 4}</textarea>
+-- =>[1,4]</textarea>
           
           <h2>パターンの静的スコープ</h2>
           
@@ -283,7 +283,7 @@ matchAll [1, 2, 3] as (Multiset Integer) with
       
     </div><!-- /.container -->
     
-    <!--# include file="/templates/footer.html" -->
+    <!--# include file="/ja/templates/footer.html" -->
     <script src="/vendors/codemirror/mode/haskell/haskell.js"></script>
     <script>
       $('.code').each(function() {
