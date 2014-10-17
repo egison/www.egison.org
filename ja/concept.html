@@ -92,9 +92,9 @@
           <textarea class="haskell-code">matchAll [1, 2, 3] as (List Integer) with x:xs -> (x, xs)
 -- =>[(1,[2,3])]
 matchAll [1, 2, 3] as (Multiset Integer) with x:xs -> (x, xs)
--- =>[(1,[2,3]),(2,[1,3]),(3,[1,2])]
+-- =>[(1,[2,3]),(2,[1,3]),(3,[1,2])]       ; 要素の並びの順番が無視される
 matchAll [1, 2, 3] as (Set Integer) with x:xs -> (x, xs)
--- =>[(1,[1,2,3]),(2,[1,2,3]),(3,[1,2,3])]</textarea>
+-- =>[(1,[1,2,3]),(2,[1,2,3]),(3,[1,2,3])] ; 要素の並びの順番と重複度の両方が無視される</textarea>
 
           <p>
             上記のパターンマッチが<b>複数の結果</b>を持っていることに注意してください。<br/>
