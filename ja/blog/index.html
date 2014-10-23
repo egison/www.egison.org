@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!--# include file="/templates/header.html" -->
+    <title>Egison - エッセイ</title>
+  </head>
+  <body>
+    <!--# include file="/ja/templates/navbar.html" -->
+
+    <div class="container manual blog">
+
+      <div class="row">
+
+        <!--# include file="./templates/top.html" -->
+        
+        <div class="col-md-8" role="main">
+
+          <!--# include file="./contents/CodeIQ-1.html" -->
+          <hr class="divider">
+          <!--# include file="./contents/AI.html" -->
+
+        </div>
+
+        <!--# include file="./templates/sidebar.html" -->
+
+      </div><!--/row-->
+    
+      <hr class="divider">
+      
+      <div class="row">
+        <!--# include file="/templates/disqus-main.html" -->
+      </div><!--/row-->
+      
+    </div><!-- /.container -->
+    
+    <!--# include file="/templates/footer.html" -->
+    <script src="/vendors/codemirror/mode/ruby/ruby.js"></script>
+    <script>
+      $('.code').each(function() {
+        var $this = $(this);
+        var myCodeMirror = CodeMirror.fromTextArea(this, {
+          readOnly: true,
+          lineWrapping: true
+        });
+      });
+    </script>
+    <script>
+      $('.ruby-code').each(function() {
+        var $this = $(this);
+        var myCodeMirror = CodeMirror.fromTextArea(this, {
+          readOnly: true,
+          lineWrapping: true,
+          mode: "ruby"
+        });
+      });
+    </script>
+  </body>
+</html>
