@@ -1,0 +1,10 @@
+(define $main
+  (lambda [$args]
+    (do {[$head (read-line)]
+         [(print head)]
+         [(each-line (lambda [$line]
+                       (let {[$ts (S.split "," line)]}
+                         (let {[$ds (zip (between 1960 2009) (map read (drop 1 ts)))]}
+                           (if (eq? (car ts) "Japan")
+                             (print (show ds))
+                             (do {}))))))]})))
