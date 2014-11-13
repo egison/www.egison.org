@@ -19,7 +19,7 @@ CodeMirror.defineMode("clojure", function () {
       "define test let letrec do lambda match-lambda match match-all pattern-function matcher algebraic-data-matcher if _ , & | @ loop something undefined main io return");
 
     var builtins = makeKeywords(
-        "bool integer list multiset set nil cons join snoc nioj");
+        "bool integer string list multiset set nil cons join snoc nioj");
 
     var indentKeys = makeKeywords(
         // Syntax
