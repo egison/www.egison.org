@@ -48,6 +48,12 @@ We don't describe precise behaviour of them, but give simply examples.
 <dd><pre><code>(/ 13 21)
 (/ 3.14159 2.71828)</code></pre></dd>
 
+<dt><code>numerator</code></dt>
+<dd><pre><code>(numerator (/ 13 21));=>13</code></pre></dd>
+
+<dt><code>denominator</code></dt>
+<dd><pre><code>(denominator (/ 13 21));=>21</code></pre></dd>
+
 <dt><code>modulo</code></dt>
 <dd><pre><code>(modulo -21 13)</code></pre></dd>
 
@@ -147,6 +153,24 @@ We don't describe precise behaviour of them, but give simply examples.
 <dt><code>rtof</code></dt>
 <dd><pre><code>(itof 3/2)</code></pre></dd>
 
+<dt><code>pack</code></dt>
+<dd><pre><code>(pack {'E' 'g' 'i' 's' 'o' 'n'});=>"Egison"</code></pre></dd>
+
+<dt><code>unpack</code></dt>
+<dd><pre><code>(unpack "Egison");=>{'E' 'g' 'i' 's' 'o' 'n'}</code></pre></dd>
+
+<dt><code>uncons-string</code></dt>
+<dd><pre><code>(uncons-string "Egison");=>['E' "gison"]</code></pre></dd>
+
+<dt><code>length-string</code></dt>
+<dd><pre><code>(length-string "Egison");=>6</code></pre></dd>
+
+<dt><code>append-string</code></dt>
+<dd><pre><code>(append-string "Egi" "son");=>"Egison"</code></pre></dd>
+
+<dt><code>split-string</code></dt>
+<dd><pre><code>(split-string "," "2,3,5,7,11,13");=>{"2" "3" "5" "7" "11" "13"}</code></pre></dd>
+
 <dt><code>read</code></dt>
 <dd><pre><code>(read "3")
 (read "3.14159")
@@ -179,6 +203,9 @@ We don't describe precise behaviour of them, but give simply examples.
 
 <dt><code>char?</code></dt>
 <dd><pre><code>(char? '1')</code></pre></dd>
+
+<dt><code>string?</code></dt>
+<dd><pre><code>(string? "hello")</code></pre></dd>
 
 <dt><code>tuple?</code></dt>
 <dd><pre><code>(tuple? [1 2])</code></pre></dd>

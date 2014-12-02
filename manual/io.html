@@ -32,6 +32,7 @@ Since Egison is purely functional, Egison I/O has its own special syntax.
   <li><a href="#ehllo">Hello World!</a></li>
   <li><a href="#args">The Command Line Arguments</a></li>
   <li><a href="#do"><code>do</code> Expressions</a></li>
+  <li><a href="#io"><code>io</code> Expressions</a></li>
 </ul>
 
 <hr/>
@@ -142,6 +143,40 @@ When the code is executed, <code>(write "args: ")</code>, <code>(read-line)</cod
 There are several samples in the directory <a href="https://github.com/egison/egison/tree/master/sample/io"><code>sample/io/</code></a>.
 Please check them.
 </p>
+
+<h2 id="io"><code>io</code> Expressions</h2>
+
+<p>
+  We can use an <code>io</code> expression to call an IO function as an ordinary function.
+  The following is a definition of the <code>pure-rand</code> function in <code>lib/core/io.egi</code>.
+</p>
+
+<textarea class="code">(define $pure-rand
+  (lambda [$s $e]
+    (io (rand s e))))</textarea>
+
+<p>
+  We can use an <code>io</code> expression on the interpreter, too.
+</p>
+
+<pre><code>$ egison
+Egison Version 3.3.15 (C) 2011-2014 Satoshi Egi
+http://www.egison.org
+Welcome to Egison Interpreter!
+&gt; (io (each (compose show print) (match-all primes (list integer) [&lt;join _ &lt;cons $p &lt;cons ,(+ p 2) &lt;cons ,(+ p 6) &lt;cons ,(+ p 8) _&gt;&gt;&gt;&gt;&gt; [p (+ p 2) (+ p 6) (+ p 8)]])))
+[5 7 11 13]
+[11 13 17 19]
+[101 103 107 109]
+[191 193 197 199]
+[821 823 827 829]
+[1481 1483 1487 1489]
+[1871 1873 1877 1879]
+[2081 2083 2087 2089]
+[3251 3253 3257 3259]
+[3461 3463 3467 3469]
+[5651 5653 5657 5659]
+^C
+&gt;</code></pre>
 
 <h2 id="next">What to do next...</h2>
 
