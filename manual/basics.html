@@ -63,6 +63,7 @@
     <li><a href="#generate-array"><code>generate-array</code> expressions</a></li>
     <li><a href="#array-size"><code>array-size</code> expressions</a></li>
     <!-- <li><a href="#array-ref"><code>array-ref</code> expressions</a></li> -->
+    <li><a href="#seq"><code>seq</code> expressions</a></li>
   </ul>
 </ul>
 
@@ -159,7 +160,6 @@
 
 <p>
   A string literal is a string enclosed in double quotes.
-  It is treated as a list of characters.
 </p>
 
 <textarea class="code">;; Strings
@@ -240,8 +240,7 @@ Unlike a tuple, a collection of an element and its unique element differ.
 
 <textarea class="code">;; Collections
 {}
-{1 2 3 4 5}
-{'a' 'b' 'c'};=>"abc"</textarea>
+{1 2 3 4 5}</textarea>
 
 <p>
 A collection may contain a collection as its element.
@@ -251,8 +250,8 @@ Then, an element of a collection with <code>@</code> that is an element of a col
 Using this notation, you can construct a collection from subcollections.
 </p>
 
-<textarea class="code">{1 @{2 3}};=>{1 2 3}
-{@{@{1}} @{2 @{3}}};=>{1 2 3}</textarea>
+<textarea class="code">{1 @{2 3} 4 5};=>{1 2 3 4 5}
+{1 @{2 @{3 4}} 5};=>{1 2 3 4 5}</textarea>
 
 <h3 id="array">Array</h3>
 
@@ -282,8 +281,8 @@ An array can have another array as its element.
 It allows us to use multi-dimensional arrays.
 </p>
 
-<textarea class="code">[| [| 1 2 3 |] [| 4 5 6 |] [| 7 8 9 |] |]_2;=>[|4 5 6|]
-[| [| 1 2 3 |] [| 4 5 6 |] [| 7 8 9 |] |]_2_3;=>6</textarea>
+<textarea class="code">[| [| 1 2 3 |] [| 4 5 6 |] [| 7 8 9 |] |]_1;=>[|4 5 6|]
+[| [| 1 2 3 |] [| 4 5 6 |] [| 7 8 9 |] |]_1_2;=>6</textarea>
 
 <p>
 Egison prepares special syntax for arrays.
@@ -442,6 +441,24 @@ An <code>array-size</code> expression tells us the number of elements in a given
 (array-size [| 1 2 3 |]);=>3
 (array-size [| |]);=>0
 (array-size [| [| 1 2 3 |] |]);=>1</textarea>
+
+<h3 id="seq"><code>seq</code> expressions</h3>
+
+<pre><code>  (seq <i>expr</i> <i>expr</i>)</code></pre>
+
+Egison's <code>seq</code> expression derives from Haskell's <code>seq</code> expression.
+The first argument of <code>seq</code> is strictly evaluated.
+
+The most popular use case of <code>seq</code> is in the definition of the <code>foldl</code> function.
+
+<textarea class="code">(define $foldl
+  (lambda [$fn $init $ls]
+    (match ls (list something)
+      {[<nil> init]
+       [<cons $x $xs>
+        (let {[$z (fn init x)]}
+          (seq z (foldl fn z xs)))]})))</textarea>
+
 
 <h2 id="next">What to do next...</h2>
 
