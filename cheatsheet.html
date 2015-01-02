@@ -35,7 +35,7 @@
   <li><a href="#patterns">Patterns</a></li>
   <li><a href="#syntax">Syntax</a></li>
   <ul>
-    <li><a href="#let"><code>let</code> and <code>letrec</code> expressions</a></li>
+    <li><a href="#let"><code>let</code>, <code>let*</code> and <code>letrec</code> expressions</a></li>
     <li><a href="#if"><code>if</code> expressions</a></li>
     <li><a href="#match-all"><code>match-all</code> expressions</a></li>
     <li><a href="#match"><code>match</code> expressions</a></li>
@@ -263,7 +263,7 @@ $w_n
 ((* $1 $1) 5);=>25
 ((map $2 $1) {1 2 3} (+ $ 1));=>{2 3 4}</textarea>
 
-<h3 id="let"><code>let</code> and <code>letrec</code> expressions</h3>
+<h3 id="let"><code>let</code>, <code>let*</code> and <code>letrec</code> expressions</h3>
 
 <p>
   A <code>let</code> and <code>letrec</code> expression are used for local variable bindings.
@@ -275,6 +275,10 @@ $w_n
 </p>
 
 <textarea class="code">(let {[$x 1] [$y 2]} (+ x y));=>3
+
+(let* {[$x 2] [$y (+ x 1)]} y)
+;=>(let {[$x 2]} (let {[$y (+ x 1)]} y))
+;=>3
 
 (letrec {[$evens {2 @(map (+ $ 2) evens)}]}
   (take 10 evens))

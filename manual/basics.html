@@ -57,6 +57,7 @@
   <ul>
     <li><a href="#lambda"><code>lambda</code> expressions</a></li>
     <li><a href="#let"><code>let</code> expressions</a></li>
+    <li><a href="#let-star"><code>let*</code> expressions</a></li>
     <li><a href="#letrec"><code>letrec</code> expressions</a></li>
     <li><a href="#if"><code>if</code> expressions</a></li>
     <li><a href="#apply"><code>apply</code> expressions</a></li>
@@ -344,24 +345,33 @@ The second argument is a formula, which is the body of the function.
 <pre><code>  (let {[<i>variable</i> <i>formula</i>] ...} <i>formula</i>)</code></pre>
 
 <p>
-A let expression takes two arguments.
+A <code>let</code> expression takes two arguments.
 The first argument is a collection of binary tuples, which are pairs of a variable and a formula.
-These formulae will be evaluated when the associated variable is needed in an evaluation of the second argument, and then the variable is bound to them.
+These formulas will be evaluated when the associated variable is needed in an evaluation of the second argument, and then the variable is bound to them.
 Since a formula in the first argument is evaluated with the original environment, you can't use variables in the first argument in the formula.
 </p>
 
 <textarea class="code">(let {[$x 1] [$y 2]} (+ x y));=>3</textarea>
 
+<h3 id="let-star"><code>let*</code> expressions</h3>
+
+<pre><code>  (let* {[<i>variable</i> <i>formula</i>] ...} <i>formula</i>)</code></pre>
+
 <p>
-Note the latter example works even if x is unbound, since Egison uses lazy evaluation.
+A <code>let*</code> expression is a syntax suger to avoide nested <code>let</code> expressions.
+This expression is desugared as follow.
 </p>
+
+<textarea class="code">(let* {[$x 2] [$y (+ x 1)]} y)
+;=>(let {[$x 2]} (let {[$y (+ x 1)]} y))
+;=>3</textarea>
 
 <h3 id="letrec"><code>letrec</code> expressions</h3>
 
 <pre><code>  (letrec {[<i>variable</i> <i>formula</i>] ...} <i>formula</i>)</code></pre>
 
 <p>
-  A letrec expression is the same as a let expression except the fact that you can use recursive definition in the first argument.
+  A <code>letrec</code> expression is the same as a let expression except the fact that you can use recursive definition in the first argument.
   Mutual recursion is also allowed.
 </p>
 
