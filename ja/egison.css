@@ -1,0 +1,15 @@
+@media (min-width: 1200px) {
+  .left-col-lg-4 {
+    margin-right:10px;
+    height:290px;
+  }
+  .middle-col-lg-4 {
+    margin-left:5px;
+    margin-right:5px;
+    height:290px;
+  }
+  .right-col-lg-4 {
+    margin-left:10px;
+    height:290px;
+  }
+}

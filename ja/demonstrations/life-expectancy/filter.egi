@@ -1,0 +1,21 @@
+(define $main
+  (lambda [$args]
+    (do {[$head (read-line)]
+         [(print head)]
+         [(each-line (lambda [$line]
+                       (let {[$ts (S.split "," line)]}
+                         (let {[$ds (zip (between 1960 2009) (map read (drop 1 ts)))]}
+                           (match ds (list [integer float])
+                             {[
+                               ;Pattern;
+                               ;_
+                               ;<join _ <cons [_ ?(gt? $ 75)] _>>
+                               ;<join _ <cons [_ ?(lt? $ 40)] _>>
+                               ;<join _ <cons [?(lte? $ 1980) ?(gt? $ 75)] _>>
+                               ;<join _ <cons [_ $x] <join _ <cons [_ ?(lt? $ (- x 5))] _>>>>
+                               ;<cons [_ $x] <join _ <cons [_ ?(gt? $ (* x 1.5))] <nil>>>>
+                               <join _ <cons [,1960 $x] <join _ <cons [,2005 ?(gt? $ (* x 1.5))] _>>>>
+                               
+                               (print (S.intercalate "," {@(take 1 ts) @(map (compose (lambda [$x $y] y) show) ds)}))
+                               ]
+                              [_ (do {})]})))))]})))

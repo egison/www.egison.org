@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!--# include file="/ja/templates/header.html" -->
+    <title>Egison デモ - 時系列データ解析</title>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/vendors/Highcharts/highcharts-all.js"></script>
+    <script type="text/javascript" src="./life.js"></script>
+  </head>
+  <body>
+    <!--# include file="/ja/templates/navbar.html" -->
+
+    <div class="container manual">
+
+      <div class="row">
+
+        <div class="col-md-12" id="top" role="complementary">
+          <h1>時系列データ解析</h1>
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-12" role="main">
+
+          <div id="container" style="width: 100%; height: 700px; margin: 0 auto"></div>
+
+          <ul>
+            <li><a onClick="get_csv('all.csv');">All countries <code>_</code></a></li>
+            <li><a onClick="get_csv('reach-75.csv');">Countries where life expectancy reached 75 <code>&lt;join _ &lt;cons [_ ?(gt? $ 75)] _&gt;&gt;</code></a></li>
+            <li><a onClick="get_csv('reach-40.csv');">Countries where life expectancy was under 40 <code>&lt;join _ &lt;cons [_ ?(lt? $ 40)] _&gt;&gt;</code></a></li>
+            <li><a onClick="get_csv('decrease-5.csv');">Countries where life expectancy dicreased more than 5 years <code>&lt;join _ &lt;cons [_ $x] &lt;join _ &lt;cons [_ ?(lt? $ (- x 5))] _&gt;&gt;&gt;&gt;</code></a></li>
+            <li><a onClick="get_csv('times-1.5.csv');">Countries where life expectancy increased 1.5 times from 1960 to 2005 <code>&lt;join _ &lt;cons [,1960 $x] &lt;join _ &lt;cons [,2005 ?(gt? $ (* x 1.5))] _&gt;&gt;&gt;</code></a></li>
+          </ul>
+            
+          <h2 id="point">What is the Point?</h2>
+
+          <p>
+            The point is we filters countries with a single pattern that represents a shape of a line.<br/>
+            We do not need to write algorithms for each filtering.<br/>
+          </p>
+          
+          <h2 id="mechanism">Mechanism</h2>
+
+          <p>
+            The target data are as follow. The following are data of Japanese life expectancy.<br/>
+            We pattern-match against these time-series data as <code>(list [integer float])</code>, i.e. a list of tuples of an integer and float.<br/>
+          </p>
+
+          <textarea id="egison-program" class="code">{[1960 67.66609756] [1961 68.31] [1962 68.59487805] [1963 69.65804878] [1964 70.13243902]
+ [1965 70.20195122] [1966 70.98658537] [1967 71.27658537] [1968 71.61121951] [1969 71.83878049]
+ [1970 71.9502439] [1971 72.88292683] [1972 73.50658537] [1973 73.75756098] [1974 74.39390244]
+ [1975 75.05731707] [1976 75.45682927] [1977 75.89829268] [1978 76.03829268] [1979 76.33756098]
+ [1980 76.09170732] [1981 76.41439024] [1982 76.92292683] [1983 76.96146341] [1984 77.36536585]
+ [1985 77.6504878] [1986 78.06463415] [1987 78.48365854] [1988 78.39926829] [1989 78.81804878]
+ [1990 78.83682927] [1991 79.10073171] [1992 79.15390244] [1993 79.29365854] [1994 79.68707317]
+ [1995 79.53634146] [1996 80.2002439] [1997 80.42414634] [1998 80.50146341] [1999 80.57073171]
+ [2000 81.07609756] [2001 81.41707317] [2002 81.56341463] [2003 81.76] [2004 82.0302439]
+ [2005 81.92512195] [2006 82.32195122] [2007 82.50707317] [2008 82.58756098] [2009 82.93146341]}</textarea>
+          
+          <h2 id="next">What to do next...</h2>
+          
+          <p>
+            <a class="btn btn-lg btn-primary" href="/" role="button">Back to Home</a>
+          </p>
+          
+        </div>
+
+      </div><!--/row-->
+    
+      <hr class="divider">
+
+      <div class="row">
+        <!--# include file="/templates/disqus-main.html" -->
+      </div><!-- /.row -->
+          
+    </div><!-- /.container -->
+    
+    <!--# include file="/ja/templates/footer.html" -->
+    <script>
+      $('.code').each(function() {
+        var $this = $(this);
+        var myCodeMirror = CodeMirror.fromTextArea(this, {
+          readOnly: true,
+          lineWrapping: true
+        });
+      });
+    </script>
+  </body>
+</html>
