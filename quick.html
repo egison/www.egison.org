@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!--# include file="/templates/header.html" -->
+    <title>Egison - Quick Reference</title>
+  </head>
+  <body data-spy="scroll" data-target=".bs-sidebar" data-offset="0">
+    <!--# include file="/templates/navbar.html" -->
+
+    <div class="container manual">
+
+      <div class="row">
+
+        <div class="col-md-6" id="top" role="complementary">
+          <h1>Egison Quick Reference</h1>
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-6" role="main">
+<ul>
+  <li><a href="#top-expressions">Top Expressions</a></li>
+  <ul>
+    <li><a href="#define-and-test"><code>define</code> and <code>test</code> expressions</a></li>
+    <li><a href="#load"><code>load</code> and <code>load-file</code> expressions</a></li>
+  </ul>
+  <li><a href="#objects">Objects</a></li>
+  <ul>
+    <li><a href="#builtin">Builtin data</a></li>
+    <li><a href="#composed">Composed data</a></li>
+    <li><a href="#functions">Functions</a></li>
+    <li><a href="#matchers">Matchers</a></li>
+  </ul>
+  <li><a href="#patterns">Patterns</a></li>
+  <li><a href="#syntax">Syntax</a></li>
+  <ul>
+    <li><a href="#let"><code>let</code>, <code>let*</code> and <code>letrec</code> expressions</a></li>
+    <li><a href="#if"><code>if</code> expressions</a></li>
+    <li><a href="#match-all"><code>match-all</code> expressions</a></li>
+    <li><a href="#match"><code>match</code> expressions</a></li>
+  </ul>
+</ul>
+
+        </div> <!-- col-md-6 -->
+
+        <div class="col-md-6" role="main">
+<ul>
+  <li><a href="#pattern-matching">Pattern-Matching</a></li>
+  <ul>
+    <li><a href="#cons-join-nil"><code>cons</code>,<code>join</code>, and <code>nil</code></a></li>
+    <li><a href="#non-linear">Non-linear patterns</a></li>
+    <li><a href="#loop-patterns">Loop-patterns</a></li>
+    <li><a href="#pattern-function">Modularization of patterns</a></li>
+  </ul>
+  <li><a href="#builtin-functions">Builtin Functions</a></li>
+  <ul>
+    <li><a href="#calculate-numbers">Calculate numbers</a></li>
+    <li><a href="#compare-numbers">Compare numbers</a></li>
+    <li><a href="#strings">Strings</a></li>
+    <li><a href="#type-predicates">Type predicates</a></li>
+  </ul>
+  <li><a href="#libraries">Libraries</a></li>
+  <ul>
+    <li><a href="#library-collection">Collections</a></li>
+  </ul>
+  <li><a href="#tips">Programming Tips</a></li>
+  <ul>
+    <li><a href="#infinite-collections">Infinite collections</a></li>
+  </ul>
+</ul>
+        </div> <!-- col-md-6 -->
+
+      </div> <!-- row -->
+      
+      <div class="row">
+
+          <div class="col-md-6" role="main">
+<h2 id="top-expressions">Top Expressions</h2>
+
+<h3 id="define-and-test"><code>define</code> and <code>test</code> expressions</h3>
+
+<textarea class="code">(define $x 2)
+(test (+ x 3));=>5
+  
+(define $f (lambda [$x $y] [(+ x y) (* x y)]))
+(test (f 2 4));=>[6 8]</textarea>
+
+<h3 id="load"><code>load</code> and <code>load-file</code> expressions</h3>
+
+<textarea class="code">; Load Egison library
+(load "lib/core/number.egi")
+
+; Load your program
+(load-file "/home/xxx/code/egison/myfile.egi")</textarea>
+
+<h2 id="objects">Objects</h2>
+
+<h3 id="builtin">Builtin data</h3>
+
+<textarea class="code">;; Boolean values
+#t ; True
+#f ; False
+
+;; Integers  
+1
+0
+-100
+  
+;; Float numbers
+10.2
+-100.1
+
+;; Characters
+'a'
+'1'
+'\n'
+
+;; Strings
+"Hello world!\n"</textarea>
+
+<h3 id="composed">Composed data</h3>
+
+<p>
+  We have five ways to compose data, <i>inductive data</i>, <i>tuples</i>, <i>collections</i>, <i>arrays</i>, and <i>hashes</i>.
+</p>
+
+<textarea class="code">;; Inductive data
+<Card <Diamond> 13>
+<Node 3 <Node <Leaf 1> <Leaf 2>> <Leaf 4>>
+
+;; Tuples
+[]
+[1 2]
+[#t "abc" 4]
+[1];=>1
+[[[[[[[[[[["too many"]]]]]]]]]]];=>"too many"
+
+;; Collections
+{}
+{1 2 3 4 5}
+{@{1 2} 3 4};=>{1 2 3 4}
+{1 @{2 3} 4};=>{1 2 3 4}
+{1 2 @{3 4}};=>{1 2 3 4}
+{@{@{1}} @{2 @{3} 4}};=>{1 2 3 4}
+
+;; Arrays
+(define $xa [| 1 2 3 4 5 |])
+(array-size xa);=>5
+xa_1;=>1
+xa_5;=>5
+
+;; Hashes
+(define $xh {| [1 11] [2 12] [3 13] [4 14] [5 15] |})
+xh_1;=>11
+xh_4;=>14</textarea>
+
+<p>
+  Note that, a tuple that consists of a single element is equal with the element itself.
+</p>
+
+<textarea class="code">[1];=>1
+[[[[[[[[[[["too many"]]]]]]]]]]];=>"too many"</textarea>
+
+<p>
+  Note that we can splice collections using <code>@</code> inside a collection.
+</p>
+
+<textarea class="code">{1 @{2 3} 4};=>{1 2 3 4}
+{1 @{2 3 @{4}} 5};=>{1 2 3 4 5}</textarea>
+
+<h3 id="functions">Functions</h3>
+
+<p>
+  <code>lambda</code> expressions make functions as other functional programming languages.
+</p>
+
+<textarea class="code">(lambda [$x] x)
+(lambda [$x $y] (* (+ x y) (- x y)))</textarea>
+
+<h3 id="matchers">Matchers</h3>
+
+<p>
+  We can define our own matcher using a <code>matcher</code> expression is used to define how to pattern-match for each data type.
+  It's too complicated to explain here, so please read <a href="/manual/matchers.html">the manual</a> for that.<br/>
+  The following matchers are defined in the core libraries.
+  <code>something</code> is an only buitin matcher.
+</p>
+
+<textarea class="code">something
+integer
+(list integer)
+(multiset integer)
+(set integer)
+(list (multiset integer))</textarea>
+
+<h2 id="patterns">Patterns</h2>
+
+<textarea class="code">;; Wildcard
+_
+
+;; Pattern-variables
+$x
+$y_1
+$z_1_(+ 1 2)
+$w_n
+
+;; Value-patterns
+,1
+,(+ n 10)
+,(id 10)
+
+;; Predicate-patterns
+?(eq? $ 10);=>,10
+?(lt? $ 10)
+?even?
+  
+;; Inductive patterns
+<nil>
+<cons $x $xs>
+<join $xs $ys>
+<join _ <cons $x_1 <join _ <cons $x_2 _>>>>
+
+;; Not-patterns
+^_
+^,10
+<cons $x ^<cons ,x _>>
+
+;; And-patterns
+(& ,3 $n)
+
+;; Or-patterns
+(| ,3 ,4)
+
+;; Loop-patterns
+(loop $i [3 {4 5} $n] <cons $x_i ...> _)
+;=><cons $x_3 <cons $x_4 (| _ <cons $x_5 _>)>>
+
+; Syntax sugars for loop-patterns
+(loop $i [3 {4 5}] <cons $x_i ...> _)
+;=>(loop $i [3 {4 5} _] <cons $x_i ...> _)
+
+(loop $i [3 5] <cons $x_i ...> _)
+;=>(loop $i [3 {5} _] <cons $x_i ...> _)
+
+(loop $i [3 $n] <cons $x_i ...> _)
+;=>(loop $i [3 {3 4 5 ...} $n] <cons $x_i ...> _)
+
+;; Pattern-functions
+(pattern-function [$pat] pat)
+
+(pattern-function [$pat1 $pat2]
+    <cons (& $pat pat1) <cons ,pat pat2>>)</textarea>
+
+<h2 id="syntax">Syntax</h2>
+
+<p>
+  We support partial evaluations.
+</p>
+
+<textarea class="code">((+ $ $) 3 4);=>7
+((+ $1 $2) 3 4);=>7
+((* $1 $1) 5);=>25
+((map $2 $1) {1 2 3} (+ $ 1));=>{2 3 4}
+
+(2#%1 1 2);=>1
+(2#%2 1 2);=>2
+(1#(not prime? %1) 10);=>#t
+(take 10 (1#{%1 @(# (* %1 2))} 2))
+;=>{2 4 8 16 32 64 128 256 512 1024})</textarea>
+
+<h3 id="let"><code>let</code>, <code>let*</code> and <code>letrec</code> expressions</h3>
+
+<p>
+  A <code>let</code> and <code>letrec</code> expression are used for local variable bindings.
+  The difference is that a <code>letrec</code> expression can used for recursive definitions.
+  Mutual recursion is also allowed.
+</p>
+
+<p>
+</p>
+
+<textarea class="code">(let {[$x 1] [$y 2]} (+ x y));=>3
+
+(let* {[$x 2] [$y (+ x 1)]} y)
+;=>(let {[$x 2]} (let {[$y (+ x 1)]} y))
+;=>3
+
+(letrec {[$evens {2 @(map (+ $ 2) evens)}]}
+  (take 10 evens))
+;=>{2 4 6 8 10 12 14 16 18 20}
+
+(letrec {[$odds {1 @(map (+ $ 1) evens)}]
+         [$evens (map (+ $ 1) odds)]}
+  (take 10 evens))
+;=>{2 4 6 8 10 12 14 16 18 20}</textarea>
+
+<h3 id="if"><code>if</code> expressions</h3>
+
+<p>
+  It's ordinary <code>if</code>.
+  But, note the result of an evaluation of the first argument must be a boolean value (i.e. <code>#t</code> or <code>#f</code>).
+</p>
+
+<textarea class="code">(if #t "YES" "NO");=>"YES"
+(if #f "YES" "NO");=>"NO"</textarea>
+
+<h3 id="match-all"><code>match-all</code> expressions</h3>
+
+<textarea class="code">(match-all {1 2 3} (list integer)
+  [<cons $x $xs> [x xs]]);=>{[1 {2 3}]}
+
+(match-all {1 2 3} (multiset integer)
+  [<cons $x $xs> [x xs]])
+;=>{[1 {2 3}] [2 {1 3}] [3 {1 2}]}
+
+(match-all {1 2 3} (set integer)
+  [<cons $x $xs> [x xs]])
+;=>{[1 {1 2 3}] [2 {1 2 3}] [3 {1 2 3}]}</textarea>
+
+<h3 id="match"><code>match</code> expressions</h3>
+
+<textarea class="code">(match {1 2 3 4} (list integer)
+  {[<nil> #f]
+   [<cons $x $xs> [x xs]]});=>[1 {2 3 4}]
+
+(match {1 2 3 4} (set integer)
+  {[<nil> #f]
+   [<cons $x $xs> [x xs]]});=>[1 {1 2 3 4}]</textarea>
+
+        </div>
+        
+        <div class="col-md-6" role="main">
+          
+<h2 id="pattern-matching">Pattern-Matching</h2>
+
+<h3 id="cons-join-nil"><code>cons</code>,<code>join</code>, and <code>nil</code></h3>
+
+<p>
+  The <code>cons</code> pattern is used to divide a collection into a element and the rest of the collection.
+</p>
+
+<textarea class="code">(match-all {1 2 3} (list integer)
+  [<cons $x $xs> [x xs]])
+;=>{[1 {2 3}]}
+
+(match-all {1 2 3} (multiset integer)
+  [<cons $x $xs> [x xs]])
+;=>{[1 {2 3}] [2 {1 3}] [3 {1 2}]}
+
+(match-all {1 2 3} (set integer)
+  [<cons $x $xs> [x xs]])
+;=>{[1 {1 2 3}] [2 {1 2 3}] [3 {1 2 3}]}</textarea>
+
+<textarea class="code">(match-all {1 2 3} (list integer)
+  [<cons $x <cons $y _>> [x y]])
+;=>{[1 2]}
+
+(match-all {1 2 3} (multiset integer)
+  [<cons $x <cons $y _>> [x y]])
+;=>{[1 2] [1 3] [2 1] [2 3] [3 1] [3 2]}
+
+(match-all {1 2 3} (set integer)
+  [<cons $x <cons $y _>> [x y]])
+;=>{[1 1] [1 2] [2 1] [1 3] [2 2] [3 1] [2 3] [3 2] [3 3]}</textarea>
+
+<p>
+  The <code>join</code> pattern is used to divide a collection into two collections.
+</p>
+
+<textarea class="code">(match-all {1 2 3} (list integer)
+  [<join $xs $ys> [xs ys]])
+;=>{[{} {1 2 3}] [{1} {2 3}] [{1 2} {3}] [{1 2 3} {}]}
+
+(match-all {1 2 3} (multiset integer)
+  [<join $xs $ys> [xs ys]])
+;=>{[{} {1 2 3}] [{1} {2 3}] [{2} {1 3}] [{3} {1 2}] [{1 2} {3}] [{1 3} {2}] [{2 3} {1}] [{1 2 3} {}]}
+
+(match-all {1 2 3} (set integer)
+  [<join $xs $ys> [xs ys]])
+;=>{[{} {1 2 3}] [{1} {1 2 3}] [{2} {1 2 3}] [{3} {1 2 3}] [{1 2} {1 2 3}] [{1 3} {1 2 3}] [{2 1} {1 2 3}] [{2 3} {1 2 3}] [{3 1} {1 2 3}] [{1 2 3} {1 2 3}] [{3 2} {1 2 3}] [{1 3 2} {1 2 3}] [{2 1 3} {1 2 3}] [{2 3 1} {1 2 3}] [{3 1 2} {1 2 3}] [{3 2 1} {1 2 3}]}</textarea>
+
+<p>
+  The <code>nil</code> pattern matches if a collection is empty.
+</p>
+
+<textarea class="code">(match {} (list integer)
+  {[<nil> #t]
+   [_ #f]});=>#t</textarea>
+
+<h3 id="non-linear">Non-linear patterns</h3>
+
+<p>
+  We can write non-linear patterns.
+</p>
+
+<textarea class="code">(match-all {1 1 2 3 2} (list integer)
+  [<cons $x <cons ,x _>> x])
+;=>{1}
+
+(match-all {1 1 2 3 2} (multiset integer)
+  [<cons $x <cons ,x _>> x])
+;=>{1 1 2 2}
+
+(match-all {1 1 2 3 2} (multiset integer)
+  [<cons $x ^<cons ,x _>> x])
+;=>{3}</textarea>
+
+<h3 id="loop-patterns">Loop-patterns</h3>
+
+<p>
+  We can write a pattern that include <code>...</code>.
+</p>
+
+<textarea class="code">(match-all {1 2 3 4} (list integer)
+  [(loop $i [1 3] <join _ <cons $xh_i ...>> _)
+   xh])
+;=>{{|[1 1] [2 2] [3 3]|} {|[1 1] [2 2] [3 4]|} {|[1 1] [2 3] [3 4]|} {|[1 2] [2 3] [3 4]|}}
+
+(match-all {1 2 3 4} (list integer)
+  [(loop $i [1 $n] <join _ <cons $xh_i ...>> _)
+   [n xh]])
+;=>{[0 {||}] [1 {|[1 1]|}] [1 {|[1 2]|}] [1 {|[1 3]|}] [1 {|[1 4]|}] [2 {|[1 1] [2 2]|}] [2 {|[1 1] [2 3]|}] [2 {|[1 2] [2 3]|}] [2 {|[1 1] [2 4]|}] [2 {|[1 2] [2 4]|}] [2 {|[1 3] [2 4]|}] [3 {|[1 1] [2 2] [3 3]|}] [3 {|[1 1] [2 2] [3 4]|}] [3 {|[1 1] [2 3] [3 4]|}] [3 {|[1 2] [2 3] [3 4]|}] [4 {|[1 1] [2 2] [3 3] [4 4]|}]}
+
+(match-all {1 2 3 4} (list integer)
+  [(loop $i [1 {2 4} $n] <join _ <cons $xh_i ...>> _)
+   [n xh]])
+;=>{[2 {|[1 1] [2 2]|}] [2 {|[1 1] [2 3]|}] [2 {|[1 2] [2 3]|}] [2 {|[1 1] [2 4]|}] [2 {|[1 2] [2 4]|}] [2 {|[1 3] [2 4]|}] [4 {|[1 1] [2 2] [3 3] [4 4]|}]}
+</textarea>
+
+<h3 id="pattern-function">Modularization of patterns</h3>
+
+<p>
+  We can reuse useful patterns with <i>pattern-functions</i>, functions that take patterns and return a pattern.
+</p>
+
+<textarea class="code">(define $twin
+  (pattern-function [$pat1 $pat2]
+    <cons (& $pat pat1) <cons ,pat pat2>>))
+
+(match-all {1 1 2 3} (list integer)
+  [(twin $n _) n]);=>{1}
+
+(match-all {1 2 1 3} (multiset integer)
+  [(twin $n _) n]);=>{1 1}</textarea>
+
+<h2 id="builtin-functions">Builtin Functions</h2>
+
+<p>Please check <a href="/manual/standard-functions.html">here</a> for the complete list of builtin functions.</p>
+
+<h3 id="calculate-numbers">Calculate numbers</h3>
+
+<textarea class="code">(+ 1 2);=>3
+(- 30 15);=>15
+(* 10 20);=>200
+(/ 20 5);=>4
+(modulo 17 4);=>1
+(power 2 10);=>1024
+
+(+ 2/3 1/5);=>13/15
+(/ 42 84);=>1/2
+
+(+ 10.2 1.3);=>11.5
+(* 10.2 1.3);=>13.26
+
+(rtof 1/5);=>0.2
+(rtof 1/100);=>1.0e-2</textarea>
+
+<h3 id="compare-numbers">Compare numbers</h3>
+
+<p>
+  We can compare numbers using the <code>eq?</code>, <code>gt?</code>, <code>lt?</code>, <code>gte?</code>, and <code>lte?</code> function.
+</p>
+
+<textarea class="code">(eq? 1 1);=>#t ; equal
+(gt? 1 1);=>#f ; greater than
+(lt? 1 1);=>#f ; less than
+(gte? 1 1);=>#t ; greater than or equal
+(lte? 1 1);->#t ; less than or equal</textarea>
+
+<h3 id="strings">Strings</h3>
+
+<p>
+  A string is a collection of characters in Egison.
+  Therefore, we can use <a href="#library-collection">functions for collections</a> to handle strings.
+</p>
+
+<h3 id="type-predicates">Type predicates</h3>
+
+<textarea class="code">(bool? #t);=>#t
+(integer? 12);=>#t
+(rational? 2/3);=>#t
+(float? 3.2);=>#t
+(char? 'a');=>#t
+(tuple? 2 [1 2]);=>#t
+(tuple? 0 []);=>#t
+(tuple? 1 3);=>#t
+(collection? {});=>#t
+(collection? {1 2});=>#t</textarea>
+
+<h2 id="libraries">Libraries</h2>
+
+<p>Please check <a href="/libraries/">here</a> for the Egison library list.</p>
+
+<h3 id="library-collection">Collections</h3>
+
+<p>Please check <a href="/libraries/core/collection.html">here</a> for the Egison collection library.</p>
+
+<p>
+  The <code>nats</code> is a collection that contains all natural numbers.<br/>
+  The <code>primes</code> is a collection that contains all prime numbers.<br/>
+  We can play with them.<b4/>
+  With the <code>take</code> function, we can extract a head part of the collection.
+</p>
+
+<textarea class="code">(take 3 {1 2 3 4 5});=>{1 2 3}
+(take 10 nats);=>{1 2 3 4 5 6 7 8 9 10}
+(take 10 primes);=>{2 3 5 7 11 13 17 19 23 29}</textarea>
+
+<p>
+  With the <code>map</code> function, we can operate each element of the collection at once.
+</p>
+
+<textarea class="code">(map (+ $ 10) {1 2 3 4 5});=>{11 12 13 14 15}
+(map (* $ 2) {1 2 3 4 5});=>{2 4 6 8 10}</textarea>
+
+<p>
+  With the <code>foldl</code> function, we can gather together all elements of the collection using an operator we like.
+</p>
+
+<textarea class="code">(foldl + 0 {1 2 3 4 5});=>15
+(foldl * 1 {1 2 3 4 5});=>120</textarea>
+
+<p>
+  With the <code>filter</code> function, we can extract all elements that satisfy the predicate.
+</p>
+
+<textarea class="code">(filter odd? {1 2 3 4 5});=>{1 3 5}
+(filter even? {1 2 3 4 5});=>{2 4}
+(take 20 (filter (lambda [$p] (eq? (modulo p 4) 1)) primes))
+;=>{5 13 17 29 37 41 53 61 73 89 97 101 109 113 137 149 157 173 181 193}</textarea>
+
+<p>
+  With the <code>while</code> function, we can extract all head elements that satisfy the predicate.
+</p>
+
+<textarea class="code">(while (lt? $ 100) primes)
+;=>{2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59 61 67 71 73 79 83 89 97}</textarea>
+
+<h2 id="tips">Programming Tips</h2>
+
+<h3 id="infinite-collections">Infinite collections</h3>
+
+<p>
+  We can generate infinite collections recursively.
+</p>
+
+<textarea class="code">(define $ones {1 @ones})
+(take 10 ones);=>{1 1 1 1 1 1 1 1 1 1}
+
+(define $nats {1 @(map (+ $ 1) nats)})
+(take 10 nats);=>{1 2 3 4 5 6 7 8 9 10}
+
+(define $evens (map (* $ 2) nats))
+(take 10 evens);=>{2 4 6 8 10 12 14 16 18 20}
+
+(define $primes (filter prime? nats))
+(take 10 primes);=>{2 3 5 7 11 13 17 19 23 29}</textarea>
+
+<p>
+  The results of <code>match-all</code> can be infinite.
+</p>
+
+<textarea class="code">(define $twin-primes
+  (match-all primes (list integer)
+    [<join _ <cons $p <cons ,(+ p 2) _>>>
+     [p (+ p 2)]]))
+
+(take 10 twin-primes)
+;=>{[3 5] [5 7] [11 13] [17 19] [29 31] [41 43] [59 61] [71 73] [101 103] [107 109]}</textarea>
+
+        </div>
+        
+      </div><!--/row-->
+
+      <hr class="divider">
+      
+      <div class="row">
+        <!--# include file="/templates/disqus-main.html" -->
+      </div><!--/row-->
+      
+    </div><!-- /.container -->
+    
+    <!--# include file="/templates/footer.html" -->
+    <script>
+      $('.code').each(function() {
+        var $this = $(this);
+        var myCodeMirror = CodeMirror.fromTextArea(this, {
+          readOnly: true,
+          lineWrapping: true
+        });
+      });
+    </script>
+  </body>
+</html>
