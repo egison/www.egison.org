@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!--# include file="/templates/header.html" -->
+    <title>Egison Manual - List of Standard Functions</title>
+  </head>
+  <body>
+    <!--# include file="/templates/navbar.html" -->
+
+    <div class="container manual">
+
+      <div class="row">
+
+        <div class="col-md-12" id="top" role="complementary">
+          <h1>List of Standard Functions</h1>
+        </div>
+
+      </div>
+
+      <div class="row" style="padding-top:30px;">
+
+        <div class="col-md-6">
+
+<table class="table table-condensed">
+  <colgroup>
+    <col class="col-xs-2">
+    <col class="col-xs-6">
+  </colgroup>
+  <thead>
+    <tr>
+      <th colspan="2"><a href="#syntax">Syntax</a></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Top expressions</td>
+      <td>
+        <code>define</code> <code>test</code> <code>load</code> <code>load-file</code>
+    </tr>
+    <tr>
+      <td>Builtin data</td>
+      <td>
+        <code>#t</code> <code>#f</code> <code>10</code> <code>-3</code> <code>22/7</code> <code>3.14</code> <code>'E'</code> <code>"Egison"</code>
+        <code>&lt;<i>D</i> &gt;</code> <code>[ ]</code> <code>{ }</code> <code>[| |]</code> <code>{| |}</code> <code>undefined</code>
+    </tr>
+    <tr>
+      <td>Function</td>
+      <td>
+        <code>lambda</code> <code>(<i>fn</i> $1 $2)</code> <code><i>n</i>#<i>expr</i></code>
+    </tr>
+    <tr>
+      <td>Let</td>
+      <td>
+        <code>let</code> <code>let*</code> <code></code> <code>letrec</code>
+    </tr>
+    <tr>
+      <td>Match</td>
+      <td>
+        <code>match-all</code> <code>match</code> <code>match-all-lambda</code> <code>match-lambda</code>
+    </tr>
+    <tr>
+      <td>Patterns</td>
+      <td>
+        <code>_</code> <code>$<i>var</i></code> <code>,<i>val</i></code> <code>[ ]</code> <code>&lt;<i>p</i> &gt;</code> <code>(& )</code> <code>(| )</code> <code>^</code> <code>(loop ...)</code> <code>pattern-function</code>
+    </tr>
+    <tr>
+      <td>Array, Hash</td>
+      <td>
+        <code><i>var</i>_<i>n</i></code> <code>array-size</code> <code>generate-array</code>
+    </tr>
+    <tr>
+      <td>Evaluation strategy</td>
+      <td>
+        <code>seq</code>
+    </tr>
+    <tr>
+      <td>IO</td>
+      <td>
+        <code>do</code>
+    </tr>
+    <tr>
+      <td>Other</td>
+      <td>
+        <code>if</code> <code>apply</code>
+    </tr>
+  </tbody>
+</table>
+          
+          
+<table class="table table-condensed">
+  <colgroup>
+    <col class="col-xs-2">
+    <col class="col-xs-6">
+  </colgroup>
+  <thead>
+    <tr>
+      <th colspan="2"><a href="#primitives">Primitive Functions</a></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Numbers</td>
+      <td>
+        <code>+</code> <code>-</code> <code>*</code> <code>/</code> <code>numerator</code> <code>denominator</code> <code>modulo</code> <code>quotient</code> <code>remainder</code> <code>neg</code> <code>abs</code><br/>
+        <code>eq?</code> <code>lt?</code> <code>lte?</code> <code>gt?</code> <code>gte?</code>
+    </tr>
+    <tr>
+      <td>Float numbers</td>
+      <td><code>round</code> <code>floor</code> <code>ceiling</code> <code>truncate</code> <code>sqrt</code> <code>exp</code> <code>log</code> <code>sin</code> <code>cons</code> <code>tan</code> <code>asin</code> <code>acos</code> <code>atan</code> <code>sinh</code> <code>cosh</code> <code>tanh</code> <code>asinh</code> <code>acosh</code> <code>atanh</code> <code>itof</code> <code>rtof</code></td>
+    </tr>
+    <tr>
+      <td>Strings</td>
+      <td><code>pack</code> <code>unpack</code> <code>uncons-string</code> <code>length-string</code> <code>append-string</code> <code>split-string</code> <code>read</code> <code>show</code>
+    </tr>
+    <tr>
+      <td>Collections</td>
+      <td><code>empty?</code> <code>uncons</code> <code>unsnoc</code></td></td>
+    </tr>
+    <tr>
+      <td>Predicates</td>
+      <td><code>bool?</code> <code>integer?</code> <code>rational?</code> <code>char?</code> <code>string?</code> <code>tuple?</code> <code>collection?</code> <code>array?</code> <code>hash?</code></td></td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="table table-condensed">
+  <colgroup>
+    <col class="col-xs-2">
+    <col class="col-xs-6">
+  </colgroup>
+  <thead>
+    <tr>
+      <th colspan="2"><a href="#ioprimitives">Primitive Functions with a Side Effect</a></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>I/O</td>
+      <td><code>open-input-file</code> <code>open-output-file</code> <code>close-input-port</code> <code>close-output-port</code> <code>read-char</code> <code>read-line</code> <code>write-char</code> <code>write-string</code> <code>write</code> <code>eof?</code> <code>flush</code> <code>read-char-from-port</code> <code>read-line-from-port</code> <code>write-char-to-port</code> <code>write-string-to-port</code> <code>write-to-port</code> <code>eof-port?</code> <code>flush-port</code></td>
+    </tr>
+    <tr>
+      <td>Other</td>
+      <td><code>return</code> <code>rand</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="table table-condensed">
+  <colgroup>
+    <col class="col-xs-2">
+    <col class="col-xs-6">
+  </colgroup>
+  <thead>
+    <tr>
+      <th colspan="2"><a href="#numberlib">Base Core Library Functions</a></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Matchers</td>
+      <td>
+        <code>bool</code> <code>char</code> <code>integer</code> <code>float</code>
+      </td>
+    </tr>
+    <tr>
+      <td>Basics</td>
+      <td>
+        <code>id</code> <code>fst</code> <code>snd</code> <code>compose</code> <code>compose3</code> <code>ref</code> <code>eq?/m</code>
+      </td>
+    </tr>
+    <tr>
+      <td>Booleans</td>
+      <td>
+        <code>and</code> <code>or</code> <code>not</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+        </div>
+        <div class="col-md-6">
+
+<table class="table table-condensed">
+  <colgroup>
+    <col class="col-xs-2">
+    <col class="col-xs-6">
+  </colgroup>
+  <thead>
+    <tr>
+      <th colspan="2"><a href="#collectionlib">Collection Core Library Functions</a></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Matchers</td>
+      <td><code>list</code> <code>ordered-list</code> <code>multiset</code> <code>set</code></td>
+    </tr>
+    <tr>
+      <td>Lists</td>
+      <td>
+        <code>nth</code> <code>take</code> <code>drop</code> <code>take-and-drop</code> <code>while</code><br/>
+        <code>cons</code> <code>car</code> <code>cdr</code> <code>rac</code> <code>rdc</code><br/>
+        <code>length</code> <code>map</code> <code>map2</code> <code>zip</code> <code>filter</code> <code>foldr</code> <code>foldl</code> <code>scanl</code> <code>append</code> <code>concat</code> <code>reverse</code> <code>intersperse</code> <code>intercalate</code> <code>split</code> <code>split/m</code> <code>find-cycle</code> <code>find-cycle/m</code> <code>repeat</code> <code>repeat1</code>
+        <code>all</code> <code>any</code> <code>from</code> <code>between</code>
+      </td>
+    </tr>
+    <tr>
+      <td>Multisets</td>
+      <td>
+         <code>add</code> <code>add/m</code> <code>delete-first</code> <code>delete-first/m</code> <code>delete</code> <code>delete/m</code> <code>difference</code> <code>difference/m</code> <code>union</code> <code>union/m</code> <code>intersect</code> <code>intersect/m</code>
+        <code>member?</code> <code>member?/m</code>
+        <code>count</code> <code>count/m</code> <code>frequency</code> <code>frequency/m</code>
+      </td>
+    </tr>
+    <tr>
+      <td>Sets</td>
+      <td><code>unique</code> <code>unique/m</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="table table-condensed">
+  <colgroup>
+    <col class="col-xs-2">
+    <col class="col-xs-6">
+  </colgroup>
+  <thead>
+    <tr>
+      <th colspan="2"><a href="#numberlib">Order Core Library Functions</a></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Matchers</td>
+      <td>
+        <code>comparing</code>
+      </td>
+    </tr>
+    <tr>
+      <td>Comparison</td>
+      <td>
+        <code>compare</code> <code>min</code> <code>min/fn</code> <code>max</code> <code>max/fn</code> <code>min-and-max</code> <code>min-and-max/fn</code> <code>qsort</code> <code>qsort/fn</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="table table-condensed">
+  <colgroup>
+    <col class="col-xs-2">
+    <col class="col-xs-6">
+  </colgroup>
+  <thead>
+    <tr>
+      <th colspan="2"><a href="#numberlib">Number Core Library Functions</a></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Matchers</td>
+      <td>
+        <code>nat</code>
+      </td>
+    </tr>
+    <tr>
+      <td>Sequences</td>
+      <td>
+        <code>nats</code> <code>nats0</code> <code>odds</code> <code>evens</code> <code>primes</code>
+      </td>
+    </tr>
+    <tr>
+      <td>Natural numbers</td>
+      <td>
+        <code>divisor?</code> <code>find-factor</code> <code>p-f</code> <code>odd?</code> <code>even?</code> <code>prime?</code> <code>gcd</code> <code>fact</code> <code>perm</code> <code>comb</code>
+      </td>
+    </tr>
+    <tr>
+      <td>Integers</td>
+      <td>
+        <code>power</code> <code>sum</code> <code>product</code>
+      </td>
+    </tr>
+    <tr>
+      <td>Decimal fractions</td>
+      <td>
+        <code>rtod</code> <code>show-decimal</code> <code>show-decimal'</code> <code>regular-continued-fraction</code> <code>continued-fraction</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="table table-condensed">
+  <colgroup>
+    <col class="col-xs-2">
+    <col class="col-xs-6">
+  </colgroup>
+  <thead>
+    <tr>
+      <th colspan="2"><a href="#numberlib">String Core Library Functions</a></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Matchers</td>
+      <td>
+        <code>string</code>
+      </td>
+    </tr>
+    <tr>
+      <td>Strings</td>
+      <td>
+        <code>S.empty?</code> <code>S.car</code> <code>S.cdr</code> <code>S.map</code> <code>S.length</code> <code>S.split</code> <code>S.append</code> <code>S.concat</code> <code>S.concat</code> <code>S.intercalate</code>
+      </td>
+    </tr>
+    <tr>
+      <td>Alphabet</td>
+      <td>
+        <code>alphabet?</code> <code>alphabets?</code> <code>upper-case</code> <code>lower-case</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="table table-condensed">
+  <colgroup>
+    <col class="col-xs-2">
+    <col class="col-xs-6">
+  </colgroup>
+  <thead>
+    <tr>
+      <th colspan="2"><a href="#numberlib">Random Core Library Functions</a></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Matchers</td>
+      <td>
+        <code>R.multiset</code> <code>R.set</code>
+      </td>
+    </tr>
+    <tr>
+      <td>Random</td>
+      <td>
+        <code>pure-rand</code> <code>randomize</code> <code>R.between</code> <code>R.uncons</code> <code>R.car</code> <code>R.cdr</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="table table-condensed">
+  <colgroup>
+    <col class="col-xs-2">
+    <col class="col-xs-6">
+  </colgroup>
+  <thead>
+    <tr>
+      <th colspan="2"><a href="#numberlib">IO Core Library Functions</a></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>I/O</td>
+      <td>
+        <code>print</code> <code>print-to-port</code><br/>
+        <code>each-line</code> <code>each-line-from-port</code>
+      </td>
+    </tr>
+    <tr>
+      <td>Other</td>
+      <td>
+        <code>each</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+        </div>
+        
+<hr/>
+        
+        <div class="col-md-12" role="main">
+
+<h2 id="primitives">Primitive Functions</h2>
+
+<p>
+We give the list of primitive functions, here.
+It consists of numeric functions, boolean functions, string functions, and I/O functions.
+We don't describe precise behaviour of them, but give simply examples.
+</p>
+
+<hr/>
+
+<dl>
+<dt><code>+</code></dt>
+<dd><textarea class="code">(+ 13 21);=>34
+(+ 3.14159 2.71828);=>5.85987</textarea></dd>
+
+<dt><code>-</code></dt>
+<dd><textarea class="code">(- 13 21);=>-8
+(- 3.14159 2.71828);=>0.42330999999999985</textarea></dd>
+
+<dt><code>*</code></dt>
+<dd><textarea class="code">(* 13 21);=>273
+(* 3.14159 2.71828);=>8.539721265199999</textarea></dd>
+
+<dt><code>/</code></dt>
+<dd><textarea class="code">(/ 13 21);=>13/21
+(/ 3.14159 2.71828);=>1.1557271509925393</textarea></dd>
+
+<dt><code>numerator</code></dt>
+<dd><textarea class="code">(numerator (/ 13 21));=>13</textarea></dd>
+
+<dt><code>denominator</code></dt>
+<dd><textarea class="code">(denominator (/ 13 21));=>21</textarea></dd>
+
+<dt><code>modulo</code></dt>
+<dd><textarea class="code">(modulo -21 13);=>5</textarea></dd>
+
+<dt><code>quotient</code></dt>
+<dd><textarea class="code">(quotient -21 13);=>-1</textarea></dd>
+
+<dt><code>remainder</code></dt>
+<dd><textarea class="code">(remainder -21 13);=>-8</textarea></dd>
+
+<dt><code>neg</code></dt>
+<dd><textarea class="code">(neg -89);=>89</textarea></dd>
+
+<dt><code>abs</code></dt>
+<dd><textarea class="code">(abs -89);=>89</textarea></dd>
+
+<dt><code>eq?</code></dt>
+<dd><textarea class="code">(eq? 2 -5);=>#f
+(eq? 3.14159 2.71828);=>#f
+</textarea></dd>
+
+<dt><code>lt?</code></dt>
+<dd><textarea class="code">(lt? 2 2);=>#f
+(lt? 2 -5);#f
+(lt? 3.14159 2.71828);=>#f</textarea></dd>
+
+<dt><code>lte?</code></dt>
+<dd><textarea class="code">(lte? 2 2);=>#t
+(lte? 2 -5);=>#f
+(lte? 3.14159 2.71828);=>#f</textarea></dd>
+
+<dt><code>gt?</code></dt>
+<dd><textarea class="code">(gt? 2 2);=>#f
+(gt? 2 -5);=>#t
+(gt? 3.14159 2.71828);=>#t</textarea></dd>
+
+<dt><code>gte?</code></dt>
+<dd><textarea class="code">(gte? 2 2);=>#t
+(gte? 2 -5);=>#t
+(gte? 3.14159 2.71828);=>#t</textarea></dd>
+
+<dt><code>round</code></dt>
+<dd><textarea class="code">(round 3.14159);=>3
+(round -2.71828);=>-3</textarea></dd>
+
+<dt><code>floor</code></dt>
+<dd><textarea class="code">(floor 3.14159);=>3
+(floor -2.71828);=>-3</textarea></dd>
+
+<dt><code>ceiling</code></dt>
+<dd><textarea class="code">(ceiling 3.14159);=>4
+(ceiling -2.71828);=>-2</textarea></dd>
+
+<dt><code>truncate</code></dt>
+<dd><textarea class="code">(truncate 3.14159);=>3
+(truncate -2.71828);=>-2</textarea></dd>
+
+<dt><code>sqrt</code></dt>
+<dd><textarea class="code">(sqrt 2.71828)</textarea></dd>
+
+<dt><code>exp</code></dt>
+<dd><textarea class="code">(exp 2.71828)</textarea></dd>
+
+<dt><code>log</code></dt>
+<dd><textarea class="code">(log 2.71828)</textarea></dd>
+
+<dt><code>sin</code></dt>
+<dd><textarea class="code">(sin 2.71828)</textarea></dd>
+
+<dt><code>cos</code></dt>
+<dd><textarea class="code">(cos 2.71828)</textarea></dd>
+
+<dt><code>tan</code></dt>
+<dd><textarea class="code">(tan 2.71828)</textarea></dd>
+
+<dt><code>asin</code></dt>
+<dd><textarea class="code">(asin 0.41078)</textarea></dd>
+
+<dt><code>acos</code></dt>
+<dd><textarea class="code">(acos 0.41078)</textarea></dd>
+
+<dt><code>atan</code></dt>
+<dd><textarea class="code">(atan 0.41078)</textarea></dd>
+
+<dt><code>sinh</code></dt>
+<dd><textarea class="code">(sinh 2.71828)</textarea></dd>
+
+<dt><code>cosh</code></dt>
+<dd><textarea class="code">(cosh 2.71828)</textarea></dd>
+
+<dt><code>tanh</code></dt>
+<dd><textarea class="code">(tanh 2.71828)</textarea></dd>
+
+<dt><code>asinh</code></dt>
+<dd><textarea class="code">(asinh 3.14159)</textarea></dd>
+
+<dt><code>acosh</code></dt>
+<dd><textarea class="code">(acosh 3.14159)</textarea></dd>
+
+<dt><code>atanh</code></dt>
+<dd><textarea class="code">(atanh 3.14159)</textarea></dd>
+
+<dt><code>itof</code></dt>
+<dd><textarea class="code">(itof 3);=>3.0</textarea></dd>
+
+<dt><code>rtof</code></dt>
+<dd><textarea class="code">(rtof 3/2);=>1.5</textarea></dd>
+
+<dt><code>pack</code></dt>
+<dd><textarea class="code">(pack {'E' 'g' 'i' 's' 'o' 'n'});=>"Egison"</textarea></dd>
+
+<dt><code>unpack</code></dt>
+<dd><textarea class="code">(unpack "Egison");=>{'E' 'g' 'i' 's' 'o' 'n'}</textarea></dd>
+
+<dt><code>uncons-string</code></dt>
+<dd><textarea class="code">(uncons-string "Egison");=>['E' "gison"]</textarea></dd>
+
+<dt><code>length-string</code></dt>
+<dd><textarea class="code">(length-string "Egison");=>6</textarea></dd>
+
+<dt><code>append-string</code></dt>
+<dd><textarea class="code">(append-string "Egi" "son");=>"Egison"</textarea></dd>
+
+<dt><code>split-string</code></dt>
+<dd><textarea class="code">(split-string "," "2,3,5,7,11,13");=>{"2" "3" "5" "7" "11" "13"}</textarea></dd>
+
+<dt><code>read</code></dt>
+<dd><textarea class="code">(read "3");=>3
+(read "3.14159");=>3.14159
+(read "{1 2}");=>{1 2}
+(read "\"Hello world!\"");=>"Hello world!"</textarea></dd>
+
+<dt><code>show</code></dt>
+<dd><textarea class="code">(show 3);=>"3"
+(show 3.14159);=>"3.14159"
+(show {1 2});=>"{1 2}"
+(show "Hello world!");=>""Hello world!""</textarea></dd>
+
+<dt><code>empty?</code></dt>
+<dd><textarea class="code">(empty? {});=>#t</textarea></dd>
+
+<dt><code>uncons</code></dt>
+<dd><textarea class="code">(uncons {1 2 3});=>[1 {2 3}]</textarea></dd>
+
+<dt><code>unsnoc</code></dt>
+<dd><textarea class="code">(unsnoc {1 2 3});=>[{1 2} 3]</textarea></dd>
+
+<dt><code>bool?</code></dt>
+<dd><textarea class="code">(bool? #t);=>#t</textarea></dd>
+
+<dt><code>integer?</code></dt>
+<dd><textarea class="code">(integer? 1);=>#t</textarea></dd>
+
+<dt><code>rational?</code></dt>
+<dd><textarea class="code">(rational? 1/2);=>#t</textarea></dd>
+
+<dt><code>char?</code></dt>
+<dd><textarea class="code">(char? '1');=>#t</textarea></dd>
+
+<dt><code>string?</code></dt>
+<dd><textarea class="code">(string? "hello");=>#t</textarea></dd>
+
+<dt><code>tuple?</code></dt>
+<dd><textarea class="code">(tuple? [1 2]);=>#t</textarea></dd>
+
+<dt><code>collection?</code></dt>
+<dd><textarea class="code">(collection? {});=>#t</textarea></dd>
+
+<dt><code>array?</code></dt>
+<dd><textarea class="code">(array? [|1 2 3|]);=>#t</textarea></dd>
+
+<dt><code>hash?</code></dt>
+<dd><textarea class="code">(hash? {|[1 1] [2 12]|});=>#t</textarea></dd>
+
+</dl>
+
+<h2 id="ioprimitives">I/O Primitive Functions</h2>
+
+<dl>
+<dt><code>open-input-file</code></dt>
+<dd><textarea class="code">[$inport (open-input-file "./input.txt")]</textarea></dd>
+
+<dt><code>open-output-file</code></dt>
+<dd><textarea class="code">[$outport (open-output-file "./output.txt")]</textarea></dd>
+
+<dt><code>close-input-port</code></dt>
+<dd><textarea class="code">[(close-input-port inport)]</textarea></dd>
+
+<dt><code>close-output-port</code></dt>
+<dd><textarea class="code">[(close-output-port outport)]</textarea></dd>
+
+<dt><code>read-char</code></dt>
+<dd><textarea class="code">[$c (read-char)]</textarea></dd>
+
+<dt><code>read-line</code></dt>
+<dd><textarea class="code">[$line (read-line)]</textarea></dd>
+
+<dt><code>write-char</code></dt>
+<dd><textarea class="code">[(write-char 'c')]</textarea></dd>
+
+<dt><code>write-string</code></dt>
+<dd><textarea class="code">[(write-string "string")]</textarea></dd>
+
+<dt><code>write</code></dt>
+<dd><textarea class="code">[(write [|{[ 1 'b' "TH" ] [| #t |]} {} |])]</textarea></dd>
+
+<dt><code>eof?</code></dt>
+<dd><textarea class="code">[(eof?)]</textarea></dd>
+
+<dt><code>flush</code></dt>
+<dd><textarea class="code">[(flush)]</textarea></dd>
+
+<dt><code>read-char-from-port</code></dt>
+<dd><textarea class="code">[$c (read-char-from-port inport)]</textarea></dd>
+
+<dt><code>read-line-from-port</code></dt>
+<dd><textarea class="code">[$line (read-line-from-port inport)]</textarea></dd>
+
+<dt><code>write-char-to-port</code></dt>
+<dd><textarea class="code">[(write-char-to-port 'c' outport)]</textarea></dd>
+
+<dt><code>write-string-to-port</code></dt>
+<dd><textarea class="code">[(write-string-to-port "String" outport)]</textarea></dd>
+
+<dt><code>write-to-port</code></dt>
+<dd><textarea class="code">[(write-to-port [|{[ 1 'b' "TH" ] [| #t |]} {} |] outport)]</textarea></dd>
+
+<dt><code>eof-port?</code></dt>
+<dd><textarea class="code">[(eof-port? inport)]</textarea></dd>
+
+<dt><code>flush-port</code></dt>
+<dd><textarea class="code">[(flush-port outport)]</textarea></dd>
+
+<dt><code>return</code></dt>
+<dd><textarea class="code">[$r (return [])]</textarea></dd>
+
+<dt><code>rand</code></dt>
+<dd><textarea class="code">[$r (rand 1 6)]</textarea></dd>
+</dl>
+
+<h2 id="next">What to do next...</h2>
+
+<p>
+  <a class="btn btn-lg btn-primary" href="/manual/" role="button">Top of Manual</a>
+  <a class="btn btn-lg btn-primary" href="/" role="button">Back to Home</a>
+</p>
+        </div>
+
+      </div><!--/row-->
+    
+      <hr class="divider">
+      
+      <div class="row">
+        <!--# include file="/templates/disqus-main.html" -->
+      </div><!--/row-->
+      
+    </div><!-- /.container -->
+    
+    <!--# include file="/templates/footer.html" -->
+    <script>
+      $('.code').each(function() {
+        var $this = $(this);
+        var myCodeMirror = CodeMirror.fromTextArea(this, {
+          readOnly: true,
+          lineWrapping: true
+        });
+      });
+    </script>
+  </body>
+</html>

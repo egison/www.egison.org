@@ -30,7 +30,8 @@
   <ul>
     <li><a href="#builtin">Builtin data</a></li>
     <li><a href="#composed">Composed data</a></li>
-    <li><a href="#user-defined">User-defined objects</a></li>
+    <li><a href="#functions">Functions</a></li>
+    <li><a href="#matchers">Matchers</a></li>
   </ul>
   <li><a href="#patterns">Patterns</a></li>
   <li><a href="#syntax">Syntax</a></li>
@@ -41,6 +42,7 @@
     <li><a href="#match"><code>match</code> expressions</a></li>
   </ul>
 </ul>
+
         </div> <!-- col-md-6 -->
 
         <div class="col-md-6" role="main">
@@ -165,14 +167,19 @@ xh_4;=>14</textarea>
   Note that we can splice collections using <code>@</code> inside a collection.
 </p>
 
-<textarea class="code">{1 @{2 3}};=>{1 2 3}
-{@{@{1}} @{2 @{3}}};=>{1 2 3}</textarea>
+<textarea class="code">{1 @{2 3} 4};=>{1 2 3 4}
+{1 @{2 3 @{4}} 5};=>{1 2 3 4 5}</textarea>
 
-<h3 id="user-defined">User-defined objects</h3>
+<h3 id="functions">Functions</h3>
 
 <p>
   <code>lambda</code> expressions make functions as other functional programming languages.
 </p>
+
+<textarea class="code">(lambda [$x] x)
+(lambda [$x $y] (* (+ x y) (- x y)))</textarea>
+
+<h3 id="matchers">Matchers</h3>
 
 <p>
   We can define our own matcher using a <code>matcher</code> expression is used to define how to pattern-match for each data type.
@@ -181,18 +188,12 @@ xh_4;=>14</textarea>
   <code>something</code> is an only buitin matcher.
 </p>
 
-<textarea class="code">;; Functions
-(lambda [$x] x)
-(lambda [$x $y] (* (+ x y) (- x y)))
-
-;; Matcher
-something
+<textarea class="code">something
 integer
 (list integer)
 (multiset integer)
 (set integer)
 (list (multiset integer))</textarea>
-
 
 <h2 id="patterns">Patterns</h2>
 
@@ -261,7 +262,13 @@ $w_n
 <textarea class="code">((+ $ $) 3 4);=>7
 ((+ $1 $2) 3 4);=>7
 ((* $1 $1) 5);=>25
-((map $2 $1) {1 2 3} (+ $ 1));=>{2 3 4}</textarea>
+((map $2 $1) {1 2 3} (+ $ 1));=>{2 3 4}
+
+(2#%1 1 2);=>1
+(2#%2 1 2);=>2
+(1#(not prime? %1) 10);=>#t
+(take 10 (1#{%1 @(# (* %1 2))} 2))
+;=>{2 4 8 16 32 64 128 256 512 1024})</textarea>
 
 <h3 id="let"><code>let</code>, <code>let*</code> and <code>letrec</code> expressions</h3>
 
@@ -440,7 +447,7 @@ $w_n
 
 <h2 id="builtin-functions">Builtin Functions</h2>
 
-<p>Please check <a href="/manual/primitives.html">here</a> for the complete list of builtin functions.</p>
+<p>Please check <a href="/manual/standard-functions.html">here</a> for the complete list of builtin functions.</p>
 
 <h3 id="calculate-numbers">Calculate numbers</h3>
 
