@@ -12,24 +12,151 @@
       <div class="row">
 
         <div class="col-md-12" id="top" role="complementary">
-          <h1><code>lib/core/number.egi</code></h1>
+          <h1>Number Core Library Functions</h1>
         </div>
 
       </div>
 
-      <div class="row">
+      <div class="row" style="padding-top:30px;">
 
+        <div class="col-md-12">
+
+<table class="table table-condensed">
+  <colgroup>
+    <col class="col-xs-2">
+    <col class="col-xs-6">
+  </colgroup>
+  <thead>
+    <tr>
+      <th colspan="2"><a href="/libraries/core/number.html">Number Core Library Functions</a></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Matchers</td>
+      <td>
+        <code>nat</code> <code>mod</code>
+      </td>
+    </tr>
+    <tr>
+      <td>Sequences</td>
+      <td>
+        <code>nats</code> <code>nats0</code> <code>odds</code> <code>evens</code> <code>primes</code>
+      </td>
+    </tr>
+    <tr>
+      <td>Natural numbers</td>
+      <td>
+        <code>divisor?</code> <code>find-factor</code> <code>p-f</code> <code>odd?</code> <code>even?</code> <code>prime?</code> <code>gcd</code> <code>fact</code> <code>perm</code> <code>comb</code>
+      </td>
+    </tr>
+    <tr>
+      <td>Integers</td>
+      <td>
+        <code>power</code> <code>sum</code> <code>product</code>
+      </td>
+    </tr>
+    <tr>
+      <td>Decimal fractions</td>
+      <td>
+        <code>rtod</code> <code>show-decimal</code> <code>show-decimal'</code> <code>regular-continued-fraction</code> <code>continued-fraction</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+        </div>
+        
+<hr/>
+        
         <div class="col-md-12" role="main">
 
-          <textarea id="egison-program" class="code"><!--# include file="/source/lib/core/number.egi" --></textarea>
-            
+<h2 id="matchers">Matchers</h2>
+
+<dl>
+  
+<dt><code>nat</code></dt>
+<dd><textarea class="code">(match 0 nat
+  {[<o> #t]
+   [_ #f]})
+;=>#t
+
+(match 1 nat
+  {[<o> #t]
+   [_ #f]})
+;=>#f
+
+(match 10 nat
+  {[<s $n> n]})
+;=>9
+
+(match 0 nat
+  {[<s <o>> #t]
+   [_ #f]})
+;=>#f</textarea></dd>
+
+<dt><code>integer</code></dt>
+<dd><textarea class="code">(match 10 integer
+  {[,10 #t]
+   [_ #f]})
+;=>#t
+
+(match 10 nat
+  {[$n n]})
+;=>10</textarea></dd>
+
+</dl>
+
+<h2 id="sequences">Sequences</h2>
+
+<dl>
+  
+<dt><code>nats</code></dt>
+<dd><textarea class="code">(take 10 nats);=>{1 2 3 4 5 6 7 8 9 10}</textarea></dd>
+
+<dt><code>nats0</code></dt>
+<dd><textarea class="code">(take 10 nats0);=>{0 1 2 3 4 5 6 7 8 9}</textarea></dd>
+
+<dt><code>odds</code></dt>
+<dd><textarea class="code">(take 10 odds);=>{1 3 5 7 9 11 13 15 17 19}</textarea></dd>
+
+<dt><code>evens</code></dt>
+<dd><textarea class="code">(take 10 evens);=>{2 4 6 8 10 12 14 16 18 20}</textarea></dd>
+
+<dt><code>primes</code></dt>
+<dd><textarea class="code">(take 10 primes);=>{2 3 5 7 11 13 17 19 23 29}</textarea></dd>
+
+<dt><code></code></dt>
+<dd><textarea class="code"></textarea></dd>
+
+</dl>
+
+<h2 id="next">What to do next...</h2>
+
+<p>
+  <a class="btn btn-lg btn-primary" href="/" role="button">Back to Home</a>
+</p>
         </div>
 
       </div><!--/row-->
     
+      <hr class="divider">
+      
+      <div class="row">
+        <!--# include file="/templates/disqus-main.html" -->
+      </div><!--/row-->
+      
     </div><!-- /.container -->
     
     <!--# include file="/templates/footer.html" -->
-    <!--# include file="/templates/libraries-js.html" -->
+    <script>
+      $('.code').each(function() {
+        var $this = $(this);
+        var myCodeMirror = CodeMirror.fromTextArea(this, {
+          readOnly: true,
+          lineWrapping: true
+        });
+      });
+    </script>
   </body>
 </html>
