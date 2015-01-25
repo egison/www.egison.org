@@ -29,39 +29,83 @@
         
         <div class="col-md-12" role="main">
 
-<h2 id=""></h2>
+<h2 id="matchers">Matchers</h2>
 
 <dl>
   
-<dt><code></code></dt>
-<dd><textarea class="code"></textarea></dd>
+<dt><code>string</code></dt>
+<dd><textarea class="code">(match "abc" string
+  {[,"abc" #t]
+   [_ #f]});=>#t
 
-<dt><code></code></dt>
-<dd><textarea class="code"></textarea></dd>
+(match "" string
+  {[<nil> #t]
+   [_ #f]});=>#t
+
+(match "abc" string
+  {[<nil> #f]
+   [_ #t]});=>#t
+
+(match-all "abc" string
+  [<cons $x $xs> [x xs]])
+;=>{['a' "bc"]}
+
+(match-all "abc" string
+  [<join $xs $ys> [xs ys]])
+;=>{["" "abc"] ["a" "bc"] ["ab" "c"] ["abc" ""]}</textarea></dd>
 
 </dl>
 
-<h2 id=""></h2>
+<h2 id="strings">Strings</h2>
 
 <dl>
   
-<dt><code></code></dt>
-<dd><textarea class="code"></textarea></dd>
+<dt><code>S.empty?</code></dt>
+<dd><textarea class="code">(S.empty? "");=>#t
 
-<dt><code></code></dt>
-<dd><textarea class="code"></textarea></dd>
+(S.empty? "Egison");=>#f</textarea></dd>
+
+<dt><code>S.car</code></dt>
+<dd><textarea class="code">(S.car "Egison");=>'E'</textarea></dd>
+
+<dt><code>S.cdr</code></dt>
+<dd><textarea class="code">(S.cdr "Egison");=>"gison"</textarea></dd>
+
+<dt><code>S.map</code></dt>
+<dd><textarea class="code">(S.map id "Egison");=>"Egison"</textarea></dd>
+
+<dt><code>S.length</code></dt>
+<dd><textarea class="code">(S.length "Egison");=>6</textarea></dd>
+
+<dt><code>S.split</code></dt>
+<dd><textarea class="code">(S.split "," "Lisp,Haskell,Egison");=>{"Lisp" "Haskell" "Egison"}</textarea></dd>
+
+<dt><code>S.append</code></dt>
+<dd><textarea class="code">(S.append "Egi" "son");=>"Egison"</textarea></dd>
+
+<dt><code>S.concat</code></dt>
+<dd><textarea class="code">(S.concat {"Egi" "son"});=>"Egison"</textarea></dd>
+
+<dt><code>S.intercalate</code></dt>
+<dd><textarea class="code">(S.intercalate "," {"Lisp" "Haskell" "Egison"});=>"Lisp,Haskell,Egison"</textarea></dd>
 
 </dl>
 
-<h2 id=""></h2>
+<h2 id="alphabets">Alphabets</h2>
 
 <dl>
   
-<dt><code></code></dt>
-<dd><textarea class="code"></textarea></dd>
+<dt><code>alphabet?</code></dt>
+<dd><textarea class="code">(alphabet? 'a');=>#t</textarea></dd>
 
-<dt><code></code></dt>
-<dd><textarea class="code"></textarea></dd>
+<dt><code>alphabets?</code></dt>
+<dd><textarea class="code">(alphabets? "Egison");=>#t</textarea></dd>
+
+<dt><code>upper-case</code></dt>
+<dd><textarea class="code">(upper-case 'e');=>'E'</textarea></dd>
+
+<dt><code>lower-case</code></dt>
+<dd><textarea class="code">(lower-case 'E');=>'e'</textarea></dd>
 
 </dl>
 
