@@ -59,7 +59,7 @@
     <tr>
       <td>Decimal fractions</td>
       <td>
-        <code>rtod</code> <code>show-decimal</code> <code>show-decimal'</code> <code>regular-continued-fraction</code> <code>continued-fraction</code>
+        <code>rtod</code> <code>rtod'</code> <code>show-decimal</code> <code>show-decimal'</code> <code>regular-continued-fraction</code> <code>continued-fraction</code>
       </td>
     </tr>
   </tbody>
@@ -126,8 +126,84 @@
 <dt><code>primes</code></dt>
 <dd><textarea class="code">(take 10 primes);=>{2 3 5 7 11 13 17 19 23 29}</textarea></dd>
 
-<dt><code></code></dt>
-<dd><textarea class="code"></textarea></dd>
+<h2 id="natural-numbers">Natural numbers</h2>
+
+<dl>
+  
+<dt><code>divisor?</code></dt>
+<dd><textarea class="code">(divisor? 10 5);=>#t</textarea></dd>
+
+<dt><code>find-factor</code></dt>
+<dd><textarea class="code">(find-factor 100);=>2</textarea></dd>
+
+<dt><code>p-f</code></dt>
+<dd><textarea class="code">(p-f 100);=>{2 2 5 5}</textarea></dd>
+
+<dt><code>odd?</code></dt>
+<dd><textarea class="code">(odd? 3);=>#t
+(odd? 4);=>#f</textarea></dd>
+
+<dt><code>even?</code></dt>
+<dd><textarea class="code">(even? 4);=>#t
+(even? 5);=>#f</textarea></dd>
+
+<dt><code>prime?</code></dt>
+<dd><textarea class="code">(prime? 17);=>#t
+(prime? 18);=>#f</textarea></dd>
+
+<dt><code>gcd</code></dt>
+<dd><textarea class="code">(gcd {10 20 5 40});=>5</textarea></dd>
+
+<dt><code>fact</code></dt>
+<dd><textarea class="code">(fact 10);=>3628800</textarea></dd>
+
+<dt><code>perm</code></dt>
+<dd><textarea class="code">(perm 5 2);=>20</textarea></dd>
+
+<dt><code>comb</code></dt>
+<dd><textarea class="code">(comb 5 2);=>10</textarea></dd>
+
+</dl>
+
+<h2 id="integers">Integers</h2>
+
+<dl>
+  
+<dt><code>power</code></dt>
+<dd><textarea class="code">(power 2 10);=>1024</textarea></dd>
+
+<dt><code>sum</code></dt>
+<dd><textarea class="code">(sum (take 5 nats));=>15</textarea></dd>
+
+<dt><code>product</code></dt>
+<dd><textarea class="code">(product (take 5 nats));=>120</textarea></dd>
+
+</dl>
+
+<h2 id="decimal-fractions">Decimal fractions</h2>
+
+<dl>
+  
+<dt><code>rtod</code></dt>
+<dd><textarea class="code">(rtod 5 1/3);=><Df 0 {3 3 3 3 3}></textarea></dd>
+
+<dt><code>rtod'</code></dt>
+<dd><textarea class="code">(rtod' 6/35);=><Df' 0 {1} {7 1 4 2 8 5}></textarea></dd>
+
+<dt><code>show-decimal</code></dt>
+<dd><textarea class="code">(show-decimal 10 1/3);=>"0.3333333333"</textarea></dd>
+
+<dt><code>show-decimal'</code></dt>
+<dd><textarea class="code">(show-decimal' 1/3);=>"0. 3 ..."</textarea></dd>
+
+<dt><code>regular-continued-fraction</code></dt>
+<dd><textarea class="code">(rtof (regular-continued-fraction {1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2}))
+;=>1.4142135623730951</textarea></dd>
+
+<dt><code>continued-fraction</code></dt>
+<dd><textarea class="code">(rtof (continued-fraction {3 7 15 1 292 1 1 1 2 1 3 1 14 2 1 1 2 2 2 2 1 84 2 1 1 15 3 13}
+                          {1 1 1  1 1   1 1 1 1 1 1 1 1  1 1 1 1 1 1 1 1 1  1 1 1 1  1}))
+;=>3.141592653589793</textarea></dd>
 
 </dl>
 
