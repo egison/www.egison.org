@@ -12,24 +12,98 @@
       <div class="row">
 
         <div class="col-md-12" id="top" role="complementary">
-          <h1><code>lib/core/random.egi</code></h1>
+          <h1>Random Core Library Functions</h1>
         </div>
 
       </div>
 
-      <div class="row">
+      <div class="row" style="padding-top:30px;">
 
+        <div class="col-md-12">
+
+          <!--# include file="/templates/tables/random.html" -->
+    
+        </div>
+        
+<hr/>
+        
         <div class="col-md-12" role="main">
 
-          <textarea id="egison-program" class="code"><!--# include file="/source/lib/core/random.egi" --></textarea>
-            
+<h2 id="matchers">Matchers</h2>
+
+<dl>
+  
+<dt><code>R.multiset</code></dt>
+<dd><textarea class="code">(match-all {1 2} (R.multiset integer)
+  [<cons $n $ns> [n ns]])
+;=>{[1 {2}] [2 {1}]} or {[2 {1}] [1 {2}]}
+
+(match-all {1 2} (R.multiset integer)
+  [<cons ,1 $ns> ns])
+;=>{{2}}
+</textarea></dd>
+
+<dt><code>R.set</code></dt>
+<dd><textarea class="code">(match-all {1 2} (R.set integer)
+  [<cons $n $ns> [n ns]])
+;=>{[1 {1 2}] [2 {1 2}]} or {[2 {1 2}] [1 {1 2}]}
+
+(match-all {1 2} (R.set integer)
+  [<cons ,1 $ns> ns])
+;=>{{1 2}}</textarea></dd>
+
+</dl>
+
+<h2 id="random">Random</h2>
+
+<dl>
+  
+<dt><code>pure-rand</code></dt>
+<dd><textarea class="code">(pure-rand 1 6);=>1, 2, 3, 4, 5 or 6</textarea></dd>
+
+<dt><code>randomize</code></dt>
+<dd><textarea class="code">(randomize {1 2 3});=>{1 2 3}, {1 3 2}, {2 1 3}, {2 3 1}, {3 1 2} or {3 2 1}</textarea></dd>
+
+<dt><code>R.between</code></dt>
+<dd><textarea class="code">(R.between 1 3);=>{1 2 3}, {1 3 2}, {2 1 3}, {2 3 1}, {3 1 2} or {3 2 1}</textarea></dd>
+
+<dt><code>R.uncons</code></dt>
+<dd><textarea class="code">(R.uncons {1 2});=>[1 {2}] or [2 {1}]</textarea></dd>
+
+<dt><code>R.car</code></dt>
+<dd><textarea class="code">(R.car {1 2});=>1 or 2</textarea></dd>
+
+<dt><code>R.cdr</code></dt>
+<dd><textarea class="code">(R.cdr {1 2});=>{2} or {1}</textarea></dd>
+
+</dl>
+
+<h2 id="next">What to do next...</h2>
+
+<p>
+  <a class="btn btn-lg btn-primary" href="/" role="button">Back to Home</a>
+</p>
         </div>
 
       </div><!--/row-->
     
+      <hr class="divider">
+      
+      <div class="row">
+        <!--# include file="/templates/disqus-main.html" -->
+      </div><!--/row-->
+      
     </div><!-- /.container -->
     
     <!--# include file="/templates/footer.html" -->
-    <!--# include file="/templates/libraries-js.html" -->
+    <script>
+      $('.code').each(function() {
+        var $this = $(this);
+        var myCodeMirror = CodeMirror.fromTextArea(this, {
+          readOnly: true,
+          lineWrapping: true
+        });
+      });
+    </script>
   </body>
 </html>

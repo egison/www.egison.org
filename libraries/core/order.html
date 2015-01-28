@@ -12,24 +12,97 @@
       <div class="row">
 
         <div class="col-md-12" id="top" role="complementary">
-          <h1><code>lib/core/order.egi</code></h1>
+          <h1>Order Core Library Functions</h1>
         </div>
 
       </div>
 
-      <div class="row">
+      <div class="row" style="padding-top:30px;">
 
+        <div class="col-md-12">
+
+          <!--# include file="/templates/tables/order.html" -->
+    
+        </div>
+        
+<hr/>
+        
         <div class="col-md-12" role="main">
 
-          <textarea id="egison-program" class="code"><!--# include file="/source/lib/core/order.egi" --></textarea>
-            
+<h2 id="matchers">Matchers</h2>
+
+<dl>
+  
+<dt><code>comparing</code></dt>
+<dd><textarea class="code">(define $ordering
+  (algebraic-data-matcher 
+    {<less> <equal> <greater>}))</textarea></dd>
+
+</dl>
+
+<h2 id="comparison">Comparison</h2>
+
+<dl>
+  
+<dt><code>compare</code></dt>
+<dd><textarea class="code">(compare 10 10);=><Equal>
+
+(compare 11 10);=><Greater>
+
+(compare 10 11);=><Less></textarea></dd>
+
+<dt><code>min</code></dt>
+<dd><textarea class="code">(min {10 20 5 20 30});=>5</textarea></dd>
+
+<dt><code>min/fn</code></dt>
+<dd><textarea class="code">(min/fn compare {10 20 5 20 30});=>5</textarea></dd>
+
+<dt><code>max</code></dt>
+<dd><textarea class="code">(max {10 20 5 20 30});=>30</textarea></dd>
+
+<dt><code>max/fn</code></dt>
+<dd><textarea class="code">(max/fn compare {10 20 5 20 30});=>30</textarea></dd>
+
+<dt><code>min-and-max</code></dt>
+<dd><textarea class="code">(min-and-max {10 20 5 20 30});=>[5 30]</textarea></dd>
+
+<dt><code>min-and-max/fn</code></dt>
+<dd><textarea class="code">(min-and-max/fn compare {10 20 5 20 30});=>[5 30]</textarea></dd>
+
+<dt><code>qsort</code></dt>
+<dd><textarea class="code">(qsort {10 20 5 20 30});=>{5 10 20 20 30}</textarea></dd>
+
+<dt><code>qsort/fn</code></dt>
+<dd><textarea class="code">(qsort/fn compare {10 20 5 20 30});=>{5 10 20 20 30}</textarea></dd>
+
+</dl>
+
+<h2 id="next">What to do next...</h2>
+
+<p>
+  <a class="btn btn-lg btn-primary" href="/" role="button">Back to Home</a>
+</p>
         </div>
 
       </div><!--/row-->
     
+      <hr class="divider">
+      
+      <div class="row">
+        <!--# include file="/templates/disqus-main.html" -->
+      </div><!--/row-->
+      
     </div><!-- /.container -->
     
     <!--# include file="/templates/footer.html" -->
-    <!--# include file="/templates/libraries-js.html" -->
+    <script>
+      $('.code').each(function() {
+        var $this = $(this);
+        var myCodeMirror = CodeMirror.fromTextArea(this, {
+          readOnly: true,
+          lineWrapping: true
+        });
+      });
+    </script>
   </body>
 </html>

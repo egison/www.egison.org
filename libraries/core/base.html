@@ -12,24 +12,117 @@
       <div class="row">
 
         <div class="col-md-12" id="top" role="complementary">
-          <h1><code>lib/core/base.egi</code></h1>
+          <h1>Base Core Library Functions</h1>
         </div>
 
       </div>
 
-      <div class="row">
+      <div class="row" style="padding-top:30px;">
 
+        <div class="col-md-12">
+
+          <!--# include file="/templates/tables/base.html" -->
+    
+        </div>
+        
+<hr/>
+        
         <div class="col-md-12" role="main">
 
-          <textarea id="egison-program" class="code"><!--# include file="/source/lib/core/base.egi" --></textarea>
-            
+<h2 id="matchers">Matchers</h2>
+
+<dl>
+  
+<dt><code>bool</code></dt>
+<dd><textarea class="code">(match [#t #f] [bool bool]
+  {[[,#t ,#f] #t]
+   [_ #f]});=>#t</textarea></dd>
+
+<dt><code>char</code></dt>
+<dd><textarea class="code">(match 'a' char
+  {[,'a' #t]
+   [_ #f]});=>#t</textarea></dd>
+
+<dt><code>integer</code></dt>
+<dd><textarea class="code">(match 10 integer
+  {[,10 #t]
+   [_ #f]});=>#t</textarea></dd>
+
+<dt><code>float</code></dt>
+<dd><textarea class="code">(match 0.1 float
+  {[,0.1 #t]
+   [_ #f]});=>#t</textarea></dd>
+
+</dl>
+
+<h2 id="basics">Basics</h2>
+
+<dl>
+  
+<dt><code>id</code></dt>
+<dd><textarea class="code">(id 1);=>1</textarea></dd>
+
+<dt><code>fst</code></dt>
+<dd><textarea class="code">(fst [1 2]);=>1</textarea></dd>
+
+<dt><code>snd</code></dt>
+<dd><textarea class="code">(snd [1 2]);=>2</textarea></dd>
+
+<dt><code>compose</code></dt>
+<dd><textarea class="code">((compose fst snd) [[1 2] 3]);=>2</textarea></dd>
+
+<dt><code>compose3</code></dt>
+<dd><textarea class="code">((compose3 fst snd fst) [[1 [2 3]] 4]);=>2</textarea></dd>
+
+<dt><code>ref</code></dt>
+<dd><textarea class="code">(ref [| 1 2 3 |] 2);=>2</textarea></dd>
+
+<dt><code>eq?/m</code></dt>
+<dd><textarea class="code">(eq?/m integer 1 1);=>#t</textarea></dd>
+
+</dl>
+
+<h2 id="booleans">Booleans</h2>
+
+<dl>
+  
+<dt><code>and</code></dt>
+<dd><textarea class="code">[(and #t #t) (and #t #f) (and #f #t) (and #f #f)];=>[#t #f #f #f]</textarea></dd>
+
+<dt><code>or</code></dt>
+<dd><textarea class="code">[(or #t #t) (or #t #f) (or #f #t) (or #f #f)];=>[#t #t #t #f]</textarea></dd>
+
+<dt><code>not</code></dt>
+<dd><textarea class="code">[(not #t) (not #f)];=>[#f #t]</textarea></dd>
+
+</dl>
+
+<h2 id="next">What to do next...</h2>
+
+<p>
+  <a class="btn btn-lg btn-primary" href="/" role="button">Back to Home</a>
+</p>
         </div>
 
       </div><!--/row-->
     
+      <hr class="divider">
+      
+      <div class="row">
+        <!--# include file="/templates/disqus-main.html" -->
+      </div><!--/row-->
+      
     </div><!-- /.container -->
     
     <!--# include file="/templates/footer.html" -->
-    <!--# include file="/templates/libraries-js.html" -->
+    <script>
+      $('.code').each(function() {
+        var $this = $(this);
+        var myCodeMirror = CodeMirror.fromTextArea(this, {
+          readOnly: true,
+          lineWrapping: true
+        });
+      });
+    </script>
   </body>
 </html>
