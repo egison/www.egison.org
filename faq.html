@@ -32,14 +32,9 @@
           <h2 id="what-is-egison">What is Egison?</h2>
 
           <p>
-            Egison is the programming language that realizes non-linear pattern-matching against unfree data types.<br/>
-            It enables us to represent pattern-matching against lists, multisets, sets, trees, graphs and any kind of data types, directly.<br/>
-            It is difficult in the existing languages because a collection <i>{a, b, c}</i> is equal with <i>{b, a, c}</i> and <i>{a, a, b, c}</i>, when we see them as sets, and
-            the pattern-matching of the existing programming languages only support data types whose data have a standard form, such as lists.<br/>
-            Therefore, we need to translate and regard them as data which have a canonical form when we treat these kinds of data.
-            For example, a set would be always treated as a list.<br/>
-            Many programmers think this is unavoidable, and in fact, it is a latent stress of programming.<br/>
-            Egison gets rid of this restriction and makes programming dramatically simple!
+            Egison is a programming language with the strong expressive power of pattern-matching.<br/>
+            With Egison, we can express pattern-matching against a wide range of data types including multisets and sets.<br/>
+            For example, we can use pattern-matching to express <a href="/demonstrations/poker-hands.html">poker hands</a>, <a href="/demonstrations/mahjong.html">mahjong</a>, and <a href="/ja/demonstrations/primes.html">enumeration of twin primes</a>.
           </p>
 
           <h2 id="why-the-name-is-egison">Why the name is Egison?</h2>
@@ -57,22 +52,12 @@
             Additionally, I had to do a lot of experiments to theorize it.<br/>
           </p>
 
-          <h2 id="how-to-contribute">How to contribute?</h2>
-          
+          <h2 id="history">Tell me the history of Egison!</h2>
+
           <p>
-            Please try Egison and give <a target="_blank" href="/~egi/">me</a> feedback.<br/>
-            If it is interesting for you, please talk and tweet about Egison.<br/>
-            What is the happiest thing for me is to read Egison code by the people with various backgrounds.<br/>
-            I believe Egison will be helpful and give breakthrough for the various fields.<br/>
+            Please read <a href="/history.html">this page</a>!
           </p>
-          <p>
-            I really appreciate if you could create the extensions for the other languages such as Haskell, Python and JavaScript.<br/>
-            I think these work will have great impact.<br/>
-            I'd like to do that by myself.<br/>
-            However, I don't have thorough knowledge of each language to implement extensions, yet.<br/>
-            I've already implemented <a target="_blank" href="https://github.com/egison/egison-ruby">the Ruby extension</a>.
-          </p>
-          
+
           <h2 id="logic-programming">What is a difference between logic programming?</h2>
           
           <p>
@@ -81,7 +66,7 @@
             The pattern-matching itself of Prolog is similar with ordinal pattern-matching of the other functional languages.<br/>
           </p>
 
-          <h2 id="related-work">What is the advantage of Egison over existing work?</h2>
+          <h2 id="related-work">What is the advantage of Egison over the existing work?</h2>
 
           <p>
             There are <a target="_blank" href="https://ghc.haskell.org/trac/ghc/wiki/ViewPatterns#Relatedwork">a lot of existing work</a> for pattern-matching.
@@ -110,16 +95,22 @@
             <li>Non-linear pattern-matching with <b>lexical scoping</b></li>
           </ul>
 
+          <h2 id="how-to-contribute">How to contribute?</h2>
+          
           <p>
-            The <a href="/manual/mechanism.html">Pattern-Matching Mechanism</a> section in Egison developer's manual explains how we realize that.
+            Please try Egison and give <a target="_blank" href="/~egi/">me</a> feedback.<br/>
+            If it is interesting for you, please talk and tweet about Egison.<br/>
+            What is the happiest thing for me is to read Egison code by the people with various backgrounds.<br/>
+            I believe Egison will be helpful and give breakthrough for the various fields.<br/>
           </p>
-
-          <h2 id="scripting">How to write scripts in Egison?</h2>
-
           <p>
-            Please read the <a href="/manual/io.html">Basics of IO</a> section in our manual. We are providing simple examples.
+            I really appreciate if you could create the extensions for the other languages such as Haskell, Python and JavaScript.<br/>
+            I think these work will have great impact.<br/>
+            I'd like to do that by myself.<br/>
+            However, I don't have thorough knowledge of each language to implement extensions, yet.<br/>
+            I've already implemented <a target="_blank" href="https://github.com/egison/egison-ruby">the Ruby extension</a>.
           </p>
-
+          
           <h2 id="next">Next Action...</h2>
           
           <p>

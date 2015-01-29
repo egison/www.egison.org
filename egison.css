@@ -279,16 +279,16 @@ sidenav, .bs-sidebar.affix .bs-sidenav {
 @media (min-width: 1200px) {
   .left-col-lg-4 {
     margin-right:10px;
-    height:260px;
+    height:280px;
   }
   .middle-col-lg-4 {
     margin-left:5px;
     margin-right:5px;
-    height:260px;
+    height:280px;
   }
   .right-col-lg-4 {
     margin-left:10px;
-    height:260px;
+    height:280px;
   }
 }
 
