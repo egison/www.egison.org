@@ -1,0 +1,507 @@
+<h1 id="SoftwareJapanAwardSpeech">ソフトウエアジャパンアワード受賞スピーチ</h1>
+
+<div id="blog-date">2015年2月3日</div>
+
+<p>
+  この度、Egisonについて<a href="https://www.ipsj.or.jp/award/softwarejapan_award.html" target="_blank">ソフトウエアジャパンアワード</a>という大きな賞を頂けることになりました。
+  その受賞スピーチのために作成した15分のプレゼンテーションを公開します。
+  スピーチはニコニコ生放送で中継され、後からも公開されるようですので是非ご覧になってみてください。
+  スピーチは2月3日の18:20-18:35に行われます。
+</p>
+
+<h3>#1</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/SoftwareJapanAward/SoftwareJapanAward.001.png">
+
+<p>
+こんばんは。ご紹介に与りました江木です。
+本日は「プログラミング言語Egison-表現の新たな抽象化の発見」というタイトルでスピーチさせて頂きます。
+</p>
+
+<h3>#2</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/SoftwareJapanAward/SoftwareJapanAward.002.png">
+
+<p>
+私は現在楽天技術研究所に所属し研究を進めています。
+研究の興味はプログラミング言語や自動推論の理論にあります。
+私個人のWebサイトには、過去に書いた文章やソフトウェアをまとめておりますので是非訪れてみてください。
+</p>
+
+<h3>#3</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/SoftwareJapanAward/SoftwareJapanAward.003.png">
+
+<p>
+本日の講演の流れを説明します。
+</p>
+
+<p>
+まず最初にEgisonを作った理由をお話します。
+その後、Egisonの概要をデモを交えながら説明します。
+その後、これまでのEgisonの開発の歴史を振り返り、最後に、Egisonのこれからについてお話します。
+</p>
+
+<h3>#4</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/SoftwareJapanAward/SoftwareJapanAward.004.png">
+
+<p>
+では、まずEgisonを作った理由についてお話します。
+</p>
+
+<h3>#5</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/SoftwareJapanAward/SoftwareJapanAward.005.png">
+
+<p>
+そもそも「プログラミング言語とはなにか？」というところから始めます。
+</p>
+
+<p>
+プログラミング言語とは、「単純な命令列しか理解できないコンピュータに対する要求を、人間が形式的に記述するための言語」です。
+世の中には、C,(Java,)Ruby,Lisp,Haskellなど多くのプログラミング言語があります。
+Egisonもその1つです。
+</p>
+
+<h3>#6</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/SoftwareJapanAward/SoftwareJapanAward.006.png">
+
+<p>
+プログラミング言語の研究が難しい理由の1つに、人間の考えの直接的な(形式的)表現を見つけるのが難しいという理由があります。
+既存の(プログラミング)言語では、未だに人間の考えをコンピュータ向けに翻訳して記述せねばならない場面があります。
+</p>
+
+<h3>#7</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/SoftwareJapanAward/SoftwareJapanAward.007.png">
+
+<p>
+Egisonを作った理由は、私が人間の頭の中の認識のより直接的な(形式的)表現を発見したからです。
+本日の講演では、このことについてお話します。
+</p>
+
+<h3>#8</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/SoftwareJapanAward/SoftwareJapanAward.008.png">
+
+<p>
+では、Egison概要の説明とデモを始めます。
+</p>
+
+<h3>#9</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/SoftwareJapanAward/SoftwareJapanAward.009.png">
+
+<p>
+Egisonは私が作ったオープンソースのプログラミング言語です。パターンマッチ指向という新しいパラダイムを掲げています。
+継続的にリリースを重ねており、最初のリリースからは4年近く経っています。
+「Egison」という名前は「俺が作った」という意味です。
+拡張子も私の苗字である「egi」となっており、究極のオレオレ言語でもあります。
+</p>
+
+<h3>#10</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/SoftwareJapanAward/SoftwareJapanAward.010.png">
+
+<p>
+Egisonの特徴は多重集合や集合を含む幅広いデータに対して柔軟なパターンマッチを表現できるところにあります。
+</p>
+
+<p>
+この例では、コレクションxsの要素のうち2回以上現れる要素を列挙するプログラムを書いています。
+このとき、コレクションの中の要素の並びの順番はプログラムの結果に関係ありません。
+このような場合、要素の並びの順番を考慮しない集合概念である多重集合としてコレクションを扱いたいことがあります。
+</p>
+
+<p>
+多重集合の例を挙げると、例えば、{a, a, b}と{b, a, a}は多重集合としてみなしたとき要素の順番が無視されるので同じものとみなされます。
+しかし、{a, a, b}と{a,b}は要素の重複が考慮されるため違うものとみなされます。
+</p>
+
+<p>
+既存の言語では多重集合としてコレクションを直接パターンマッチできないため、コレクションをリストとして扱い、2重にネストしたループを記述せねばなりません。
+Egisonでは多重集合に対するパターンマッチが記述できるため、このようなシンプルなパターンマッチ式で同じことができます。
+</p>
+
+<p>
+Egisonプログラム中の赤色の部分で多重集合としてパターンマッチすることを指定しています。
+</p>
+
+<h3>#11</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/SoftwareJapanAward/SoftwareJapanAward.011.png">
+
+<p>
+これから、Egisonのより具体的なデモをお見せしていきます。
+</p>
+
+<h3>#12</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/SoftwareJapanAward/SoftwareJapanAward.012.png">
+
+<p>
+最初のEgisonのデモとして、ポーカーの役判定プログラムをよくデモしています。
+カードの並びの順番を考慮しない多重集合としてパターンマッチすることにより、すべての役についてそれぞれ1つのパターンで書くことができます。
+このようなことができる言語はEgisonが世界で初めてです。
+</p>
+
+<h3>#13</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/SoftwareJapanAward/SoftwareJapanAward.013.png">
+
+<p>
+これはストレートフラッシュに対するパターンを切り出したものです。
+すべてのカードのスートが同じで数が連番になっていることを表現しています。
+</p>
+
+<h3>#14</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/SoftwareJapanAward/SoftwareJapanAward.014.png">
+
+<p>
+Egisonでは同じ名前の変数が、1つのパターン内に複数現れるようなパターンを書けます。
+このようなパターンは非線形パターンと呼ばれています。
+非線形パターンを使えることにより、パターンの表現力は大きく強力になっています。
+</p>
+
+<h3>#15</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/SoftwareJapanAward/SoftwareJapanAward.015.png">
+
+<p>
+これはツーペアのパターン部を切り出したものです。
+</p>
+
+<h3>#16</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/SoftwareJapanAward/SoftwareJapanAward.016.png">
+
+<p>
+アンダーバーははどんな値にもマッチするワイルドカードと呼ばれるパターンを表しています。
+これを使ってスートはなんでも良いことを表現しています。
+また、非線形パターンを使って、同じ数のカードが2組あることを表現しています。
+</p>
+
+<h3>#17</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/SoftwareJapanAward/SoftwareJapanAward.017.png">
+
+<p>
+ポーカーのデモを見せると大抵麻雀はどうなのかと聞かれるので麻雀のデモも用意しています。
+このプログラムは麻雀の上がり判定をするプログラムです。
+</p>
+
+<h3>#18</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/SoftwareJapanAward/SoftwareJapanAward.018.png">
+
+<p>
+このように2つの同じ牌からなる雀頭、3つの連番の牌からなる順子、3つの同じ牌からなる刻子にマッチするパターンをモジュール化できます。
+それにより上がり判定を1枚のスライドに収まるプログラムで記述できます。
+Egison以外の言語で同じことを書くと、読むだけでも大変なプログラムになります。
+</p>
+
+<h3>#19</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/SoftwareJapanAward/SoftwareJapanAward.019.png">
+
+<p>
+このデモはEgisonのパターンマッチにより双子素数を列挙するプログラムです。
+双子素数とは差が2の素数のペアのことを言います。
+例えば、(3,5)や(5,7)、(11,13)などがそうです。
+</p>
+
+<p>
+この例は、素数の無限列に対し、この緑の部分のパターンをパターンマッチさせることにより、双子素数を列挙します。
+このパターンは連続する要素の差が2である箇所にマッチするパターンとなっています。
+</p>
+
+<h3>#20</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/SoftwareJapanAward/SoftwareJapanAward.020.png">
+
+<p>
+Egisonは、複数の結果を持つパターンマッチにも対応しています。
+それにより、このパターンマッチ式により任意の個数の双子素数を列挙することができます。
+この例では先頭5つの双子素数を列挙しています。
+</p>
+
+<h3>#21</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/SoftwareJapanAward/SoftwareJapanAward.021.png">
+
+<p>
+最後により実用的な例として、グラフのパターンマッチの例をあげます。
+</p>
+
+<p>
+これは巡回セールスマン問題を解くプログラムです。
+東京駅から出発し、ここにあげた東京の5つの駅すべてを訪ね、東京駅に戻ってくる経路のうち運賃が最安値の経路を見つけるプログラムになっています。
+</p>
+
+<p>
+この緑の部分のパターンにより、全ての駅を巡回する経路を列挙しています。
+この部分を編集するだけで、色々な種類の経路を列挙することができます。
+</p>
+
+<h3>#22</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/SoftwareJapanAward/SoftwareJapanAward.022.png">
+
+<p>
+この赤色の部分で、graphに対するパターンマッチの方法を定義しています。
+</p>
+
+<p>
+Egisonでは、マッチャーというものを定義することにより、データ型ごとのパターンマッチの方法をプログラマが定義できます。
+graphだけでなくリストや多重集合に対するマッチャーもプログラマが定義できるようになっています。
+</p>
+
+<h3>#23</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/SoftwareJapanAward/SoftwareJapanAward.023.png">
+
+<p>
+これは、Egisonにより可能になったパターンマッチの機能をまとめたリストです。
+まとめるとここに上げた4つの機能になります。
+</p>
+
+<h3>#24</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/SoftwareJapanAward/SoftwareJapanAward.024.png">
+
+<p>
+この図は現在のプログラミング言語の理論地図を書いたものになっています。
+今までは表現の抽象化については、主に関数のモジュール化の理論と型システムの理論が深く研究されてきました。
+</p>
+
+<p>
+その中でEgisonは、今まで他の理論に比べて貧弱であったパターンマッチの理論を大きく発展させることにより、既存の理論の大きな穴を埋めた研究であると私は考えています。
+そして、今まで深く研究されてきた2つの分野と同じくらいパターンマッチの理論は深く、大きな意味があることを示したと私は主張しています。
+このような研究は歴史的にも希少で、本当に革新的であると私は主張しています。
+</p>
+
+<h3>#25</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/SoftwareJapanAward/SoftwareJapanAward.025.png">
+
+<p>
+ここから、Egisonのこれまでの開発の歴史を振り返ります。
+</p>
+
+<h3>#26</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/SoftwareJapanAward/SoftwareJapanAward.026.png">
+
+<p>
+Egisonのアイデアが生まれた発端は、卒業研究のために数学の定理を自動で予想するプログラムを書いている時でした。
+</p>
+
+<p>
+私は、数学的推論の自動化や、プログラムの自動生成に興味を持って研究を始めました。
+しかし、卒業研究を進めているうちに、人間の考えをコンピュータ向けに翻訳する必要のある既存の表現の上では数学的推論の形式化は難しいと認識し、そのときEgisonのアイデアを得ました。
+</p>
+
+<h3>#27</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/SoftwareJapanAward/SoftwareJapanAward.027.png">
+
+<p>
+修士過程に進んだ後、1年をEgisonの構想だけに費やし、修士2年の5月にEgisonを初めてリリースしました。
+初めてEgisonのパターンマッチの実行に成功した時、とても感動しました。
+人生一仕事したと感じたほどです。
+</p>
+
+<h3>#28</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/SoftwareJapanAward/SoftwareJapanAward.028.png">
+
+<p>
+リリースした直後、研究室の先輩、後輩4人がEgisonを理解して使い始めてくれました。
+新しい理論の普及と研究の継続のためには、周囲に信じ、理解してくれる優しさがあることは、非常に重要だと感じています。
+一番最初に理解して使い始めてくれた後輩には今も一番感謝しています。
+</p>
+
+<h3>#29</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/SoftwareJapanAward/SoftwareJapanAward.029.png">
+
+<p>
+修士の2年はあっという間で、Egisonが世に広く認められることなく、大学を卒業することになりました。
+ただ、有り難いことにEgisonの開発が未踏のプロジェクトの1つとして採択されたおかげで卒業後も半年間は研究を延長できました。
+</p>
+
+<h3>#30</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/SoftwareJapanAward/SoftwareJapanAward.030.png">
+
+<p>
+しかし、半年の延長の甲斐なく、有名な企業の内定はEgisonではとれず、結局先輩が昔アルバイトをしていたという社員数が15人ほどの会社に入社しました。
+</p>
+
+<p>
+しかし、驚いたことに社内でEgisonの将来性を認められ、入社して2ヶ月して会社の仕事でEgison開発させてもらえることになりました。
+東京大学・筑波大学の優秀な学生を集め、新しく設計しなおしたEgisonを今までにない開発速度で開発しました。
+</p>
+
+<p>
+しかし、残念なことにそのような開発は長くは続かずリリースの3ヶ月後には会社を退職してしまいました。
+</p>
+
+<h3>#31</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/SoftwareJapanAward/SoftwareJapanAward.031.png">
+
+<p>
+このときは、既に結婚して子供ができていたため、本気で就活をしました。
+当時面識のなかったRubyの作者で楽天技術研究所のフェローをしているまつもとさんに、「私を楽天技術研究所に入れてほしい」とメールを送るという無茶な行為もしました。
+有り難いことにまつもとさんはメールに返信してくれ、私のことを研究所の所長の森さんに話してくださいました。
+楽天技術研究所の方々にも面接で認められ、地に足がついた生活が送れるようになりました。
+</p>
+
+<h3>#32</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/SoftwareJapanAward/SoftwareJapanAward.032.png">
+
+<p>
+楽天技術研究所に入ってからは、Egisonを多くのひとに知ってもらい理解してもらうことに注力しました。
+そのためにEgisonのWebサイトを大きくリニューアルしました。
+</p>
+
+<p>
+入所直後このようにシンプルで無骨だったWebサイトは、(次のスライドに移動)
+</p>
+
+<h3>#33</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/SoftwareJapanAward/SoftwareJapanAward.033.png">
+
+<p>
+現在ではこのようにリニューアルしています。
+</p>
+
+<h3>#34</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/SoftwareJapanAward/SoftwareJapanAward.034.png">
+
+<p>
+日本語のサイトも用意しています。
+</p>
+
+<h3>#35</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/SoftwareJapanAward/SoftwareJapanAward.035.png">
+
+<p>
+このリニューアルのおかげで、Egisonの知名度は一気に世界に広がりました。
+現在では、Egisonのメーリスに参加している海外のPh.Dの方もいます。
+</p>
+
+<h3>#36</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/SoftwareJapanAward/SoftwareJapanAward.036.png">
+
+<p>
+また、萩谷先生に東京大学の授業でEgisonを取り上げて頂く約束を得ることもできました。
+Egisonにはもっと有名になってもらい、このような流れが大きくなることを期待しています。
+</p>
+
+<h3>#37</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/SoftwareJapanAward/SoftwareJapanAward.037.png">
+
+<p>
+最後に、Egisonが今後について私の考えをお話しします。
+</p>
+
+<h3>#38</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/SoftwareJapanAward/SoftwareJapanAward.038.png">
+
+<p>
+まず、自動推論やプログラムの自動生成をはじめとするコンピュータサイエンスの各分野でEgisonの理論がきっかけでブレークスルーが起こることを期待しています。
+(最初にお見せしたコレクションの要素のうち2回以上現れる要素を列挙するプログラムを思い出してください。
+Egisonによるプログラムのほうが自動生成しやすいのは明らかだと思います。
+Egisonのある世界とない世界は全く別の世界です。)
+</p>
+
+<p>
+また、こういったブレークスルーが起こると同時にEgisonのパターンマッチの重要性が広く認識され、多くのプログラミング言語に当たり前に組み込まれることを期待しています。
+</p>
+
+<p>
+そして、将来は学校で全ての子供がEgisonを学ぶようになると期待しています。
+</p>
+
+<p>
+以降少しだけその根拠を補足します。
+</p>
+
+<h3>#39</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/SoftwareJapanAward/SoftwareJapanAward.039.png">
+
+<p>
+現在は「習得が容易なプログラミング言語」が「直感をより直接的に表現できるプログラミング言語」よりも広く使われています。
+それは、「直感のより直接的な表現」を理解するには、我々の頭のなかで行われている我々が意識できていない抽象化を理解する必要があるため、最初理解するのが難しいからです。
+</p>
+
+<p>
+しかし、将来、コンピュータサイエンスの素養が当たり前になり、「形式化」の重要性を万人が理解するような世界になったら、後者の理解が当たり前になります。
+</p>
+
+<p>
+そのような将来を見越して、Egisonのような言語を教育に真っ先に取り入れれば、国の将来にとって大きなアドバンテージになると私は主張します。
+</p>
+
+<h3>#40</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/SoftwareJapanAward/SoftwareJapanAward.040.png">
+
+<p>
+Egisonの普及については、私はただの時間の問題だと考えています。
+なぜなら、理論も実装も既にできているからです。
+</p>
+
+<p>
+ただ、いつ普及するのかはわかりません。
+普及のためには多くの方々にEgisonを勉強して理解していただくことが必要だからです。
+そのための、わかりやすい説明や応用の作成、プレゼンテーションの努力ををこれからも続けていくつもりです。
+</p>
+
+<p>
+Egisonをもっと多くの方々に理解して頂き、Egisonの先にあるもっと<b>とんでもない</b>研究に本気で没頭したいというのが私の希望です。
+</p>
+
+<h3>#41</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/SoftwareJapanAward/SoftwareJapanAward.041.png">
+
+<p>
+今日のスピーチをまとめます。
+</p>
+
+<p>
+「直感を直接的に表現できるプログラミング言語」こそが究極のプログラミング言語だという考えのもとに私はEgisonを作りました。
+そのようにして作られたEgisonは最先端の「直感を直接的に表現できるプログラミング言語」です。
+そして、Egisonのような本質的なプログラミング言語の進歩は、歴史を紐解いても数少ないすごい革新なのです。
+</p>
+
+<h3>#42</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/SoftwareJapanAward/SoftwareJapanAward.042.png">
+
+<p>
+Egisonについて是非勉強してみてください。またはご存知の一番頭の良い方に薦めてみてください。
+Egisonについてのお話や私の講演をもっとお聞きになりたいときは、いつでもお呼びください。
+</p>
+
+<h3>#43</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/SoftwareJapanAward/SoftwareJapanAward.043.png">
+
+<p>
+ありがとうございました！
+</p>
