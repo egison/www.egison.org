@@ -71,6 +71,12 @@
 <dt><code>S.cdr</code></dt>
 <dd><textarea class="code">(S.cdr "Egison");=>"gison"</textarea></dd>
 
+<dt><code>S.rac</code></dt>
+<dd><textarea class="code">(S.rac "Egison");=>'n'</textarea></dd>
+
+<dt><code>S.rdc</code></dt>
+<dd><textarea class="code">(S.rdc "Egison");=>"Egiso"</textarea></dd>
+
 <dt><code>S.map</code></dt>
 <dd><textarea class="code">(S.map id "Egison");=>"Egison"</textarea></dd>
 
@@ -91,10 +97,16 @@
 
 </dl>
 
-<h2 id="alphabets">Alphabets</h2>
+<h2 id="characters">Characters</h2>
 
 <dl>
   
+<dt><code>C.between</code></dt>
+<dd><textarea class="code">(C.between 'a' 'c');=>{'a' 'b' 'c'}</textarea></dd>
+
+<dt><code>C.between?</code></dt>
+<dd><textarea class="code">(C.between? 'a' 'c' 'b');=>#t</textarea></dd>
+
 <dt><code>alphabet?</code></dt>
 <dd><textarea class="code">(alphabet? 'a');=>#t</textarea></dd>
 
