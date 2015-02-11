@@ -344,6 +344,12 @@ sidenav, .bs-sidebar.affix .bs-sidenav {
     }
 }
 
+@media (max-width: 768px) {
+    .award {
+        display:none;
+    }
+}
+
 @media (min-width: 768px) {
 
     /* Remove the edge padding needed for mobile */

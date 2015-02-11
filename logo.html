@@ -1,13 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!--# include file="/templates/header.html" -->
     <title>Egison - Logos</title>
-    <link href='http://fonts.googleapis.com/css?family=Oxygen:700' rel='stylesheet' type='text/css'>
   </head>
-  <body style="font-family: 'Oxygen', sans-serif; font-size: 100px; color: #fff;">
-    <img src="/images/EgisonLogo.png">
-    <br/>
-    <img src="/images/EgisonLogo2.png">
-    <br/>
-    <img src="/images/EgisonIcon.png">
+  <body data-spy="scroll" data-target=".bs-sidebar" data-offset="0">
+    <!--# include file="/templates/navbar.html" -->
+    <div class="container manual">
+      <div class="row">
+
+        <div class="col-md-12" id="top" role="complementary">
+          <h1>Egison Logos</h1>
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-12" role="main">
+          <p>
+            The following Egison Logos are available under <a target="_blank" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution ShareAlike (CC BY-SA)</a>.
+          </p>
+
+          <img src="/images/EgisonLogo.png">
+          <br/>
+          <img src="/images/EgisonLogo2.png">
+          <br/>
+          <img src="/images/EgisonIcon.png">
+
+        </div>
+
+      </div><!--/row-->
+    
+      <hr class="divider">
+      
+      <div class="row">
+        <!--# include file="/templates/disqus-main.html" -->
+      </div><!--/row-->
+      
+    </div><!-- /.container -->
+    
+    <!--# include file="/templates/footer.html" -->
+    <script>
+      $(document).ready(function(){
+        $('.btn').button()
+
+        $('#subscribe').click(function() {
+          $('#subscribe').prop("disabled", true);
+          $('#subscribe').html("Processing...");
+          $.post("/api/subscribe", { email: document.getElementById("email").value }, function(data) {
+            $('#subscribe').html("Accepted!");
+            $('#subscribe').prop("disabled", true);
+          }, "json");
+        });
+      });
+    </script>
+  </body>
 </html>
