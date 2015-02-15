@@ -41,6 +41,58 @@
           </p>
           <hr/>
 
+          <h2>Introduction</h2>
+
+          <p>
+            Pattern-matching is an important feature of programming languages.<br/>
+            Pattern-matching enables us to express data decomposition and conditional branches <!-- that make programs messy --> in a simple pattern-matching expression.
+          </p>
+
+          <p>
+            However, the existing pattern-matching expressions have a problem that they are only capable against the limited range of data types.<br/>
+            For example, they are good at pattern-matching against lists, but not good at pattern-matching against multisets and sets that ignore the order of the elements.<br/>
+            Therefore, there still exist data operations that we cannot express directly.
+          </p>
+
+          <p>
+            Egison is a programming language designed to solve this problem.<br/>
+          </p>
+
+          <p>
+            In the following sample code, we are enumerating the elements that appear multiple times in a collection.<br/>
+            If we write it in the existing languages in a naive way without using library functions, we need to write nested loops and a conditional branch.<br/>
+            If we write it in Egison, we can write it in a single pattern-matching expression.
+          </p>
+          
+          <div class="row">
+          <div class="col-md-6" role="main">
+          <div class="version">Ruby version</div>
+          <textarea class="ruby-code">xs = [1,2,3,2,4]
+
+pairs = []
+(1..xs.length).each do |i|
+  (i+1..xs.length).each do |j|
+    if xs[i] == xs[j]
+      pairs.push(xs[i])
+    end
+  end
+end
+
+p(pairs)#=>[2]</textarea>
+          </div>
+          
+          <div class="col-md-6" role="main">
+          <div class="version">Egison version</div>
+          <textarea class="code">(match-all {1 2 3 2 4} (list integer)
+  [<join _ <cons $x <join _ <cons ,x _>>>>
+   x]);=>{2}</textarea>
+          </div>
+          </div>
+
+          <p>
+            In the following sections, we will explain what is the novelty of Egison with specific examples.
+          </p>
+          
           <h2>Syntax of Pattern-Matching</h2>
           
           <p>
@@ -66,7 +118,7 @@
             If we wrote the same meaning code in Haskell, it will be as follow. (<b>The following code does not run because Haskell does not support such kind of syntax for now.</b>)
           </p>
           
-          <div class="version">Haskell version</div>
+          <div class="version">Haskell version (pseudocode)</div>
           <textarea class="haskell-code">matchAll
   [1, 2, 3] as        -- Target  ('as' is a reserved word for pattern-matching)
   (List Integer) with -- Matcher ('with' is a reserved word for pattern-matching)
@@ -77,7 +129,7 @@
           
           <p>
             We can define the way of pattern-matching for each data type.<br/>
-            In the following example, we do pattern-matching against a collection as a list, multiset, set respectively.<br/>
+            In the following example, we do pattern-matching against a collection as a list, multiset and set respectively.<br/>
             The pattern constructor <code>cons</code> divides a collection into an element and the rest.<br/>
             The meaning of <code>cons</code> varies for each matcher and is defined in Egison libraries for each matcher.
           </p>
@@ -89,7 +141,7 @@
 ;=>{[1 {2 3}] [2 {1 3}] [3 {1 2}]}       ; The order of elements is ignored
 (match-all {1 2 3} (set integer) [<cons $x $xs> [x xs]])
 ;=>{[1 {1 2 3}] [2 {1 2 3}] [3 {1 2 3}]} ; The order and duplication of elements are ignored</textarea>
-          <div class="version2">Haskell version</div>
+          <div class="version2">Haskell version (pseudocode)</div>
           <textarea class="haskell-code">matchAll [1, 2, 3] as (List Integer) with x:xs -> (x, xs)
 -- =>[(1,[2,3])]
 matchAll [1, 2, 3] as (Multiset Integer) with x:xs -> (x, xs)
@@ -114,7 +166,7 @@ matchAll [1, 2, 3] as (Set Integer) with x:xs -> (x, xs)
 ;=>{[1 2] [1 3] [2 1] [2 3] [3 1] [3 2]}
 (match-all {1 2 3} (set integer) [<cons $x <cons $y _>> [x y]])
 ;=>{[1 1] [1 2] [2 1] [1 3] [2 2] [3 1] [2 3] [3 2] [3 3]}</textarea>
-          <div class="version2">Haskell version</div>
+          <div class="version2">Haskell version (pseudocode)</div>
           <textarea class="haskell-code">matchAll [1, 2, 3] as (List Integer) with x:y:_ -> (x, y)
 -- =>[(1,[2,3])]
 matchAll [1, 2, 3] as (Multiset Integer) with x:y:_ -> (x, y)
@@ -132,7 +184,7 @@ matchAll [1, 2, 3] as (Set Integer) with x:y:_ -> (x, y)
 ;=>{[{} {1 2 3}] [{1} {2 3}] [{1 2} {3}] [{1 2 3} {}]}
 (match-all {1 2 3} (multiset integer) [<join $xs $ys> [xs ys]])
 ;=>{[{} {1 2 3}] [{1} {2 3}] [{2} {1 3}] [{3} {1 2}] [{1 2} {3}] [{1 3} {2}] [{2 3} {1}] [{1 2 3} {}]}</textarea>
-          <div class="version2">Haskell version</div>
+          <div class="version2">Haskell version (pseudocode)</div>
           <textarea class="haskell-code">matchAll [1, 2, 3] as (List Integer) with
   xs ++ ys -> (xs, ys)
 -- =>[([],[1,2,3]),([1],[2,3]),([1,2],[3]),([1,2,3],[])]
@@ -148,15 +200,15 @@ matchAll [1, 2, 3] as (Multiset Integer) with
           
           <p>
             We can handle multiple occurrence of same variables in a pattern.<br/>
-            Patterns that have <code>,</code> ahead are called <i>value-patterns</i>.
-            The equality is checked for a value-pattern.<br/>
-            We can define the equality for each data type in the matcher.
+            Patterns that have <code>,</code> ahead are called <i>value-patterns</i>.<br/>
+            In many cases, it is natural to check equality by a value-pattern.<br/>
+            We can define how to handle value-patterns for each data type in the matcher.
           </p>
 
           <div class="version">Egison version</div>
           <textarea class="code">(match-all {1 2 3 3 2 4} (multiset integer) [<cons $x <cons ,x _>> x])
 ;=>{2 3 3 2}</textarea>
-          <div class="version2">Haskell version</div>
+          <div class="version2">Haskell version (pseudocode)</div>
           <textarea class="haskell-code">matchAll [1, 2, 3, 3, 2, 4] as (Multiset Integer) with x:x:_ -> x
 -- =>[2,3,3,2]</textarea>
 
@@ -171,7 +223,7 @@ matchAll [1, 2, 3] as (Multiset Integer) with
            [<join _ <cons $p <cons ,(+ p 2) _>>> ; patterns for twin primes
             [p (+ p 2)]]))
 ;=>{[3 5] [5 7] [11 13] [17 19] [29 31] [41 43] [59 61] [71 73] [101 103] [107 109]}</textarea>
-          <div class="version2">Haskell version</div>
+          <div class="version2">Haskell version (pseudocode)</div>
           <textarea class="haskell-code">take 10 (matchAll primes as (List Integer) with (_ ++ (p : p+2 : _))) -> (p, p+2))
 -- =>[(3,5),(5,7),(11,13),(17,19),(29,31),(41,43),(59,61),(71,73),(101,103),(107,109)]</textarea>
 
@@ -190,7 +242,7 @@ matchAll [1, 2, 3] as (Multiset Integer) with
           <textarea class="code">(match-all {{1 2 3 4 5} {4 5 1} {6 1 7 4}} (list (multiset integer))
   [<cons <cons $n _> <cons <cons ,n _> <cons <cons ,n _> <nil>>>> n])
 ;=>{1 4}</textarea>
-          <div class="version2">Haskell version</div>
+          <div class="version2">Haskell version (pseudocode)</div>
           <textarea class="haskell-code">matchAll [[1, 2, 3, 4, 5], [4, 5, 1] [6, 1, 7, 4]] as List (Multiset Integer) with
   (n:_):(n:_):(n:_):[] -> n
 -- =>[1,4]</textarea>
@@ -287,6 +339,7 @@ matchAll [1, 2, 3] as (Multiset Integer) with
     </div><!-- /.container -->
     
     <!--# include file="/templates/footer.html" -->
+    <script src="/vendors/codemirror/mode/ruby/ruby.js"></script>
     <script src="/vendors/codemirror/mode/haskell/haskell.js"></script>
     <script>
       $('.code').each(function() {
@@ -302,6 +355,14 @@ matchAll [1, 2, 3] as (Multiset Integer) with
           readOnly: true,
           lineWrapping: true,
           mode: "haskell"
+        });
+      });
+      $('.ruby-code').each(function() {
+        var $this = $(this);
+        var myCodeMirror = CodeMirror.fromTextArea(this, {
+          readOnly: true,
+          lineWrapping: true,
+          mode: "ruby"
         });
       });
     </script>
