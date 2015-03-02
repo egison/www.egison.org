@@ -31,6 +31,7 @@
 
           <pre id="egison-result"></pre>
             
+          <textarea id="haskell-program" name="code"></textarea>
           <textarea id="ruby-program" name="code"></textarea>
           
         </div>
@@ -40,6 +41,7 @@
     </div><!-- /.container -->
     
     <!--# include file="/templates/footer.html" -->
+    <script src="/vendors/codemirror/mode/haskell/haskell.js"></script>
     <script src="/vendors/codemirror/mode/ruby/ruby.js"></script>
     <script>
       var editor = CodeMirror.fromTextArea(document.getElementById("egison-program"), {
@@ -65,7 +67,14 @@
         });
       });
 
-      var editor2 = CodeMirror.fromTextArea(document.getElementById("ruby-program"), {
+      var editor2 = CodeMirror.fromTextArea(document.getElementById("haskell-program"), {
+        matchBrackets: true,
+        lineNumbers: true,
+        lineWrapping: true,
+        viewportMargin: Infinity,
+        mode: "haskell"
+      });
+      var editor3 = CodeMirror.fromTextArea(document.getElementById("ruby-program"), {
         matchBrackets: true,
         lineNumbers: true,
         lineWrapping: true,
