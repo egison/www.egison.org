@@ -26,7 +26,7 @@
   Probably, most of you represents it as a list.
   However, a list differs from a set because it does not ignore the order of elements.
   Then, even if we want to ignore the order, we have to care about it when we represent a set as a list.
-  Data types whose data have no normal form such as sets are called <i>unfree data types</i>.
+  Data types whose data have no normal form such as sets are called <i>non-free data types</i>.
   Unfortunately, it had been difficult to do pattern-matching against them in the programming languages before Egison.
   Egison gives strong pattern-matching expressive power even against those data types.
   We demonstrate it here with many examples, which contain pattern-matching for lists, multisets, and sets.
@@ -35,8 +35,8 @@
 <hr/>
 
 <ul>
-  <li><a href="#pattern-matching1">Pattern-Matching against Unfree Data Types!</a></li>
-  <li><a href="#pattern-matching2">Non-Linear Pattern-Matching against Unfree Data Types!!</a></li>
+  <li><a href="#pattern-matching1">Pattern-Matching against Non-Free Data Types!</a></li>
+  <li><a href="#pattern-matching2">Non-Linear Pattern-Matching against Non-Free Data Types!!</a></li>
   <li><a href="#pattern-matching3">Pattern-Matching with Lexical Scoping!!</a></li>
   <li><a href="#loop-patterns">Loop-Patterns</a></li>
 </ul>
@@ -45,7 +45,7 @@
 
 
 
-<h2 id="pattern-matching1">Pattern-Matching against Unfree Data Types!</h2>
+<h2 id="pattern-matching1">Pattern-Matching against Non-Free Data Types!</h2>
 
 
 <p>
@@ -155,12 +155,12 @@
   The order of pattern-matching is important when we do non-linear pattern-matching, which we will discuss in the next section.
 </p>
 
-<h2 id="pattern-matching2">Non-Linear Pattern-Matching against Unfree Data Types!!</h2>
+<h2 id="pattern-matching2">Non-Linear Pattern-Matching against Non-Free Data Types!!</h2>
 
 <p>
   Egison allows programmers to "bind and use" variables in a pattern.
   A pattern that contains multiple occurrences of the same variables is called a <i>non-linear pattern</i>.
-  Egison is the first programming language that non-linear patterns can be used in pattern-matching for unfree data.
+  Egison is the first programming language that non-linear patterns can be used in pattern-matching for non-free data.
 </p>
 
 <h3>The First Example</h3>
@@ -185,7 +185,7 @@
 
 <p>
   We can write any expression after <code>,</code>.
-  Non-linear pattern-matching against unfree data types extends the expressive power of the language so much.
+  Non-linear pattern-matching against non-free data types extends the expressive power of the language so much.
   Please see <a href="http://www.egison.org/demonstrations/poker-hands.html">Poker Hands</a> demonstration.
 </p>
 
@@ -193,7 +193,7 @@
 
 <p>
   Here is another example.
-  We can write pattern-matching against nested unfree data types such as a list of multisets or a set of sets as the following sample code.
+  We can write pattern-matching against nested non-free data types such as a list of multisets or a set of sets as the following sample code.
 </p>
 
 <textarea class="code">(match-all {{1 2 3 4 5} {4 5 1} {6 1 7 4}} (list (multiset integer))
