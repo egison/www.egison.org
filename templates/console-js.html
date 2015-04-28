@@ -51,7 +51,7 @@
         var startPrompt = function () {
           // Start the prompt with history enabled.
           jqconsole.Prompt(true, function (input) {
-            $.post("/api/eval", { program: (inputs + '\n' + input) }, function(data) {
+            $.post("/api/eval2", { program: (inputs + '\n' + input) }, function(data) {
               // Output input with the class jqconsole-output.
               if (data.output != "") {
                 jqconsole.Write(data.output + '\n', 'jqconsole-output');

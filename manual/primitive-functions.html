@@ -189,6 +189,13 @@ We don't describe precise behaviour of them, but give simply examples.
 <dt><code>split-string</code></dt>
 <dd><textarea class="code">(split-string "," "2,3,5,7,11,13");=>{"2" "3" "5" "7" "11" "13"}</textarea></dd>
 
+<dt><code>regex</code></dt>
+<dd><textarea class="code">(regex "cde" "abcdefg");=>{["ab" "cde" "fg"]}
+(regex "[0-9]+" "abc123defg");=>{["abc" "123" "defg"]}</textarea></dd>
+
+<dt><code>regex-cg</code></dt>
+<dd><textarea class="code">(regex "[0-9]+,[0-9]+" "abc,123,45,defg");=>{["abc," {"123" "45"} ",defg"]}</textarea></dd>
+
 <dt><code>read</code></dt>
 <dd><textarea class="code">(read "3");=>3
 (read "3.14159");=>3.14159
