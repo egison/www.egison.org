@@ -230,6 +230,9 @@
 <dt><code>between</code></dt>
 <dd><textarea class="code">(between 2 5);=>{2 3 4 5}</textarea></dd>
 
+<dt><code>merge</code></dt>
+<dd><textarea class="code">(merge {1 4 5} {2 3 6});=>{1 2 3 4 5 6}</textarea></dd>
+
 </dl>
 
 <h2 id="multisets">Multisets</h2>
@@ -263,6 +266,12 @@
 
 <dt><code>difference/m</code></dt>
 <dd><textarea class="code">(difference/m integer {1 2 3} {1 3});=>{2}</textarea></dd>
+
+<dt><code>include?</code></dt>
+<dd><textarea class="code">(include? {1 2 3} {1 3});=>#t</textarea></dd>
+
+<dt><code>include?/m</code></dt>
+<dd><textarea class="code">(include?/m integer {1 2 3} {1 3});=>#t</textarea></dd>
 
 <dt><code>union</code></dt>
 <dd><textarea class="code">(union {1 2 3} {1 3 4});=>{1 2 3 4}</textarea></dd>
