@@ -51,6 +51,13 @@
 
 (compare 10 11);=><Less></textarea></dd>
 
+<dt><code>compare-c</code></dt>
+<dd><textarea class="code">(compare-c {1 2 3} {1 2 3});=><Equal>
+
+(compare-c {1 2 3 4} {1 2 3});=><Greater>
+
+(compare-c {1 2 3} {2 3});=><Less></textarea></dd>
+
 <dt><code>min</code></dt>
 <dd><textarea class="code">(min {10 20 5 20 30});=>5</textarea></dd>
 
@@ -69,11 +76,20 @@
 <dt><code>min-and-max/fn</code></dt>
 <dd><textarea class="code">(min-and-max/fn compare {10 20 5 20 30});=>[5 30]</textarea></dd>
 
-<dt><code>qsort</code></dt>
-<dd><textarea class="code">(qsort {10 20 5 20 30});=>{5 10 20 20 30}</textarea></dd>
+<dt><code>sort</code></dt>
+<dd><textarea class="code">(sort {10 20 5 20 30});=>{5 10 20 20 30}</textarea></dd>
 
-<dt><code>qsort/fn</code></dt>
-<dd><textarea class="code">(qsort/fn compare {10 20 5 20 30});=>{5 10 20 20 30}</textarea></dd>
+<dt><code>sort/fn</code></dt>
+<dd><textarea class="code">(sort/fn compare {10 20 5 20 30});=>{5 10 20 20 30}</textarea></dd>
+
+<dt><code>sort-strings</code></dt>
+<dd><textarea class="code">(sort-strings {"Egison" "Haskell" "Clojure"});=>{"Clojure" "Egison" "Haskell"}</textarea></dd>
+
+<dt><code>merge</code></dt>
+<dd><textarea class="code">(merge {3 4 6} {1 2 5});=>{1 2 3 4 5 6}</textarea></dd>
+
+<dt><code>merge/fn</code></dt>
+<dd><textarea class="code">(merge/fn compare {3 4 6} {1 2 5});=>{1 2 3 4 5 6}</textarea></dd>
 
 </dl>
 
