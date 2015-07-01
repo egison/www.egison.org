@@ -25,7 +25,11 @@
     
         </div>
         
-<hr/>
+      </div>
+      
+      <hr class="divider">
+
+      <div class="row">
         
         <div class="col-md-12" role="main">
 
@@ -33,7 +37,7 @@
 
 <dl>
   
-<dt><code>R.multiset</code></dt>
+<dt id="demo-R-multiset"><code>R.multiset</code></dt>
 <dd><textarea class="code">(match-all {1 2} (R.multiset integer)
   [<cons $n $ns> [n ns]])
 ;=>{[1 {2}] [2 {1}]} or {[2 {1}] [1 {2}]}
@@ -43,7 +47,7 @@
 ;=>{{2}}
 </textarea></dd>
 
-<dt><code>R.set</code></dt>
+<dt id="demo-R-set"><code>R.set</code></dt>
 <dd><textarea class="code">(match-all {1 2} (R.set integer)
   [<cons $n $ns> [n ns]])
 ;=>{[1 {1 2}] [2 {1 2}]} or {[2 {1 2}] [1 {1 2}]}
@@ -58,22 +62,22 @@
 
 <dl>
   
-<dt><code>pure-rand</code></dt>
+<dt id="demo-pure-rand"><code>pure-rand</code></dt>
 <dd><textarea class="code">(pure-rand 1 6);=>1, 2, 3, 4, 5 or 6</textarea></dd>
 
-<dt><code>randomize</code></dt>
+<dt id="demo-randomize"><code>randomize</code></dt>
 <dd><textarea class="code">(randomize {1 2 3});=>{1 2 3}, {1 3 2}, {2 1 3}, {2 3 1}, {3 1 2} or {3 2 1}</textarea></dd>
 
-<dt><code>R.between</code></dt>
+<dt id="demo-R-between"><code>R.between</code></dt>
 <dd><textarea class="code">(R.between 1 3);=>{1 2 3}, {1 3 2}, {2 1 3}, {2 3 1}, {3 1 2} or {3 2 1}</textarea></dd>
 
-<dt><code>R.uncons</code></dt>
+<dt id="demo-R-uncons"><code>R.uncons</code></dt>
 <dd><textarea class="code">(R.uncons {1 2});=>[1 {2}] or [2 {1}]</textarea></dd>
 
-<dt><code>R.car</code></dt>
+<dt id="demo-R-car"><code>R.car</code></dt>
 <dd><textarea class="code">(R.car {1 2});=>1 or 2</textarea></dd>
 
-<dt><code>R.cdr</code></dt>
+<dt id="demo-R-cdr"><code>R.cdr</code></dt>
 <dd><textarea class="code">(R.cdr {1 2});=>{2} or {1}</textarea></dd>
 
 </dl>

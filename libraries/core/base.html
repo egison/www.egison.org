@@ -25,7 +25,11 @@
     
         </div>
         
-<hr/>
+      </div>
+      
+      <hr class="divider">
+
+      <div class="row">
         
         <div class="col-md-12" role="main">
 
@@ -33,22 +37,22 @@
 
 <dl>
   
-<dt><code>bool</code></dt>
+<dt id="demo-bool"><code>bool</code></dt>
 <dd><textarea class="code">(match [#t #f] [bool bool]
   {[[,#t ,#f] #t]
    [_ #f]});=>#t</textarea></dd>
 
-<dt><code>char</code></dt>
+<dt id="demo-char"><code>char</code></dt>
 <dd><textarea class="code">(match 'a' char
   {[,'a' #t]
    [_ #f]});=>#t</textarea></dd>
 
-<dt><code>integer</code></dt>
+<dt id="demo-integer"><code>integer</code></dt>
 <dd><textarea class="code">(match 10 integer
   {[,10 #t]
    [_ #f]});=>#t</textarea></dd>
 
-<dt><code>float</code></dt>
+<dt id="demo-float"><code>float</code></dt>
 <dd><textarea class="code">(match 0.1 float
   {[,0.1 #t]
    [_ #f]});=>#t</textarea></dd>
@@ -59,25 +63,25 @@
 
 <dl>
   
-<dt><code>id</code></dt>
+<dt id="demo-id"><code>id</code></dt>
 <dd><textarea class="code">(id 1);=>1</textarea></dd>
 
-<dt><code>fst</code></dt>
+<dt id="demo-fst"><code>fst</code></dt>
 <dd><textarea class="code">(fst [1 2]);=>1</textarea></dd>
 
-<dt><code>snd</code></dt>
+<dt id="demo-snd"><code>snd</code></dt>
 <dd><textarea class="code">(snd [1 2]);=>2</textarea></dd>
 
-<dt><code>compose</code></dt>
+<dt id="demo-compose"><code>compose</code></dt>
 <dd><textarea class="code">((compose fst snd) [[1 2] 3]);=>2</textarea></dd>
 
-<dt><code>compose3</code></dt>
+<dt id="demo-compose3"><code>compose3</code></dt>
 <dd><textarea class="code">((compose3 fst snd fst) [[1 [2 3]] 4]);=>2</textarea></dd>
 
-<dt><code>ref</code></dt>
+<dt id="demo-ref"><code>ref</code></dt>
 <dd><textarea class="code">(ref [| 1 2 3 |] 2);=>2</textarea></dd>
 
-<dt><code>eq?/m</code></dt>
+<dt id="demo-eq-m"><code>eq?/m</code></dt>
 <dd><textarea class="code">(eq?/m integer 1 1);=>#t</textarea></dd>
 
 </dl>
@@ -86,13 +90,13 @@
 
 <dl>
   
-<dt><code>and</code></dt>
+<dt id="demo-and"><code>and</code></dt>
 <dd><textarea class="code">[(and #t #t) (and #t #f) (and #f #t) (and #f #f)];=>[#t #f #f #f]</textarea></dd>
 
-<dt><code>or</code></dt>
+<dt id="demo-or"><code>or</code></dt>
 <dd><textarea class="code">[(or #t #t) (or #t #f) (or #f #t) (or #f #f)];=>[#t #t #t #f]</textarea></dd>
 
-<dt><code>not</code></dt>
+<<dt id="demo-not"><code>not</code></dt>
 <dd><textarea class="code">[(not #t) (not #f)];=>[#f #t]</textarea></dd>
 
 </dl>

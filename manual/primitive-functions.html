@@ -27,7 +27,11 @@
 
         </div>
         
-<hr/>
+      </div>
+      
+      <hr class="divider">
+
+      <div class="row">
         
         <div class="col-md-12" role="main">
 
@@ -42,206 +46,206 @@ We don't describe precise behaviour of them, but give simply examples.
 <hr/>
 
 <dl>
-<dt><code>+</code></dt>
+<dt id="demo-plus"><code>+</code></dt>
 <dd><textarea class="code">(+ 13 21);=>34
 (+ 3.14159 2.71828);=>5.85987</textarea></dd>
 
-<dt><code>-</code></dt>
+<dt id="demo-minus"><code>-</code></dt>
 <dd><textarea class="code">(- 13 21);=>-8
 (- 3.14159 2.71828);=>0.42330999999999985</textarea></dd>
 
-<dt><code>*</code></dt>
+<dt id="demo-multiply"><code>*</code></dt>
 <dd><textarea class="code">(* 13 21);=>273
 (* 3.14159 2.71828);=>8.539721265199999</textarea></dd>
 
-<dt><code>/</code></dt>
+<dt id="demo-divide"><code>/</code></dt>
 <dd><textarea class="code">(/ 13 21);=>13/21
 (/ 3.14159 2.71828);=>1.1557271509925393</textarea></dd>
 
-<dt><code>numerator</code></dt>
+<dt id="demo-numerator"><code>numerator</code></dt>
 <dd><textarea class="code">(numerator (/ 13 21));=>13</textarea></dd>
 
-<dt><code>denominator</code></dt>
+<dt id="demo-denominator"><code>denominator</code></dt>
 <dd><textarea class="code">(denominator (/ 13 21));=>21</textarea></dd>
 
-<dt><code>modulo</code></dt>
+<dt id="demo-modulo"><code>modulo</code></dt>
 <dd><textarea class="code">(modulo -21 13);=>5</textarea></dd>
 
-<dt><code>quotient</code></dt>
+<dt id="demo-quotient"><code>quotient</code></dt>
 <dd><textarea class="code">(quotient -21 13);=>-1</textarea></dd>
 
-<dt><code>remainder</code></dt>
+<dt id="demo-remainder"><code>remainder</code></dt>
 <dd><textarea class="code">(remainder -21 13);=>-8</textarea></dd>
 
-<dt><code>neg</code></dt>
+<dt id="demo-neg"><code>neg</code></dt>
 <dd><textarea class="code">(neg -89);=>89</textarea></dd>
 
-<dt><code>abs</code></dt>
+<dt id="demo-abs"><code>abs</code></dt>
 <dd><textarea class="code">(abs -89);=>89</textarea></dd>
 
-<dt><code>eq?</code></dt>
+<dt id="demo-eq-p"><code>eq?</code></dt>
 <dd><textarea class="code">(eq? 2 -5);=>#f
 (eq? 3.14159 2.71828);=>#f
 </textarea></dd>
 
-<dt><code>lt?</code></dt>
+<dt id="demo-lt-p"><code>lt?</code></dt>
 <dd><textarea class="code">(lt? 2 2);=>#f
 (lt? 2 -5);#f
 (lt? 3.14159 2.71828);=>#f</textarea></dd>
 
-<dt><code>lte?</code></dt>
+<dt id="demo-lte-p"><code>lte?</code></dt>
 <dd><textarea class="code">(lte? 2 2);=>#t
 (lte? 2 -5);=>#f
 (lte? 3.14159 2.71828);=>#f</textarea></dd>
 
-<dt><code>gt?</code></dt>
+<dt id="demo-gt-p"><code>gt?</code></dt>
 <dd><textarea class="code">(gt? 2 2);=>#f
 (gt? 2 -5);=>#t
 (gt? 3.14159 2.71828);=>#t</textarea></dd>
 
-<dt><code>gte?</code></dt>
+<dt id="demo-gte-p"><code>gte?</code></dt>
 <dd><textarea class="code">(gte? 2 2);=>#t
 (gte? 2 -5);=>#t
 (gte? 3.14159 2.71828);=>#t</textarea></dd>
 
-<dt><code>round</code></dt>
+<dt id="demo-round"><code>round</code></dt>
 <dd><textarea class="code">(round 3.14159);=>3
 (round -2.71828);=>-3</textarea></dd>
 
-<dt><code>floor</code></dt>
+<dt id="demo-floor"><code>floor</code></dt>
 <dd><textarea class="code">(floor 3.14159);=>3
 (floor -2.71828);=>-3</textarea></dd>
 
-<dt><code>ceiling</code></dt>
+<dt id="demo-ceiling"><code>ceiling</code></dt>
 <dd><textarea class="code">(ceiling 3.14159);=>4
 (ceiling -2.71828);=>-2</textarea></dd>
 
-<dt><code>truncate</code></dt>
+<dt id="demo-truncate"><code>truncate</code></dt>
 <dd><textarea class="code">(truncate 3.14159);=>3
 (truncate -2.71828);=>-2</textarea></dd>
 
-<dt><code>sqrt</code></dt>
+<dt id="demo-sqrt"><code>sqrt</code></dt>
 <dd><textarea class="code">(sqrt 2.71828)</textarea></dd>
 
-<dt><code>exp</code></dt>
+<dt id="demo-exp"><code>exp</code></dt>
 <dd><textarea class="code">(exp 2.71828)</textarea></dd>
 
-<dt><code>log</code></dt>
+<dt id="demo-log"><code>log</code></dt>
 <dd><textarea class="code">(log 2.71828)</textarea></dd>
 
-<dt><code>sin</code></dt>
+<dt id="demo-sin"><code>sin</code></dt>
 <dd><textarea class="code">(sin 2.71828)</textarea></dd>
 
-<dt><code>cos</code></dt>
+<dt id="demo-cos"><code>cos</code></dt>
 <dd><textarea class="code">(cos 2.71828)</textarea></dd>
 
-<dt><code>tan</code></dt>
+<dt id="demo-tan"><code>tan</code></dt>
 <dd><textarea class="code">(tan 2.71828)</textarea></dd>
 
-<dt><code>asin</code></dt>
+<dt id="demo-asin"><code>asin</code></dt>
 <dd><textarea class="code">(asin 0.41078)</textarea></dd>
 
-<dt><code>acos</code></dt>
+<dt id="demo-acos"><code>acos</code></dt>
 <dd><textarea class="code">(acos 0.41078)</textarea></dd>
 
-<dt><code>atan</code></dt>
+<dt id="demo-atan"><code>atan</code></dt>
 <dd><textarea class="code">(atan 0.41078)</textarea></dd>
 
-<dt><code>sinh</code></dt>
+<dt id="demo-sinh"><code>sinh</code></dt>
 <dd><textarea class="code">(sinh 2.71828)</textarea></dd>
 
-<dt><code>cosh</code></dt>
+<dt id="demo-cosh"><code>cosh</code></dt>
 <dd><textarea class="code">(cosh 2.71828)</textarea></dd>
 
-<dt><code>tanh</code></dt>
+<dt id="demo-tanh"><code>tanh</code></dt>
 <dd><textarea class="code">(tanh 2.71828)</textarea></dd>
 
-<dt><code>asinh</code></dt>
+<dt id="demo-asinh"><code>asinh</code></dt>
 <dd><textarea class="code">(asinh 3.14159)</textarea></dd>
 
-<dt><code>acosh</code></dt>
+<dt id="demo-acosh"><code>acosh</code></dt>
 <dd><textarea class="code">(acosh 3.14159)</textarea></dd>
 
-<dt><code>atanh</code></dt>
+<dt id="demo-atanh"><code>atanh</code></dt>
 <dd><textarea class="code">(atanh 3.14159)</textarea></dd>
 
-<dt><code>itof</code></dt>
+<dt id="demo-itof"><code>itof</code></dt>
 <dd><textarea class="code">(itof 3);=>3.0</textarea></dd>
 
-<dt><code>rtof</code></dt>
+<dt id="demo-rtof"><code>rtof</code></dt>
 <dd><textarea class="code">(rtof 3/2);=>1.5</textarea></dd>
 
-<dt><code>pack</code></dt>
+<dt id="demo-pack"><code>pack</code></dt>
 <dd><textarea class="code">(pack {'E' 'g' 'i' 's' 'o' 'n'});=>"Egison"</textarea></dd>
 
-<dt><code>unpack</code></dt>
+<dt id="demo-pack"><code>unpack</code></dt>
 <dd><textarea class="code">(unpack "Egison");=>{'E' 'g' 'i' 's' 'o' 'n'}</textarea></dd>
 
-<dt><code>uncons-string</code></dt>
+<dt id="demo-uncons-string"><code>uncons-string</code></dt>
 <dd><textarea class="code">(uncons-string "Egison");=>['E' "gison"]</textarea></dd>
 
-<dt><code>length-string</code></dt>
+<dt id="demo-length-string"><code>length-string</code></dt>
 <dd><textarea class="code">(length-string "Egison");=>6</textarea></dd>
 
-<dt><code>append-string</code></dt>
+<dt id="demo-append-string"><code>append-string</code></dt>
 <dd><textarea class="code">(append-string "Egi" "son");=>"Egison"</textarea></dd>
 
-<dt><code>split-string</code></dt>
+<dt id="demo-split-string"><code>split-string</code></dt>
 <dd><textarea class="code">(split-string "," "2,3,5,7,11,13");=>{"2" "3" "5" "7" "11" "13"}</textarea></dd>
 
-<dt><code>regex</code></dt>
+<dt id="demo-regex"><code>regex</code></dt>
 <dd><textarea class="code">(regex "cde" "abcdefg");=>{["ab" "cde" "fg"]}
 (regex "[0-9]+" "abc123defg");=>{["abc" "123" "defg"]}</textarea></dd>
 
-<dt><code>regex-cg</code></dt>
+<dt id="demo-regex-cg"><code>regex-cg</code></dt>
 <dd><textarea class="code">(regex "[0-9]+,[0-9]+" "abc,123,45,defg");=>{["abc," {"123" "45"} ",defg"]}</textarea></dd>
 
-<dt><code>read</code></dt>
+<dt id="demo-read"><code>read</code></dt>
 <dd><textarea class="code">(read "3");=>3
 (read "3.14159");=>3.14159
 (read "{1 2}");=>{1 2}
 (read "\"Hello world!\"");=>"Hello world!"</textarea></dd>
 
-<dt><code>show</code></dt>
+<dt id="demo-show"><code>show</code></dt>
 <dd><textarea class="code">(show 3);=>"3"
 (show 3.14159);=>"3.14159"
 (show {1 2});=>"{1 2}"
 (show "Hello world!");=>""Hello world!""</textarea></dd>
 
-<dt><code>empty?</code></dt>
+<dt id="demo-empty-p"><code>empty?</code></dt>
 <dd><textarea class="code">(empty? {});=>#t</textarea></dd>
 
-<dt><code>uncons</code></dt>
+<dt id="demo-uncons"><code>uncons</code></dt>
 <dd><textarea class="code">(uncons {1 2 3});=>[1 {2 3}]</textarea></dd>
 
-<dt><code>unsnoc</code></dt>
+<dt id="demo-unsnoc"><code>unsnoc</code></dt>
 <dd><textarea class="code">(unsnoc {1 2 3});=>[{1 2} 3]</textarea></dd>
 
-<dt><code>bool?</code></dt>
+<dt id="demo-bool-p"><code>bool?</code></dt>
 <dd><textarea class="code">(bool? #t);=>#t</textarea></dd>
 
-<dt><code>integer?</code></dt>
+<dt id="demo-integer-p"><code>integer?</code></dt>
 <dd><textarea class="code">(integer? 1);=>#t</textarea></dd>
 
-<dt><code>rational?</code></dt>
+<dt id="demo-rational-p"><code>rational?</code></dt>
 <dd><textarea class="code">(rational? 1/2);=>#t</textarea></dd>
 
-<dt><code>char?</code></dt>
+<dt id="demo-char-p"><code>char?</code></dt>
 <dd><textarea class="code">(char? '1');=>#t</textarea></dd>
 
-<dt><code>string?</code></dt>
+<dt id="demo-string-p"><code>string?</code></dt>
 <dd><textarea class="code">(string? "hello");=>#t</textarea></dd>
 
-<dt><code>tuple?</code></dt>
+<dt id="demo-tuple-p"><code>tuple?</code></dt>
 <dd><textarea class="code">(tuple? [1 2]);=>#t</textarea></dd>
 
-<dt><code>collection?</code></dt>
+<dt id="demo-collection-p"><code>collection?</code></dt>
 <dd><textarea class="code">(collection? {});=>#t</textarea></dd>
 
-<dt><code>array?</code></dt>
+<dt id="demo-array-p"><code>array?</code></dt>
 <dd><textarea class="code">(array? [|1 2 3|]);=>#t</textarea></dd>
 
-<dt><code>hash?</code></dt>
+<dt id="demo-hash-p"><code>hash?</code></dt>
 <dd><textarea class="code">(hash? {|[1 1] [2 12]|});=>#t</textarea></dd>
 
 </dl>
@@ -249,64 +253,64 @@ We don't describe precise behaviour of them, but give simply examples.
 <h2 id="ioprimitives">Primitive Functions with a Side Effect</h2>
 
 <dl>
-<dt><code>open-input-file</code></dt>
+<dt id="demo-open-input-file"><code>open-input-file</code></dt>
 <dd><textarea class="code">[$inport (open-input-file "./input.txt")]</textarea></dd>
 
-<dt><code>open-output-file</code></dt>
+<dt id="demo-open-output-file"><code>open-output-file</code></dt>
 <dd><textarea class="code">[$outport (open-output-file "./output.txt")]</textarea></dd>
 
-<dt><code>close-input-port</code></dt>
+<dt id="demo-close-input-port"><code>close-input-port</code></dt>
 <dd><textarea class="code">[(close-input-port inport)]</textarea></dd>
 
-<dt><code>close-output-port</code></dt>
+<dt id="demo-close-output-port"><code>close-output-port</code></dt>
 <dd><textarea class="code">[(close-output-port outport)]</textarea></dd>
 
-<dt><code>read-char</code></dt>
+<dt id="demo-read-char"><code>read-char</code></dt>
 <dd><textarea class="code">[$c (read-char)]</textarea></dd>
 
-<dt><code>read-line</code></dt>
+<dt id="demo-read-line"><code>read-line</code></dt>
 <dd><textarea class="code">[$line (read-line)]</textarea></dd>
 
-<dt><code>write-char</code></dt>
+<dt id="demo-write-char"><code>write-char</code></dt>
 <dd><textarea class="code">[(write-char 'c')]</textarea></dd>
 
-<dt><code>write-string</code></dt>
+<dt id="demo-write-string"><code>write-string</code></dt>
 <dd><textarea class="code">[(write-string "string")]</textarea></dd>
 
-<dt><code>write</code></dt>
+<dt id="demo-write"><code>write</code></dt>
 <dd><textarea class="code">[(write [|{[ 1 'b' "TH" ] [| #t |]} {} |])]</textarea></dd>
 
-<dt><code>eof?</code></dt>
+<dt id="demo-eof-p"><code>eof?</code></dt>
 <dd><textarea class="code">[(eof?)]</textarea></dd>
 
-<dt><code>flush</code></dt>
+<dt id="demo-flush"><code>flush</code></dt>
 <dd><textarea class="code">[(flush)]</textarea></dd>
 
-<dt><code>read-char-from-port</code></dt>
+<dt id="demo-read-char-from-port"><code>read-char-from-port</code></dt>
 <dd><textarea class="code">[$c (read-char-from-port inport)]</textarea></dd>
 
-<dt><code>read-line-from-port</code></dt>
+<dt id="demo-read-line-from-port"><code>read-line-from-port</code></dt>
 <dd><textarea class="code">[$line (read-line-from-port inport)]</textarea></dd>
 
-<dt><code>write-char-to-port</code></dt>
+<dt id="demo-write-char-to-port"><code>write-char-to-port</code></dt>
 <dd><textarea class="code">[(write-char-to-port 'c' outport)]</textarea></dd>
 
-<dt><code>write-string-to-port</code></dt>
+<dt id="demo-write-string-to-port"><code>write-string-to-port</code></dt>
 <dd><textarea class="code">[(write-string-to-port "String" outport)]</textarea></dd>
 
-<dt><code>write-to-port</code></dt>
+<dt id="demo-write-to-port"><code>write-to-port</code></dt>
 <dd><textarea class="code">[(write-to-port [|{[ 1 'b' "TH" ] [| #t |]} {} |] outport)]</textarea></dd>
 
-<dt><code>eof-port?</code></dt>
+<dt id="demo-eof-port-p"><code>eof-port?</code></dt>
 <dd><textarea class="code">[(eof-port? inport)]</textarea></dd>
 
-<dt><code>flush-port</code></dt>
+<dt id="demo-flush-port"><code>flush-port</code></dt>
 <dd><textarea class="code">[(flush-port outport)]</textarea></dd>
 
-<dt><code>return</code></dt>
+<dt id="demo-return"><code>return</code></dt>
 <dd><textarea class="code">[$r (return [])]</textarea></dd>
 
-<dt><code>rand</code></dt>
+<dt id="demo-rand"><code>rand</code></dt>
 <dd><textarea class="code">[$r (rand 1 6)]</textarea></dd>
 </dl>
 

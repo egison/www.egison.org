@@ -38,6 +38,8 @@ h6,
 }
 
 .manual dt {
+        padding-top: 55px;
+        margin-top: -45px;
         font-size: 17px;
 }
 .manual dd {

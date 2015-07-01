@@ -24,8 +24,12 @@
           <!--# include file="/templates/tables/number.html" -->
 
         </div>
-        
-<hr/>
+
+      </div>
+      
+      <hr class="divider">
+
+      <div class="row">
         
         <div class="col-md-12" role="main">
 
@@ -33,7 +37,7 @@
 
 <dl>
   
-<dt><code>nat</code></dt>
+<dt id="demo-nat"><code>nat</code></dt>
 <dd><textarea class="code">(match 0 nat
   {[<o> #t]
    [_ #f]})
@@ -53,7 +57,7 @@
    [_ #f]})
 ;=>#f</textarea></dd>
 
-<dt><code>integer</code></dt>
+<dt id="demo-integer"><code>integer</code></dt>
 <dd><textarea class="code">(match 10 integer
   {[,10 #t]
    [_ #f]})
@@ -69,63 +73,67 @@
 
 <dl>
   
-<dt><code>nats</code></dt>
+<dt id="demo-nats"><code>nats</code></dt>
 <dd><textarea class="code">(take 10 nats);=>{1 2 3 4 5 6 7 8 9 10}</textarea></dd>
 
-<dt><code>nats0</code></dt>
+<dt id="demo-nats0"><code>nats0</code></dt>
 <dd><textarea class="code">(take 10 nats0);=>{0 1 2 3 4 5 6 7 8 9}</textarea></dd>
 
-<dt><code>odds</code></dt>
+<dt id="demo-odds"><code>odds</code></dt>
 <dd><textarea class="code">(take 10 odds);=>{1 3 5 7 9 11 13 15 17 19}</textarea></dd>
 
-<dt><code>evens</code></dt>
+<dt id="demo-evens"><code>evens</code></dt>
 <dd><textarea class="code">(take 10 evens);=>{2 4 6 8 10 12 14 16 18 20}</textarea></dd>
 
-<dt><code>primes</code></dt>
+<dt id="demo-primes"><code>primes</code></dt>
 <dd><textarea class="code">(take 10 primes);=>{2 3 5 7 11 13 17 19 23 29}</textarea></dd>
 
-<dt><code>fibs</code></dt>
+<dt id="demo-fibs"><code>fibs</code></dt>
 <dd><textarea class="code">(take 10 fibs);=>{1 1 2 3 5 8 13 21 34 55}</textarea></dd>
 
 <h2 id="natural-numbers">Natural numbers</h2>
 
 <dl>
   
-<dt><code>divisor?</code></dt>
+<dt id="demo-divisor"><code>divisor?</code></dt>
 <dd><textarea class="code">(divisor? 10 5);=>#t</textarea></dd>
 
-<dt><code>find-factor</code></dt>
+<dt id="demo-find-factor"><code>find-factor</code></dt>
 <dd><textarea class="code">(find-factor 100);=>2</textarea></dd>
 
-<dt><code>p-f</code></dt>
+<dt id="demo-p-f"><code>p-f</code></dt>
 <dd><textarea class="code">(p-f 100);=>{2 2 5 5}</textarea></dd>
 
-<dt><code>odd?</code></dt>
+<dt id="demo-n-adic"><code>n-adic</code></dt>
+<dd><textarea class="code">(n-adic 2 5);=>{1 0 1}
+(n-adic 5 5);=>{1 0}</textarea></dd>
+
+<dt id="demo-odd"><code>odd?</code></dt>
 <dd><textarea class="code">(odd? 3);=>#t
 (odd? 4);=>#f</textarea></dd>
 
-<dt><code>even?</code></dt>
+<dt id="demo-even"><code>even?</code></dt>
 <dd><textarea class="code">(even? 4);=>#t
 (even? 5);=>#f</textarea></dd>
 
-<dt><code>prime?</code></dt>
+<dt id="demo-prime"><code>prime?</code></dt>
 <dd><textarea class="code">(prime? 17);=>#t
 (prime? 18);=>#f</textarea></dd>
 
-<dt><code>square?</code></dt>
+<dt id="demo-square"><code>square?</code></dt>
 <dd><textarea class="code">(square? 9);=>#t
 (square? 10);=>#f</textarea></dd>
 
-<dt><code>gcd</code></dt>
+<dt id="demo-gcd"><code>gcd</code></dt>
 <dd><textarea class="code">(gcd {10 20 5 40});=>5</textarea></dd>
 
-<dt><code>fact</code></dt>
+<dt id="demo-fact"><code>fact</code></dt>
 <dd><textarea class="code">(fact 10);=>3628800</textarea></dd>
 
-<dt><code>perm</code></dt>
+<dt id="demo-perm"><code>perm</code></dt>
 <dd><textarea class="code">(perm 5 2);=>20</textarea></dd>
 
-<dt><code>comb</code></dt>
+<dt id="demo-comb"><code>comb</code></dt>
 <dd><textarea class="code">(comb 5 2);=>10</textarea></dd>
 
 </dl>
@@ -134,13 +142,13 @@
 
 <dl>
   
-<dt><code>power</code></dt>
+<dt id="demo-power"><code>power</code></dt>
 <dd><textarea class="code">(power 2 10);=>1024</textarea></dd>
 
-<dt><code>sum</code></dt>
+<dt id="demo-sum"><code>sum</code></dt>
 <dd><textarea class="code">(sum (take 5 nats));=>15</textarea></dd>
 
-<dt><code>product</code></dt>
+<dt id="demo-product"><code>product</code></dt>
 <dd><textarea class="code">(product (take 5 nats));=>120</textarea></dd>
 
 </dl>
@@ -149,23 +157,23 @@
 
 <dl>
   
-<dt><code>rtod</code></dt>
+<dt id="demo-rtod"><code>rtod</code></dt>
 <dd><textarea class="code">(rtod 10 6/35);=>[0 {1 7 1 4 2 8 5 7 1 4}]</textarea></dd>
 
-<dt><code>rtod'</code></dt>
+<dt id="demo-rtod-dash"><code>rtod'</code></dt>
 <dd><textarea class="code">(rtod' 6/35);=>[0 {1} {7 1 4 2 8 5}]</textarea></dd>
 
-<dt><code>show-decimal</code></dt>
+<dt id="demo-show-decimal"><code>show-decimal</code></dt>
 <dd><textarea class="code">(show-decimal 10 6/35);=>"0.1714285714"</textarea></dd>
 
-<dt><code>show-decimal'</code></dt>
+<dt id="demo-show-decimal-dash"><code>show-decimal'</code></dt>
 <dd><textarea class="code">(show-decimal' 6/35);=>"0.1 714285 ..."</textarea></dd>
 
-<dt><code>regular-continued-fraction</code></dt>
+<dt id="demo-regular-continued-fraction"><code>regular-continued-fraction</code></dt>
 <dd><textarea class="code">(rtof (regular-continued-fraction {1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2}))
 ;=>1.4142135623730951</textarea></dd>
 
-<dt><code>continued-fraction</code></dt>
+<dt id="demo-continued-fraction"><code>continued-fraction</code></dt>
 <dd><textarea class="code">(rtof (continued-fraction {3 7 15 1 292 1 1 1 2 1 3 1 14 2 1 1 2 2 2 2 1 84 2 1 1 15 3 13}
                           {1 1 1  1 1   1 1 1 1 1 1 1 1  1 1 1 1 1 1 1 1 1  1 1 1 1  1}))
 ;=>3.141592653589793</textarea></dd>

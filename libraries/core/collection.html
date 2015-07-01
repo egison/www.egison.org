@@ -25,7 +25,11 @@
     
         </div>
         
-<hr/>
+      </div>
+      
+      <hr class="divider">
+
+      <div class="row">
         
         <div class="col-md-12" role="main">
 
@@ -33,7 +37,7 @@
 
 <dl>
   
-<dt><code>list</code></dt>
+<dt id="demo-list"><code>list</code></dt>
 <dd><textarea class="code">(match {1 2 3} (list integer)
   {[,{@{@{1}} @{2 @{3}}} #t]
    [_ #f]});=>#t
@@ -62,7 +66,12 @@
   [<nioj $xs $ys> [xs ys]])
 ;=>{[{} {1 2 3}] [{3} {1 2}] [{2 3} {1}] [{1 2 3} {}]}</textarea></dd>
 
-<dt><code>multiset</code></dt>
+<dt id="demo-sorted-list"><code>soreted-list</code></dt>
+<dd><textarea class="code">(take 5 (match-all primes (sorted-list integer)
+  [<join _ <cons $p <join _ <cons ,(+ p 100) _>>>> [p (+ p 100)]]))
+;=>{[3 103] [7 107] [13 113] [31 131] [37 137]}</textarea></dd>
+
+<dt id="demo-multiset"><code>multiset</code></dt>
 <dd><textarea class="code">(match {} (multiset integer)
   {[<nil> #t]
    [_ #f]});=>#t
@@ -91,7 +100,7 @@
   [<join ,{1 5 3} $ys> ys])
 ;=>{}</textarea></dd>
 
-<dt><code>set</code></dt>
+<dt id="demo-set"><code>set</code></dt>
 <dd><textarea class="code">(match {} (set integer)
   {[<nil> #t]
    [_ #f]});=>#t
@@ -126,112 +135,112 @@
 
 <dl>
   
-<dt><code>nth</code></dt>
+<dt id="demo-nth"><code>nth</code></dt>
 <dd><textarea class="code">(nth 1 {1 2 3});=>1</textarea></dd>
 
-<dt><code>take</code></dt>
+<dt id="demo-take"><code>take</code></dt>
 <dd><textarea class="code">(take 2 {1 2 3});=>{1 2}</textarea></dd>
 
-<dt><code>drop</code></dt>
+<dt id="demo-drop"><code>drop</code></dt>
 <dd><textarea class="code">(drop 2 {1 2 3});=>{3}</textarea></dd>
 
-<dt><code>take-and-drop</code></dt>
+<dt id="demo-take-and-drop"><code>take-and-drop</code></dt>
 <dd><textarea class="code">(take-and-drop 2 {1 2 3});=>[{1 2} {3}]</textarea></dd>
 
-<dt><code>while</code></dt>
-<dd><textarea class="code">(while (lt? $ 10) primes);=>{2 3 5 7}</textarea></dd>
+<dt id="demo-take-while"><code>take-while</code></dt>
+<dd><textarea class="code">(take-while (lt? $ 10) primes);=>{2 3 5 7}</textarea></dd>
 
-<dt><code>cons</code></dt>
+<dt id="demo-drop-while"><code>drop-while</code></dt>
+<dd><textarea class="code">(drop-while (lt? $ 3) {1 2 3 4 5});=>{3 4 5}</textarea></dd>
+
+<dt id="demo-cons"><code>cons</code></dt>
 <dd><textarea class="code">(cons 1 {2 3});=>{1 2 3}</textarea></dd>
 
-<dt><code>car</code></dt>
+<dt id="demo-car"><code>car</code></dt>
 <dd><textarea class="code">(car {1 2 3});=>1</textarea></dd>
 
-<dt><code>cdr</code></dt>
+<dt id="demo-cdr"><code>cdr</code></dt>
 <dd><textarea class="code">(cdr {1 2 3});=>{2 3}</textarea></dd>
 
-<dt><code>rac</code></dt>
+<dt id="demo-rac"><code>rac</code></dt>
 <dd><textarea class="code">(rac {1 2 3});=>3</textarea></dd>
 
-<dt><code>rdc</code></dt>
+<dt id="demo-rdc"><code>rdc</code></dt>
 <dd><textarea class="code">(rdc {1 2 3});=>{1 2}</textarea></dd>
 
-<dt><code>length</code></dt>
+<dt id="demo-length"><code>length</code></dt>
 <dd><textarea class="code">(length {1 2 3});=>3</textarea></dd>
 
-<dt><code>map</code></dt>
+<dt id="demo-map"><code>map</code></dt>
 <dd><textarea class="code">(map (* $ 2) {1 2 3});=>{2 4 6}</textarea></dd>
 
-<dt><code>map2</code></dt>
+<dt id="demo-map2"><code>map2</code></dt>
 <dd><textarea class="code">(map2 (* $ $) {1 2 3} {10 20 30});=>{10 40 90}</textarea></dd>
 
-<dt><code>filter</code></dt>
+<dt id="demo-filter"><code>filter</code></dt>
 <dd><textarea class="code">(let {[$odd? (lambda [$n] (eq? (modulo n 2) 1))]}
   (filter odd? {1 2 3}));=>{1 3}</textarea></dd>
 
-<dt><code>zip</code></dt>
+<dt id="demo-zip"><code>zip</code></dt>
 <dd><textarea class="code">(zip {1 2 3} {10 20 30});=>{[1 10] [2 20] [3 30]}</textarea></dd>
 
-<dt><code>lookup</code></dt>
+<dt id="demo-lookup"><code>lookup</code></dt>
 <dd><textarea class="code">(lookup 2 {[1 10] [2 20] [3 30]});=>20</textarea></dd>
 
-<dt><code>foldr</code></dt>
+<dt id="demo-foldr"><code>foldr</code></dt>
 <dd><textarea class="code">(foldr (lambda [$n $ns] {n @ns}) {} {1 2 3});=>{1 2 3}</textarea></dd>
 
-<dt><code>foldl</code></dt>
+<dt id="demo-foldl"><code>foldl</code></dt>
 <dd><textarea class="code">(foldl (lambda [$ns $n] {n @ns}) {} {1 2 3});=>{3 2 1}</textarea></dd>
 
-<dt><code>scanl</code></dt>
+<dt id="demo-scanl"><code>scanl</code></dt>
 <dd><textarea class="code">(scanl (lambda [$r $n] (* r n)) 2 {2 2 2});=>{2 4 8 16}</textarea></dd>
 
-<dt><code>append</code></dt>
+<dt id="demo-append"><code>append</code></dt>
 <dd><textarea class="code">(append {1 2} {3 4 5});=>{1 2 3 4 5}</textarea></dd>
 
-<dt><code>concat</code></dt>
+<dt id="demo-concat"><code>concat</code></dt>
 <dd><textarea class="code">(concat {{1 2} {3 4 5}});=>{1 2 3 4 5}</textarea></dd>
 
-<dt><code>reverse</code></dt>
+<dt id="demo-reverse"><code>reverse</code></dt>
 <dd><textarea class="code">(reverse {1 2 3});=>{3 2 1}</textarea></dd>
 
-<dt><code>intersperse</code></dt>
+<dt id="demo-intersperse"><code>intersperse</code></dt>
 <dd><textarea class="code">(intersperse {0} {{1 2} {3 3} {4} {}});=>{{1 2} {0} {3 3} {0} {4} {0} {}}</textarea></dd>
 
-<dt><code>intercalate</code></dt>
+<dt id="demo-intercalate"><code>intercalate</code></dt>
 <dd><textarea class="code">(intercalate {0} {{1 2} {3 3} {4} {}});=>{1 2 0 3 3 0 4 0}</textarea></dd>
 
-<dt><code>split</code></dt>
+<dt id="demo-split"><code>split</code></dt>
 <dd><textarea class="code">(split {0} {1 2 0 3 3 0 4 0});=>{{1 2} {3 3} {4} {}}</textarea></dd>
 
-<dt><code>split/m</code></dt>
+<dt id="demo-split-m"><code>split/m</code></dt>
 <dd><textarea class="code">(split/m integer {0} {1 2 0 3 3 0 4 0});=>{{1 2} {3 3} {4} {}}</textarea></dd>
 
-<dt><code>find-cycle</code></dt>
+<dt id="demo-find-cycle"><code>find-cycle</code></dt>
 <dd><textarea class="code">(find-cycle {1 3 4 5 2 7 5 2 7 5 2 7});=>[{1 3 4} {5 2 7}]</textarea></dd>
 
-<dt><code>repeat</code></dt>
+<dt id="demo-repeat"><code>repeat</code></dt>
 <dd><textarea class="code">(take 5 (repeat {1 2 3}));=>{1 2 3 1 2}</textarea></dd>
 
-<dt><code>repeat1</code></dt>
+<dt id="demo-repeat1"><code>repeat1</code></dt>
 <dd><textarea class="code">(take 5 (repeat1 2));=>{2 2 2 2 2}</textarea></dd>
 
-<dt><code>all</code></dt>
+<dt id="demo-all"><code>all</code></dt>
 <dd><textarea class="code">(all (eq? $ 1) {1 1 1});=>#t
 
 (all (eq? $ 1) {1 1 2});=>#f</textarea></dd>
 
-<dt><code>any</code></dt>
+<dt id="demo-any"><code>any</code></dt>
 <dd><textarea class="code">(any (eq? $ 1) {0 1 0});=>#t
 
 (any (eq? $ 1) {0 0 0});=>#f</textarea></dd>
 
-<dt><code>from</code></dt>
+<dt id="demo-from"><code>from</code></dt>
 <dd><textarea class="code">(take 3 (from 2));=>{2 3 4}</textarea></dd>
 
-<dt><code>between</code></dt>
+<dt id="demo-between"><code>between</code></dt>
 <dd><textarea class="code">(between 2 5);=>{2 3 4 5}</textarea></dd>
-
-<dt><code>merge</code></dt>
-<dd><textarea class="code">(merge {1 4 5} {2 3 6});=>{1 2 3 4 5 6}</textarea></dd>
 
 </dl>
 
@@ -239,72 +248,72 @@
 
 <dl>
   
-<dt><code>add</code></dt>
+<dt id="demo-add"><code>add</code></dt>
 <dd><textarea class="code">(add 1 {2 3});=>{2 3 1}
 
 (add 1 {1 2 3});=>{1 2 3}</textarea></dd>
 
-<dt><code>add/m</code></dt>
+<dt id="demo-add-m"><code>add/m</code></dt>
 <dd><textarea class="code">(add/m integer 1 {2 3});=>{2 3 1}
 
 (add/m integer 1 {1 2 3});=>{1 2 3}</textarea></dd>
 
-<dt><code>delete-first</code></dt>
+<dt id="demo-delete-first"><code>delete-first</code></dt>
 <dd><textarea class="code">(delete-first 2 {1 2 3 2});=>{1 3 2}</textarea></dd>
 
-<dt><code>delete-first/m</code></dt>
+<dt id="demo-delete-first-m"><code>delete-first/m</code></dt>
 <dd><textarea class="code">(delete-first/m integer 2 {1 2 3 2});=>{1 3 2}</textarea></dd>
 
-<dt><code>delete</code></dt>
+<dt id="demo-delete"><code>delete</code></dt>
 <dd><textarea class="code">(delete 2 {1 2 3 1 2 3});=>{1 3 1 3}</textarea></dd>
 
-<dt><code>delete/m</code></dt>
+<dt id="demo-delete-m"><code>delete/m</code></dt>
 <dd><textarea class="code">(delete/m integer 2 {1 2 3 1 2 3});=>{1 3 1 3}</textarea></dd>
 
-<dt><code>difference</code></dt>
+<dt id="demo-difference"><code>difference</code></dt>
 <dd><textarea class="code">(difference {1 2 3} {1 3});=>{2}</textarea></dd>
 
-<dt><code>difference/m</code></dt>
+<dt id="demo-difference-m"><code>difference/m</code></dt>
 <dd><textarea class="code">(difference/m integer {1 2 3} {1 3});=>{2}</textarea></dd>
 
-<dt><code>include?</code></dt>
+<dt id="demo-include"><code>include?</code></dt>
 <dd><textarea class="code">(include? {1 2 3} {1 3});=>#t</textarea></dd>
 
-<dt><code>include?/m</code></dt>
+<dt id="demo-include-m"><code>include?/m</code></dt>
 <dd><textarea class="code">(include?/m integer {1 2 3} {1 3});=>#t</textarea></dd>
 
-<dt><code>union</code></dt>
+<dt id="demo-union"><code>union</code></dt>
 <dd><textarea class="code">(union {1 2 3} {1 3 4});=>{1 2 3 4}</textarea></dd>
 
-<dt><code>union/m</code></dt>
+<dt id="demo-union-m"><code>union/m</code></dt>
 <dd><textarea class="code">(union/m integer {1 2 3} {1 3 4});=>{1 2 3 4}</textarea></dd>
 
-<dt><code>intersect</code></dt>
+<dt id="demo-intersect"><code>intersect</code></dt>
 <dd><textarea class="code">(intersect {1 2 3} {1 3 4});=>{1 3}</textarea></dd>
 
-<dt><code>intersect/m</code></dt>
+<dt id="demo-intersect-m"><code>intersect/m</code></dt>
 <dd><textarea class="code">(intersect/m integer {1 2 3} {1 3 4});=>{1 3}</textarea></dd>
 
-<dt><code>member?</code></dt>
+<dt id="demo-member"><code>member?</code></dt>
 <dd><textarea class="code">(member? 1 {1 3 1 4});=>#t
 
 (member? 2 {1 3 1 4});=>#f</textarea></dd>
 
-<dt><code>member?/m</code></dt>
+<dt id="demo-member-m"><code>member?/m</code></dt>
 <dd><textarea class="code">(member?/m integer 1 {1 3 1 4});=>#t
 
 (member?/m integer 2 {1 3 1 4});=>#f</textarea></dd>
 
-<dt><code>count</code></dt>
+<dt id="demo-count"><code>count</code></dt>
 <dd><textarea class="code">(count 1 {1 3 1 4});=>2</textarea></dd>
 
-<dt><code>count/m</code></dt>
+<dt id="demo-count-m"><code>count/m</code></dt>
 <dd><textarea class="code">(count/m integer 1 {1 3 1 4});=>2</textarea></dd>
 
-<dt><code>frequency</code></dt>
+<dt id="demo-frequency"><code>frequency</code></dt>
 <dd><textarea class="code">(frequency {1 3 1 4});=>{[1 2] [3 1] [4 1]}</textarea></dd>
 
-<dt><code>frequency/m</code></dt>
+<dt id="demo-frequency-m"><code>frequency/m</code></dt>
 <dd><textarea class="code">(frequency/m integer {1 3 1 4});=>{[1 2] [3 1] [4 1]}</textarea></dd>
 
 </dl>
@@ -313,10 +322,10 @@
 
 <dl>
   
-<dt><code>unique</code></dt>
+<dt id="demo-unique"><code>unique</code></dt>
 <dd><textarea class="code">(unique {1 2 3 2 1 4});=>{1 2 3 4}</textarea></dd>
 
-<dt><code>unique/m</code></dt>
+<dt id="demo-unique-m"><code>unique/m</code></dt>
 <dd><textarea class="code">(unique/m integer {1 2 3 2 1 4});=>{1 2 3 4}</textarea></dd>
 
 </dl>

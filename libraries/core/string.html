@@ -25,7 +25,11 @@
     
         </div>
         
-<hr/>
+      </div>
+      
+      <hr class="divider">
+
+      <div class="row">
         
         <div class="col-md-12" role="main">
 
@@ -33,7 +37,7 @@
 
 <dl>
   
-<dt><code>string</code></dt>
+<dt id="demo-string"><code>string</code></dt>
 <dd><textarea class="code">(match "abc" string
   {[,"abc" #t]
    [_ #f]});=>#t
@@ -60,39 +64,39 @@
 
 <dl>
   
-<dt><code>S.empty?</code></dt>
+<dt id="demo-S-empty-p"><code>S.empty?</code></dt>
 <dd><textarea class="code">(S.empty? "");=>#t
 
 (S.empty? "Egison");=>#f</textarea></dd>
 
-<dt><code>S.car</code></dt>
+<dt id="demo-S-car"><code>S.car</code></dt>
 <dd><textarea class="code">(S.car "Egison");=>'E'</textarea></dd>
 
-<dt><code>S.cdr</code></dt>
+<dt id="demo-S-cdr"><code>S.cdr</code></dt>
 <dd><textarea class="code">(S.cdr "Egison");=>"gison"</textarea></dd>
 
-<dt><code>S.rac</code></dt>
+<dt id="demo-S-rac"><code>S.rac</code></dt>
 <dd><textarea class="code">(S.rac "Egison");=>'n'</textarea></dd>
 
-<dt><code>S.rdc</code></dt>
+<dt id="demo-S-rdc"><code>S.rdc</code></dt>
 <dd><textarea class="code">(S.rdc "Egison");=>"Egiso"</textarea></dd>
 
-<dt><code>S.map</code></dt>
+<dt id="demo-S-map"><code>S.map</code></dt>
 <dd><textarea class="code">(S.map id "Egison");=>"Egison"</textarea></dd>
 
-<dt><code>S.length</code></dt>
+<dt id="demo-S-length"><code>S.length</code></dt>
 <dd><textarea class="code">(S.length "Egison");=>6</textarea></dd>
 
-<dt><code>S.split</code></dt>
+<dt id="demo-S-split"><code>S.split</code></dt>
 <dd><textarea class="code">(S.split "," "Lisp,Haskell,Egison");=>{"Lisp" "Haskell" "Egison"}</textarea></dd>
 
-<dt><code>S.append</code></dt>
+<dt id="demo-S-append"><code>S.append</code></dt>
 <dd><textarea class="code">(S.append "Egi" "son");=>"Egison"</textarea></dd>
 
-<dt><code>S.concat</code></dt>
+<dt id="demo-S-concat"><code>S.concat</code></dt>
 <dd><textarea class="code">(S.concat {"Egi" "son"});=>"Egison"</textarea></dd>
 
-<dt><code>S.intercalate</code></dt>
+<dt id="demo-S-intercalate"><code>S.intercalate</code></dt>
 <dd><textarea class="code">(S.intercalate "," {"Lisp" "Haskell" "Egison"});=>"Lisp,Haskell,Egison"</textarea></dd>
 
 </dl>
@@ -101,22 +105,22 @@
 
 <dl>
   
-<dt><code>C.between</code></dt>
+<dt id="demo-S-between"><code>C.between</code></dt>
 <dd><textarea class="code">(C.between 'a' 'c');=>{'a' 'b' 'c'}</textarea></dd>
 
-<dt><code>C.between?</code></dt>
+<dt id="demo-S-between-p"><code>C.between?</code></dt>
 <dd><textarea class="code">(C.between? 'a' 'c' 'b');=>#t</textarea></dd>
 
-<dt><code>alphabet?</code></dt>
+<dt id="demo-alphabet-p"><code>alphabet?</code></dt>
 <dd><textarea class="code">(alphabet? 'a');=>#t</textarea></dd>
 
-<dt><code>alphabets?</code></dt>
+<dt id="demo-alphabets-p"><code>alphabets?</code></dt>
 <dd><textarea class="code">(alphabets? "Egison");=>#t</textarea></dd>
 
-<dt><code>upper-case</code></dt>
+<dt id="demo-upper-case"><code>upper-case</code></dt>
 <dd><textarea class="code">(upper-case 'e');=>'E'</textarea></dd>
 
-<dt><code>lower-case</code></dt>
+<dt id="demo-lower-case"><code>lower-case</code></dt>
 <dd><textarea class="code">(lower-case 'E');=>'e'</textarea></dd>
 
 </dl>

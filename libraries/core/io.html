@@ -25,7 +25,11 @@
     
         </div>
         
-<hr/>
+      </div>
+      
+      <hr class="divider">
+
+      <div class="row">
         
         <div class="col-md-12" role="main">
 
@@ -33,17 +37,17 @@
 
 <dl>
   
-<dt><code>print</code></dt>
+<dt id="demo-print"><code>print</code></dt>
 <dd><textarea class="code">[(print "Egison")]</textarea></dd>
 
-<dt><code>print-to-port</code></dt>
+<dt id="demo-print-to-port"><code>print-to-port</code></dt>
 <dd><textarea class="code">[(print-to-port outport "Egison")]</textarea></dd>
 
-<dt><code>each-line</code></dt>
+<dt id="demo-each-line"><code>each-line</code></dt>
 <dd><textarea class="code">[(each-line print)]</textarea></dd>
 
-<dt><code>each-line-from-port</code></dt>
-<dd><textarea class="code">[(each-line inport print)]</textarea></dd>
+<dt id="demo-each-line-from-port"><code>each-line-from-port</code></dt>
+<dd><textarea class="code">[(each-line-from-port inport print)]</textarea></dd>
 
 </dl>
 
@@ -51,7 +55,7 @@
 
 <dl>
   
-<dt><code>each</code></dt>
+<dt id="demo-each"><code>each</code></dt>
 <dd><textarea class="code">[(each print (map show (take 10 primes)))]</textarea></dd>
 
 </dl>

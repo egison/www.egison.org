@@ -25,7 +25,11 @@
     
         </div>
         
-<hr/>
+      </div>
+      
+      <hr class="divider">
+
+      <div class="row">
         
         <div class="col-md-12" role="main">
 
@@ -33,7 +37,7 @@
 
 <dl>
   
-<dt><code>comparing</code></dt>
+<dt id="demo-comparing"><code>comparing</code></dt>
 <dd><textarea class="code">(define $ordering
   (algebraic-data-matcher 
     {<less> <equal> <greater>}))</textarea></dd>
@@ -44,51 +48,51 @@
 
 <dl>
   
-<dt><code>compare</code></dt>
+<dt id="demo-compare"><code>compare</code></dt>
 <dd><textarea class="code">(compare 10 10);=><Equal>
 
 (compare 11 10);=><Greater>
 
 (compare 10 11);=><Less></textarea></dd>
 
-<dt><code>compare-c</code></dt>
+<dt id="demo-compare-c"><code>compare-c</code></dt>
 <dd><textarea class="code">(compare-c {1 2 3} {1 2 3});=><Equal>
 
 (compare-c {1 2 3 4} {1 2 3});=><Greater>
 
 (compare-c {1 2 3} {2 3});=><Less></textarea></dd>
 
-<dt><code>min</code></dt>
+<dt id="demo-min"><code>min</code></dt>
 <dd><textarea class="code">(min {10 20 5 20 30});=>5</textarea></dd>
 
-<dt><code>min/fn</code></dt>
+<dt id="demo-min-fn"><code>min/fn</code></dt>
 <dd><textarea class="code">(min/fn compare {10 20 5 20 30});=>5</textarea></dd>
 
-<dt><code>max</code></dt>
+<dt id="demo-max"><code>max</code></dt>
 <dd><textarea class="code">(max {10 20 5 20 30});=>30</textarea></dd>
 
-<dt><code>max/fn</code></dt>
+<dt id="demo-max-fn"><code>max/fn</code></dt>
 <dd><textarea class="code">(max/fn compare {10 20 5 20 30});=>30</textarea></dd>
 
-<dt><code>min-and-max</code></dt>
+<dt id="demo-min-and-max"><code>min-and-max</code></dt>
 <dd><textarea class="code">(min-and-max {10 20 5 20 30});=>[5 30]</textarea></dd>
 
-<dt><code>min-and-max/fn</code></dt>
+<dt id="demo-min-and-max-fn"><code>min-and-max/fn</code></dt>
 <dd><textarea class="code">(min-and-max/fn compare {10 20 5 20 30});=>[5 30]</textarea></dd>
 
-<dt><code>sort</code></dt>
+<dt id="demo-sort"><code>sort</code></dt>
 <dd><textarea class="code">(sort {10 20 5 20 30});=>{5 10 20 20 30}</textarea></dd>
 
-<dt><code>sort/fn</code></dt>
+<dt id="demo-sort-fn"><code>sort/fn</code></dt>
 <dd><textarea class="code">(sort/fn compare {10 20 5 20 30});=>{5 10 20 20 30}</textarea></dd>
 
-<dt><code>sort-strings</code></dt>
+<dt id="demo-sort-strings"><code>sort-strings</code></dt>
 <dd><textarea class="code">(sort-strings {"Egison" "Haskell" "Clojure"});=>{"Clojure" "Egison" "Haskell"}</textarea></dd>
 
-<dt><code>merge</code></dt>
+<dt id="demo-merge"><code>merge</code></dt>
 <dd><textarea class="code">(merge {3 4 6} {1 2 5});=>{1 2 3 4 5 6}</textarea></dd>
 
-<dt><code>merge/fn</code></dt>
+<dt id="demo-merge-fn"><code>merge/fn</code></dt>
 <dd><textarea class="code">(merge/fn compare {3 4 6} {1 2 5});=>{1 2 3 4 5 6}</textarea></dd>
 
 </dl>
