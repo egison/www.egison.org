@@ -1,0 +1,55 @@
+<p>
+  We can load these libraries as follow in a program.
+</p>
+
+<div class="version">demo.egi</div>
+<textarea class="code">(load "lib/math/project-euler.egi")
+(load "lib/math/prime-numbers.egi")
+
+;; write a program here
+(nth 100001 primes)</textarea>
+
+<pre><code>% egison -t demo.egi
+1299721</code></pre>
+
+<h2>Simple Example</h2>
+
+<p>
+  Briefly, Egison is a programming language with the following features.
+</p>
+
+<ul>
+  <li>Functional programming with lazy evaluation strategy</li>
+  <li>Strong pattern-matching facility</li>
+</ul>
+
+<p>
+  The first feature is useful to solve any problems in Project Euler.
+</p>
+
+<p>
+  The second feature is Egison's original key feature.<br/>
+  This feature is useful to solve problems for those we need to write complex enumeration.
+</p>
+
+<p>
+  Let me show a simple example.<br/>
+  This example is from <a href="https://projecteuler.net/problem=35" target="_blank">Problem 33</a>.<br/>
+  It seems obvious that we need to write a function that works as follow.
+</p>
+
+<textarea class="code">(rotate {1 2 3 4});=>{{1 2 3 4} {2 3 4 1} {3 4 1 2} {4 1 2 3}}</textarea>
+
+<p>
+  The work of the above <code>rotate</code> function is very easy, but tidy to write by ourselves.<br/>
+  However, we can write it easily using pattern-matching in Egison.
+</p>
+
+<textarea class="code">(define $rotate
+  (match-all-lambda (list something)
+    [<join $hs (& ^<nil> $ts)> {@ts @hs}])))</textarea>
+
+<p>
+  Thus, Egison's pattern-matching makes programs concise by replacing tidy parts of programs with simple pattern-matching expressions.<br/>
+  We can find more interesting examples for more difficult problems.
+</p>
