@@ -57,7 +57,7 @@
 内側の要素がコレクションである場合、それぞれの要素がタブで区切られます。
 </p>
 
-<code>$ egison -T -e '(map p-f (between 100 110))'
+<pre><code>$ egison -T -e '(map p-f (between 100 110))'
 2	2	5	5
 101
 2	3	17
@@ -69,7 +69,7 @@
 2	2	3	3	3
 109
 2	5	11
-</code>
+</code></pre>
 
 <p>
 内側の要素がタプルである場合にも、それぞれの要素がタブで区切られます。
@@ -175,7 +175,7 @@ $ egison -T -e '(match-all primes (list integer) [&lt;join _ &lt;cons $p &lt;con
 双子素数の場合は<code>awk</code>でも短い記述で取得することができます。
 </p>
 
-<per><code>
+<pre><code>
 $ seq 2 100 | factor | awk 'BEGIN{p=2}(NF == 2){if (p + 2 == $2){print p "\t" $2;};p=$2}'
 3	5
 5	7

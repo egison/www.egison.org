@@ -16,14 +16,14 @@ CodeMirror.defineMode("clojure", function () {
     var atoms = makeKeywords("true false nil");
 
     var keywords = makeKeywords(
-      "define test let let* letrec do lambda match-lambda match match-all pattern-function matcher algebraic-data-matcher if _ , & | @ loop something undefined main io return");
+      "define test let let* letrec do lambda match-lambda match match-all pattern-function matcher algebraic-data-matcher extend-matcher self if _ , & | @ loop something undefined main io return");
 
     var builtins = makeKeywords(
         "bool integer string list multiset set nil cons join snoc nioj");
 
     var indentKeys = makeKeywords(
         // Syntax
-        "define test let letrec do lambda match-lambda match match-all pattern-function matcher algebraic-data-matcher loop"
+        "define test let letrec do lambda match-lambda match match-all pattern-function matcher algebraic-data-matcher extend-matcher self loop"
     );
 
     var tests = {

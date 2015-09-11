@@ -130,12 +130,17 @@
 <p>
   A string which consists of only numbers is a number literal.
   An integer literal is a number literal or concatenation of <code>-</code> and a number literal.
+  We support complex numbers as built-in data.
 </p>
 
 <textarea class="code">;; Integers
 1
 0
--100</textarea>
+-100
+
+;; Gaussian integers
+1+1i
+2i</textarea>
 
 <h3 id="rational">Ratinal Numbers</h3>
 
@@ -146,7 +151,11 @@
 <textarea class="code">;; Ratinal numbers
 3/2
 6/4;=>3/2
--2/1;=>-2</textarea>
+-2/1;=>-2
+
+;; Complex numbers
+1+1i/1-1i
+10+2i/3</textarea>
 
 <h3 id="floats">Floats</h3>
 
@@ -156,7 +165,11 @@
 
 <textarea class="code">;; Float numbers
 10.2
--100.1</textarea>
+-100.1
+
+;; Complex numbers
+1.0+1.0i
+-3.5i</textarea>
 
 <h3 id="characters">Characters</h3>
 
