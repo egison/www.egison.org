@@ -2,6 +2,19 @@
 <html lang="en">
   <head>
     <!--# include file="/templates/header.html" -->
+    <style>
+.version {
+    padding-top: 10px;
+    color: #888;
+}
+.version2 {
+    padding-top: 0px;
+    color: #888;
+}
+.CodeMirror {
+    margin-top: 0px;
+}
+    </style>
     <title>Online Egison Editor</title>
   </head>
   <body>
@@ -25,13 +38,16 @@
             You can write and run Egison programs. Enjoy Egison programming!
           </p>
           
+          <div class="version">Egison mode</div>
           <textarea id="egison-program" name="code"></textarea>
 
           <button id="run-egison" class="btn btn-lg btn-primary" data-loading-text="Loading..." role="button">Run</button>
 
           <pre id="egison-result"></pre>
             
+          <div class="version">Haskell mode (unable to execute)</div>
           <textarea id="haskell-program" name="code"></textarea>
+          <div class="version">Ruby mode (unable to execute)</div>
           <textarea id="ruby-program" name="code"></textarea>
           
         </div>

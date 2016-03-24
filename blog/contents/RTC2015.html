@@ -1,0 +1,459 @@
+<h1 id="RTC2015">Egison Presentation at Rakuten Technology Conference 2015</h1>
+
+<div id="blog-date">Nov 21, 2015</div>
+
+<p>
+In <a target="_blank" href="http://tech.rakuten.co.jp/">RTC 2015</a>, Matz and I gave a presentation on the thought behind the creation of programming languages together!
+The following slides and script are my part.
+We can see <a target="_blank" href="https://www.youtube.com/watch?v=b3u4NpqcjVQ&index=4&list=PLNVIqXmk6x8z_DN9EMSN8jzLAE6ipsKpJ">the video of our session on YouTube</a>.
+</p>
+
+<h3>#1</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/RTC2015/RTC2015.001.png">
+
+<p>
+Today, I’ll make a presentation on the thought behind the creation of Egison.
+Here is the slides and script for that.
+</p>
+
+<h3>#2</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/RTC2015/RTC2015.002.png">
+
+<p>
+At first, let me introduce myself.
+I am a researcher working for Rakuten Institute of Technology.
+My research interest includes programming language theory.
+Here is my brief personal history.
+I released the Egison programming language in 2011 when I was a student of the university of Tokyo.
+I have continued the development of Egison even after I graduated the university in 2012.
+And I joined Rakuten in 2013.
+After that, Egison is gradually getting popular and recently I have received several awards for creating Egison.
+And today, I am giving a presentation with Matz!
+</p>
+
+<h3>#3</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/RTC2015/RTC2015.003.png">
+
+<p>
+Egison has been released as open source software and has its website.
+Please visit it when you have time.
+</p>
+
+<h3>#4</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/RTC2015/RTC2015.004.png">
+
+<p>
+Today, I’d like to talk 3 things.
+First, the importance of representation in Science, a reason why I am researching on programming languages.
+Second, the process of inventing new representation.
+Finally, I’ll introduce Egison and talk how Egison invented.
+</p>
+
+<h3>#5</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/RTC2015/RTC2015.005.png">
+
+<p>
+At first, let me talk about the importance of Representation in Science.
+</p>
+
+<h3>#6</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/RTC2015/RTC2015.006.png">
+
+<p>
+There are a lot of representation.
+Here are examples from number notation, mathematical expressions, chemical formulas and programming languages.
+Humans have invented various representation up to the present.
+</p>
+
+<h3>#7</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/RTC2015/RTC2015.007.png">
+
+<p>
+The representation has been developed over a long time.
+Various number notations are developed in each cultural region.
+Roman numerals, Chinese numerals, and Hindu-Arabic numerals are in this list.
+</p>
+
+<h3>#8</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/RTC2015/RTC2015.008.png">
+
+<p>
+There are distinct differences among readability of these numerals.
+</p>
+<p>
+This difference is not only because we are accustomed to Hindu-Arabic numerals.
+It arises from the mathematical features that each numeral based on.
+</p>
+
+<h3>#9</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/RTC2015/RTC2015.009.png">
+
+<p>
+Let me explain this difference further.
+The difference become bigger when we calculate using them.
+It’s harder to calculate multiplication using Roman numerals and Chinese numerals than Hindu-Arabic numerals.
+</p>
+
+<h3>#10</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/RTC2015/RTC2015.010.png">
+
+<p>
+This is a diagram to show the role of representation in the research of science.
+</p>
+
+<h3>#11</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/RTC2015/RTC2015.011.png">
+
+<p>
+First we observe nature, and it develops our intuition.
+</p>
+
+<h3>#12</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/RTC2015/RTC2015.012.png">
+
+<p>
+This process helps us to develop better understanding which lead to a  better representation.
+</p>
+
+<h3>#13</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/RTC2015/RTC2015.013.png">
+
+<p>
+Good representation helps us to deepen our understanding of nature.
+For example, in the middle ages, after Hindu-Arabic numerals were introduced in Europe, European mathematics developed significantly.
+</p>
+<p>
+Representation plays really important role in research of Science.
+</p>
+
+<h3>#14</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/RTC2015/RTC2015.014.png">
+
+<p>
+We can see that in the history of mathematical symbols.
+The mathematical symbols such as plus and minus are invented in the middle ages.
+After that, mathematics developed quickly and at the same time the number of symbols also increased significantly.
+</p>
+
+<h3>#15</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/RTC2015/RTC2015.015.png">
+
+<p>
+Next topic is the process of inventing new representation.
+</p>
+
+<h3>#16</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/RTC2015/RTC2015.016.png">
+
+<p>
+The process of inventing new representation can be divided into three phases.
+</p>
+<p>
+In the first phase, we study the features of nature and develop our intuition.
+But then we realize there is a gap created between our intuition and the existing representation.
+In the second phase, we research in order to find the reason for the gap.
+In the third phase, we implement the result of the research and create a new representation.
+</p>
+
+<h3>#17</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/RTC2015/RTC2015.017.png">
+
+<p>
+Let’s see the process in more detail with the example from number notation.
+</p>
+<p>
+In the first phase, we study the features of nature and develop our intuition.
+In this phase, the notion of numbers, addition, multiplication and various theorems on numbers are discovered.
+These discoveries include the feature that all numbers are uniquely represented in the form like this.
+</p>
+
+<h3>#18</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/RTC2015/RTC2015.018.png">
+
+<p>
+In the second phase, we analyze the gap between our intuition and the existing representation.
+</p>
+<p>
+In this phase, it is discovered that the feature explained in the previous slide is useful to improve the number notation.
+There would be many researchers who discovered such feature, but there were only few researchers who can discover it is useful for notation of numbers.
+It is really difficult to notice the usefulness of this connection before the positional notations is invented.
+</p>
+
+<h3>#19</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/RTC2015/RTC2015.019.png">
+
+<p>
+In the third phase, we design new representation utilizing the connection found in the second phase.
+</p>
+<p>
+In this phase, positional notation was invented and developed utilizing the connection found in the previous phase.
+</p>
+<p>
+Developing the whole system was really difficult.
+</p>
+
+<h3>#20</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/RTC2015/RTC2015.020.png">
+
+<p>
+In these three phases, we invent new representation.
+</p>
+
+<h3>#21</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/RTC2015/RTC2015.021.png">
+
+<p>
+Finally, I’d like to explain about the Egison programming language that I’ve created.
+I found a new abstraction for new representation in programming languages and implemented it in Egison.
+</p>
+
+<h3>#22</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/RTC2015/RTC2015.022.png">
+
+<p>
+Please take a look at this mind map on the theory of programming languages.
+There are two kinds of abstraction, the abstraction of algorithms and the abstraction of computers.
+The abstraction of algorithms contains three topics, functional modularity, type system, and pattern-matching.
+Egison improved the pattern-matching part.
+</p>
+
+<h3>#23</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/RTC2015/RTC2015.023.png">
+
+<p>
+Egison focuses on the fact that some data types such as collections are treated as various data types in the programs.
+</p>
+<p>
+For example, a collection of cards is sometimes treated as a list of cards and sometimes treated as a multiset of cards.
+When we treat a collection as a multiset, we ignore the order of the elements.
+When we count or sort them, we treat them as a list.
+But when we find identical elements or elements in sequence, it is natural to treat them as a multiset.
+</p>
+
+<h3>#24</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/RTC2015/RTC2015.024.png">
+
+<p>
+There are mainly three kinds of patterns for collection, nil, cons, and join patterns.
+We combine them to make various patterns of the collections.
+</p>
+<p>
+Nil patterns are a pattern that matches with an empty collection.
+Cons patterns are a pattern that matches with a collection more than one element and divide it into the head element and the rest collection.
+Join patterns are a pattern that matches with any collection and divide it into two lists, the head part and the rest part.
+In this definition, cons and join patterns are applicable only to lists. and not applicable to multisets and sets.
+So we can’t treat multisets and sets directly as lists.
+</p>
+
+<h3>#25</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/RTC2015/RTC2015.025.png">
+
+<p>
+Egison generalized the meaning of these patterns and make them applicable to others.
+
+Egison generalized the scope of patterns from head to any.
+Cons patterns divide a collection into an element and the rest, not the head and the rest.
+Join patterns divide a collection into just two collections.
+</p>
+<p>
+When target is a collection 1, 2, 3 and treated as a list, a cons pattern divides it into 1 and 2, 3 as the previous slide.
+But when target is treated as a multiset, we ignore the order of elements.
+So, a cons pattern divides it into 1 and 2, 3, 2 and 1,3, 3 and 1,2.
+When the target is treated as a set, we ignore both of order and duplicates of the elements.
+So, a cons pattern divides it into 1 and 1,2, 3, 2 and 1,2,3, 3 and 1,2,3.
+</p>
+
+<h3>#26</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/RTC2015/RTC2015.026.png">
+
+<p>
+Here are pattern-matching expressions in Egison.
+Please note that Egison’s pattern-matching expressions take a matcher to specify how the target is pattern-matched.
+If we set a matcher `List Integer` as the first sample, the target collection `[1,2,3]` is  pattern-matched as a list of integers.
+If we set a matcher `Multiset Integer` as the second sample, the target collection is  pattern-matched as a multiset of integers.
+This matcher is one of the unique inventions of Egison.
+</p>
+
+<h3>#27</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/RTC2015/RTC2015.027.png">
+
+<p>
+The expressive power of pattern-matching of Egison is so strong that we can express poker-hands pattern-matching in a single expression.
+All poker-hands are expressed in a single pattern.
+</p>
+
+<h3>#28</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/RTC2015/RTC2015.028.png">
+
+<p>
+Here is a pattern for straight-flush.
+</p>
+
+<h3>#29</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/RTC2015/RTC2015.029.png">
+
+<p>
+This means all cards have a same suit.
+</p>
+
+<h3>#30</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/RTC2015/RTC2015.030.png">
+
+<p>
+And this means numbers are in sequence.
+</p>
+
+<h3>#31</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/RTC2015/RTC2015.031.png">
+
+<p>
+Egison supports a pattern called a non-linear pattern.
+It allows us to refer the value of the variables whose values are bound within the patterns.
+</p>
+<p>
+A pattern that begins with a comma is called a value-pattern.
+A value-pattern matches with the object equal to the evaluated value of the expression after the comma.
+</p>
+
+<h3>#32</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/RTC2015/RTC2015.032.png">
+
+<p>
+Here is a pattern for two pair.
+</p>
+
+<h3>#33</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/RTC2015/RTC2015.033.png">
+
+<p>
+This means the suit of the cards is not important.
+</p>
+
+<h3>#34</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/RTC2015/RTC2015.034.png">
+
+<p>
+This part means we have two pairs of cards that has same numbers. 
+</p>
+
+<h3>#35</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/RTC2015/RTC2015.035.png">
+
+<p>
+We can create patterns even for mahjong.
+This program determines whether a mahjong hand is completed or not.
+We can write that in one slide.
+In other languages, it will be at least 5 times longer.
+</p>
+
+<h3>#36</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/RTC2015/RTC2015.036.png">
+
+<p>
+This is a more realistic sample.
+This program solves the traveling salesman problem.
+In the Egison system, We can match patterns of various data types.
+We can create a pattern for graphs as well, like this.
+</p>
+
+<h3>#37</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/RTC2015/RTC2015.037.png">
+
+<p>
+Currently, I am working to solve real problems in Egison.
+There are several possibilities to do that.
+</p>
+<p>
+First, I’d like to mention that Egison can represent complex tasks for daily work in a simple way.
+Second, there is a possibility Egison is useful to financial problems by describing complex patterns accurately for chart analysis.
+Third, Egison provides a way to pattern-match for various data types in a unified way for data query.
+Fourth,  pattern-matching in Egison can be paralleled automatically.
+So, we can write parallel programs very easily in Egison.
+</p>
+<p>
+My next year’s goal is to utilize Egison in one of these fields in Rakuten.
+</p>
+
+<h3>#38</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/RTC2015/RTC2015.038.png">
+
+<p>
+Finally, let me talk about the next version of Egison, Egison version 4.
+</p>
+
+<h3>#39</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/RTC2015/RTC2015.039.png">
+
+<p>
+Egison Version 4 will aim to become a popular programming language.
+For that, I will focus to improve usability of Egison and seriously proceed research on friendly syntax.
+</p>
+
+<h3>#40</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/RTC2015/RTC2015.040.png">
+
+<p>
+We will provide completely new syntax in the next version.
+We will remove at least this, … a lot of parenthesis.
+I hope you'll enjoy it.
+</p>
+
+<h3>#41</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/RTC2015/RTC2015.041.png">
+
+<p>
+Here are links for further information on Egison.
+I have already uploaded my presentation on my blog.
+Please check it.
+</p>
+
+<h3>#42</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/RTC2015/RTC2015.042.png">
+
+<p>
+Rakuten Institute of Technology is hiring researchers, data scientists, coordinators, and part-time research assistants.
+Please contact us if you are interested in these posts.
+Thank you so much for your attention.
+</p>

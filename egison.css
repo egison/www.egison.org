@@ -14,9 +14,12 @@
 /* Padding below the footer and lighter body text */
 
 body {
-    font-family: 'Oxygen', sans-serif, 'ヒラギノ角ゴ Pro', 'Hiragino Kaku Gothic Pro';
+    font-family: 'Oxygen', "游ゴシック体", "Yu Gothic", YuGothic, 'ヒラギノ角ゴ Pro', 'Hiragino Kaku Gothic Pro', "Meiryo", sans-serif;
     padding-top: 50px;
     color: #5a5a5a;
+    letter-spacing: 0.01rem;
+    font-size: 1.8rem;
+    line-height: 1.75em;
 }
 
 h1,

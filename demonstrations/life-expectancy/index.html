@@ -30,7 +30,7 @@
             <li><a onClick="get_csv('all.csv');">All countries <code>_</code></a></li>
             <li><a onClick="get_csv('reach-75.csv');">Countries where life expectancy reached 75 <code>&lt;join _ &lt;cons [_ ?(gt? $ 75)] _&gt;&gt;</code></a></li>
             <li><a onClick="get_csv('reach-40.csv');">Countries where life expectancy was under 40 <code>&lt;join _ &lt;cons [_ ?(lt? $ 40)] _&gt;&gt;</code></a></li>
-            <li><a onClick="get_csv('decrease-5.csv');">Countries where life expectancy dicreased more than 5 years <code>&lt;join _ &lt;cons [_ $x] &lt;join _ &lt;cons [_ ?(lt? $ (- x 5))] _&gt;&gt;&gt;&gt;</code></a></li>
+            <li><a onClick="get_csv('decrease-5.csv');">Countries where life expectancy decreased more than 5 years <code>&lt;join _ &lt;cons [_ $x] &lt;join _ &lt;cons [_ ?(lt? $ (- x 5))] _&gt;&gt;&gt;&gt;</code></a></li>
             <li><a onClick="get_csv('times-1.5.csv');">Countries where life expectancy increased 1.5 times from 1960 to 2005 <code>&lt;join _ &lt;cons [,1960 $x] &lt;join _ &lt;cons [,2005 ?(gt? $ (* x 1.5))] _&gt;&gt;&gt;</code></a></li>
           </ul>
             
