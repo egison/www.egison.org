@@ -32,9 +32,13 @@
           </p>
 
           <p>
-            このインストーラーにより <code>egison</code> と <code>egison-tutorial</code> コマンドがインストールされます。
+            このインストーラーにより <code>egison</code> と <code>egison-tutorial</code> コマンドが <code>/Library/Egison</code> 以下にインストールされます。<br/>
+            ですので、以下のような行を <code>.bashrc</code> や <code>.zshenv</code> に書き加えてください。
           </p>
           
+<pre><code>PATH=:/Library/Egison/bin:$PATH
+export PATH</code></pre>
+
           <h2 id="how-to-start">Egison の始め方</h3>
           
           <p>
