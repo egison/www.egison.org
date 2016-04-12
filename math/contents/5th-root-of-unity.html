@@ -2,19 +2,51 @@
 
 <div id="first-date">Apr 7 2016</div>
 
-<h2>Naive Approach</h2>
+<h2>Calculating the 5th Root of Unity</h2>
 
 <p>
+  On the 5th root of unity, the following equation is known.
 </p>
+
+`cos((2pi)/5) = 1/4 (-1 + sqrt 5)`
+
+<p>
+  We calucuate this value in the following code in 2 ways.<br/>
+</p>
+
+<h2>Naive Approach</h2>
+
+`x^4 + x^3 + x^2 + x + 1 = 0`
+
+<p>
+  We can divide the above equation with `x^2` (`x != 0` is obvious).
+  Then we get
+</p>
+
+`(x + 1/x)^2 + (x + 1/x) - 1 = 0`.
+
+<p>
+  We can substitute `(x + 1/x)` in this equation with `t`.
+</p>
+
+`t = x + 1/x`
+
+<p>
+  In the above way, we can get the value of the 5th root of unity by solving quadratic formula twice.
+<p>
 
 <textarea class="code">
 (define $t (fst (q-f' 1 1 -1)));(/ (+ -1 (sqrt 5)) 2)
 (define $z (fst (q-f' 1 (* -1 t) 1)));(/ (+ -1 (sqrt 5) (sqrt (+ -10 (* -2 (sqrt 5))))) 4)
 (** z 5);1</textarea>
 
-<h2>More General Solution</h2>
+<h2>More General Solution Applying Galois Theory</h2>
+
+`x^4 + x^3 + x^2 + x + 1 = 0`
 
 <p>
+  The Galois group of this equation has same structure with the multiplicative group of `ZZ//5ZZ-{0}`.<br/>
+  We can utilize this fact to solve this equation as follow.
 </p>
 
 <textarea class="code"><!--# include file="/source/sample/math/number/5th-root-of-unity.egi" --></textarea>
