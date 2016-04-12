@@ -1,0 +1,20 @@
+<h1 id="17th-root-of-unity">17th Root of Unity</h1>
+
+<div id="first-date">Apr 12 2016</div>
+
+<h2>Calculate 17th Root of Unity</h2>
+
+<p>
+  On 17th root of unity, the following equation is known.
+</p>
+
+`cos((2pi)/17) = 1/16(-1 + sqrt 17 + sqrt (34 - 2 sqrt 17) + 2 sqrt (17 + 3 sqrt 17 - sqrt (34 - 2 sqrt 17) - 2 sqrt (34 + 2 sqrt 17))`.
+
+<p>
+  We calucuate this value in the following code.<br/>
+  We utilize the fact that the Galois group of the following equation has same structure with the multiplicative group of `ZZ//17ZZ-{0}`.
+</p>
+
+`x^16 + x^15 + x^14 + x^13 + x^12 + x^11 + x^10 + x^9 + x^8 + x^7 + x^6 + x^5 + x^4 + x^3 + x^2 + x + 1 = 0`
+
+<textarea class="code"><!--# include file="/source/sample/math/number/17th-root-of-unity.egi" --></textarea>

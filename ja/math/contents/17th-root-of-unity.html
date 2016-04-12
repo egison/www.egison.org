@@ -1,0 +1,24 @@
+<h1 id="17th-root-of-unity">1の17乗根</h1>
+
+<div id="first-date">Apr 12 2016</div>
+
+<h2>1の17乗根の冪根表示</h2>
+
+<p>
+  1の17乗根について、
+</p>
+
+`cos((2pi)/17) = 1/16(-1 + sqrt 17 + sqrt (34 - 2 sqrt 17) + 2 sqrt (17 + 3 sqrt 17 - sqrt (34 - 2 sqrt 17) - 2 sqrt (34 + 2 sqrt 17))`
+
+<p>
+  であることが知られています。<br/>
+  以下のコードはこの値を実際に計算して求めています。
+</p>
+
+`x^16 + x^15 + x^14 + x^13 + x^12 + x^11 + x^10 + x^9 + x^8 + x^7 + x^6 + x^5 + x^4 + x^3 + x^2 + x + 1 = 0`
+
+<p>
+  のガロア群が`ZZ//17ZZ-{0}`における乗法についての循環群と同じ構造であることを利用した解法で計算しています。
+</p>
+
+<textarea class="code"><!--# include file="/source/sample/math/number/17th-root-of-unity.egi" --></textarea>
