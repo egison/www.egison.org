@@ -11,7 +11,7 @@
 `cos((2pi)/7) = 1/6 (-1 + root 3 ((7 + 21 sqrt 3 i) / 2) + root 3 ((7 - 21 sqrt 3 i) / 2))`
 
 <p>
-  We calucuate this value in the following code.<br/>
+  We calculate this value in the following code.<br/>
   We utilize the fact that the Galois group of the following equation has same structure with the multiplicative group of `ZZ//7ZZ-{0}`.
 </p>
 
@@ -19,3 +19,14 @@
 `x^6 + x^5 + x^4 + x^3 + x^2 + x + 1 = 0`
 
 <textarea class="code"><!--# include file="/source/sample/math/number/7th-root-of-unity.egi" --></textarea>
+
+<h2>One more way to solve the equation</h2>
+
+<p>
+  The above program calculates the 7th root of unity by solving cubic equation at first and quadratic equation after that.<br/>
+  We can reverse the order.
+  That is we can calculate the 7th root of unity by solving quadratic equation at first and cubic equation after that.
+</p>
+
+<textarea class="code"><!--# include file="/source/sample/math/number/7th-root-of-unity-2.egi" --></textarea>
+

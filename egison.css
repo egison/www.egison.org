@@ -129,6 +129,7 @@ pre.prettyprint {
 
 .navbar {
     opacity:0.95;
+    height: 50px;
 }
 
 .navbar-inverse .navbar-brand {
