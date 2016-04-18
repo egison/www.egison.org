@@ -1,0 +1,46 @@
+<h1 id="fourier-series">Fourier Series</h1>
+
+<div id="first-date">Apr 18 2016</div>
+
+<h2>Leibniz formula</h2>
+
+<p>
+  Let's consider a sawtooth wave function.
+</p>
+
+`f(x) = x` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `(-pi < x < pi)`<br/>
+`f(x + 2 n pi) = f(x)`
+
+<p>
+  And get the Fourier coefficients of this function.
+</p>
+
+`f(x) = a_0 + sum_(k=0) a_k cos(k x) + sum_(k=0) b_k sin(k x)`
+
+<p>
+  In the following program, we caclcluate these expressions to get the Fourier coefficients.
+</p>
+
+`a_0 = int_(-pi)^pi f(x) dx = 0`
+
+<br/><br/>
+
+`a_k = int_(-pi)^pi f(x) cos(k x) dx = 0`
+
+<br/><br/>
+
+`b_k = int_(-pi)^pi f(x) sin(k x) dx = (2 pi (-1)^k) / k`
+
+<p>
+  Therefore,
+</p>
+
+`f(x) = sum_(k=0) ((2 pi (-1)^k sin(k x)) / k)`
+
+<p>
+  If we substitute `x` with `1 / 2`, we get Leibniz formula as follow.
+</p>
+
+`pi / 4 = -1 + 1 / 2 - 1 / 3 + 1 / 4 - 1 / 5 + 1 / 6 - 1 / 7 + 1 / 8 - 1 / 9 + 1 / 10 - ...`
+
+<textarea class="code"><!--# include file="/source/sample/math/analysis/fourier-series.egi" --></textarea>

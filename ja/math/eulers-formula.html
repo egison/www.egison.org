@@ -2,33 +2,34 @@
 <html lang="en">
   <head>
     <!--# include file="/ja/templates/header.html" -->
-    <title>Egison 数学ノート</title>
+    <title>オイラーの公式 - Egison</title>
+    <style>
+      <!--
+.CodeMirror{
+  font-size: 14px;
+}
+        -->
+    </style>
   </head>
   <body>
     <!--# include file="/ja/templates/navbar.html" -->
 
-    <div class="container manual">
+    <div class="container manual blog">
 
       <div class="row">
 
-        <div class="col-md-12" id="top" role="complementary">
-          <h1>Egison 数学ノート</h1>
-        </div>
+        <div class="col-md-12" role="main">
 
-      </div>
-
-      <div class="row" style="padding-top:30px;">
-
-        <div class="col-md-6">
-
-          <!--# include file="/ja/math/templates/tables/number-theory.html" -->
-          <!--# include file="/ja/math/templates/tables/analysis.html" -->
+        <!--# include file="/ja/math/contents/eulers-formula.html" -->
+          
+          <h2 id="next">リンク</h2>
+          
+          <p>
+            <a class="btn btn-lg btn-primary" href="/ja/math/" role="button">Egison 数学ノート目次に戻る</a>
+          </p>
 
         </div>
-        <div class="col-md-6">
 
-        </div>
-        
       </div><!--/row-->
     
       <hr class="divider">
@@ -39,7 +40,7 @@
       
     </div><!-- /.container -->
     
-    <!--# include file="/templates/footer.html" -->
+    <!--# include file="/ja/templates/footer.html" -->
     <script>
       $('.code').each(function() {
         var $this = $(this);
