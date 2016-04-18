@@ -5,20 +5,20 @@
 <h2>Leibniz formula</h2>
 
 <p>
-  Let's consider a sawtooth wave function.
+  Let's consider a sawtooth wave function as follow.
 </p>
 
 `f(x) = x` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `(-pi < x < pi)`<br/>
 `f(x + 2 n pi) = f(x)`
 
 <p>
-  And get the Fourier coefficients of this function.
+  We can get the Fourier coefficients of this function by calculating the following expressions.
 </p>
 
 `f(x) = a_0 / 2 + sum_(k=0) a_k cos(k x) + sum_(k=0) b_k sin(k x)`
 
 <p>
-  In the following program, we caclcluate these expressions to get the Fourier coefficients.
+  In the following program, we caclcluate these expressions.
 </p>
 
 `a_0 = 1 / pi int_(-pi)^pi f(x) dx = 0`
@@ -32,10 +32,10 @@
 `b_k = 1 / pi int_(-pi)^pi f(x) sin(k x) dx = (2 (-1)^k) / k`
 
 <p>
-  Therefore,
+  Now, we get
 </p>
 
-`f(x) = sum_(k=0) ((2 (-1)^k sin(k x)) / k)`
+`f(x) = sum_(k=0) ((2 (-1)^k sin(k x)) / k)`.
 
 <p>
   If we substitute `x` with `pi / 2`, we get Leibniz formula as follow.
