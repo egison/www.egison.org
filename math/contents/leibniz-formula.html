@@ -1,0 +1,46 @@
+<h1 id="leibniz-formula">Leibniz Formula</h1>
+
+<div id="first-date">Apr 18 2016</div>
+
+<h2>Verify Leibniz formula using Fourier series expansion</h2>
+
+<p>
+  Let's consider a sawtooth wave function as follow.
+</p>
+
+`f(x) = x` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `(-pi < x < pi)`<br/>
+`f(x + 2 n pi) = f(x)`
+
+<p>
+  We calculate the Fourier coefficients of this function.
+</p>
+
+`f(x) = a_0 / 2 + sum_(k=0) a_k cos(k x) + sum_(k=0) b_k sin(k x)`
+
+<p>
+  In the program, we calculate the following expressions to get the Fourier coefficients.
+</p>
+
+`a_0 = 1 / pi int_(-pi)^pi f(x) dx = 0`
+
+<br/><br/>
+
+`a_k = 1 / pi int_(-pi)^pi f(x) cos(k x) dx = 0`
+
+<br/><br/>
+
+`b_k = 1 / pi int_(-pi)^pi f(x) sin(k x) dx = (2 (-1)^k) / k`
+
+<p>
+  Then, we get
+</p>
+
+`f(x) = sum_(k=0) ((2 (-1)^k sin(k x)) / k)`.
+
+<p>
+  If we substitute `x` with `pi / 2` in the above equation, we get Leibniz formula as follow.
+</p>
+
+`pi / 4 = 1 - 1 / 3 + 1 / 5 - 1 / 7 + 1 / 9 - ...`
+
+<textarea class="code"><!--# include file="/source/sample/math/analysis/leibniz-formula.egi" --></textarea>
