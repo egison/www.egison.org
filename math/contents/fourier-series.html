@@ -12,13 +12,13 @@
 `f(x + 2 n pi) = f(x)`
 
 <p>
-  We can get the Fourier coefficients of this function by calculating the following expressions.
+  We calculate the Fourier coefficients of this function.
 </p>
 
 `f(x) = a_0 / 2 + sum_(k=0) a_k cos(k x) + sum_(k=0) b_k sin(k x)`
 
 <p>
-  In the following program, we caclcluate these expressions.
+  In the program, we calculate the following expressions to get the Fourier coefficients.
 </p>
 
 `a_0 = 1 / pi int_(-pi)^pi f(x) dx = 0`
@@ -32,13 +32,13 @@
 `b_k = 1 / pi int_(-pi)^pi f(x) sin(k x) dx = (2 (-1)^k) / k`
 
 <p>
-  Now, we get
+  Then, we get
 </p>
 
 `f(x) = sum_(k=0) ((2 (-1)^k sin(k x)) / k)`.
 
 <p>
-  If we substitute `x` with `pi / 2`, we get Leibniz formula as follow.
+  If we substitute `x` with `pi / 2` in the above equation, we get Leibniz formula as follow.
 </p>
 
 `pi / 4 = 1 - 1 / 3 + 1 / 5 - 1 / 7 + 1 / 9 - ...`
