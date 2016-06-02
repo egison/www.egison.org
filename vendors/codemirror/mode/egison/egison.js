@@ -16,14 +16,14 @@ CodeMirror.defineMode("clojure", function () {
     var atoms = makeKeywords("true false nil");
 
     var keywords = makeKeywords(
-      "define test let let* letrec do lambda match-lambda match match-all pattern-function matcher algebraic-data-matcher extend-matcher self if _ , & | @ loop something undefined main io return");
+      "define test let let* letrec do lambda match-lambda match match-all pattern-function matcher algebraic-data-matcher extend-matcher self if _ , & @ loop something undefined main io return tensor contract generate-tensor with-symbols");
 
     var builtins = makeKeywords(
         "bool integer string list multiset set nil cons join snoc nioj");
 
     var indentKeys = makeKeywords(
         // Syntax
-        "define test let letrec do lambda match-lambda match match-all pattern-function matcher algebraic-data-matcher extend-matcher self loop"
+        "define test let letrec do lambda match-lambda match match-all pattern-function matcher algebraic-data-matcher extend-matcher self loop with-symbols"
     );
 
     var tests = {
@@ -32,7 +32,7 @@ CodeMirror.defineMode("clojure", function () {
         hex: /[0-9a-f]/i,
         sign: /[+-]/,
         exponent: /e/i,
-        keyword_char: /[^\s\(\[\;\)\]]/,
+        keyword_char: /[^\s\|\(\[\;\)\]]/,
         symbol: /[\w*+!'\-\._?:\/]/
     };
 
