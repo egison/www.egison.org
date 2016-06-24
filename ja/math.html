@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!--# include file="/ja/templates/header.html" -->
+    <style>
+.version {
+    padding-top: 10px;
+    color: #888;
+}
+.version2 {
+    padding-top: 0px;
+    color: #888;
+}
+.CodeMirror {
+    margin-top: 0px;
+}
+    </style>
+    <title>数式処理システムとしてのプログラミング言語 Egison</title>
+  </head>
+  <body data-spy="scroll" data-target=".bs-sidebar" data-offset="0">
+    <!--# include file="/ja/templates/navbar.html" -->
+
+    <div class="container manual">
+
+      <div class="row">
+
+        <div class="col-md-12" id="top" role="complementary">
+          <h1>数式処理システムとしてのプログラミング言語 Egison</h1>
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-12" role="main">
+
+<p>Egison version 3.6.0から、数式処理機能がEgisonに実装されました。
+Egison独自の強力なパターンマッチを数式に対して用いることにより、ユーザーによって簡単に拡張可能なシステムであることが、この数式処理システムの大きな特徴となっています。
+このEgison上に実装された数式処理システムについてご紹介します。</p>
+
+<h2><a id="_6"></a>シンボリックな計算とは</h2>
+
+<p>シンボリックな計算とは、<code>x + x = 2x</code>や<code>(x + y)^2 = x^2 + 2 x y + y^2</code>のように<code>x</code>や<code>y</code>といったシンボルを数としてプログラム上で扱い計算することをいいます。
+シンボリックな計算をサポートしている既存の数式処理システムとしては、Mathematicaや、Maxima、Pythonの拡張ライブラリとして実装されているSymPyなどが有名です。</p>
+<p>最新のEgisonは以下のようにシンボリックな計算をサポートしています。</p>
+
+<textarea class="code">; (x + y)の2乗
+(* (+ x y) (+ x y))
+;=>(+ x^2 (* 2 x y) y^2)
+
+; (1 + i)の5乗
+(** (+ 1 i) 5)
+;=>(+ -4 (* -4 i))</textarea>
+
+<p><code>i^2</code>を<code>-1</code>に変換するような書き換え規則は、Egisonのパターンマッチを用いてライブラリで定義されています。
+ユーザーが新たに書き換え規則を追加することも可能です。</p>
+
+<p>シンボリックな計算を用いることにより、代数的数を浮動小数点数で近似することなく、扱うことができます。
+例えば、以下のように、二次方程式の解の公式を用いて、二次方程式の解を計算することができます。</p>
+
+<textarea class="code">(define $q-f
+  (lambda [$a $b $c]
+    [(/ (+ (* -1 b) (sqrt (- (** b 2) (* 4 a c)))) (* 2 a))
+     (/ (- (* -1 b) (sqrt (- (** b 2) (* 4 a c)))) (* 2 a))]))
+
+(q-f 1 1 -1)
+;=>[(/ (+ -1 (sqrt 5)) 2) (/ (+ -1 (* -1 (sqrt 5))) 2)]</textarea>
+
+<p>この発展的な例として、幾つかのnについて1のn乗根を計算したプログラムを用意しています。</p>
+
+<ul>
+<li><a href="https://www.egison.org/ja/math/5th-root-of-unity.html">1の5乗根の計算</a></li>
+<li><a href="https://www.egison.org/ja/math/7th-root-of-unity.html">1の7乗根の計算</a></li>
+<li><a href="https://www.egison.org/ja/math/9th-root-of-unity.html">1の9乗根の計算</a></li>
+<li><a href="https://www.egison.org/ja/math/17th-root-of-unity.html">1の17乗根の計算</a></li>
+</ul>
+
+<h2><a id="_46"></a>パターンマッチによる微分の定義</h2>
+
+<p>Egisonによる数式処理システムの一番大きな特徴は、Egison独自の強力なパターンマッチを数式に対して適用できることにあります。
+例えば、微分はEgisonのパターンマッチにより以下のように数十行のプログラムで定義できます。</p>
+
+<textarea class="code">(define $∂/∂
+  (lambda [$f $x]
+    (match f math-expr
+      {; symbol
+       [,x 1]
+       [?symbol? 0]
+       ; function application
+       [(,exp $g) (* (exp g) (∂/∂ g x))]
+       [(,log $g) (* (/ 1 g) (∂/∂ g x))]
+       [(,cos $g) (* (* -1 (sin g)) (∂/∂ g x))]
+       [(,sin $g) (* (cos g) (∂/∂ g x))]
+       [(,sqrt $g) (* (/ 1 (* 2 (sqrt g))) (∂/∂ g x))]
+       [(,** $g $h) (* f (∂/∂ (* (log g) h) x))]
+       [<apply $g (& $args <join $hs <cons ,x _>>)>
+        (capply `(add-subscript g (+ (length hs) 1)) args)]
+       [<apply $g $args>
+        (sum (map (lambda [$t] (* (∂/∂ (capply g args) t) (∂/∂ t x)))
+                  args))]
+       ; term (constant)
+       [,0 0]
+       [(* _ ,1) 0]
+       ; term (multiplication)
+       [(* ,1 $fx^$n) (* n (** fx (- n 1)) (∂/∂ fx x))]
+       [(* $a $fx^$n $r)
+        (+ (* a (∂/∂ (**' fx n) x) r)
+           (* a (**' fx n) (∂/∂ r x)))]
+       ; polynomial
+       [<poly $ts> (sum (map (∂/∂ $ x) ts))]
+       ; quotient
+       [(/ $p1 $p2)
+        (let {[$p1' (∂/∂ p1 x)]
+              [$p2' (∂/∂ p2 x)]}
+          (/ (- (* p1' p2) (* p2' p1)) (** p2 2)))]
+       })))
+
+(define $d/d ∂/∂)</textarea>
+
+<p>この微分関数は以下のように動作します。</p>
+
+<textarea class="code">(d/d (** x 3) x)
+;=>(* 3 x^2)
+
+(d/d (** e (* i x)) x)
+;=>(* i (** e (* i x)))
+
+(d/d (* (cos x) (sin x)) x)
+;=>(+ (* -1 (sin x)^2) (cos x)^2)</textarea>
+
+<p>この微分関数を利用して、入力された関数のテイラー展開を計算するプログラムは以下のように定義できます。</p>
+
+<textarea class="code">(define $taylor-expansion
+  (lambda [$f $x $a]
+    (map2 *
+          (map 1#(/ (** (- x a) %1) (fact %1)) nats0)
+          (map (substitute {[x a]} $) (iterate (d/d $ x) f)))))</textarea>
+
+<p>このプログラムを利用してオイラーの公式を確かめることができます。</p>
+
+<textarea class="code">(take 5 (taylor-expansion (** e (* i x)) x 0))
+;=>{1 (* x i) (/ (* -1 x^2) 2) (/ (* -1 x^3 i) 6) (/ x^4 24)}
+
+(take 5 (taylor-expansion (cos x) x 0))
+;=>{1 0 (/ (* -1 x^2) 2) 0 (/ x^4 24)}
+
+;=>(take 5 (taylor-expansion (* i (sin x)) x 0))
+{0 (* x i) 0 (/ (* -1 x^3 i) 6) 0}</textarea>
+
+<p>このようにパターンマッチの強力な表現力を活かして、ここでデモした微分以外の色々な数学の理論についても、数十行のプログラムで実装し、実験できる処理系を目指して開発を進めています。</p>
+
+<h2><a id="_128"></a>クオート式による式展開の制御</h2>
+
+<p>数式処理システムの設計において、式展開をどのように制御するかは非常に重要な問題です。
+式展開の制御について、Egisonによる数式処理システムには、以下に述べるような動作をするクオート式の導入というオリジナルの工夫が実装されています。</p>
+
+<p><code>'</code>が先頭に付いている式をクオート式と呼びます。
+<code>'</code>に続く式はクオートされた式と呼ばれます。
+クオートされた式は評価され展開されます。
+しかし、その展開された式は1つのまとまった式として扱われ、他の式と足したり、掛けたりしても、それ以上は展開されません。</p>
+
+<textarea class="code">(** '(+ x y) 2)
+;=>'(+ x y)^2
+
+'(** (+ x y) 2)
+;=>'(+ x^2 (* 2 x y) y^2)
+
+(** '(** (+ x y) 2) 3)
+;=>'(+ x^2 (* 2 x y) y^2)^3</textarea>
+
+<p>意外にも、このクオート式を用いるだけでも、まるでノートで計算するように式の展開を制御することができます。
+以下の例はクオート式が効果的に使われているある程度大きな規模の計算の例です。
+計算の要所々々にクオート(<code>'</code>)を挿入することにより、長い計算でも自動で紙の上で計算するように制御することができます。</p>
+
+<ul>
+<li><a href="https://www.egison.org/ja/math/gaussian-curvature-of-surface.html">曲面のガウス曲率の計算</a></li>
+<li><a href="https://www.egison.org/ja/math/riemann-curvature-tensor-of-the-2-torus.html">トーラスのリーマン曲率テンソルの計算</a></li>
+</ul>
+
+<h2><a id="_157"></a>組み込みデータ型としてテンソルのサポート</h2>
+
+<p>テンソルの扱いについていくつか細かい工夫をしています。
+Egisonは、タプルや配列と同様に、組み込みデータ型としてテンソルをサポートしています。
+そうすることにより、ベクトル解析や、テンソル解析で使われているテンソル計算の表記を、ほぼそのままプログラミングに持ち込んでいます。</p>
+
+<p>いくつか具体例を見てみましょう。</p>
+
+<p>2引数関数の引数の両方が、ベクトルである場合をまず見ていきます。
+添字が同じ場合は、</p>
+
+<textarea class="code">(+ [| 1 2 3 |]_i [| 1 2 3 |]_i)
+;=>[|2 4 6|]_i</textarea>
+
+<p>添字が指定されていない場合、テンソル積の形で計算されます。
+それぞれの添字が異なる場合も、テンソル積の形で計算されます。</p>
+
+<textarea class="code">(+ [| 10 20 30 |] [| 1 2 3 |])
+;=>[| [| 11 12 13 |] [| 21 22 23 |] [| 31 32 33 |] |]
+
+(+ [| 10 20 30 |]_i [| 1 2 3 |]_j)
+;=>[| [| 11 12 13 |] [| 21 22 23 |] [| 31 32 33 |] |]_i_j</textarea>
+
+<p>スカラーとベクトル・ベクトルと行列のように階数が異なるテンソルの演算も以下のように可能になっています。</p>
+
+<textarea class="code">(+ 1 [| 1 2 3 |])
+;=>[|2 3 4|]
+
+(+ [| 100 200 300 |]_i
+   [|[| 11 12 |]
+     [| 21 22 |]
+     [| 31 32 |]|]_i_j)
+;=>[| [| 111 112 |] [| 221 222 |] [| 331 332 |] |]_i_j</textarea>
+
+<p>上記の例は、関数の引数がテンソルである場合でしたが、関数がテンソルである場合にも対応する自然な処理があります。</p>
+
+<textarea class="code">([| (∂/∂ $ x) (∂/∂ $ y) |] (f x y))
+;=>[| (f_1 x y) (f_2 x y) |]</textarea>
+
+<p>内積を計算するには、<code>contract</code>式を用います。
+アインシュタインの縮約記法を実現するようにこの<code>contract</code>式の挙動は設計されており、同じシンボルの上添字と下添字がある場合、その箇所を<code>contract</code>式の第一引数で指定された演算により縮約します。</p>
+
+<textarea class="code">(contract + (* [|1 2 3|]~i [|10 20 30|]_i))
+;=>
+140</textarea>
+
+<p>これらの記法を組み合わせると、ベクトル解析において重要な演算子、ナブラやdiv(発散)、rot(回転)なども簡潔に記述できます。</p>
+
+<textarea class="code">(define $∇ ∂/∂)
+
+(define $div
+  (lambda [%A %xs]
+    (trace (∇ A xs))))
+
+(define $rot
+  (lambda [%A %xs]
+    (cross-product/fn ∂/∂ A xs)))</textarea>
+
+<p>ある程度の規模になる計算の例として、リーマン曲率テンソル(空間の曲がり具合を表現する4階のテンソル)を計算するプログラムがあります。
+リーマン曲率テンソルは一般相対性理論の記述の際に重要な役目を果たすテンソルです。
+具体的にこのテンソルの値を計算するのは少々煩雑なのですが、Egisonを使うと、教科書に載っている定義を記述するだけで、計算することができます。</p>
+
+<ul>
+<li><a href="https://www.egison.org/ja/math/riemann-curvature-tensor-of-the-2-sphere.html">球面のリーマン曲率テンソルの計算</a></li>
+<li><a href="https://www.egison.org/ja/math/riemann-curvature-tensor-of-the-2-torus.html">トーラスのリーマン曲率テンソルの計算</a></li>
+</ul>
+<h2><a id="_235"></a>今後の展開</h2>
+<h3><a id="_237"></a>方程式のサポート</h3>
+<p>上に挙げた例はすべて方程式の解を導出するプログラムでしたが、処理対象のデータとして方程式もサポートし、方程式自体も導出できるようになる予定です。
+また、方程式に対するパターンマッチを適用することにより、微分方程式を分類したり、変形し解くプログラムも容易に記述することができるようになります。</p>
+<h3><a id="_242"></a>グラフィックのサポート</h3>
+<p>既存の数式処理システムと同様にグラフの描画もサポートする予定です。</p>
+
+          <h2 id="next">次に見てほしいもの...</h2>
+          
+          <p>
+            <a class="btn btn-lg btn-primary" href="https://www.egison.org/ja/math/" role="button">Egison数学ノート</a>
+            <a class="btn btn-lg btn-primary" href="/ja/" role="button">トップに戻る</a>
+          </p>
+
+
+
+        </div>
+        
+      </div><!--/row-->
+    
+      <hr class="divider">
+      
+      <div class="row">
+        <!--# include file="/templates/disqus-main.html" -->
+      </div><!--/row-->
+      
+    </div><!-- /.container -->
+    
+    <!--# include file="/ja/templates/footer.html" -->
+    <script src="/vendors/codemirror/mode/ruby/ruby.js"></script>
+    <script src="/vendors/codemirror/mode/haskell/haskell.js"></script>
+    <script>
+      $('.code').each(function() {
+        var $this = $(this);
+        var myCodeMirror = CodeMirror.fromTextArea(this, {
+          readOnly: true,
+          lineWrapping: true
+        });
+      });
+      $('.haskell-code').each(function() {
+        var $this = $(this);
+        var myCodeMirror = CodeMirror.fromTextArea(this, {
+          readOnly: true,
+          lineWrapping: true,
+          mode: "haskell"
+        });
+      });
+      $('.ruby-code').each(function() {
+        var $this = $(this);
+        var myCodeMirror = CodeMirror.fromTextArea(this, {
+          readOnly: true,
+          lineWrapping: true,
+          mode: "ruby"
+        });
+      });
+    </script>
+  </body>
+</html>
