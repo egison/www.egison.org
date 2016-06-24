@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!--# include file="/templates/header.html" -->
+    <style>
+.version {
+    padding-top: 10px;
+    color: #888;
+}
+.version2 {
+    padding-top: 0px;
+    color: #888;
+}
+.CodeMirror {
+    margin-top: 0px;
+}
+    </style>
+    <title>Introduction of Egison as a Computer Algebra System</title>
+  </head>
+  <body data-spy="scroll" data-target=".bs-sidebar" data-offset="0">
+    <!--# include file="/templates/navbar.html" -->
+
+    <div class="container manual">
+
+      <div class="row">
+
+        <div class="col-md-12" id="top" role="complementary">
+          <h1>Introduction of Egison as a Computer Algebra System</h1>
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-12" role="main">
+
+<p>From Egison version 3.6.0, Egison has a function for symbolic computing.
+The most biggest feature of this computer algebra system is the extensibility by applying pattern-matching of Egison against mathematical expressions.
+This article introduces this computer algebra system on Egison.
+</p>
+
+<h2><a id="_6"></a>What is Symbolic Computing?</h2>
+
+Symbolic computing is a function to treat symbols such as <code>x</code> and <code>y</code> as numbers in programs like <code>x + x = 2x</code> and <code>(x + y)^2 = x^2 + 2 x y + y^2</code>.
+Symbolic computing is the essential feature of computer algebra systems.
+Mathematica, Maxima, Sympy are famous computer algebra systems that support symbolic computing.
+
+<p>The newest version of Egison supports symbolic computing as follow.</p>
+
+<textarea class="code">; (x + y) to the power 2
+(* (+ x y) (+ x y))
+;=>(+ x^2 (* 2 x y) y^2)
+
+; (1 + i) to the power 5
+(** (+ 1 i) 5)
+;=>(+ -4 (* -4 i))</textarea>
+
+<p>
+The rewriting rule that transform <code>i^2</code> to <code>-1</code> is written in libraries in Egison using pattern-matching.
+Users can add rewriting rules easily in Egison.</p>
+
+<p>Symbolic computing enables us to handle algebraic numbers without approximation by float.
+For example, we can calculate the root of quadratic equation as follow.
+</p>
+
+<textarea class="code">(define $q-f
+  (lambda [$a $b $c]
+    [(/ (+ (* -1 b) (sqrt (- (** b 2) (* 4 a c)))) (* 2 a))
+     (/ (- (* -1 b) (sqrt (- (** b 2) (* 4 a c)))) (* 2 a))]))
+
+(q-f 1 1 -1)
+;=>[(/ (+ -1 (sqrt 5)) 2) (/ (+ -1 (* -1 (sqrt 5))) 2)]</textarea>
+
+<p>The following are programs to calculate nth root of unity as more advanced samples.</p>
+
+<ul>
+<li><a href="https://www.egison.org/math/5th-root-of-unity.html">Calculation of 5th root of unity</a></li>
+<li><a href="https://www.egison.org/math/7th-root-of-unity.html">Calculation of 7th root of unity</a></li>
+<li><a href="https://www.egison.org/math/9th-root-of-unity.html">Calculation of 9th root of unity</a></li>
+<li><a href="https://www.egison.org/math/17th-root-of-unity.html">Calculation of 17th root of unity</a></li>
+</ul>
+
+<h2><a id="_46"></a>Definition of Derivative in Pattern-Matching</h2>
+
+<p>The biggest feature of the computer algebra system on Egison is pattern-matching against mathematical expressions.
+For example, we can define derivative in the following code.
+</p>
+
+<textarea class="code">(define $∂/∂
+  (lambda [$f $x]
+    (match f math-expr
+      {; symbol
+       [,x 1]
+       [?symbol? 0]
+       ; function application
+       [(,exp $g) (* (exp g) (∂/∂ g x))]
+       [(,log $g) (* (/ 1 g) (∂/∂ g x))]
+       [(,cos $g) (* (* -1 (sin g)) (∂/∂ g x))]
+       [(,sin $g) (* (cos g) (∂/∂ g x))]
+       [(,sqrt $g) (* (/ 1 (* 2 (sqrt g))) (∂/∂ g x))]
+       [(,** $g $h) (* f (∂/∂ (* (log g) h) x))]
+       [<apply $g (& $args <join $hs <cons ,x _>>)>
+        (capply `(add-subscript g (+ (length hs) 1)) args)]
+       [<apply $g $args>
+        (sum (map (lambda [$t] (* (∂/∂ (capply g args) t) (∂/∂ t x)))
+                  args))]
+       ; term (constant)
+       [,0 0]
+       [(* _ ,1) 0]
+       ; term (multiplication)
+       [(* ,1 $fx^$n) (* n (** fx (- n 1)) (∂/∂ fx x))]
+       [(* $a $fx^$n $r)
+        (+ (* a (∂/∂ (**' fx n) x) r)
+           (* a (**' fx n) (∂/∂ r x)))]
+       ; polynomial
+       [<poly $ts> (sum (map (∂/∂ $ x) ts))]
+       ; quotient
+       [(/ $p1 $p2)
+        (let {[$p1' (∂/∂ p1 x)]
+              [$p2' (∂/∂ p2 x)]}
+          (/ (- (* p1' p2) (* p2' p1)) (** p2 2)))]
+       })))
+
+(define $d/d ∂/∂)</textarea>
+
+<p>The above function works as follow.</p>
+
+<textarea class="code">(d/d (** x 3) x)
+;=>(* 3 x^2)
+
+(d/d (** e (* i x)) x)
+;=>(* i (** e (* i x)))
+
+(d/d (* (cos x) (sin x)) x)
+;=>(+ (* -1 (sin x)^2) (cos x)^2)</textarea>
+
+<p>We can define Taylor expansion using this derivative function in concise way.</p>
+
+<textarea class="code">(define $taylor-expansion
+  (lambda [$f $x $a]
+    (map2 *
+          (map 1#(/ (** (- x a) %1) (fact %1)) nats0)
+          (map (substitute {[x a]} $) (iterate (d/d $ x) f)))))</textarea>
+
+<p>The following code check Euler's formula using this Taylor expansion function.</p>
+
+<textarea class="code">(take 5 (taylor-expansion (** e (* i x)) x 0))
+;=>{1 (* x i) (/ (* -1 x^2) 2) (/ (* -1 x^3 i) 6) (/ x^4 24)}
+
+(take 5 (taylor-expansion (cos x) x 0))
+;=>{1 0 (/ (* -1 x^2) 2) 0 (/ x^4 24)}
+
+;=>(take 5 (taylor-expansion (* i (sin x)) x 0))
+{0 (* x i) 0 (/ (* -1 x^3 i) 6) 0}</textarea>
+
+<p>
+We are aiming a computer algebra system that users can implement a new theory other than the above derivative in very short code utilizing the expressive power of pattern-matching.
+</p>
+
+<h2><a id="_128"></a>Control of Expression Expansion by Quote Expressions</h2>
+
+<p>It is a very important problem in the design on a computer algebra system to control the expansion of expressions.
+We have implemented an original idea, <i>quote expressions</i>, to control it.
+
+<p>A expressions that starts with <code>'</code> is called a <i>quote expression</i>.
+A expression after <code>'</code> is a quoted expression.
+A quoted expression is expanded.
+However, the expanded quoted expression is treated as an unit expression and not expanded any more if it is added or multiplied with the other expressions.
+</p>
+
+<textarea class="code">(** '(+ x y) 2)
+;=>'(+ x y)^2
+
+'(** (+ x y) 2)
+;=>'(+ x^2 (* 2 x y) y^2)
+
+(** '(** (+ x y) 2) 3)
+;=>'(+ x^2 (* 2 x y) y^2)^3</textarea>
+
+Surprisingly, we can control expression expansion as we calculate on the notebook only by this quote expression.
+In the following samples, quote expressions are used effectively.
+Just by inserting quote (<code>'</code>) at the appropriate points in a program,  we can control large scale calculation as we do it by hand.
+
+<ul>
+<li><a href="https://www.egison.org/math/gaussian-curvature-of-surface.html">Calculation of Gaussian curvature of the surface</a></li>
+<li><a href="https://www.egison.org/math/riemann-curvature-tensor-of-the-2-torus.html">Calculation of Riemann curvature tensor of torus</a></li>
+</ul>
+
+<h2><a id="_157"></a>Tensors as Built-in Data</h2>
+
+<p>
+Egison has tensors as built-in data as tuples and arrays.
+By doing that, we succeeded to import notations in vector analysis and tensor analysis into programming.
+</p>
+
+<p>Let's see some specific samples.</p>
+
+<p>First, let's check the case the both argument for a 2 argument function is vector.
+When the index of each vector are identical, we return the vector with same dimension with input.</p>
+
+<textarea class="code">(+ [| 1 2 3 |]_i [| 1 2 3 |]_i)
+;=>[|2 4 6|]_i</textarea>
+
+<p>When the index of each vector are different, we return the tensor product of these vectors.
+When no index is specified, we return the same thing.</p>
+
+<textarea class="code">(+ [| 10 20 30 |] [| 1 2 3 |])
+;=>[| [| 11 12 13 |] [| 21 22 23 |] [| 31 32 33 |] |]
+
+(+ [| 10 20 30 |]_i [| 1 2 3 |]_j)
+;=>[| [| 11 12 13 |] [| 21 22 23 |] [| 31 32 33 |] |]_i_j</textarea>
+
+<p>We can handle the case that each tensor's rank is different.</p>
+
+<textarea class="code">(+ 1 [| 1 2 3 |])
+;=>[|2 3 4|]
+
+(+ [| 100 200 300 |]_i
+   [|[| 11 12 |]
+     [| 21 22 |]
+     [| 31 32 |]|]_i_j)
+;=>[| [| 111 112 |] [| 221 222 |] [| 331 332 |] |]_i_j</textarea>
+
+<p>In the above samples, tensors appear in the argument of a function.
+Next, let's see the case that tensors appear as a function.
+It behaves in the similar way with the above samples as follow.</p>
+
+<textarea class="code">([| (∂/∂ $ x) (∂/∂ $ y) |] (f x y))
+;=>[| (f_1 x y) (f_2 x y) |]</textarea>
+
+<p>To calculate inner product, we use a <code>contract</code> expression.
+The <code>contract</code> expression is designed to realize Einstein's notation.
+When there are identical pairs of the upper index and the lower index, it reduces the trace corresponding to the pair of indices by the function specified in the first argument of <code>contract</code>.</p>
+
+<textarea class="code">(contract + (* [|1 2 3|]~i [|10 20 30|]_i))
+;=>
+140</textarea>
+
+<p>We can define operators that are important in vector analysis ∇, div and rot concisely by combining these notations.</p>
+
+<textarea class="code">(define $∇ ∂/∂)
+
+(define $div
+  (lambda [%A %xs]
+    (trace (∇ A xs))))
+
+(define $rot
+  (lambda [%A %xs]
+    (cross-product/fn ∂/∂ A xs)))</textarea>
+
+<p>We wrote a program to calculate Riemann curvature tensor as a large scale sample.
+Riemann curvature tensor plays important role to describe Einstein's general theory of relativity.
+The calculation of the value of this tensor is little troublesome.
+However, we can calculate it by just writing the definition in textbook in straight way using Egison.</p>
+
+<ul>
+<li><a href="https://www.egison.org/math/riemann-curvature-tensor-of-the-2-sphere.html">Calculation of Riemann curvature tensor of sphere</a></li>
+<li><a href="https://www.egison.org/math/riemann-curvature-tensor-of-the-2-torus.html">Calculation of Riemann curvature tensor of torus</a></li>
+</ul>
+
+<h2><a id="_235"></a>Future Plans</h2>
+
+<h3><a id="_237"></a>Pattern-Matching against Equations</h3>
+<p>In the next version, we will implement pattern-matching against equations.
+Then, we will be able to reduce various kind of differential equations, transform them, and solve them in Egison.
+</p>
+
+<h3><a id="_242"></a>Graphics</h3>
+<p>The function to plot the graph of a function and generation of animation are very important features. We will implement them in some future.</p>
+
+          <h2 id="next">Links</h2>
+          
+          <p>
+            <a class="btn btn-lg btn-primary" href="https://www.egison.org/math/" role="button">Egison Mathematics Notebook</a>
+            <a class="btn btn-lg btn-primary" href="/" role="button">Back to Home</a>
+          </p>
+
+        </div>
+        
+      </div><!--/row-->
+    
+      <hr class="divider">
+      
+      <div class="row">
+        <!--# include file="/templates/disqus-main.html" -->
+      </div><!--/row-->
+      
+    </div><!-- /.container -->
+    
+    <!--# include file="/templates/footer.html" -->
+    <script src="/vendors/codemirror/mode/ruby/ruby.js"></script>
+    <script src="/vendors/codemirror/mode/haskell/haskell.js"></script>
+    <script>
+      $('.code').each(function() {
+        var $this = $(this);
+        var myCodeMirror = CodeMirror.fromTextArea(this, {
+          readOnly: true,
+          lineWrapping: true
+        });
+      });
+      $('.haskell-code').each(function() {
+        var $this = $(this);
+        var myCodeMirror = CodeMirror.fromTextArea(this, {
+          readOnly: true,
+          lineWrapping: true,
+          mode: "haskell"
+        });
+      });
+      $('.ruby-code').each(function() {
+        var $this = $(this);
+        var myCodeMirror = CodeMirror.fromTextArea(this, {
+          readOnly: true,
+          lineWrapping: true,
+          mode: "ruby"
+        });
+      });
+    </script>
+  </body>
+</html>
