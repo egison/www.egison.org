@@ -56,7 +56,7 @@ Mathematica, Maxima, Sympy are famous computer algebra systems that support symb
 ;=>(+ -4 (* -4 i))</textarea>
 
 <p>
-The rewriting rule that transform <code>i^2</code> to <code>-1</code> is written in libraries in Egison using pattern-matching.
+The rewriting rule that transforms <code>i^2</code> to <code>-1</code> is written using pattern-matching in Egison.
 Users can add rewriting rules easily in Egison.</p>
 
 <p>Symbolic computing enables us to handle algebraic numbers without approximation by float.
@@ -71,7 +71,7 @@ For example, we can calculate the root of quadratic equation as follow.
 (q-f 1 1 -1)
 ;=>[(/ (+ -1 (sqrt 5)) 2) (/ (+ -1 (* -1 (sqrt 5))) 2)]</textarea>
 
-<p>The following are programs to calculate nth root of unity as more advanced samples.</p>
+<p>Here are programs to calculate nth root of unity as more advanced samples.</p>
 
 <ul>
 <li><a href="https://www.egison.org/math/5th-root-of-unity.html">Calculation of 5th root of unity</a></li>
@@ -134,7 +134,7 @@ For example, we can define derivative in the following code.
 (d/d (* (cos x) (sin x)) x)
 ;=>(+ (* -1 (sin x)^2) (cos x)^2)</textarea>
 
-<p>We can define Taylor expansion using this derivative function in concise way.</p>
+<p>We can define Taylor expansion concisely using this derivative function.</p>
 
 <textarea class="code">(define $taylor-expansion
   (lambda [$f $x $a]
@@ -154,15 +154,15 @@ For example, we can define derivative in the following code.
 {0 (* x i) 0 (/ (* -1 x^3 i) 6) 0}</textarea>
 
 <p>
-We are aiming a computer algebra system that users can implement a new theory other than the above derivative in very short code utilizing the expressive power of pattern-matching.
+We are aiming a computer algebra system that users can implement a various new theory in very short code utilizing the expressive power of pattern-matching.
 </p>
 
 <h2><a id="_128"></a>Control of Expression Expansion by Quote Expressions</h2>
 
 <p>It is a very important problem in the design on a computer algebra system to control the expansion of expressions.
-We have implemented an original idea, <i>quote expressions</i>, to control it.
+We have implemented an original idea to control it.
 
-<p>An expressions that starts with <code>'</code> is called a <i>quote expression</i>.
+<p>An expression that starts with <code>'</code> is called a <i>quote expression</i>.
 An expression after <code>'</code> is a quoted expression.
 A quoted expression is expanded.
 However, the expanded quoted expression is treated as an unit expression and not expanded any more if it is added or multiplied with the other expressions.
@@ -189,7 +189,7 @@ Just by inserting quote (<code>'</code>) at the appropriate points in a program,
 <h2><a id="_157"></a>Tensors as Built-in Data</h2>
 
 <p>
-Egison has tensors as built-in data as tuples and arrays.
+Egison has tensors as built-in data like tuples and arrays.
 By doing that, we succeeded to import notations in vector analysis and tensor analysis into programming.
 </p>
 
@@ -202,7 +202,7 @@ When the index of each vector are identical, we return the vector with same dime
 ;=>[|2 4 6|]_i</textarea>
 
 <p>When the index of each vector are different, we return the tensor product of these vectors.
-When no index is specified, we return the same thing.</p>
+Also when no indices are specified, we return the tensor product.</p>
 
 <textarea class="code">(+ [| 10 20 30 |] [| 1 2 3 |])
 ;=>[| [| 11 12 13 |] [| 21 22 23 |] [| 31 32 33 |] |]
@@ -236,7 +236,7 @@ When there are identical pairs of the upper index and the lower index, it reduce
 ;=>
 140</textarea>
 
-<p>We can define operators that are important in vector analysis ∇, div and rot concisely by combining these notations.</p>
+<p>We can define operators that are important in vector analysis such as ∇, div and rot concisely by combining these notations.</p>
 
 <textarea class="code">(define $∇ ∂/∂)
 
@@ -249,7 +249,7 @@ When there are identical pairs of the upper index and the lower index, it reduce
     (cross-product/fn ∂/∂ A xs)))</textarea>
 
 <p>We wrote a program to calculate Riemann curvature tensor as a large scale sample.
-Riemann curvature tensor plays important role to describe Einstein's general theory of relativity.
+Riemann curvature is a important tensor in Einstein's general theory of relativity.
 The calculation of the value of this tensor is little troublesome.
 However, we can calculate it by just writing the definition in textbook in straight way using Egison.</p>
 
