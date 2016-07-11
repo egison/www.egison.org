@@ -93,11 +93,11 @@ Egison独自の強力なパターンマッチを数式に対して用いるこ�
        [(,sin $g) (* (cos g) (∂/∂ g x))]
        [(,sqrt $g) (* (/ 1 (* 2 (sqrt g))) (∂/∂ g x))]
        [(,** $g $h) (* f (∂/∂ (* (log g) h) x))]
-       [<apply $g (& $args <join $hs <cons ,x _>>)>
-        (capply `(add-subscript g (+ (length hs) 1)) args)]
        [<apply $g $args>
-        (sum (map (lambda [$t] (* (∂/∂ (capply g args) t) (∂/∂ t x)))
-                  args))]
+        (sum (map 2#(* (capply `(add-subscript g %1) args) (∂/∂ %2 x))
+                  (zip nats args)))]
+       ; quote
+       [<quote $g> (∂/∂ g x)]
        ; term (constant)
        [,0 0]
        [(* _ ,1) 0]
@@ -126,7 +126,13 @@ Egison独自の強力なパターンマッチを数式に対して用いるこ�
 ;=>(* i (** e (* i x)))
 
 (d/d (* (cos x) (sin x)) x)
-;=>(+ (* -1 (sin x)^2) (cos x)^2)</textarea>
+;=>(+ (* -1 (sin x)^2) (cos x)^2)
+
+(∂/∂ (f x y) x)
+;=>(f_1 x y)
+
+(∂/∂ (f x y) y)
+;=>(f_2 x y)</textarea>
 
 <p>この微分関数を利用して、入力された関数のテイラー展開を計算するプログラムは以下のように定義できます。</p>
 
@@ -134,7 +140,10 @@ Egison独自の強力なパターンマッチを数式に対して用いるこ�
   (lambda [$f $x $a]
     (map2 *
           (map 1#(/ (** (- x a) %1) (fact %1)) nats0)
-          (map (substitute {[x a]} $) (iterate (d/d $ x) f)))))</textarea>
+          (map (substitute {[x a]} $) (iterate (d/d $ x) f)))))
+
+(take 5 (taylor-expansion (f x) x 0))
+;=>{(f 0) (* x (f_1 0)) (/ (* x^2 (f_1_1 0)) 2) (/ (* x^3 (f_1_1_1 0)) 6) (/ (* x^4 (f_1_1_1_1 0)) 24)}</textarea>
 
 <p>このプログラムを利用してオイラーの公式を確かめることができます。</p>
 
@@ -144,8 +153,17 @@ Egison独自の強力なパターンマッチを数式に対して用いるこ�
 (take 5 (taylor-expansion (cos x) x 0))
 ;=>{1 0 (/ (* -1 x^2) 2) 0 (/ x^4 24)}
 
-;=>(take 5 (taylor-expansion (* i (sin x)) x 0))
-{0 (* x i) 0 (/ (* -1 x^3 i) 6) 0}</textarea>
+(take 5 (taylor-expansion (* i (sin x)) x 0))
+;=>{0 (* x i) 0 (/ (* -1 x^3 i) 6) 0}</textarea>
+
+<p>
+またもう少し複雑な微分の計算例として、極座標のラプラシアンの検算と導出をしています。
+</p>
+
+<ul>
+<li><a href="https://www.egison.org/ja/math/polar-laplacian-2d.html">2次元極座標のラプラシアンの計算</a></li>
+<li><a href="https://www.egison.org/ja/math/polar-laplacian-3d.html">3次元極座標のラプラシアンの計算</a></li>
+</ul>
 
 <p>このようにパターンマッチの強力な表現力を活かして、ここでデモした微分以外の色々な数学の理論についても、数十行のプログラムで実装し、実験できる処理系を目指して開発を進めています。</p>
 

@@ -1,0 +1,47 @@
+<h1 id="polar-laplacian-2d">Laplacian in Polar Coordinates</h1>
+
+<div id="first-date">July 9 2016</div>
+
+<hr/>
+
+<ul>
+  <li><a href="#verify">Verify Laplace's Equation in Polar Coordinates</a></li>
+  <li><a href="#derive">Derive Laplace's Equation in Polar Coordinates</a></li>
+</ul>
+
+<hr/>
+
+<h2 id="verify">Verify Laplace's Equation in Polar Coordinates</h2>
+
+<p>
+  We verify the following equation is correct by expanding `u_(r r)`, `u_r`, and `u_(theta theta)` in the right side of the equation.
+</p>
+
+`u_(x x) + u_(y y) = u_(r r) + (1 / r) u_r + (1 / r^2) u_(theta theta)`
+
+<textarea class="code"><!--# include file="/source/sample/math/geometry/polar-laplacian-2d.egi" --></textarea>
+
+<h2 id="derive">Derive Laplace's Equation in Polar Coordinates</h2>
+
+<p>
+  Laplacian is defined as follow for general coordinates with covariant derivative in Riemann geometry.
+</p>
+
+`Delta = g^(i j) grad_i grad_j`
+
+<p>
+  This formula is transformed as follow.
+</p>
+
+`Delta = g^(i j) del_(i) del_(j) - g^(i j) Gamma_(i j)^k del_k \ \ \ \ \ \ \ \ \ \  (1)`
+
+<br/>
+<br/>
+
+`Delta = (1 / sqrt(g)) del_i sqrt(g) g^(i j) del_j \ \ \ \ \ \ \ \ \ \  (2)`
+
+<p>
+  In the following program, we calculate Laplacian using each formula and get the same result.
+</p>
+
+<textarea class="code"><!--# include file="/source/sample/math/geometry/polar-laplacian-2d-2.egi" --></textarea>

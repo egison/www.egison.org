@@ -1,0 +1,47 @@
+<h1 id="polar-laplacian-3d">3次元極座標のラプラシアン</h1>
+
+<div id="first-date">July 9 2016</div>
+
+<hr/>
+
+<ul>
+  <li><a href="#verify">3次元極座標のラプラシアンの検算</a></li>
+  <li><a href="#derive">3次元極座標のラプラシアンの導出</a></li>
+</ul>
+
+<hr/>
+
+<h2 id="verify">3次元極座標のラプラシアンの検算</h2>
+
+<p>
+  下記の公式が正しいことを、右辺の`u_(r r)`と`u_r`、`u_(theta theta)`、`u_theta`、`u_(phi phi)`を展開することにより確かめています。
+</p>
+
+`u_(x x) + u_(y y) + u_(z z) = u_(r r) + (2 / r) u_r + (1 / r^2) u_(theta theta) + (cos(theta) / (r^2 sin(theta))) u_theta + (1 / (r^2 sin^2(theta))) u_(phi phi)`
+
+<textarea class="code"><!--# include file="/source/sample/math/geometry/polar-laplacian-3d.egi" --></textarea>
+
+<h2 id="derive">3次元極座標のラプラシアンの導出</h2>
+
+<p>
+  リーマン幾何学の共変微分の概念を使うと、一般の座標のラプラシアンは以下のように定義できます。
+</p>
+
+`Delta = g^(i j) grad_i grad_j`
+
+<p>
+  この公式は以下のように展開できます。
+</p>
+
+`Delta = g^(i j) del_(i) del_(j) - g^(i j) Gamma_(i j)^k del_k \ \ \ \ \ \ \ \ \ \  (1)`
+
+<br/>
+<br/>
+
+`Delta = (1 / sqrt(g)) del_i sqrt(g) g^(i j) del_j \ \ \ \ \ \ \ \ \ \  (2)`
+
+<p>
+  下記のプログラムでは、これら2つの公式それぞれを用いてラプラシアンを計算して、同じ結果を導出しています。
+</p>
+
+<textarea class="code"><!--# include file="/source/sample/math/geometry/polar-laplacian-3d-2.egi" --></textarea>

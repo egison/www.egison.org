@@ -99,11 +99,11 @@ For example, we can define derivative in the following code.
        [(,sin $g) (* (cos g) (∂/∂ g x))]
        [(,sqrt $g) (* (/ 1 (* 2 (sqrt g))) (∂/∂ g x))]
        [(,** $g $h) (* f (∂/∂ (* (log g) h) x))]
-       [<apply $g (& $args <join $hs <cons ,x _>>)>
-        (capply `(add-subscript g (+ (length hs) 1)) args)]
        [<apply $g $args>
-        (sum (map (lambda [$t] (* (∂/∂ (capply g args) t) (∂/∂ t x)))
-                  args))]
+        (sum (map 2#(* (capply `(add-subscript g %1) args) (∂/∂ %2 x))
+                  (zip nats args)))]
+       ; quote
+       [<quote $g> (∂/∂ g x)]
        ; term (constant)
        [,0 0]
        [(* _ ,1) 0]
@@ -132,7 +132,13 @@ For example, we can define derivative in the following code.
 ;=>(* i (** e (* i x)))
 
 (d/d (* (cos x) (sin x)) x)
-;=>(+ (* -1 (sin x)^2) (cos x)^2)</textarea>
+;=>(+ (* -1 (sin x)^2) (cos x)^2)
+
+(∂/∂ (f x y) x)
+;=>(f_1 x y)
+
+(∂/∂ (f x y) y)
+;=>(f_2 x y)</textarea>
 
 <p>We can define Taylor expansion concisely using this derivative function.</p>
 
@@ -140,7 +146,10 @@ For example, we can define derivative in the following code.
   (lambda [$f $x $a]
     (map2 *
           (map 1#(/ (** (- x a) %1) (fact %1)) nats0)
-          (map (substitute {[x a]} $) (iterate (d/d $ x) f)))))</textarea>
+          (map (substitute {[x a]} $) (iterate (d/d $ x) f)))))
+
+(take 5 (taylor-expansion (f x) x 0))
+;=>{(f 0) (* x (f_1 0)) (/ (* x^2 (f_1_1 0)) 2) (/ (* x^3 (f_1_1_1 0)) 6) (/ (* x^4 (f_1_1_1_1 0)) 24)}</textarea>
 
 <p>The following code check Euler's formula using this Taylor expansion function.</p>
 
@@ -150,8 +159,8 @@ For example, we can define derivative in the following code.
 (take 5 (taylor-expansion (cos x) x 0))
 ;=>{1 0 (/ (* -1 x^2) 2) 0 (/ x^4 24)}
 
-;=>(take 5 (taylor-expansion (* i (sin x)) x 0))
-{0 (* x i) 0 (/ (* -1 x^3 i) 6) 0}</textarea>
+(take 5 (taylor-expansion (* i (sin x)) x 0))
+;=>{0 (* x i) 0 (/ (* -1 x^3 i) 6) 0}</textarea>
 
 <p>
 We are aiming a computer algebra system that users can implement a various new theory in very short code utilizing the expressive power of pattern-matching.
