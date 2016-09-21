@@ -80,7 +80,7 @@ For example, we can calculate the root of quadratic equation as follow.
 <li><a href="https://www.egison.org/math/17th-root-of-unity.html">Calculation of 17th root of unity</a></li>
 </ul>
 
-<h2><a id="_46"></a>Definition of Derivative in Pattern-Matching</h2>
+<h2><a id="derivative"></a>Definition of Derivative in Pattern-Matching</h2>
 
 <p>The biggest feature of the computer algebra system on Egison is pattern-matching against mathematical expressions.
 For example, we can define derivative in the following code.
@@ -163,10 +163,19 @@ For example, we can define derivative in the following code.
 ;=>{0 (* x i) 0 (/ (* -1 x^3 i) 6) 0}</textarea>
 
 <p>
+  Here are programs to verify and drive laplacian for polar and spherical coordinates as more advanced samples.
+</p>
+
+<ul>
+<li><a href="https://www.egison.org/math/polar-laplacian-2d.html">Laplacian in polar coordinates</a></li>
+<li><a href="https://www.egison.org/math/polar-laplacian-3d.html">Laplacian in spherical coordinates</a></li>
+</ul>
+
+<p>
 We are aiming a computer algebra system that users can implement a various new theory in very short code utilizing the expressive power of pattern-matching.
 </p>
 
-<h2><a id="_128"></a>Control of Expression Expansion by Quote Expressions</h2>
+<h2><a id="quote"></a>Control of Expression Expansion by Quote Expressions</h2>
 
 <p>It is a very important problem in the design on a computer algebra system to control the expansion of expressions.
 We have implemented an original idea to control it.
@@ -181,10 +190,16 @@ However, the expanded quoted expression is treated as an unit expression and not
 ;=>'(+ x y)^2
 
 '(** (+ x y) 2)
-;=>'(+ x^2 (* 2 x y) y^2)
+;=>'(+ x^2 (* 2 x y) y^2)</textarea>
 
-(** '(** (+ x y) 2) 3)
-;=>'(+ x^2 (* 2 x y) y^2)^3</textarea>
+<textarea class="code">(+ '(+ x y) x y)
+;=>(+ '(+ x y) x y)
+
+(+ '(+ x y) '(+ x y))
+;=>(* 2 '(+ x y))
+
+(+ '(+ x y) '(+ y x))
+;=>(* 2 '(+ x y))</textarea>
 
 Surprisingly, we can control expression expansion as we calculate on the notebook only by this quote expression.
 In the following samples, quote expressions are used effectively.
