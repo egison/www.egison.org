@@ -24,7 +24,7 @@
 <h2 id="derive">Derive Laplace's Equation in Polar Coordinates</h2>
 
 <p>
-  Laplacian is defined as follow for general coordinates with covariant derivative in Riemann geometry.
+  Laplacian for general coordinates is defined with covariant derivative in Riemann geometry.
 </p>
 
 `Delta = g^(i j) grad_i grad_j`
@@ -33,15 +33,10 @@
   This formula is transformed as follow.
 </p>
 
-`Delta = g^(i j) del_(i) del_(j) - g^(i j) Gamma_(i j)^k del_k \ \ \ \ \ \ \ \ \ \  (1)`
-
-<br/>
-<br/>
-
-`Delta = (1 / sqrt(g)) del_i sqrt(g) g^(i j) del_j \ \ \ \ \ \ \ \ \ \  (2)`
+`Delta = (1 / sqrt(g)) del_i sqrt(g) g^(i j) del_j`
 
 <p>
-  In the following program, we calculate Laplacian using each formula and get the same result.
+  In the following program, we calculate Laplacian using this formula.
 </p>
 
-<textarea class="code"><!--# include file="/source/sample/math/geometry/polar-laplacian-2d-2.egi" --></textarea>
+<textarea class="code"><!--# include file="/source/sample/math/geometry/polar-laplacian-2d-3.egi" --></textarea>

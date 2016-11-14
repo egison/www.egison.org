@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!--# include file="/ja/templates/header.html" -->
+    <title>CodeIQ 2016/10/21 投稿問題 - Egison</title>
+    <style>
+      <!--
+.CodeMirror{
+  font-size: 20px;
+}
+        -->
+    </style>
+  </head>
+  <body>
+    <!--# include file="/ja/templates/navbar.html" -->
+
+    <div class="container manual blog">
+
+      <div class="row">
+
+        <div class="col-md-12" role="main">
+
+<h1>Egisonで微分計算</h1>
+
+<br/>
+
+<h2>問題</h2>
+
+<p>
+合成関数の微分について、<b>チェインルール</b>という名前で以下のような公式が知られています。
+</p>
+
+`(d r(x(t), y(t)))/(d t) = (del r)/(del x) (d x)/(d t) + (del r)/(del y) (d y)/(d t)`
+
+<p>
+以下のように、Egisonを用いてこの公式を検算することができます。
+左辺に対応する式をEgisonプログラムとして入力し、その結果として右辺に対応する式を得ることによって検算を行っています。
+(下記1行目が左辺に対応するEgisonプログラム、2-3行目が1行目のプログラムの評価結果をコメントアウトしたもの。)
+</p>
+
+<textarea class="code">(d/d (r (x t) (y t)) t)
+;(+ (* (r_1 (x t) (y t)) (x_1 t))
+;   (* (r_2 (x t) (y t)) (y_1 t)))</textarea>
+
+<p>
+ここで、上記に現れる<code>r_1</code>、<code>r_2</code>は、それぞれ関数<code>r</code>を1つめ、2つめの引数で微分することによって得られる関数を表しています。
+</p>
+
+<p>
+この式をさらに `t` で微分すると、<b>束縛運動の方程式</b>と呼ばれる以下のような公式を得ることができます。
+</p>
+
+`(d^2 r(x(t), y(t)))/(d t^2) = (del r)/(del x) (d^2 x)/(d t^2) + (del r)/(del y) (d^2 y)/(d t^2) + (del^2 r)/(del x^2) ((d x)/(d t))^2 + (del^2 r)/(del x del y) ((d x)/(d t)) ((d y)/(d t)) + (del^2 r)/(del y del x) ((d y)/(d t)) ((d x)/(d t)) + (del^2 r)/(del y^2) ((d y)/(d t))^2`
+
+<p>
+さて、この公式もEgisonを用いて検算することができます。<br/>
+空欄<code>[  1  ]</code>を埋めるこの公式を検算するためのEgisonプログラムを、提出してください。
+</p>
+
+<textarea class="code">(d/d [  1  ] t)
+;(+ (* (r_1_1 (x t) (y t)) (x_1 t)^2)
+;   (* (r_1_2 (x t) (y t)) (y_1 t) (x_1 t))
+;   (* (r_1 (x t) (y t)) (x_1_1 t))
+;   (* (r_2_1 (x t) (y t)) (x_1 t) (y_1 t))
+;   (* (r_2_2 (x t) (y t)) (y_1 t)^2)
+;   (* (r_2 (x t) (y t)) (y_1_1 t)))</textarea>
+
+<h2>回答方法</h2>
+
+<p>
+空欄<code>[  1  ]</code>を埋めるEgisonプログラムを、問題中のサンプルと同じコーディングスタイルで記述し、提出してください。
+</p>
+
+<br/><br/><br/>
+
+        </div>
+
+      </div><!--/row-->
+    
+      
+    </div><!-- /.container -->
+    
+    <!--# include file="/ja/templates/footer.html" -->
+    <script>
+      $('.code').each(function() {
+        var $this = $(this);
+        var myCodeMirror = CodeMirror.fromTextArea(this, {
+          readOnly: true,
+          lineWrapping: true
+        });
+      });
+    </script>
+  </body>
+</html>
