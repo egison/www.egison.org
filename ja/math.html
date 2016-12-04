@@ -94,7 +94,7 @@ Egison独自のパターンマッチを数式に対して応用することに�
        [(,sqrt $g) (* (/ 1 (* 2 (sqrt g))) (∂/∂ g x))]
        [(,** $g $h) (* f (∂/∂ (* (log g) h) x))]
        [<apply $g $args>
-        (sum (map 2#(* (capply `(add-subscript g %1) args) (∂/∂ %2 x))
+        (sum (map 2#(* (capply `g|%1 args) (∂/∂ %2 x))
                   (zip nats args)))]
        ; quote
        [<quote $g> (∂/∂ g x)]
@@ -129,14 +129,14 @@ Egison独自のパターンマッチを数式に対して応用することに�
 ;=>(+ (* -1 (sin x)^2) (cos x)^2)
 
 (∂/∂ (f x y) x)
-;=>(f_1 x y)
+;=>(f|1 x y)
 
 (∂/∂ (f x y) y)
-;=>(f_2 x y)
+;=>(f|2 x y)
 
 (d/d (r (u t) (v t)) t)
-;=> (+ (* (r_1 (u t) (v t)) (u_1 t))
-;      (* (r_2 (u t) (v t)) (v_1 t)))</textarea>
+;=> (+ (* (r|1 (u t) (v t)) (u|1 t))
+;      (* (r|2 (u t) (v t)) (v|1 t)))</textarea>
 
 <p>この微分関数を利用して、入力された関数のテイラー展開を計算するプログラムは以下のように定義できます。</p>
 
@@ -147,7 +147,7 @@ Egison独自のパターンマッチを数式に対して応用することに�
           (map (substitute {[x a]} $) (iterate (d/d $ x) f)))))
 
 (take 4 (taylor-expansion (f x) x 0))
-;=>{(f 0) (* x (f_1 0)) (/ (* x^2 (f_1_1 0)) 2) (/ (* x^3 (f_1_1_1 0)) 6)}</textarea>
+;=>{(f 0) (* x (f|1 0)) (/ (* x^2 (f|1|1 0)) 2) (/ (* x^3 (f|1|1|1 0)) 6)}</textarea>
 
 <p>このプログラムを利用してオイラーの公式を確かめることができます。</p>
 
@@ -246,7 +246,7 @@ Egisonは、タプルや配列と同様に、組み込みデータ型として�
 <p>上記の例は、関数の引数がテンソルである場合でしたが、関数がテンソルである場合にも対応する自然な処理があります。</p>
 
 <textarea class="code">([| (∂/∂ $ x) (∂/∂ $ y) |] (f x y))
-;=>[| (f_1 x y) (f_2 x y) |]</textarea>
+;=>[| (f|1 x y) (f|2 x y) |]</textarea>
 
 <p>内積を計算するには、<code>contract</code>式を用います。
 アインシュタインの縮約記法を実現するようにこの<code>contract</code>式の挙動は設計されており、同じシンボルの上添字と下添字がある場合、その箇所を<code>contract</code>式の第一引数で指定された演算により縮約します。</p>

@@ -23,6 +23,7 @@
           
           <h2 id="how-to-install">Egison のインストール方法</h2>
 
+<!--
           <p>
             Mac 用のインストーラーを用意しています。
           </p>
@@ -37,6 +38,38 @@
           </p>
           
 <pre><code>PATH=:/Library/Egison/bin:$PATH
+export PATH</code></pre>
+-->
+
+          <h3>1. Haskell Platform をインストール</h3>
+          
+          <p>
+            Egison をインストールするには <a href="https://www.haskell.org/platform/">Haskell Platform</a> を先にインストールする必要があります。
+            その理由は <a href="http://hackage.haskell.org/">Hackage</a> という Haskell のパッケージシステムを用いて Egison が配布されているためです。
+          </p>
+
+          <p>
+            Haskell Platform のインストーラーは<a href="https://www.haskell.org/platform/">ここ</a>からダウンロードできます。
+          </p>
+
+          <h3>2. Hackage から Egison をインストール</h3>
+          
+          <p>
+            Haskell Platform をインストールしたら、ターミナルから以下のコマンドで Egison をインストールできます。
+          </p>
+
+<pre><code>% cabal update
+% cabal install egison egison-tutorial
+...
+Installing executable(s) in /home/xxx/.cabal/bin
+Registering egison-X.X.X...</code></pre>
+
+          <p>
+            このコマンドにより、<code>egison</code> と <code>egison-tutorial</code> コマンドが <code>~/.cabal/bin</code> 以下にインストールされます。<br/>
+            ですので、以下のような行を <code>.bashrc</code> や <code>.zshenv</code> に書き加えてください。
+          </p>
+          
+<pre><code>PATH=:$HOME/.cabal/bin:$PATH
 export PATH</code></pre>
 
           <h2 id="how-to-start">Egison の始め方</h3>

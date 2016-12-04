@@ -39,11 +39,11 @@
 </p>
 
 <textarea class="code">(d/d (r (x t) (y t)) t)
-;(+ (* (r_1 (x t) (y t)) (x_1 t))
-;   (* (r_2 (x t) (y t)) (y_1 t)))</textarea>
+;(+ (* (r|1 (x t) (y t)) (x|1 t))
+;   (* (r|2 (x t) (y t)) (y|1 t)))</textarea>
 
 <p>
-ここで、上記に現れる<code>r_1</code>、<code>r_2</code>は、それぞれ関数<code>r</code>を1つめ、2つめの引数で微分することによって得られる関数を表しています。
+ここで、上記に現れる<code>r|1</code>、<code>r|2</code>は、それぞれ関数<code>r</code>を1つめ、2つめの引数で微分することによって得られる関数を表しています。
 </p>
 
 <p>
@@ -58,12 +58,12 @@
 </p>
 
 <textarea class="code">(d/d [  1  ] t)
-;(+ (* (r_1_1 (x t) (y t)) (x_1 t)^2)
-;   (* (r_1_2 (x t) (y t)) (y_1 t) (x_1 t))
-;   (* (r_1 (x t) (y t)) (x_1_1 t))
-;   (* (r_2_1 (x t) (y t)) (x_1 t) (y_1 t))
-;   (* (r_2_2 (x t) (y t)) (y_1 t)^2)
-;   (* (r_2 (x t) (y t)) (y_1_1 t)))</textarea>
+;(+ (* (r|1|1 (x t) (y t)) (x|1 t)^2)
+;   (* (r|1|2 (x t) (y t)) (y|1 t) (x|1 t))
+;   (* (r|1 (x t) (y t)) (x|1|1 t))
+;   (* (r|2|1 (x t) (y t)) (x|1 t) (y|1 t))
+;   (* (r|2|2 (x t) (y t)) (y|1 t)^2)
+;   (* (r|2 (x t) (y t)) (y|1|1 t)))</textarea>
 
 <h2>回答方法</h2>
 
