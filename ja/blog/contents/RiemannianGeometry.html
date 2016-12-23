@@ -1,0 +1,128 @@
+<h1 id="RiemannianGeometry">Egisonでリーマン幾何学</h1>
+
+<div id="blog-date">2016年12月24日</div>
+
+<h2>リーマン幾何学とは</h2>
+
+<p>
+非ユークリッド幾何学という言葉を聞いたことはあるでしょうか？
+曲面の幾何学と呼ばれていて，例えば，球面上で三角形の内角の和は180度以上になったり，平行線の公理が成り立たなくなるという話など聞いたことがあるかもしれません．
+</p>
+
+<p>
+球面などの2次元の曲面が曲がっていることは，3次元の空間を認識している我々からしたら当たり前のように思えますが，ここで今我々が認識している3次元空間もより高次元の空間を認識できる存在から見ると実は曲がっているのではないかという発想を推し進めて発展したのがリーマン幾何学です．
+</p>
+
+<p>
+リーマン幾何学が発展する過程で，実際に我々の住む宇宙が曲がっているのかどうか検証しようとする試みがあったようです．
+例えば，我々が住むこの宇宙で大きい三角形を書いたときの内角の和を計測してみて，180度より大きいのか小さいのかなどを確かめてみるなどして，我々が住むこの空間が曲がっているのかどうか確かめようとなど試みられたようです．
+</p>
+
+<p>
+結論としては，時間軸までを含めた4次元時空が，ある規則に則って曲がっていることが発見されました．
+それを説明する理論が有名な相対性理論です．
+相対性理論によると，星の重力の原因は，星の持つエネルギーによる時空の歪みとして説明されます．
+</p>
+
+<p>
+リーマン幾何学に現れる計算は，ベクトル・行列の上位概念であるテンソルについての計算と偏微分を組み合わせると記述できます．
+</p>
+
+<p>
+2016年，Egisonでこれらの計算を簡潔に記述できるようにすることを目指して，Egisonにシンボリックな数式を扱うことができる数式処理機能を実装しました．
+</p>
+
+<p>
+特にテンソル解析については，既存の数式処理システムでは扱えていなかった記法までより上手に表現できるようになりました．
+それにより相対性理論の計算も，既存のシステムに較べてEgisonでは簡単に記述できるようになっています．
+本記事では，この記法について簡単に解説できたらと考えています．
+</p>
+
+<h2>Egisonでプログラミングに導入されたテンソル解析の記法</h2>
+
+<p>
+</p>
+
+
+`R_(j k l)^i = (del Gamma_(j k)^i)/(del x^l) - (del Gamma_(j l)^i)/(del x^k) + Gamma_(j_k)^m Gamma_(m_l)^i - Gamma_(j_l)^m Gamma_(m_k)^i`
+
+<br/><br/>
+
+<div class="version">Wolfram</div>
+<textarea class="code">R=Table[D[Γ2[[i,j,k]],x[[l]]] - D[Γ2[[i,j,l]],x[[k]]]
+       +Sum[Γ2[[m,j,k]]Γ2[[i,m,l]] - Γ2[[m,j,l]]Γ2[[i,m,k]],
+            {m,M}],
+        {i,M},{j,M},{k,M},{l,M}] //ExpandAll//Simplify;</textarea>
+
+<div class="version">Egison</div>
+<textarea class="code">(define $R~___
+  (with-symbols {i j k l m}
+    (+ (- (∂/∂ Γ~i_j_k x^l) (∂/∂ Γ~i_j_l x^k))
+       (- (. Γ~m_j_k Γ~i_m_l) (. Γ~m_j_l Γ~i_m_k)))))</textarea>
+
+<p>
+Wolfram言語とEgisonによる記述の間の本質的な差異は，上記の式を計算する際に，Wolfram言語は<code>Table</code>式を用いるのに対し，Egisonは添字記法を用いることにより，数式を直接記述できているところにあります．
+</p>
+
+<p>
+特に，上記のようなテンソル同士の掛け算を含む計算について，Wolfram言語による記述では，<code>Table</code>式と<code>Sum</code>式による二重ループがプログラム中に現れてしまいます．
+しかし，アインシュタインの縮約記法もサポートするEgisonによる記述では，数式と同様にフラットにこの式を記述できます．
+</p>
+
+<p>
+以上のように，プログラムの行数については大きな違いはないですが，数式をより直接的に表現している点においては，Wolfram言語よりもEgisonによる記述のほうに分があります．
+</p>
+
+<h2>リーマン曲率テンソル</h2>
+
+<p>
+2016年4月から<a href="/ja/math/">Egison数学ノート</a>というサイトを立ち上げました．
+</p>
+
+<p>
+このサイトでは，Egisonでプログラムを書いて検証した数学の計算を記事にしてまとめていっています．
+幾何学以外の分野でも，プログラムを書いているのでぜひ覗いてみてください．
+</p>
+
+<p>
+リーマン幾何学では，リーマン曲率テンソルという重要な概念が登場するのですが，これの値を色々な図形について求めるプログラムを書いています．
+</p>
+
+<ul>
+  <li><a href="/ja/math/riemann-curvature-tensor-of-S2.html">`S^2`のリーマン曲率テンソル</a></li>
+  <li><a href="/ja/math/riemann-curvature-tensor-of-S3.html">`S^3`のリーマン曲率テンソル</a></li>
+  <li><a href="/ja/math/riemann-curvature-tensor-of-S4.html">`S^4`のリーマン曲率テンソル</a></li>
+  <li><a href="/ja/math/riemann-curvature-tensor-of-S5.html">`S^5`のリーマン曲率テンソル</a></li>
+  <li><a href="/ja/math/riemann-curvature-tensor-of-T2.html">`T^2`のリーマン曲率テンソル</a></li>
+  <li><a href="/ja/math/riemann-curvature-tensor-of-S2xS3.html">`S^2 xx S^3`のリーマン曲率テンソル</a></li>
+  <li><a href="/ja/math/riemann-curvature-tensor-of-Schwarzschild-metric.html">シュワルツシルト計量</a></li>
+  <li><a href="/ja/math/riemann-curvature-tensor-of-FLRW-metric.html">フリードマン・ルメートル・ロバートソン・ウォーカー計量</a></li>
+</ul>
+
+<p>
+上記の<a href="/ja/math/riemann-curvature-tensor-of-Schwarzschild-metric.html">シュワルツシルト計量</a>のページでは，宇宙の中心に一つだけ星があり，他の場所は全て真空であるような宇宙の形について計算するためのプログラムを掲載しています．
+このページのプログラムとその計算結果を見ながら，相対性理論の教科書を読むと，教科書を理解するのが非常に簡単になります．
+例えば，どうして重力があり，地球上のものは下に落ちようとするのだろうかという理由が幾何学的に理解できるようになります．
+</p>
+
+<p>
+その一つ下の<a href="/ja/math/riemann-curvature-tensor-of-FLRW-metric.html">フリードマン・ルメートル・ロバートソン・ウォーカー計量</a>のページでは，宇宙の至る場所で一様に質量が存在するような宇宙の形について計算するためのプログラムを掲載しています．
+このプログラムで計算されている内容を初めて計算する人が人手で行うと半日以上はかかると思われるのですが，プログラムで計算すると1,2分で計算することができます．
+この計算結果を分析すると，膨張する宇宙のモデルを得ることができるようです．
+</p>
+
+<p>
+また，以下のリポジトリでは，Wolfram言語とEgisonとの両方でトーラス`T^2`のリーマン曲率テンソルを計算したプログラムを置いています．
+ぜひこちらでも，Wolfram言語によるプログラムとEgisonによるプログラムを比べてみてください．
+</p>
+
+<ul>
+  <li><a href="https://github.com/egisatoshi/riemann-curvature-tensor-of-torus">egisatoshi/riemann-curvature-tensor-of-torus: Calculation of Riemann Curvature Tensor in Various Computer Algebra System</a></li>
+</ul>
+
+<h2>最後に</h2>
+
+<p>
+私が所属している<a href="https://rit.rakuten.co.jp/index.html">楽天技術研究所</a>では，Egison開発や，Haskellでのソフトウェア開発に興味ある方も募集しています．
+もし興味ある方がいらっしゃいましたら，<a href="/~egi/">私宛</a>にコンタクト取って頂けますと幸いです．
+</p>
