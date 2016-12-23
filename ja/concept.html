@@ -69,7 +69,7 @@
 
           <div class="row">
           <div class="col-md-6" role="main">
-          <div class="version">Ruby version</div>
+          <div class="version">Ruby</div>
           <textarea class="ruby-code">xs = [1,2,3,2,4]
 
 pairs = []
@@ -85,7 +85,7 @@ p(pairs)#=>[2]</textarea>
           </div>
           
           <div class="col-md-6" role="main">
-          <div class="version">Egison version</div>
+          <div class="version">Egison</div>
           <textarea class="code">(match-all {1 2 3 2 4} (list integer)
   [<join _ <cons $x <join _ <cons ,x _>>>>
    x]);=>{2}</textarea>
@@ -103,7 +103,7 @@ p(pairs)#=>[2]</textarea>
             この式だけを用いれば、Egison のコンセプトを説明することができます。
           </p>
 
-          <div class="version">Egison version</div>
+          <div class="version">Egison</div>
           <textarea class="code">(match-all
   {1 2 3}                ; ターゲット
   (list integer)         ; マッチャー
@@ -120,7 +120,7 @@ p(pairs)#=>[2]</textarea>
             もし、Haskellに似た擬似コードで同じ意味のコードを書くと以下のようになります。
           </p>
           
-          <div class="version">Haskell version (擬似コード)</div>
+          <div class="version">Haskell (擬似コード)</div>
           <textarea class="haskell-code">matchAll
   [1, 2, 3] as        -- ターゲット ('as' はパターンマッチのための予約語)
   (List Integer) with -- マッチャー ('with' はパターンマッチのための予約語)
@@ -136,14 +136,14 @@ p(pairs)#=>[2]</textarea>
             パターンコンストラクタ <code>cons</code> の意味はそれぞれのマッチャー毎に異なり、Egison ライブラリ内でそれぞれのマッチャー毎に定義されています。<br/>
           </p>
 
-          <div class="version">Egison version</div>
+          <div class="version">Egison</div>
           <textarea class="code">(match-all {1 2 3} (list integer) [<cons $x $xs> [x xs]])
 ;=>{[1 {2 3}]}
 (match-all {1 2 3} (multiset integer) [<cons $x $xs> [x xs]])
 ;=>{[1 {2 3}] [2 {1 3}] [3 {1 2}]}       ; 要素の並びの順番が無視される
 (match-all {1 2 3} (set integer) [<cons $x $xs> [x xs]])
 ;=>{[1 {1 2 3}] [2 {1 2 3}] [3 {1 2 3}]} ; 要素の並びの順番と重複の両方が無視される</textarea>
-          <div class="version2">Haskell version (擬似コード)</div>
+          <div class="version2">Haskell (擬似コード)</div>
           <textarea class="haskell-code">matchAll [1, 2, 3] as (List Integer) with x:xs -> (x, xs)
 -- =>[(1,[2,3])]
 matchAll [1, 2, 3] as (Multiset Integer) with x:xs -> (x, xs)
@@ -161,14 +161,14 @@ matchAll [1, 2, 3] as (Set Integer) with x:xs -> (x, xs)
             パターンコンストラクタ <code>cons</code> をネストして使うことも可能で、下記の例では2つの要素をコレクションから取り出しています。
           </p>
           
-          <div class="version">Egison version</div>
+          <div class="version">Egison</div>
           <textarea class="code">(match-all {1 2 3} (list integer) [<cons $x <cons $y _>> [x y]])
 ;=>{[1 2]}
 (match-all {1 2 3} (multiset integer) [<cons $x <cons $y _>> [x y]])
 ;=>{[1 2] [1 3] [2 1] [2 3] [3 1] [3 2]}
 (match-all {1 2 3} (set integer) [<cons $x <cons $y _>> [x y]])
 ;=>{[1 1] [1 2] [2 1] [1 3] [2 2] [3 1] [2 3] [3 2] [3 3]}</textarea>
-          <div class="version2">Haskell version (擬似コード)</div>
+          <div class="version2">Haskell (擬似コード)</div>
           <textarea class="haskell-code">matchAll [1, 2, 3] as (List Integer) with x:y:_ -> (x, y)
 -- =>[(1,[2,3])]
 matchAll [1, 2, 3] as (Multiset Integer) with x:y:_ -> (x, y)
@@ -181,12 +181,12 @@ matchAll [1, 2, 3] as (Set Integer) with x:y:_ -> (x, y)
             パターンコンストラクタ <code>join</code> の意味もそれぞれのマッチャー毎に Egison ライブラリ内で定義されています。
           </p>
 
-          <div class="version">Egison version</div>
+          <div class="version">Egison</div>
           <textarea class="code">(match-all {1 2 3} (list integer) [<join $xs $ys> [xs ys]])
 ;=>{[{} {1 2 3}] [{1} {2 3}] [{1 2} {3}] [{1 2 3} {}]}
 (match-all {1 2 3} (multiset integer) [<join $xs $ys> [xs ys]])
 ;=>{[{} {1 2 3}] [{1} {2 3}] [{2} {1 3}] [{3} {1 2}] [{1 2} {3}] [{1 3} {2}] [{2 3} {1}] [{1 2 3} {}]}</textarea>
-          <div class="version2">Haskell version (擬似コード)</div>
+          <div class="version2">Haskell (擬似コード)</div>
           <textarea class="haskell-code">matchAll [1, 2, 3] as (List Integer) with
   xs ++ ys -> (xs, ys)
 -- =>[([],[1,2,3]),([1],[2,3]),([1,2],[3]),([1,2,3],[])]
@@ -208,10 +208,10 @@ matchAll [1, 2, 3] as (Multiset Integer) with
             バリューパターンの扱いについては、それぞれのデータ型についてマッチャー毎に定義できます。
           </p>
 
-          <div class="version">Egison version</div>
+          <div class="version">Egison</div>
           <textarea class="code">(match-all {1 2 3 3 2 4} (multiset integer) [<cons $x <cons ,x _>> x])
 ;=>{2 3 3 2}</textarea>
-          <div class="version2">Haskell version (擬似コード)</div>
+          <div class="version2">Haskell (擬似コード)</div>
           <textarea class="haskell-code">matchAll [1, 2, 3, 3, 2, 4] as (Multiset Integer) with x:x:_ -> x
 -- =>[2,3,3,2]</textarea>
 
@@ -221,12 +221,12 @@ matchAll [1, 2, 3] as (Multiset Integer) with
             バリューパターンには任意の式を記述できることにも注意してください。
           </p>
 
-          <div class="version">Egison version</div>
+          <div class="version">Egison</div>
           <textarea class="code">(take 10 (match-all primes (list integer)
            [<join _ <cons $p <cons ,(+ p 2) _>>> ; 双子素数にマッチするパターン
             [p (+ p 2)]]))
 ;=>{[3 5] [5 7] [11 13] [17 19] [29 31] [41 43] [59 61] [71 73] [101 103] [107 109]}</textarea>
-          <div class="version2">Haskell version (擬似コード)</div>
+          <div class="version2">Haskell (擬似コード)</div>
           <textarea class="haskell-code">take 10 (matchAll primes as (List Integer) with (_ ++ (p : p+2 : _))) -> (p, p+2))
 -- =>[(3,5),(5,7),(11,13),(17,19),(29,31),(41,43),(59,61),(71,73),(101,103),(107,109)]</textarea>
 
@@ -241,11 +241,11 @@ matchAll [1, 2, 3] as (Multiset Integer) with
             下記の例では2重にネストしたコレクションの中の共通要素を取り出しています。
           </p>
           
-          <div class="version">Egison version</div>
+          <div class="version">Egison</div>
           <textarea class="code">(match-all {{1 2 3 4 5} {4 5 1} {6 1 7 4}} (list (multiset integer))
   [<cons <cons $n _> <cons <cons ,n _> <cons <cons ,n _> <nil>>>> n])
 ;=>{1 4}</textarea>
-          <div class="version2">Haskell version (擬似コード)</div>
+          <div class="version2">Haskell (擬似コード)</div>
           <textarea class="haskell-code">matchAll [[1, 2, 3, 4, 5], [4, 5, 1] [6, 1, 7, 4]] as List (Multiset Integer) with
   (n:_):(n:_):(n:_):[] -> n
 -- =>[1,4]</textarea>
@@ -257,7 +257,7 @@ matchAll [1, 2, 3] as (Multiset Integer) with
             パターン関数は静的スコープを持つため、変数の衝突を気にすることなくパターンのモジュール化が可能です。
           </p>
 
-          <div class="version">Egison version</div>
+          <div class="version">Egison</div>
           <textarea class="code">(define $twin
   (pattern-function [$pat1 $pat2]
     <cons (& $pat pat1)
