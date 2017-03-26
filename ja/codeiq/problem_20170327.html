@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!--# include file="/ja/templates/header.html" -->
+    <title>CodeIQ 2017/03/27 投稿問題 - Egison</title>
+    <style>
+      <!--
+.CodeMirror{
+  font-size: 20px;
+}
+        -->
+    </style>
+  </head>
+  <body>
+    <!--# include file="/ja/templates/navbar.html" -->
+
+    <div class="container manual blog">
+
+      <div class="row">
+
+        <div class="col-md-12" role="main">
+
+<h1>1の原始5乗根の計算</h1>
+
+<br/>
+
+<h2>問題</h2>
+
+<p>
+  1の5乗根とは、5乗したら1になる数のことをいいます。<br/>
+  つまり、方程式`z^5 - 1 = 0`の解のことをいいます。
+</p>
+
+<p>
+  特に1の原始5乗根とは、5乗して始めて1になる数のことをいいます。<br/>
+  これは、方程式`z^5 - 1 = (z - 1) (z^4 + z^3 + z^2 + z + 1) = 0`の1以外の解になります。<br/>
+  つまり、方程式`z^4 + z^3 + z^2 + z + 1 = 0`の解は1の原始5乗根です。<br/>
+  本問題ではこの方程式を解き、1の原始5乗根の値を求めてみましょう。
+</p>
+
+<p>
+  方程式`z^4 + z^3 + z^2 + z + 1 = 0`について、以下のような解法が知られています。
+</p>
+
+<p>
+  まず、
+</p>
+
+`z^4 + z^3 + z^2 + z + 1 = 0`
+
+<p>
+  の両辺を`z^2`で割ります。(`z != 0`は明らか)<br/>
+  その結果得られた方程式
+</p>
+
+`z^2 + z + 1 + 1/z + 1/z^2 = 0`
+
+<p>
+  を、
+</p>
+
+`(z + 1/z)^2 + (z + 1/z) - 1 = 0`
+
+<p>
+  と変形します。<br/>
+  この方程式について、
+</p>
+
+`t = z + 1/z`
+
+<p>
+  と置換すれば、2次方程式を2回解くことにより、1の5乗根を求めることができます。
+<p>
+
+<p>
+  さて、実際にEgisonを用いてこの方法により、1の原始5乗根を求めてみましょう。<br/>
+  下記1行目、4行目は、それぞれ`t`、`z`の値を求め、それぞれを変数<code>t</code>、<code>z</code>に束縛するEgisonプログラムとなっています。<br/>
+  それらに続く2行目、5行目は、`t`、`z`に束縛された値をコメントアウトしたものとなっています。<br/>
+  7行目、8行目では、求めた<code>z</code>の値を5乗すると<code>1</code>になることを確かめています。
+<p>
+
+<textarea class="code">
+(define $t (fst [ 1 ]))
+;(/ (+ -1 (sqrt 5)) 2)
+
+(define $z (fst [ 2 ]))
+;(/ (+ -1 (sqrt 5) (sqrt (+ -10 (* -2 (sqrt 5))))) 4)
+
+(** z 5)
+;1</textarea>
+
+<p>
+  上記のプログラムに現れている<code>fst</code>関数はタプルを引数にとり、そのタプルの1つ目の要素を返す関数です。<br/>
+  ここでは、2次方程式の2つの解の片方を取得するために使われています。
+<p>
+
+<textarea class="code">
+(fst [1 2])
+;1</textarea>
+
+<h3>問題1</h3>
+
+<p>
+空欄<code>[  1  ]</code>を埋めるEgisonプログラムを、以下の4択から選んでください。<br/>
+<code>q-f'</code>関数については、CodeIQ掲載記事を参考にしてください。
+</p>
+
+<ul>
+  <li>1: <code>(q-f' 1 0 1)</code></li>
+  <li>2: <code>(q-f' 1 0 -1)</code></li>
+  <li>3: <code>(q-f' 1 1 -1)</code>(正解)</li>
+  <li>4: <code>(q-f' 1 -1 1)</code></li>
+</ul>
+
+<h3>問題2</h3>
+
+<p>
+空欄<code>[  2  ]</code>を埋めるEgisonプログラムを、以下の4択から選んでください。
+</p>
+
+<ul>
+  <li>1: <code>(q-f' 1 t -1)</code></li>
+  <li>2: <code>(q-f' 1 t 1)</code></li>
+  <li>3: <code>(q-f' 1 (* -1 t) -1)</code></li>
+  <li>4: <code>(q-f' 1 (* -1 t) 1)</code>(正解)</li>
+</ul>
+
+<h3>問題3</h3>
+
+<p>
+結果として得られた1の原始5乗根の値として正しいものを選んでください。
+</p>
+
+<ul>
+  <li>1: `(-1 + sqrt 5 + sqrt (-10 - 2 sqrt 5))/4`(正解)</li>
+  <li>2: `(-1 + sqrt 5 - sqrt (10 + 2 sqrt 5))/4`</li>
+  <li>3: `(-1 + sqrt 5)/2`</li>
+  <li>4: `(-1 + sqrt (-5))/2`</li>
+</ul>
+
+<br/><br/><br/>
+
+        </div>
+
+      </div><!--/row-->
+    
+      
+    </div><!-- /.container -->
+    
+    <!--# include file="/ja/templates/footer.html" -->
+    <script>
+      $('.code').each(function() {
+        var $this = $(this);
+        var myCodeMirror = CodeMirror.fromTextArea(this, {
+          readOnly: true,
+          lineWrapping: true
+        });
+      });
+    </script>
+  </body>
+</html>
