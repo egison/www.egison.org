@@ -80,10 +80,10 @@
 <p>
 
 <textarea class="code">
-(define $t (fst [ 1 ]))
+(define $t (fst 【 ア 】))
 ;(/ (+ -1 (sqrt 5)) 2)
 
-(define $z (fst [ 2 ]))
+(define $z (fst 【 イ 】))
 ;(/ (+ -1 (sqrt 5) (sqrt (+ -10 (* -2 (sqrt 5))))) 4)
 
 (** z 5)
@@ -101,41 +101,41 @@
 <h3>問題1</h3>
 
 <p>
-空欄<code>[  1  ]</code>を埋めるEgisonプログラムを、以下の4択から選んでください。<br/>
-<code>q-f'</code>関数については、CodeIQ掲載記事を参考にしてください。
+結果として得られた1の原始5乗根の値として正しいものを選んでください。
 </p>
 
 <ul>
-  <li>1: <code>(q-f' 1 0 1)</code></li>
-  <li>2: <code>(q-f' 1 0 -1)</code></li>
-  <li>3: <code>(q-f' 1 1 -1)</code>(正解)</li>
-  <li>4: <code>(q-f' 1 -1 1)</code></li>
+  <li>1: `(-1 + sqrt 5 + sqrt (-10 - 2 sqrt 5))/4`<span hidden>(正解)</span></li>
+  <li>2: `(-1 + sqrt 5 - sqrt (10 + 2 sqrt 5))/4`</li>
+  <li>3: `(-1 + sqrt 5)/2`</li>
+  <li>4: `(-1 + sqrt (-5))/2`</li>
 </ul>
 
 <h3>問題2</h3>
 
 <p>
-空欄<code>[  2  ]</code>を埋めるEgisonプログラムを、以下の4択から選んでください。
+空欄<code>【 ア 】</code>を埋めるEgisonプログラムを、以下の4択から選んでください。<br/>
+<code>q-f'</code>関数の動作については、<a href="https://gist.github.com/egisatoshi/70c63f0dbdb184e6bf4ba79ea6609a13">CodeIQ掲載記事</a>を参考にしてください。
+</p>
+
+<ul>
+  <li>1: <code>(q-f' 1 0 1)</code></li>
+  <li>2: <code>(q-f' 1 0 -1)</code></li>
+  <li>3: <code>(q-f' 1 1 -1)</code><span hidden>(正解)</span></li>
+  <li>4: <code>(q-f' 1 -1 1)</code></li>
+</ul>
+
+<h3>問題3</h3>
+
+<p>
+空欄<code>【 イ 】</code>を埋めるEgisonプログラムを、以下の4択から選んでください。
 </p>
 
 <ul>
   <li>1: <code>(q-f' 1 t -1)</code></li>
   <li>2: <code>(q-f' 1 t 1)</code></li>
   <li>3: <code>(q-f' 1 (* -1 t) -1)</code></li>
-  <li>4: <code>(q-f' 1 (* -1 t) 1)</code>(正解)</li>
-</ul>
-
-<h3>問題3</h3>
-
-<p>
-結果として得られた1の原始5乗根の値として正しいものを選んでください。
-</p>
-
-<ul>
-  <li>1: `(-1 + sqrt 5 + sqrt (-10 - 2 sqrt 5))/4`(正解)</li>
-  <li>2: `(-1 + sqrt 5 - sqrt (10 + 2 sqrt 5))/4`</li>
-  <li>3: `(-1 + sqrt 5)/2`</li>
-  <li>4: `(-1 + sqrt (-5))/2`</li>
+  <li>4: <code>(q-f' 1 (* -1 t) 1)</code><span hidden>(正解)</span></li>
 </ul>
 
 <br/><br/><br/>

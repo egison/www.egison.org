@@ -49,6 +49,9 @@
           <textarea id="haskell-program" name="code"></textarea>
           <div class="version">Ruby mode (unable to execute)</div>
           <textarea id="ruby-program" name="code"></textarea>
+
+          <div class="version">Egison mode with line numbers</div>
+          <textarea id="egison-program2" name="code"></textarea>
           
         </div>
 
@@ -62,7 +65,7 @@
     <script>
       var editor = CodeMirror.fromTextArea(document.getElementById("egison-program"), {
         matchBrackets: true,
-        lineNumbers: true,
+        lineNumbers: false,
         lineWrapping: true,
         viewportMargin: Infinity
       });
@@ -96,6 +99,12 @@
         lineWrapping: true,
         viewportMargin: Infinity,
         mode: "ruby"
+      });
+      var editor = CodeMirror.fromTextArea(document.getElementById("egison-program2"), {
+        matchBrackets: true,
+        lineNumbers: true,
+        lineWrapping: true,
+        viewportMargin: Infinity
       });
     </script>
   </body>
