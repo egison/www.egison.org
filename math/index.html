@@ -22,19 +22,34 @@
         <div class="col-md-6">
 
           <!--# include file="/math/templates/tables/number-theory.html" -->
+          <!--# include file="/math/templates/tables/algebra.html" -->
           <!--# include file="/math/templates/tables/analysis.html" -->
-          <!--# include file="/math/templates/tables/physics.html" -->
 
         </div>
         <div class="col-md-6">
 
-          <!--# include file="/math/templates/tables/algebra.html" -->
           <!--# include file="/math/templates/tables/geometry.html" -->
 
         </div>
         
       </div><!--/row-->
-    
+
+      <hr class="divider">
+        
+      <div class="row">
+        <div class="col-md-12" id="top" role="complementary">
+          <h2>How to try Egison Math Notebook on your computer</h2>
+          <p>
+            We can execute all of the above calculations on our computers by executing the following commands.<br/>
+            All programs are under <a href="https://github.com/egison/egison/tree/master/sample/math"><code>/sample/math</code></a> director of <a href="https://github.com/egison/egison/tree/master/sample/math">the git repository of Egison</a>.
+          </p>
+          <pre><code>% egison -t sample/math/geometry/exterior-derivative.egi
+[| (f|1 x y z) (f|2 x y z) (f|3 x y z) |]
+[| [| 0 0 0 |] [| 0 0 0 |] [| 0 0 0 |] |]
+</code></pre>
+        </div>
+      </div><!--/row-->
+
       <hr class="divider">
       
       <div class="row">
@@ -42,7 +57,7 @@
       </div><!--/row-->
       
     </div><!-- /.container -->
-    
+
     <!--# include file="/templates/footer.html" -->
     <script>
       $('.code').each(function() {

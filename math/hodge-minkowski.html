@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!--# include file="/templates/header.html" -->
+    <title>Hodge Operator of Minkowski Space - Egison</title>
+    <style>
+      <!--
+.CodeMirror{
+  font-size: 14px;
+}
+        -->
+    </style>
+  </head>
+  <body>
+    <!--# include file="/templates/navbar.html" -->
+
+    <div class="container manual blog">
+
+      <div class="row">
+
+        <div class="col-md-12" role="main">
+
+        <!--# include file="/math/contents/hodge-minkowski.html" -->
+
+          <h2 id="next">Links</h2>
+          
+          <p>
+            <a class="btn btn-lg btn-primary" href="/math/" role="button">Back to the Table of Contents</a>
+          </p>
+          
+        </div>
+
+      </div><!--/row-->
+    
+      <hr class="divider">
+      
+      <div class="row">
+        <!--# include file="/templates/disqus-main.html" -->
+      </div><!--/row-->
+      
+    </div><!-- /.container -->
+    
+    <!--# include file="/templates/footer.html" -->
+    <script>
+      $('.code').each(function() {
+        var $this = $(this);
+        var myCodeMirror = CodeMirror.fromTextArea(this, {
+          readOnly: true,
+          lineWrapping: true
+        });
+      });
+    </script>
+  </body>
+</html>
