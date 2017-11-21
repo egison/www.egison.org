@@ -199,18 +199,18 @@ In this pattern, the <i>variable</i> is regarded as an <a href="./basics.html#ha
 
 <h3 id="not-patterns">Not-Patterns</h3>
 
-<pre><code>^<i>pattern</i></code></pre>
+<pre><code>!<i>pattern</i></code></pre>
 
 <p>
-  A not-pattern matches with a object if the object does not matches the pattern following after <code>^</code>.
+  A not-pattern matches with a object if the object does not matches the pattern following after <code>!</code>.
 </p>
 
 <textarea class="code">(match 1 integer {[,2 #t] [_ #f]});=>#f
-(match 1 integer {[^,2 #t] [_ #f]});=>#t
+(match 1 integer {[!,2 #t] [_ #f]});=>#t
 (match {2 3 4} (multiset integer) {[<cons ,1 _> #t] [_ #f]});=>#f
-(match {2 3 4} (multiset integer) {[^<cons ,1 _> #t] [_ #f]});=>#t
-(match {1 1 2} (multiset integer) {[^<cons ,1 _> #t] [_ #f]});=>#f
-(match {1 1 2} (multiset integer) {[<cons ^,1 _> #t] [_ #f]});=>#t</textarea>
+(match {2 3 4} (multiset integer) {[!<cons ,1 _> #t] [_ #f]});=>#t
+(match {1 1 2} (multiset integer) {[!<cons ,1 _> #t] [_ #f]});=>#f
+(match {1 1 2} (multiset integer) {[<cons !,1 _> #t] [_ #f]});=>#t</textarea>
 
 <h3 id="and-patterns">And-Patterns</h3>
 
