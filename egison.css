@@ -348,11 +348,16 @@ sidenav, .bs-sidebar.affix .bs-sidenav {
     .pull-right {
         display: none;
     }
+    
 }
 
 @media (max-width: 768px) {
     .award {
         display:none;
+    }
+    
+    .navbar-collapse {
+        background-color: #333333;
     }
 }
 
