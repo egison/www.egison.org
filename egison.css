@@ -155,6 +155,12 @@ pre.prettyprint {
 
 }
 
+.navbar-nav .dropdown .dropdown-menu {
+  height: auto;
+  max-height: calc(100vh - 50px); /* viewport height - .navbar height */
+  overflow-x: hidden;
+}
+
 /* CUSTOMIZE THE SIDENAV
    -------------------------------------------------- */
 
