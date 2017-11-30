@@ -1,0 +1,747 @@
+<h1 id="PhysicsAndGeometry">Egisonでゲージ理論 - 量子と古典の物理と幾何@九大</h1>
+
+<div id="blog-date">2017年12月1日</div>
+
+<p>
+  2017年11月19日に九州大学で開催された研究会<a target="_blank" href="https://atnd.org/events/89311">「量子と古典の物理と幾何@九大」</a>にて，Egisonについて講演させていただきました．
+  最新のEgisonは，独自のアイデアにより，テンソルの添字記法や微分形式による微分方程式の表現など微分幾何学で使われている数学の表現をサポートしています．
+  この機能により，ゲージ理論の教科書にのっているような計算を，Egisonでは，数式に近い簡潔な記述で表現できます．
+  本講演では，これらのアイデアとその応用として具体的なプログラムの例を紹介しました．
+</p>
+
+<h3>#1</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.001.png">
+
+<p>
+  おはようございます．ご紹介にあずかりました江木です．<br/>
+  本日は，テンソルの添字記法や微分形式による微分方程式の表現など微分幾何学で使われている数学の表現を，プログラム上で表現するために私が開発した手法についてお話します．
+</p>
+
+<h3>#2</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.002.png">
+
+<p>
+  私は，2011年，私が東大の理学部情報科学科の修士の学生だったころにEgisonというプログラミング言語を作り始めました．<br/>
+  私はその開発を通して，プログラミング言語の研究をしています．<br/>
+  今回の微分幾何をプログラムで記述するための機能も，このEgisonに実装しました．
+</p>
+
+<h3>#3</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.003.png">
+
+<p>
+  本日の講演の目次です．<br/>
+  まず，はじめにEgison独自の機能について紹介します．<br/>
+  つぎに，Egisonの開発の背景にある哲学についてお話します．<br/>
+  最後に，いろいろなプログラムのデモをお見せします．
+  
+</p>
+
+<h3>#4</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.004.png">
+
+<p>
+  では，まずEgison独自の機能についてお話します．
+</p>
+
+<h3>#5</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.005.png">
+
+<p>
+  このEgisonという言語は，人類が発見しうるアルゴリズム，すべてを簡潔に表現できるプログラミング言語を作りたいという壮大な動機のもとに作っています．<br/>
+  現在は，その一環として，数理物理学の計算を簡潔に表現する言語を作るという挑戦をしています．
+</p>
+
+<h3>#6</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.006.png">
+
+<p>
+  Egisonには3つの独自の機能があり，これらがアルゴリズムの簡潔な表現に役立っています．<br/>
+  第一の機能は，幅広いデータ型に対する強力なパターンマッチです．<br/>
+  第二の機能は，そのパターンマッチを利用して作られたユーザーがカスタマイズ可能な数式処理システムです．<br/>
+  第三の機能は，テンソルの添字記法です．<br/>
+  Egisonはテンソルの添字記法をプログラムでもそのまま使うための工夫が施されています．<br/>
+  これにより，微分形式に対する演算までもが，プログラム上でそのまま表現することができます．
+</p>
+
+<h3>#7</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.007.png">
+
+<p>
+  まず最初に，パターンマッチについて説明させてください．<br/>
+  この機能は第二の機能を簡単に作るために非常に大切な機能となっています．
+</p>
+
+<h3>#8</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.008.png">
+
+<p>
+  これはEgisonのパターンマッチの例です．<br/>
+</p>
+<p>
+  変数<code>primes</code>には素数の無限列が束縛されています．<br/>
+  マッチャーが<code>(list integer)</code>であるのは，この<code>primes</code>を素数の無限列としてパターンマッチするという意味です．<br/>
+  このパターンは双子素数にマッチするパターンとなっています．<br/>
+  (... パターン部の説明 ...) <br/>
+  そして，pとp+2というタプルを返します．<br/>
+  match-all式は成功したすべてのパターンマッチの結果をコレクションにして返します．<br/>
+  そのため，変数twin-primesには，すべての双子素数からなるコレクションが束縛されます．
+</p>
+<p>
+  プログラム<code>(take 6 twin-primes)</code>の部分で，先頭6つの双子素数を取り出しています．
+</p>
+<p>
+  このようなパターンマッチをサポートしていない言語では，同じことをするプログラムを書くには，ループを使用したプログラムを記述することになり，記述が煩雑になります．<br/>
+  Egisonのパターンマッチを使えば，他のプログラミング言語では，煩雑になるプログラムが簡潔に書けます．
+</p>
+
+<h3>#9</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.009.png">
+
+<p>
+  先程のプログラムをコレクションをリストとしてパターンマッチしました．<br/>
+  しかし，Egisonではコレクションを多重集合としてパターンマッチすることもできます．<br/>
+  このプログラムは，それを利用してポーカーの役判定をするプログラムを簡潔に記述しています．
+</p>
+
+<h3>#10</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.010.png">
+
+<p>
+  この部分はストレートフラッシュにマッチするパターンです．
+</p>
+
+<h3>#11</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.011.png">
+
+<p>
+  このように非線形パターン(パターン変数に束縛された値を同じパターン内で参照するようなパターン)を利用して，ストレートフラッシュにマッチするパターンを記述しています．
+</p>
+
+<h3>#12</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.012.png">
+
+<p>
+  これはツーペアのパターンです．
+</p>
+
+<h3>#13</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.013.png">
+
+<p>
+  先程の例と同様，<code>_</code>はワイルドカードを表しています．
+</p>
+
+<h3>#14</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.014.png">
+
+<p>
+  先程紹介した<code>list</code>や<code>multiset</code>というマッチャーは，言語決め打ちのものではなく，ユーザー自身がEgisonを使って定義できるようになっています．<br/>
+  これは<code>multiset</code>マッチャーの定義の例です．
+</p>
+
+<h3>#15</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.015.png">
+
+<p>
+  <code>multiset</code>の<code>cons</code>パターンの定義の例をお見せしてその定義方法を説明します．
+</p>
+
+<h3>#16</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.016.png">
+
+<p>
+  <code>cons</code>パターンコンストラクタは2つのパターンを引数にとり，それぞれのパターンは，要素のマッチャー<code>a</code>と<code>(multiset a)</code>として再帰的にパターンマッチされ，ターゲットは，ターゲットが<code>{1 2 3}</code>というコレクションだった場合，<code>1</code>と<code>{2 3}</code>，<code>2</code>と<code>{1 3}</code>，<code>3</code>と<code>{1 2}</code>という3通りの分解のされ方があるということを定義しています．
+</p>
+<p>
+  このようなユーザによるデータ型ごとのパターンマッチの方法の定義にもとづいて，言語処理系により比較的シンプルなアルゴリズムによってパターンマッチは実行されます．<br/>
+  この機構の設計がEgisonのパターンマッチを作る上で挑戦的な問題でした．
+</p>
+
+<h3>#17</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.017.png">
+
+<p>
+  Egison以前のプログラミング言語では，consやjoinはリストに対してのみ定義されているものでした．
+</p>
+
+<h3>#18</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.018.png">
+
+<p>
+  Egisonでは，これらのパターンコンストラクタをmultisetやsetに対しても意味がもつように意味を拡張しました．
+  このようなパターンコンストラクタの多相性を導入したのもEgisonの貢献の1つです．
+</p>
+
+<h3>#19</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.019.png">
+
+<p>
+  次は，このパターンマッチを利用して作られた数式処理システムについて説明します．
+</p>
+
+<h3>#20</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.020.png">
+
+<p>
+  これはシンボリックな計算の例です．<br/>
+  シンボリックな計算をサポートしている言語では，xやy，iなどといった変数をそのまま数のように扱えます．
+</p>
+
+<h3>#21</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.021.png">
+
+<p>
+  Egisonはパターンマッチにより，cos(θ)^2 + sin(θ)^2 = 1やω + ω^2 = -1のような簡約規則をユーザーが定義できるようになっています．<br/>
+  可換なかけ算とたし算からなる数式は項の多重集合とみることができ，項は因子の多重集合と考えることができます．<br/>
+  そのため，Egisonのパターンマッチを使うとその簡約規則を簡単に記述できます．
+</p>
+
+<h3>#22</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.022.png">
+
+<p>
+  これは，ガロア理論のアイデアを利用して，1の7乗根の冪根による表示を求めるプログラムです．<br/>
+  1の3乗根がうまく簡約されているおかげで，きれいに答えが求まっています．<br/>
+  EgisonのWebサイトには，他にもいくつかの代数方程式を解くプログラムを掲載しています．
+</p>
+
+<h3>#23</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.023.png">
+
+<p>
+  これは偏微分演算子をしている例です．<br/>
+  先程のお話した簡約化のプログラムと同様にパターンマッチを使って簡単に定義しています．<br/>
+  これだけの定義で，微分幾何ででてくるような関数については微分することができます．
+</p>
+
+<h3>#24</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.024.png">
+
+<p>
+  微分演算子は，実際にこのように使うことができます．
+</p>
+
+<h3>#25</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.025.png">
+
+<p>
+  テイラー展開をするプログラムもこのように実装できます．<br/>
+  多変数テイラー展開も実装できます．
+</p>
+
+<h3>#26</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.026.png">
+
+<p>
+  テイラー展開の実行例です．
+</p>
+
+<h3>#27</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.027.png">
+
+<p>
+  次にテンソルの添字記法をプログラミングに導入する手法について説明します．<br/>
+  この手法は，今まで説明してきたパターンマッチの機構とは独立したものとなっています．
+</p>
+
+<h3>#28</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.028.png">
+
+<p>
+  これはリーマン曲率テンソルの公式です．<br/>
+  テンソルの添字記法を使った数式では，テンソルに添字がたくさん付加されます．<br/>
+  この公式をEgisonはそのまま表現できます．
+</p>
+
+<h3>#29</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.029.png">
+
+<p>
+  これはEgisonによるプログラムをWolfram言語(Mathematica)と比較したものです．
+</p>
+<p>
+  Wolfram言語では，微分演算子<code>D</code>を直接テンソルに適用できないため，Table構文を用いて配列<code>Γ</code>と<code>x</code>の要素にアクセスし，その結果に対して微分演算子<code>D</code>を適用する必要があります．<br/>
+  そのため，プログラムの記述が数式やEgisonによるプログラムに対して，煩雑になります．<br/>
+  またアインシュタインの縮約規則もサポートできていないため，Sum式を明示的に書く必要もあります．
+</p>
+<p>
+  Egisonでは，偏微分演算子<code>∂/∂</code>もテンソルのかけ算<code>.</code>の両方ともテンソルに対して適用できます．
+  そのため，数式をそのままプログラムに翻訳できます．
+</p>
+
+<h3>#30</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.030.png">
+
+<p>
+  Egisonでさきほどの例のように数式をそのままプログラムに翻訳できるようになったのは，関数をここで述べるようなスカラー関数とテンソル関数という2種類の関数に分類し，区別したからです．
+</p>
+<p>
+  スカラー関数は，たし算やかけ算，偏微分のようなスカラーに対して定義された関数です．<br/>
+  これらの関数はテンソルが適用された際に，自動で要素ごとにマップしたい関数です．
+</p>
+<p>
+  対して，テンソル関数は，テンソル同士のかけ算や，行列式の計算をするような関数のことです．<br/>
+  これらのテンソルに対して定義される関数は，要素ごとに自動でマップすると問題があります．<br/>
+  テンソル関数の場合は，引数がテンソルだった場合は，テンソルをテンソルとしてそのまま扱います．
+</p>
+<p>
+  スカラー関数とテンソル関数という2種類の関数に関数を分類し，区別して扱うとテンソルの添字記法をプログラムでもそのまま使えるという発見が今回の研究の新規性です．
+</p>
+
+<h3>#31</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.031.png">
+
+<p>
+  実際にはスカラー仮引数とテンソル仮引数という2種類の仮引数の概念をプログラミング言語に導入することにより，スカラー関数とテンソル関数の区別を実現しました．
+</p>
+<p>
+  仮引数の先頭に<code>$</code>が付加されているとそれはスカラー仮引数です．<br/>
+  対して，仮引数の先頭に<code>%</code>が付加されているとテンソル仮引数になります．
+</p>
+<p>
+  仮引数がスカラー仮引数の関数に，テンソルが適用されると，関数の処理はテンソルの要素ごとに自動でマップされます．<br/>
+  それに対して，仮引数がテンソル仮引数の関数に，テンソルが適用されると，仮引数はテンソルそのものに束縛されます．
+</p>
+
+<h3>#32</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.032.png">
+
+<p>
+  これはスカラー関数として定義されたmin関数をベクトルに対して適用している例です．<br/>
+  min関数は2つの整数を引数にとり小さい方の数を返す関数です．<br/>
+  このように自動でテンソルの要素ごとに処理がマップされます．<br/>
+  そのおかげでスカラー値に対してしかmin関数は定義されていなくても，テンソルに対してmin関数を適用することができます．
+</p>
+
+<h3>#33</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.033.png">
+
+<p>
+  これは，テンソル関数の例として，テンソル同士のかけ算のための<code>.</code>関数を定義した例です．<br/>
+  <code>contract</code>は，上下で同じ添字がある場合，その対角成分について第1引数で指定された関数で畳み込む組み込み関数です．<br/>
+  この<code>.</code>関数で，あらゆるテンソルのかけ算を表現できます．
+</p>
+
+<h3>#34</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.034.png">
+
+<p>
+  スカラー関数の実装は非常に簡単です．<br/>
+  スカラー仮引数があった場合，それをテンソル仮引数に変換し，tensor-map関数を挿入するだけです．
+</p>
+
+<h3>#35</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.035.png">
+
+<p>
+  実際にリーマン幾何学にあらわれる計算をEgisonで記述してみます．
+</p>
+
+<h3>#36</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.036.png">
+
+<p>
+  これは球面の曲がり具合を表現するリーマン曲率テンソルを計算するプログラムです．
+</p>
+
+<h3>#37</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.037.png">
+
+<p>
+  この部分では球座標の設定をし，その局所基底を計算しています．
+</p>
+
+<h3>#38</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.038.png">
+
+<p>
+  ここでは球面のリーマン計量を計算しています．<br/>
+  このように，<code>g__</code>と<code>g~~</code>それぞれに違う行列を束縛することができます．
+</p>
+
+<h3>#39</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.039.png">
+
+<p>
+  これは第一種クリストッフェル記号を計算している箇所です．
+</p>
+
+<h3>#40</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.040.png">
+
+<p>
+  これは第二種クリストッフェル記号を計算している箇所です．
+</p>
+
+<h3>#41</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.041.png">
+
+<p>
+  これはリーマン曲率テンソルを計算している箇所です．
+</p>
+
+<h3>#42</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.042.png">
+
+<p>
+  Ricci曲率やスカラー曲率も同様に計算できます．
+</p>
+
+<h3>#43</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.043.png">
+
+<p>
+  計量の部分をこのようにシュヴァルツシルト計量にかえると，原点を中心とした星のまわりの時空間の曲がり具合，重力場の計算ができます．
+</p>
+
+<h3>#44</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.044.png">
+
+<p>
+  ここまで説明したテンソルの添字記法をプログラミングに導入する手法については今年の9月にICFPに併設して開催されたSchemeワークショップにて論文を発表しました．
+</p>
+
+<h3>#45</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.045.png">
+
+<p>
+  ここまで説明してきたテンソルの添字記法をプログラミングに導入する手法を少し拡張すると微分形式もプログラムで自然に表現できることを最近発見しました．<br/>
+  ここから，これについて説明します．
+</p>
+
+<h3>#46</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.046.png">
+
+<p>
+  数式では，n階のテンソルにk個の添字が付加されている場合，そのテンソルを(n-k)形式として解釈します．<br/>
+  例えば，3階のテンソルにω~i_jと2つ添字が付加されていた場合は，そのテンソルを1形式として扱います．
+</p>
+
+<h3>#47</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.047.png">
+
+<p>
+  そこで，プログラムでも，添字が省略された場合に，テンソルは微分形式として解釈されることにします．<br/>
+  ここで，添字が省略された場合の添字の補完の規則をうまく設計することにより，プログラムでも微分形式を自然に表現できるということを最近発見しました．
+</p>
+<p>
+  例えば，<code>A</code>,<code>B</code>はスカラーを値に持つ2形式とします．
+</p>
+<p>
+  デフォルトでは，上の例のように，省略された添字については，同じ組み合わせの添字を自動的に補完します．
+</p>
+<p>
+  ただし，ウェッジ積のような微分形式のための特別な演算の場合には，このような補完では適していないことがあります．<br/>
+  例えば，ウェッジ積の場合は，下の例のように，引数のそれぞれに全て異なる添字を補完したいです．
+</p>
+<p>
+  そのような補完をしたいときのために<code>!</code>という構文要素を追加しました．<br/>
+  <code>!</code>が関数適用の前に付加されている場合は，引数のそれぞれに全て異なる添字を補完します．
+</p>
+
+<h3>#48</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.048.png">
+
+<p>
+  <coee>!</coee>を使う必要があるのは，ウェッジ積や外微分など微分形式のための特別な関数の定義の中だけである．<br/>
+  そのため，一般ユーザーは<code>!</code>について意識する必要はない．
+</p>
+<p>
+  このように，テンソルの添字が省略された場合の，添字の補完方法を制御するための構文を導入することにより，微分形式の計算は表現できる
+</p>
+
+<h3>#49</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.049.png">
+
+<p>
+  ウェッジ積はこのように実装できます．
+</p>
+
+<h3>#50</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.050.png">
+
+<p>
+  これは外微分を実装しています．
+</p>
+
+<h3>#51</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.051.png">
+
+<p>
+  ホッジ作用素も実装できます．<br/>
+  このサンプルでは，nlabにのっているこの数式をプログラムで表現することにより，ホッジ作用素を定義しています．<br/>
+  ユークリッド空間の計量におけるホッジ作用素が定義されています．
+</p>
+
+<h3>#52</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.052.png">
+
+<p>
+  これはMinkowski空間における計量についてホッジ作用素を定義したものです．
+</p>
+
+<h3>#53</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.053.png">
+
+<p>
+  ホッジ作用素と外微分作用素を組み合わせると余微分作用素も簡単に定義できます．
+</p>
+
+<h3>#54</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.054.png">
+
+<p>
+  ここから，もうすこし応用的な微分形式の計算をするプログラムの例をお見せします．
+</p>
+
+<h3>#55</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.055.png">
+
+<p>
+  これはホッジラプラシアンを定義しているサンプルです．<br/>
+  ラプラシアンはデカルト座標ではシンプルな形をしていますが，例えば極座標や球座標など一般の座標系では複雑な形になります．<br/>
+  微分形式のための演算子dとδがあれば，リーマン計量を設定するだけで，一般の座標系についてラプラシアンを自動で計算することができます．
+</p>
+
+<h3>#56</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.056.png">
+
+<p>
+  これは，Euler類という特性類についての計算です．<br/>
+  球面のEuler形式という微分形式を求めています．
+</p>
+
+<h3>#57</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.057.png">
+
+<p>
+  Euler形式を計算する場合は，接続形式を対角化する必要があります．<br/>
+  この公式のように基底を変換することで接続形式を対角化させています．
+</p>
+<p>
+  Euler形式を球面全体で積分すると，2となります．<br/>
+  これは球面のEuler数と同じです．
+</p>
+<p>
+  トーラスについて同じことをすると，トーラスのEuler数0が求まります．
+</p>
+
+<h3>#58</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.058.png">
+
+<p>
+  これはU(1)ゲージ理論の計算をEgisonでしている例です．<br/>
+  dF=0，δF=0が，電荷のない空間のマクスウェル方程式と同値であることを確かめています．
+</p>
+
+<h3>#59</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.059.png">
+
+<p>
+  ここまで紹介したEgisonのプログラムは，Egison Math Notebookという形で公開されています．
+</p>
+
+<h3>#60</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.060.png">
+
+<p>
+  この研究の応用先として，スパコンで高速に動く物理シミュレーションエンジンとつなげることを考えています．<br/>
+  例えば，Formuraは，偏微分方程式に近いかたちのプログラムをスパコンで動くコードに変換するコンパイラです．<br/>
+  Egisonを使えば，微分形式の言葉で記述した微分方程式を，偏微分方程式に変換できます．<br/>
+  FormuraにEgisonをつなげると，微分形式の言葉で書かれた微分方程式をスパコンで高速に実行できうるようになります．
+</p>
+<p>
+  またHaskellで流体シミュレーションエンジンを開発されている九州大学の深川さんとも共同研究を進めています．
+</p>
+
+<h3>#61</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.061.png">
+
+<p>
+  ここから，Egisonを作った背後の哲学について語らせてください．
+</p>
+
+<h3>#62</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.062.png">
+
+<p>
+  最初に述べたとおり，人間が発見しうるすべてのアルゴリズムを簡潔に表現できる言語を作りたいというモチベーションでEgisonは作られています．
+</p>
+
+<h3>#63</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.063.png">
+
+<p>
+  これまた，壮大なスライドですが，これは科学の研究について図示したものです．
+</p>
+</p>
+  自然を観察することによって我々の直感は深まります．<br/>
+  その結果，我々が使っている表現と我々の直感の間にギャップが生じます．<br/>
+  そして，そのギャップを埋める新しい表現が発明されます．<br/>
+  その新しい表現を通して自然を観察すると，より深い自然の理解が得られます．<br/>
+  その結果，我々の直感はさらに深まります．
+</p>
+<p>
+  科学の研究は，このようなループであり，そのため表現の研究はとても重要であるということをこのスライドはいっています．
+</p>
+<p>
+  また，このような事を考えにもとづくと，自然を深く理解することが言語の研究のために必要だという考えてにいたり，数学や物理を勉強し，その専門的な計算を表現することに注力するようになりました．
+</p>
+
+<h3>#64</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.064.png">
+
+<p>
+  例えば，数学のシンボルの歴史にもこのループを見ることができます．
+</p>
+
+<h3>#65</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.065.png">
+
+<p>
+  また，直感と表現のギャップを感じるのにもっとも手っ取り早い方法は，数の表記をくらべることです．<br/>
+  それぞれの文明の数の表記は，まったく扱いやすさが違います．<br/>
+  プログラミング言語によるアルゴリズムの表現は，この数の表記を複雑にしたものと考えることができます．
+</p>
+
+<h3>#66</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.066.png">
+
+<p>
+  このスライドは，新しい表現を発明するプロセスについてまとめたものです．
+</p>
+
+<h3>#67</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.067.png">
+
+<p>
+  最初に自然を観察します．<br/>
+  数の場合，数の概念の発見や，たし算・かけ算の発見，このような形で数が一意的に表せるという感覚などを養うことが，数の表記法を発明するためには重要です．
+</p>
+
+<h3>#68</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.068.png">
+
+<p>
+  数に対する理解が深まると，ただ棒を並べて数を表現する表記と直感との間に大きなギャップが生じます．<br/>
+  そのギャップの原因を分析することにより，より良い数の表記に役に立つ数の法則が何なのかわかってきます．
+</p>
+
+<h3>#69</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.069.png">
+
+<p>
+  その結果わかった数の法則を活かして，表記のデザインをします．<br/>
+  このフェーズでは，それぞれの数に名前を与えるというアイデアや，複数の数を並べることにより1つの数を表現するアイデア，10進数のアイデア，0をプレースホルダーとして使うアイデアなどのようなデザイン上のアイデアを得る必要があります．
+</p>
+
+<h3>#70</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.070.png">
+
+<p>
+  まだ定式的な説明にはなっていませんが，大体このようなプロセスを経て，新しい表現は発明されるというようなことを考えています．
+</p>
+
+<h3>#71</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.071.png">
+
+<p>
+  人間にとって表現とは何かという問題を深く考えることは，非常に重要だと考えています．<br/>
+  先程のべた「新しい表現方法をみつける一般的な方法はあるか？」という問題の他にも，「プログラミング言語の表現力を定式的に測る方法はあるか？」など重要な問題はいくつもあります．<br/>
+  これらの答えが見えたとき，人類にとって全く新しい世界観が得られると考えています．
+</p>
+<p>
+  この講演でお話したプログラミング言語の研究をする際にも，このような大きな問題も念頭において研究しています．
+</p>
+
+<h3>#72</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.072.png">
+
+<p>
+  では，最後に実際にいくつかデモを動かしてみます．
+</p>
+
+<p>
+  (... 略 ...)
+</p>
+
+<h3>#73</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/PhysicsAndGeometry/PhysicsAndGeometry.073.png">
+
+<p>
+  ありがとうございました．
+</p>
