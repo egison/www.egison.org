@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!--# include file="/ja/templates/header.html" -->
+    <style>
+.version {
+    padding-top: 10px;
+    color: #888;
+}
+.version2 {
+    padding-top: 0px;
+    color: #888;
+}
+.CodeMirror {
+    margin-top: 0px;
+}
+    </style>
+    <title>Egison - スカラー仮引数とテンソル仮引数</title>
+  </head>
+  <body data-spy="scroll" data-target=".bs-sidebar" data-offset="0">
+    <!--# include file="/ja/templates/navbar.html" -->
+
+    <div class="container manual">
+
+      <div class="row">
+
+        <div class="col-md-12" id="top" role="complementary">
+          <h1>Egisonのスカラー仮引数とテンソル仮引数</h1>
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-12" role="main">
+
+          <hr/>
+          <p>
+            このドキュメントの目的は、Egisonのスカラー仮引数とテンソル仮引数のコンセプトを出来る限り素早く読者に理解していただくことです。<br/>
+          </p>
+          <hr/>
+
+          <h2>イントロダクション</h2>
+
+<textarea class="code">(define $min (lambda [$x $y] (if (less-than? x y) x y)))
+</textarea>
+
+<textarea class="code">(define $. (lambda [%t1 %t2] (contract + (* t1 t2))))
+</textarea>
+
+
+          <h2>テンソルの添字記法</h2>
+
+          `R_(jkl)^i= (partial Gamma_(jl)^i)/(partial x^k) - (partial Gamma_(jk)^i)/(partial x^l) + Gamma_(jl)^m Gamma_(mk)^i - Gamma_(jk)^m Gamma_(ml)^i`
+
+          <div class="version">Ruby</div>
+<textarea class="ruby-code">R=Table[D[Γ[[i,j,l]],x[[k]]] - D[Γ[[i,j,k]],x[[l]]]
+       +Sum[Γ[[m,j,l]] Γ[[i,m,k]]
+          - Γ[[m,j,k]] Γ[[i,m,l]],
+          {m,M}],
+        {i,M},{j,M},{k,M},{l,M}]</textarea>
+          
+          <div class="version">Egison</div>
+<textarea class="code">(define $R~i_j_k_l
+  (with-symbols {m}
+    (+ (- (∂/∂ Γ~i_j_l x~k) (∂/∂ Γ~i_j_k x~l))
+       (- (. Γ~m_j_l Γ~i_m_k) (. Γ~m_j_k Γ~i_m_l)))))</textarea>
+
+          <h2>微分形式</h2>
+
+          
+
+<textarea class="code"></textarea>
+
+          <h2 id="next">次に見てほしいもの...</h2>
+          
+          <p>
+            <a class="btn btn-lg btn-github" href="http://arxiv.org/pdf/1407.0729.pdf" role="button" target="_blank">Egison 論文 (英語) &raquo;</a>
+            <a class="btn btn-lg btn-primary" href="http://www.egison.org/ja/demonstrations/poker-hands.html" role="button">オンライン・デモンストレーション &raquo;</a>
+            <a class="btn btn-lg btn-primary" href="/ja/" role="button">トップに戻る</a>
+          </p>
+
+        </div>
+        
+      </div><!--/row-->
+    
+      <hr class="divider">
+      
+      <div class="row">
+        <!--# include file="/templates/disqus-main.html" -->
+      </div><!--/row-->
+      
+    </div><!-- /.container -->
+    
+    <!--# include file="/ja/templates/footer.html" -->
+    <script src="/vendors/codemirror/mode/ruby/ruby.js"></script>
+    <script src="/vendors/codemirror/mode/haskell/haskell.js"></script>
+    <script>
+      $('.code').each(function() {
+        var $this = $(this);
+        var myCodeMirror = CodeMirror.fromTextArea(this, {
+          readOnly: true,
+          lineWrapping: true
+        });
+      });
+      $('.haskell-code').each(function() {
+        var $this = $(this);
+        var myCodeMirror = CodeMirror.fromTextArea(this, {
+          readOnly: true,
+          lineWrapping: true,
+          mode: "haskell"
+        });
+      });
+      $('.ruby-code').each(function() {
+        var $this = $(this);
+        var myCodeMirror = CodeMirror.fromTextArea(this, {
+          readOnly: true,
+          lineWrapping: true,
+          mode: "ruby"
+        });
+      });
+    </script>
+  </body>
+</html>

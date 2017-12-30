@@ -35,7 +35,7 @@
               <h2><i class="fa fa-key"></i> パターンマッチ指向</h2>
               <p>
                 Egison は<strong>パターンマッチ指向</strong>という新たなパラダイムを提唱しています。
-                <strong>以下の3つの機能</strong>を同時に実現することにより、強力で直感的なパターンマッチを可能にしています。
+                <strong>以下の4つの機能</strong>を同時に実現することにより、強力で直感的なパターンマッチを可能にしています。
               </p>
               <ul>
                 <li>非線形パターン</li>
@@ -44,7 +44,23 @@
                 <li>静的スコープを保つパターンマッチング</li>
               </ul>
               <p>
-                <a class="btn btn-default btn-primary" href="/ja/concept.html" role="button">Egison のコンセプト (5分)</a>
+                <a class="btn btn-default btn-primary" href="/ja/concept.html" role="button">Egisonのパターンマッチのコンセプト (5分)</a>
+              </p>
+            </div>
+          </div><!-- /.col-lg-4 -->
+          <div class="col-lg-4" style="padding:0px;">
+            <div class="middle-col-lg-4">
+              <h2><i class="fa fa-table"></i> 数式処理</h2>
+              <p>
+                Egisonは<strong>テンソルの添字記法</strong>や<strong>微分形式</strong>をプログラムでもそのまま記述することができます。<br/>
+                <strong>スカラー関数</strong>と<strong>テンソル関数</strong>という2種類の関数の分類を提唱することにより、これを実現しました。<br/>
+              </p>
+              <ul>
+                <li>スカラー関数 - 引数がテンソルだった場合、処理を要素ごとにマップする。</li>
+                <li>テンソル関数 - 引数がテンソルだった場合、テンソルをテンソルとしてそのまま処理する。</li>
+              </ul>
+              <p>
+                <a class="btn btn-default btn-primary" href="/ja/concept2.html" role="button">Egisonの数式処理のコンセプト (5分)</a>
               </p>
             </div>
           </div><!-- /.col-lg-4 -->
@@ -52,25 +68,27 @@
             <div class="middle-col-lg-4">
               <h2><i class="fa fa-flask"></i> デモンストレーション</h2>
               <p>
-                多様なパターンマッチを体験してみてください。
+                Egison独自の機能を体験してみてください。
               </p>
               <ul>
-                <!--# include file="/ja/templates/demonstrations.html" -->
+                <li>パターンマッチ</li>
+                <ul>
+                  <li><a href="https://www.egison.org/ja/demonstrations/poker-hands.html">ポーカーの役判定</a></li>
+                  <li><a href="https://www.egison.org/ja/demonstrations/mahjong.html">麻雀の上がり判定</a></li>
+                  <li><a href="https://www.egison.org/ja/demonstrations/primes.html">双子素数の列挙</a></li>
+                </ul>
+                <li>数式処理</li>
+                <ul>
+                  <li><a href="https://www.egison.org/ja/math/riemann-curvature-tensor-of-S2.html">球面のリーマン曲率テンソル</a></li>
+                  <li><a href="https://www.egison.org/ja/math/hodge-minkowski.html">ミンコフスキー空間のホッジ作用素</a></li>
+                  <li><a href="https://www.egison.org/ja/math/hodge-laplacian-polar.html">極座標のホッジラプラシアン</a></li>
+                </ul>
               </ul>
+              <!--
               <p>
                 <a class="btn btn-default btn-primary" href="/ja/demonstrations/poker-hands.html" role="button">オンライン・デモを試す &raquo;</a>
               </p>
-            </div>
-          </div><!-- /.col-lg-4 -->
-          <div class="col-lg-4" style="padding:0px;">
-            <div class="right-col-lg-4">
-              <h2><i class="fa fa-question-circle"></i> FAQ</h2>
-              <p>
-              </p>
-              <ul>
-                <!--# include file="/ja/templates/faq.html" -->
-              </ul>
-              <p><a class="btn btn-default btn-primary" href="/ja/faq.html" role="button">FAQ の答えを見る &raquo;</a></p>
+              -->
             </div>
           </div><!-- /.col-lg-4 -->
         </div>
@@ -138,7 +156,8 @@
                 </ul>
                 <li>Egison 論文 (英語)</li>
                 <ul>
-                  <li><a href="http://arxiv.org/pdf/1407.0729.pdf" target="_blank">Egison Paper on arXiv.org</a></li>
+                  <li><a href="http://arxiv.org/pdf/1407.0729.pdf" target="_blank">Pattern-Matching Paper</a></li>
+                  <li><a href="https://arxiv.org/pdf/1702.06343.pdf" target="_blank">Tensor Paper</a></li>
                 </ul>
                 <li>その他 (英語)</li>
                 <ul>
@@ -168,7 +187,7 @@ We are supporting Emacs key bindings to move cursor.
       </div>
       
       <hr class="divider">
-      
+
       <div class="row">
         <div class="col-lg-3">
           <h3><i class="fa fa-eye"></i> 目標</h3>
@@ -207,23 +226,23 @@ We are supporting Emacs key bindings to move cursor.
       <hr class="divider">
 
       <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-3">
           <h3><i class="fa fa-trophy"></i> メディア</h3>
           <ul>
             <li><a href="https://www.ipsj.or.jp/award/softwarejapan_award.html" target="_blank">情報処理学会 ソフトウエアジャパンアワード <i class="fa fa-external-link"></i></a></li>
             <li><a href="http://www.infoworld.com/slideshow/146094/not-the-usual-suspects-10-plucky-programming-languages-the-rise-240677" target="_blank">InfoWorld article "Not the usual suspects: 10 plucky programming languages on the rise" <i class="fa fa-external-link"></i></a></li>
             <li><a href="https://codeiq.jp/magazine/tag/egison/" target="_blank">CodeIQ MAGAZINE 連載 <i class="fa fa-external-link"></i></a></li>
           </ul>
-        </div><!-- /.col-lg-4 -->
-        <div class="col-lg-4">
+        </div><!-- /.col-lg-3 -->
+        <div class="col-lg-3">
           <h3><i class="icon-satellite"></i> リンク</h3>
           <ul>
             <li><a href="http://rit.rakuten.co.jp/index_en.html" target="_blank">楽天技術研究所 <i class="fa fa-external-link"></i></a></li>
             <li><a href="https://www.ipa.go.jp/index.html" target="_blank">IPA 情報処理推進機構 <i class="fa fa-external-link"></i></a></li>
             <li><a href="http://hagi.is.s.u-tokyo.ac.jp/index.html.ja" target="_blank">東京大学萩谷研究室 <i class="fa fa-external-link"></i></a></li>
           </ul>
-        </div><!-- /.col-lg-4 -->
-        <div class="col-lg-4">
+        </div><!-- /.col-lg-3 -->
+        <div class="col-lg-3">
           <h3><i class="fa fa-comments"></i> コミュニティ</h3>
           <p>
             Egison には<a href="/ja/community.html#mailing-list">メーリングリスト</a>があります。<br/>
@@ -242,7 +261,18 @@ We are supporting Emacs key bindings to move cursor.
             <a href="https://twitter.com/Egison_Lang" class="twitter-follow-button" data-show-count="false" target="_blank">Follow @Egison_Lang</a>
             <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
           </p>
-        </div><!-- /.col-lg-4 -->
+        </div><!-- /.col-lg-3 -->
+        <div class="col-lg-3" style="padding:0px;">
+          <div class="right-col-lg-3">
+            <h2><i class="fa fa-question-circle"></i> FAQ</h2>
+            <p>
+            </p>
+            <ul>
+              <!--# include file="/ja/templates/faq.html" -->
+            </ul>
+            <p><a class="btn btn-default btn-primary" href="/ja/faq.html" role="button">FAQ の答えを見る &raquo;</a></p>
+          </div>
+        </div><!-- /.col-lg-3 -->
       </div><!-- /.row -->
 
       <hr class="divider">
