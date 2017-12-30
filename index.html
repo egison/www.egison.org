@@ -45,7 +45,7 @@
                 <li>Pattern-matching with lexical scoping</li>
               </ul>
               <p>
-                <a class="btn btn-default btn-primary" href="/concept.html" role="button">Concept of Egison (5 min)</a>
+                <a class="btn btn-default btn-primary" href="/concept.html" role="button">Concept of Egison Pattern-Matching (5 mins)</a>
                 <!--
                 <a class="btn btn-default btn-github" href="http://arxiv.org/pdf/1407.0729.pdf" role="button" target="_blank">Egison Paper on arXiv.org</a>
                 -->
@@ -54,27 +54,43 @@
           </div><!-- /.col-lg-4 -->
           <div class="col-lg-4" style="padding:0px;">
             <div class="middle-col-lg-4">
-              <h2><i class="fa fa-flask"></i> Online Demonstrations</h2>
+              <h2><i class="fa fa-table"></i> Computer Algebra System</h2>
               <p>
-                <!--# include file="/templates/demonstrations.html" -->
+                Egison allows users to describe <strong>tensor index notation</strong> and <strong>differential forms</strong> in programs.
+                Egison proposed two types of parameters <strong>scalar</strong> and <strong>tensor</strong> parameters for that.
               </p>
               <p>
-                <a class="btn btn-default btn-primary" href="https://www.egison.org/demonstrations/poker-hands.html" role="button">View Demonstrations &raquo;</a>
+                When a tensor is provided to a scalar parameter, the function is applied to each component of the tensor.
+                When a tensor is provided to a tensor parameter, the function treats the tensor argument as a whole.
+              </p>
+              <p>
                 <!--
-                <a class="btn btn-default btn-primary" href="https://try.egison.org" role="button" target="_blank">Online Egison Tutorial</a>
+                <a class="btn btn-default btn-primary" href="/concept2.html" role="button">Concept of Egison as CAS (5 mins)</a>
                 -->
+                <a class="btn btn-default btn-github" href="https://arxiv.org/pdf/1702.06343.pdf" role="button" target="_blank">Tensor Paper on arXiv.org</a>
               </p>
             </div>
           </div><!-- /.col-lg-4 -->
           <div class="col-lg-4" style="padding:0px;">
             <div class="right-col-lg-4">
-              <h2><i class="fa fa-question-circle"></i> FAQ</h2>
+              <h2><i class="fa fa-flask"></i> Online Demonstrations</h2>
               <p>
+                Please try Egison's original features.
               </p>
               <ul>
-                <!--# include file="/templates/faq.html" -->
+                <li>Pattern-Matching</li>
+                <ul>
+                  <li><a href="https://www.egison.org/demonstrations/poker-hands.html">Poker Hands</a></li>
+                  <li><a href="https://www.egison.org/demonstrations/mahjong.html">Mahjong</a></li>
+                  <li><a href="https://www.egison.org/demonstrations/primes.html">Twin Primes</a></li>
+                </ul>
+                <li>Computer Algebra System</li>
+                <ul>
+                  <li><a href="https://www.egison.org/math/riemann-curvature-tensor-of-S2.html">Riemann Curvature Tensor of `S^2`</a></li>
+                  <li><a href="https://www.egison.org/math/hodge-minkowski.html">Hodge Operator of Minkowski Space</a></li>
+                  <li><a href="https://www.egison.org/math/hodge-laplacian-polar.html">Hodge Laplacian of Polar Coordinates</a></li>
+                </ul>
               </ul>
-              <p><a class="btn btn-default btn-primary" href="/faq.html" role="button">View Answers &raquo;</a></p>
             </div>
           </div><!-- /.col-lg-4 -->
         </div>
@@ -84,14 +100,14 @@
 
     <div class="container marketing">
 
+          <!--
       <div class="row">
         <div style="border-radius: 10px; background-color:#f5f5f5; border: 2px solid #222; margin-bottom:20px; padding: 10px; margin-left:15px; margin-right:15px;">
-          <!--
           <b>We are working for Egison version 4. Egison will have a static type system from this version!</b>
-          -->
           <b>We are refining Egison paper to propagate the theory of Egison all over the world! Please check <a href="http://arxiv.org/pdf/1407.0729.pdf" target="_blank">the latest copy of the paper</a> on arXiv.org.</b>
         </div>
       </div>
+          -->
       
       <div class="row">
         <div class="col-lg-6">
@@ -139,7 +155,8 @@
                 </ul>
                 <li>Egison Paper</li>
                 <ul>
-                  <li><a href="http://arxiv.org/pdf/1407.0729.pdf" target="_blank">Egison Paper on arXiv.org</a></li>
+                  <li><a href="http://arxiv.org/pdf/1407.0729.pdf" target="_blank">Pattern-Matching Paper</a></li>
+                  <li><a href="https://arxiv.org/pdf/1702.06343.pdf" target="_blank">Tensor Paper</a></li>
                 </ul>
                 <li>Others</li>
                 <ul>
@@ -208,23 +225,30 @@ We are supporting Emacs key bindings to move cursor.
       <hr class="divider">
       
       <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-3">
+          <h3><i class="fa fa-question-circle"></i> FAQ</h3>
+          <ul>
+            <!--# include file="/templates/faq.html" -->
+          </ul>
+          <p><a class="btn btn-default btn-primary" href="/faq.html" role="button">View Answers &raquo;</a></p>
+        </div><!-- /.col-lg-3 -->
+        <div class="col-lg-3">
           <h3><i class="fa fa-trophy"></i> Media</h3>
           <ul>
             <li><a href="http://www.infoworld.com/slideshow/146094/not-the-usual-suspects-10-plucky-programming-languages-the-rise-240677" target="_blank">InfoWorld article "Not the usual suspects: 10 plucky programming languages on the rise" <i class="fa fa-external-link"></i></a></li>
             <li><a href="https://www.ipsj.or.jp/award/softwarejapan_award.html" target="_blank">IPSJ Software Japan Award (Japanese) <i class="fa fa-external-link"></i></a></li>
             <li><a href="https://codeiq.jp/magazine/tag/egison/" target="_blank">Egi's Serial Publication on CodeIQ MAGAZINE (Japanese) <i class="fa fa-external-link"></i></a></li>
           </ul>
-        </div><!-- /.col-lg-4 -->
-        <div class="col-lg-4">
+        </div><!-- /.col-lg-3 -->
+        <div class="col-lg-3">
           <h3><i class="icon-satellite"></i> Links</h3>
           <ul>
             <li><a href="http://rit.rakuten.co.jp/index_en.html" target="_blank">Rakuten Institute of Technology <i class="fa fa-external-link"></i></a></li>
             <li><a href="https://www.ipa.go.jp/english/humandev/index.html" target="_blank">IPA: IT Human Resources Development <i class="fa fa-external-link"></i></a></li>
             <li><a href="http://hagi.is.s.u-tokyo.ac.jp" target="_blank">Hagiya Laboratory in University of Tokyo <i class="fa fa-external-link"></i></a></li>
           </ul>
-        </div><!-- /.col-lg-4 -->
-        <div class="col-lg-4">
+        </div><!-- /.col-lg-3 -->
+        <div class="col-lg-3">
           <h3><i class="fa fa-comments"></i> Community</h3>
           <p>
             We have <a href="/community.html#mailing-list">a mailing list</a>!<br/>
@@ -243,7 +267,7 @@ We are supporting Emacs key bindings to move cursor.
             <a href="https://twitter.com/Egison_Lang" class="twitter-follow-button" data-show-count="false" target="_blank">Follow @Egison_Lang</a>
             <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
           </p>
-        </div><!-- /.col-lg-4 -->
+        </div><!-- /.col-lg-3 -->
       </div><!-- /.row -->
 
       <hr class="divider">
