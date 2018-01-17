@@ -22,18 +22,34 @@
         <div class="col-md-6">
 
           <!--# include file="/ja/math/templates/tables/number-theory.html" -->
+          <!--# include file="/ja/math/templates/tables/algebra.html" -->
           <!--# include file="/ja/math/templates/tables/analysis.html" -->
 
         </div>
         <div class="col-md-6">
 
-          <!--# include file="/ja/math/templates/tables/algebra.html" -->
           <!--# include file="/ja/math/templates/tables/geometry.html" -->
 
         </div>
         
       </div><!--/row-->
     
+      <hr class="divider">
+      
+      <div class="row">
+        <div class="col-md-12" id="top" role="complementary">
+          <h2>Egison数学ノートの試し方</h2>
+          <p>
+            Egison数学ノートのプログラムは、お手元のコンピューターで、すべて実行することができます。<br/>
+            上記のリストのプログラムはすべて<a href="https://github.com/egison/egison/tree/master/sample/math">EgisonのGitレポジトリ</a>の<a href="https://github.com/egison/egison/tree/master/sample/math"><code>/sample/math</code></a>ディレクトリ以下に置いてあります。
+          </p>
+          <pre><code>% egison -t sample/math/geometry/exterior-derivative.egi
+[| (f|1 x y z) (f|2 x y z) (f|3 x y z) |]
+[| [| 0 0 0 |] [| 0 0 0 |] [| 0 0 0 |] |]
+</code></pre>
+        </div>
+      </div><!--/row-->
+
       <hr class="divider">
       
       <div class="row">
