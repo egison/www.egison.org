@@ -97,10 +97,10 @@
           var startTutorial = function () {
             jqconsole.Write('==============================\n' + table + '\n==============================\n', 'jqconsole-output');
             jqconsole.Write("** Information **\n1. To proceed the next in the tutorial, please press just 'Enter'.\n2. We are supporting Emacs key bindings to move cursor.\n*****************\n", 'jqconsole-output');
-            jqconsole.SetPromptLabel('Choose a section to learn.\n(1-4): ');
+            jqconsole.SetPromptLabel('Choose a section to learn.\n(1-7): ');
             jqconsole.Prompt(false, function (input) {
               jqconsole.SetPromptLabel(prompt);
-                if (input == "1" || input == "2" || input == "3" || input == "4") {
+                if (input == "1" || input == "2" || input == "3" || input == "4" || input == "5" || input == "6" || input == "7") {
                   sn = parseInt(input);
                   ssn = 1;
                   startSession();

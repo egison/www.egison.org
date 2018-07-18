@@ -23,8 +23,8 @@
         <h1>The Egison Programming Language</h1>
         <h2 style="margin-bottom:20px;"> - Express Intuition Directly with Essentially New Syntax -</h2>
         <p>
-          Egison is a programming language that realizes non-linear pattern-matching against non-free data types.<br/>
-          We can directly represent pattern-matching against a wide range of data types such as lists, multisets, sets, trees and graphs.<br/>
+          Egison is a programming language that features the customizable efficient non-linear pattern-matching facility for non-free data types.<br/>
+          We can directly represent pattern matching for a wide range of data types including lists, multisets, sets, trees, graphs, and mathematical expressions.<br/>
           Egison makes programming dramatically simple!
         </p>
 
@@ -36,16 +36,18 @@
               <h2><i class="fa fa-key"></i> Pattern-Matching-Oriented</h2>
               <p>
                 Egison proposes a new paradigm <strong>pattern-matching-oriented</strong>.
-                The combination of <strong>all of the following features</strong> enables intuitive powerful pattern-matching.
+                The combination of <strong>all of the following features</strong> enables intuitive powerful pattern matching.
               </p>
               <ul>
-                <li>Non-linear patterns</li>
-                <li>Pattern-matching with multiple results</li>
-                <li>Modularization of the way of pattern-matching</li>
-                <li>Pattern-matching with lexical scoping</li>
+                <li>Efficiency of the backtracking algoirthm for non-linear patterns</li>
+                <li>Extensibility of pattern matching</li>
+                <li>Polymorphisim in patterns</li>
+<!--
+                <li>Pattern matching with lexical scoping</li>
+-->
               </ul>
               <p>
-                <a class="btn btn-default btn-primary" href="/concept.html" role="button">Concept of Egison Pattern-Matching (5 mins)</a>
+                <a class="btn btn-default btn-primary" href="/concept.html" role="button">Concept of Egison Pattern Matching (5 mins)</a>
                 <!--
                 <a class="btn btn-default btn-github" href="http://arxiv.org/pdf/1407.0729.pdf" role="button" target="_blank">Egison Paper on arXiv.org</a>
                 -->
@@ -56,17 +58,20 @@
             <div class="middle-col-lg-4">
               <h2><i class="fa fa-table"></i> Computer Algebra System</h2>
               <p>
-                Egison allows users to describe <strong>tensor index notation</strong> and <strong>differential forms</strong> in programs.
-                Egison proposed two types of parameters <strong>scalar</strong> and <strong>tensor</strong> parameters for that.
+                Egison allows programmers to use <strong>tensor index notation</strong> including the support for <strong>differential forms</strong>.<br/>
+                Egison introduces two types of parameters, scalar and tensor parameters, and a set of simple index reduction rules for that.
               </p>
+<!--
               <p>
                 When a tensor is provided to a scalar parameter, the function is applied to each component of the tensor.
                 When a tensor is provided to a tensor parameter, the function treats the tensor argument as a whole.
               </p>
+-->
               <p>
-                <!--
+                <a class="btn btn-default btn-primary" href="https://www.egison.org/math/riemann-curvature-tensor-of-S2.html" role="button">Demo: Riemann Curvature Tensor of `S^2` &raquo</a>
+<!--
                 <a class="btn btn-default btn-primary" href="/concept2.html" role="button">Concept of Egison as CAS (5 mins)</a>
-                -->
+-->
                 <a class="btn btn-default btn-github" href="https://arxiv.org/pdf/1702.06343.pdf" role="button" target="_blank">Tensor Paper on arXiv.org</a>
               </p>
             </div>
@@ -78,7 +83,7 @@
                 Please try Egison's original features.
               </p>
               <ul>
-                <li>Pattern-Matching</li>
+                <li>Pattern Matching</li>
                 <ul>
                   <li><a href="https://www.egison.org/demonstrations/poker-hands.html">Poker Hands</a></li>
                   <li><a href="https://www.egison.org/demonstrations/mahjong.html">Mahjong</a></li>
@@ -208,12 +213,12 @@ We are supporting Emacs key bindings to move cursor.
           <h3><i class="icon-haskell"></i> Haskell</h3>
           <p>
             Egison is written in <a href="http://www.haskell.org" target="_blank">Haskell</a> and being distributed as a <a href="http://hackage.haskell.org/package/egison" target="_blank">Hackage package</a>.<br/>
-            Egison inherits a lot of things from Haskell.
+            Egison inherits a lot of features from Haskell.
           </p>
         </div><!-- /.col-lg-3 -->
         <div class="col-lg-3">
           <h3><i class="fa fa-globe"></i> Related Projects</h3>
-          <p>Extending other languages to access Egison pattern-matching!</p>
+          <p>Extending other languages to access Egison pattern matching!</p>
           <ul>
             <li>GHC Extension</li>
             <li>Python Extension</li>

@@ -21,26 +21,23 @@
 
         <div class="col-md-12" role="main">
           
-          <h2 id="how-to-install">Egison のインストール方法</h2>
+          <h2 id="how-to-install-homebrew">Egison のインストール方法(Homebrew)</h2>
 
-<!--
           <p>
-            Mac 用のインストーラーを用意しています。
+            Homebrew をつかって簡単にインストールできます。
+            以下のような、シンプルなコマンドをうつだけでEgisonをインストールできるようになっています。
           </p>
 
-          <p>
-            <a class="btn btn-default btn-github btn-lg" href="/download/Egison-3.6.1-20161107.pkg" role="button" target="_blank">Egison 3.6.1 Installer for Mac</a>
-          </p>
+          <pre><code>$ brew update
+$ brew tap egison/egison
+$ brew install egison</code></pre>
+
+          <h2 id="how-to-install-cabal">Egison のインストール方法(Haskell Platform)</h2>
 
           <p>
-            このインストーラーにより <code>egison</code> と <code>egison-tutorial</code> コマンドが <code>/Library/Egison</code> 以下にインストールされます。<br/>
-            ですので、以下のような行を <code>.bashrc</code> や <code>.zshenv</code> に書き加えてください。
+            Haskellの処理系GHCをつかって手元のコンピューターでコンパイルしてインストールすることも可能です。
           </p>
           
-<pre><code>PATH=:/Library/Egison/bin:$PATH
-export PATH</code></pre>
--->
-
           <h3>1. Haskell Platform をインストール</h3>
           
           <p>
