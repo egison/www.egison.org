@@ -147,8 +147,8 @@
 {@{@{1}} @{2 @{3} 4}};=>{1 2 3 4}
 
 ;; Arrays
-(define $xa [| 1 2 3 4 5 |])
-(array-size xa);=>5
+(define $xa (| 1 2 3 4 5 |))
+(array-bounds xa);=> [1 5]
 xa_1;=>1
 xa_5;=>5
 
