@@ -17,8 +17,8 @@
     <tr>
       <td>Builtin data</td>
       <td>
-        <a href="/manual/basics.html#boolean"><code>#t</code></a> <a href="/manual/basics.html#boolean"><code>#f</code></a> <a href="/manual/basics.html#integers"><code>10</code></a> <a href="/manual/basics.html#integers"><code>-3</code></a> <a href="/manual/basics.html#integers"><code>1+1i</code></a> <a href="/manual/basics.html#rational"><code>22/7</code></a> <a href="/manual/basics.html#rational"><code>2+1i/1-1i</code></a> <a href="/manual/basics.html#floats"><code>3.14</code></a>  <a href="/manual/basics.html#floats"><code>1.0+1.0i</code></a> <a href="/manual/basics.html#characters"><code>'E'</code></a> <a href="/manual/basics.html#strings"><code>"Egison"</code></a>
-        <a href="/manual/basics.html#inductive-data"><code>&lt;<i>D</i> &gt;</code></a> <a href="/manual/basics.html#tuple"><code>[ ]</code></a> <a href="/manual/basics.html#collection"><code>{ }</code></a> <a href="/manual/basics.html#array"><code>[| |]</code></a> <a href="/manual/basics.html#hash"><code>{| |}</code></a> <a href="/manual/basics.html#undefined"><code>undefined</code></a>
+        <a href="/manual/basics.html#boolean"><code>#t</code></a> <a href="/manual/basics.html#boolean"><code>#f</code></a> <a href="/manual/basics.html#integers"><code>10</code></a> <a href="/manual/basics.html#integers"><code>-3</code></a> <a href="/manual/basics.html#integers"><code>(+ 1 i)</code></a> <a href="/manual/basics.html#rational"><code>(/ 22 7)</code></a> <a href="/manual/basics.html#floats"><code>3.14</code></a>  <a href="/manual/basics.html#floats"><code>1.0+1.0i</code></a> <a href="/manual/basics.html#characters"><code>'E'</code></a> <a href="/manual/basics.html#strings"><code>"Egison"</code></a>
+        <a href="/manual/basics.html#inductive-data"><code>&lt;<i>D</i> &gt;</code></a> <a href="/manual/basics.html#tuple"><code>[ ]</code></a> <a href="/manual/basics.html#collection"><code>{ }</code></a> <a href="/manual/basics.html#tensor"><code>[| |]</code></a> <a href="/manual/basics.html#hash"><code>{| |}</code></a> <a href="/manual/basics.html#undefined"><code>undefined</code></a>
     </tr>
     <tr>
       <td>Function</td>
@@ -38,7 +38,7 @@
     <tr>
       <td>Patterns</td>
       <td>
-        <a href="/manual/patterns.html#wildcard"><code>_</code></a> <a href="/manual/patterns.html#pattern-variable"><code>$<i>var</i></code></a> <a href="/manual/patterns.html#value-patterns"><code>,<i>val</i></code></a> <a href="/manual/patterns.html#predicate-patterns"><code>?<i>predicate</i></code></a> <a href="/manual/patterns.html#"><code>[ ]</code></a> <a href="/manual/patterns.html#inductive-patterns"><code>&lt;<i>p</i> &gt;</code></a> <a href="/manual/patterns.html#and-patterns"><code>(& )</code></a> <a href="/manual/patterns.html#or-patterns"><code>(| )</code></a> <a href="/manual/patterns.html#not-patterns"><code>!</code></a> <a href="/manual/patterns.html#loop-patterns"><code>(loop ...)</code></a> <a href="/manual/patterns.html#pattern-function"><code>pattern-function</code></a>
+        <a href="/manual/patterns.html#wildcard"><code>_</code></a> <a href="/manual/patterns.html#pattern-variable"><code>$<i>var</i></code></a> <a href="/manual/patterns.html#value-patterns"><code>,<i>val</i></code></a> <a href="/manual/patterns.html#predicate-patterns"><code>?<i>predicate</i></code></a> <a href="/manual/patterns.html#"><code>[ ]</code></a> <a href="/manual/patterns.html#inductive-patterns"><code>&lt;<i>c</i> <i>pat*</i>&gt;</code></a> <a href="/manual/patterns.html#and-patterns"><code>(& <i>pat*</i>)</code></a> <a href="/manual/patterns.html#or-patterns"><code>(| <i>pat*</i>)</code></a> <a href="/manual/patterns.html#not-patterns"><code>!<i>pat</i></code></a> <a href="/manual/patterns.html#later-patterns"><code>(later <i>pat</i>)</code></a> <a href="/manual/patterns.html#loop-patterns"><code>(loop ...)</code></a> <a href="/manual/patterns.html#pattern-function"><code>pattern-function</code></a>
     </tr>
     <tr>
       <td>Matchers</td>
@@ -46,9 +46,9 @@
         <a href="/manual/patterns.html#matcher"><code>matcher</code></a> <a href="/manual/patterns.html#matcher"><code>algebraic-data-matcher</code></a>
     </tr>
     <tr>
-      <td>Array, Hash</td>
+      <td>Tensors, Hash Maps</td>
       <td>
-        <a href="/manual/basics.html#array"><code><i>var</i>_<i>n</i></code></a> <a href="/manual/basics.html#generate-array"><code>generate-array</code></a> <a href="/manual/basics.html#array-bounds"><code>array-bounds</code></a> <a href="/manual/basics.html#array-ref"><code>array-ref</code></a> 
+        <a href="/manual/basics.html#tensor"><code><i>var</i>_<i>n</i></code></a> <a href="/manual/basics.html#generate-tensor"><code>generate-tensor</code></a> <a href="/manual/basics.html#tensor-size"><code>tensor-size</code></a>
     </tr>
     <tr>
       <td>Evaluation strategy</td>

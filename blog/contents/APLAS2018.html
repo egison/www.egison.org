@@ -1,0 +1,806 @@
+<h1 id="APLAS2018">APLAS 2018 Presentation: Non-linear Pattern Matching with Backtracking for Non-free Data Types</h1>
+
+<div id="blog-date">Dec 3, 2087</div>
+
+<p>
+At <a target="_blank" href="http://aplas2018.org/schedule/">APLAS 2018</a>, we made a paper presentation on Egison pattern matching system.
+The following are our slides and script.
+We can download our paper from <a target="_blank" href="https://link.springer.com/chapter/10.1007/978-3-030-02768-1_1">Springer</a> and <a target="_blank" href="https://arxiv.org/abs/1808.10603">arXiv</a>.
+</p>
+
+<h3>#1</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.001.png">
+
+<p>
+  Good morning everybody.
+  Thank you for inviting us today.
+  I am happy to be here.
+  Today, I'd like to talk about our new pattern-matching system for non-free data types.
+</p>
+
+<h3>#2</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.002.png">
+
+<p>
+  First, let me explain our motivation.
+</p>
+
+<h3>#3</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.003.png">
+
+<p>
+  The aim of our research is to create a programming language with an expressive pattern-matching facility for non-free data types.
+  We would like to achieve pattern matching like regular expressions for arbitrary user defined data types including non-free data types.
+</p>
+
+<h3>#4</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.004.png">
+
+<p>
+  Let me explain what are non-free data types.
+  Non-free data types are data types whose data have no standard form.
+  For example, a multiset is non-free data types, because a collection {a, a, b} has two equivalent but different forms {a, b, a} and {b, a, a}.
+</p>
+<p>
+  Basically, free data types are data types that can be represented as algebraic data types.
+  For example, consed lists and syntax trees of programming languages are free data types.
+</p>
+<p>
+  The other data types are non-free data types.
+  For example, multisets, sets, graphs, and mathematical expressions are important non-free data types.
+</p>
+<p>
+  (List with join constructor is also a non-free data type.
+  This is because it also has multiple representation for an equivalent datum, that way.)
+</p>
+<p>
+  Our motivation is to extend the range of data types that we can use pattern matching to these non-free data types.
+  It enables us to describe many algorithms more concisely than now.
+</p>
+
+<h3>#5</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.005.png">
+
+<p>
+  There are many existing work for pattern matching against non-free data types.
+  Here are the list of these work.
+  Let me classify them by their features.
+</p>
+
+<h3>#6</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.006.png">
+
+<p>
+  This table shows the classification.
+  We listed all the features proposed by the existing work and listed the existing work that satisfy each feature.
+  We explain each existing work from the next slide.
+</p>
+
+<h3>#7</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.007.png">
+
+<p>
+  Let me start with the pattern-matching of computer algebra systems.
+</p>
+<p>
+  Most of computer algebra systems have an practical pattern matching engine for mathematical expressions.
+  They support both non-linear patterns and backtracking.
+  Non-linear patterns are patterns that allows multiple occurrences of the same variables in a pattern.
+  Computer algebra system can process non-linear patterns efficiently by backtracking.
+</p>
+<p>
+  However, their disadvantage is extensibility.
+  These pattern-matching engines are specialized only for well-known mathematical structures.
+  Users cannot extend the pattern-matching algorithms by themselves.
+</p>
+
+<h3>#8</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.008.png">
+
+<p>
+  Wadler's views are an earlier research that allows users to extend the pattern-matching method for each pattern.
+  However, views support neither non-linear patterns and pattern matching with multiple results.
+  Therefore, we cannot describe expressive patterns.
+</p>
+
+<h3>#9</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.009.png">
+
+<p>
+  Active patterns are an extension of views that support non-linear patterns.
+  However, it does not support pattern matching with backtracking.
+  Therefore, we cannot still describe expressive patterns.
+</p>
+
+<h3>#10</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.010.png">
+
+<p>
+  This is an example of active patterns.
+  Add' is a pattern constructor defined using active patterns.
+  It matches if the target collection contains the first argument of Add'.
+  This pattern constructor extracts one element from a collection as a multiset, ignoring the order of the elements.
+  
+</p>
+
+<h3>#11</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.011.png">
+
+<p>
+  We can use this pattern for defining the member function only with pattern matching.
+</p>
+
+<h3>#12</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.012.png">
+
+<p>
+  However, for example, we cannot describe a pattern that matches the collections that contain a pair of identical elements.
+  This is because active patterns do not support backtracking.
+</p>
+
+<h3>#13</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.013.png">
+
+<p>
+  First class patterns are another extension of views that support pattern matching with multiple results.
+  However, First class patterns do not support non-linear patterns.
+  Therefore, we cannot still describe expressive patterns.
+</p>
+
+<h3>#14</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.014.png">
+
+<p>
+  Functional logic programming is an independent approach for non-free data types.
+  It supports both of non-linear patterns and multiple results.
+  So we can describe expressive patterns using it.
+  However, the current implementations of functional logic programming languages do not handle non-linear patterns efficiently.
+</p>
+
+<h3>#15</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.015.png">
+
+<p>
+  Let me show an example.
+</p>
+<p>
+  This is a sample program of Curry, the most popular functional logic programming language.
+  insert is a pattern constructor defined in Curry.
+  This pattern constructor extracts one element from a collection as a multiset, ignoring the order of elements, like Add' in the previous example.
+</p>
+
+<h3>#16</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.016.png">
+
+<p>
+  Here are patterns for finding sequential pairs, triples, and quadruples from a collection.
+  We can describe them concisely using non-linear patterns.
+</p>
+
+<h3>#17</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.017.png">
+
+<p>
+  However, non-linear pattern matching is not efficiently executed in Curry.
+  Theoretical time complexities depend on the size of patterns, that way.
+  Here are the benchmark results.
+</p>
+
+<h3>#18</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.018.png">
+
+<p>
+  The reason for the difference of time complexity between these patterns is because Curry transforms non-linear patterns into pattern guards.
+  Basically, pattern guards are applied after enumerating all pattern-matching results.
+  Therefore, substantial unnecessary enumerations often occur before the application of pattern guards.
+</p>
+
+<h3>#19</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.019.png">
+
+<p>
+  Another key difference with the functional logic programming and the others is the method for defining the pattern-matching algorithms for each pattern.
+  In this approach, we describe pattern-matching algorithms in logic-programming style.
+  A pattern constructor takes decomposed values and returns the target data in its definition.
+  On the other hands, in the functional approach, a pattern constructor takes a target and returns the decomposed values.
+  In logic-programming style, it is difficult to directly describe efficient pattern-matching algorithms.
+</p>
+
+<h3>#20</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.020.png">
+
+<p>
+  As we have seen so far,  all the features in this table are important for pattern matching against non-free data types.
+  However, there is no existing research that supports all the features in this table.
+</p>
+
+<h3>#21</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.021.png">
+
+<p>
+  Furthermore, in our paper, we additionally proposed this feature, polymorphic patterns, for practical pattern matching against non-free data types.
+  Let me explain what are polymorphic patterns.
+</p>
+
+<h3>#22</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.022.png">
+
+<p>
+  This is a sample program to show the importance of polymorphic patterns.
+</p>
+<p>
+  Polymorphism is important especially for value patterns.
+  A value pattern is a pattern that matches when the value in the pattern is equal to the target.
+  It is an important pattern construct for expressing non-linear patterns.
+</p>
+<p>
+  If patterns are monomorphic, we need to have different notations for value patterns for lists and multisets as this sample.
+  This is because both lists and multisets are represented as a list, but the equivalence of them are different.
+</p>
+
+<h3>#23</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.023.png">
+
+<p>
+  Let me summarize my presentation so far.
+  We made two claims.
+  The first claim is that all the features in this table are necessary for practical pattern matching for non-free data types.
+  The second claim is that there are no existing work that supports all the features.
+</p>
+
+<h3>#24</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.024.png">
+
+<p>
+  Now, let me explain our solution.
+</p>
+
+<h3>#25</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.025.png">
+
+<p>
+  We've designed a pattern-matching system that supports all these features and implemented it on our proof-of-concept language Egison.
+</p>
+
+<h3>#26</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.026.png">
+
+<p>
+  Let me explain how we achieve that.
+</p>
+
+<h3>#27</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.027.png">
+
+<p>
+  First, let me show our pattern-matching expression.
+  By the way, current implementation of Egison has Lisp-like syntax.
+  But in this presentation, we use Haskell notation to omit the explanation of its basic syntax.
+</p>
+
+<h3>#28</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.028.png">
+
+<p>
+  MatchAll is a pattern-matching expression of Egison.
+</p>
+
+<h3>#29</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.029.png">
+
+<p>
+  MatchAll takes a target, pattern, and body as the match expressions of the other languages.
+</p>
+
+<h3>#30</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.030.png">
+
+<p>
+  MatchAll takes an additional argument matcher.
+</p>
+
+<h3>#31</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.031.png">
+
+<p>
+  As we have seen, this pattern-matching expression has two characteristic parts: the name of syntax matchAll and a matcher.
+</p>
+
+<h3>#32</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.032.png">
+
+<p>
+  First, let me explain the reason of the name matchAll.
+</p>
+<p>
+  MatchAll returns a list of all pattern-matching results.
+  Generally, pattern matching for non-free data types has multiple results.
+  So this expression is often useful for handling them.
+</p>
+<p>
+  In this case, there is only one decomposition.
+  So, the returned list contains only one element (1,[2,3]).
+</p>
+
+<h3>#33</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.033.png">
+
+<p>
+  Next, let me explain what is a matcher.
+  A Matcher is an Egison specific object that specifies the pattern-matching method.
+</p>
+
+<h3>#34</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.034.png">
+
+<p>
+  If we pass a different matcher to a matchAll expression, the different pattern-matching methods are executed.
+  The multiset matcher ignores the order of the elements in a collection.
+  Therefore, in this case, there are three decompositions [(1,[2,3]), (2,[1,3]),(3,[1,2])].
+</p>
+
+<h3>#35</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.035.png">
+
+<p>
+  In fact, these matchers, list and multiset, are defined by users in Egison.
+  Let me explain how we can define them.
+</p>
+
+<h3>#36</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.036.png">
+
+<p>
+  This is a definition of the list matcher.
+</p>
+
+<h3>#37</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.037.png">
+
+<p>
+  Each part of this program defines a pattern-matching method for each pattern.
+</p>
+
+<h3>#38</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.038.png">
+
+<p>
+  These parts are patterns for pattern.
+  The structure of the matcher expression is similar with the match expression of the existing languages.
+</p>
+
+<h3>#39</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.039.png">
+
+<p>
+  Definitions of each pattern are similar with the definition of pattern constructors in existing functional approach for non-free data types.
+  A difference from the existing work that I'd like you to notice about this matcher expression is that it modularizes pattern-matching method for each data type, not for each pattern.
+</p>
+
+<h3>#40</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.040.png">
+
+<p>
+  The multiset matcher is defined in a similar way.
+  We come back here later again.
+</p>
+
+<h3>#41</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.041.png">
+
+<p>
+  Thanks to the design of our matchAll and matcher expression, we achieved the polymorphic patterns, that way.
+  We can use the same pattern constructor names "cons" for different matchers.  
+</p>
+
+<h3>#42</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.042.png">
+
+<p>
+  Let me proceed to the next phase.
+</p>
+
+<h3>#43</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.043.png">
+
+<p>
+  We've also achieved the polymorphic value patterns.
+  We can write the value patterns in the same notation.
+</p>
+<p>
+  Here, we are checking the equality of a collection [1,2,3] as a list and multiset, respectively.
+  The pattern is [2,1,3].
+  If we regard it as a list, they are not equal.
+  But if we regard it as a multiset, they are equal.
+  So, in this case, only the second expression succeeds in pattern matching.
+</p>
+
+<h3>#44</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.044.png">
+
+<p>
+  It is achieved by defining the pattern-matching method for the value patterns in a matcher, that way.
+</p>
+
+<h3>#45</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.045.png">
+
+<p>
+  This is a definition of the pattern-matching method of the value patterns for multiset.
+  The modularization of pattern-matching method by matchers, not by patterns, allows us to achieve polymorphic value patterns.
+</p>
+
+<h3>#46</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.046.png">
+
+<p>
+  Now, let me proceed to the third phase.
+</p>
+
+<h3>#47</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.047.png">
+
+<p>
+  Let's see how the pattern-matching method is defined for the cons pattern of multiset.
+</p>
+
+<h3>#48</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.048.png">
+
+<p>
+  The definition of pattern-matching method is divided into three parts.
+  First, the pattern for patterns.
+  Second, the next matcher expression.
+  Third, the next target expression.
+</p>
+<p>
+  This pattern for patterns contains two dollar signs.
+  It means the cons pattern takes two patterns as arguments and these two argument patterns become next patterns.
+</p>
+<p>
+  This next matcher expression returns a tuple, m and multiset m.
+  m is a matcher for inner element of the multiset.
+  It means the first argument of the cons pattern is matched as an inner element, and the second argument is matched as a multiset, recursively.
+</p>
+<p>
+  This next target expression returns the target, that way, when the target is a collection [1, 2, 3].
+  In this expression, matchAll is effectively used for this decomposition.
+</p>
+
+<h3>#49</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.049.png">
+
+<p>
+  Now, let me explain the pattern-matching algorithm inside Egison by showing what happens when we execute the above pattern-matching expression.
+</p>
+<p>
+  Pattern matching algorithm of Egison is designed as a reduction of data, called matching states.
+  A matching state is a datum that consists of stack of matching atoms, and intermediate pattern matching results.
+</p>
+
+<h3>#50</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.050.png">
+
+<p>
+  A matching atom consists of a pattern, matcher, and target.
+  From this matchAll expression, the initial matching state is created, that way.
+</p>
+
+<h3>#51</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.051.png">
+
+<p>
+  Reduction is executed recursively referring to the definition of the matcher.
+  In this case, the next matching states are generated from the definition of the cons pattern in the multiset matcher that we've seen in the previous slide.
+</p>
+
+<h3>#52</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.052.png">
+
+<p>
+  In this presentation, we examine the reduction of only this matching state.
+</p>
+
+<h3>#53</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.053.png">
+
+<p>
+  In the next step, the matcher of top matching atom changes from integer to something.
+  This reduction is defined in the integer matcher.
+</p>
+
+<h3>#54</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.054.png">
+
+<p>
+  In the next step, a new binding is added to the intermediate pattern-matching result.
+  something is the only built-in matcher in the proposed system, which can add a new binding to the intermediate pattern-matching result, that way.
+</p>
+
+<h3>#55</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.055.png">
+
+<p>
+  In the next step, two matching states are generated by the cons pattern of the multiset matcher.
+</p>
+
+<h3>#56</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.056.png">
+
+<p>
+  The first matching state fails for pattern matching of the value pattern and vanishes because 8 is not equal to 2.
+</p>
+
+<h3>#57</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.057.png">
+
+<p>
+  Let's examine the reduction of this matching state.
+</p>
+
+<h3>#58</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.058.png">
+
+<p>
+  In the next step, the value pattern matches with the target and the matching atom is popped out.
+</p>
+
+<h3>#59</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.059.png">
+
+<p>
+  In the next step, the matcher changes from multiset integer to something.
+</p>
+
+<h3>#60</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.060.png">
+
+<p>
+  In the next step, the wildcard matches with the target, and the top matching atom is popped out.
+</p>
+
+<h3>#61</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.061.png">
+
+<p>
+  Finally, if the stack of matching atoms becomes empty, pattern matching succeeds.
+</p>
+
+<h3>#62</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.062.png">
+
+<p>
+  Let me show the search trees for non-linear pattern matching in our proposal.
+  The nodes of this tree represent matching states.
+  The proposed algorithm avoids unnecessary branches by backtracking, that way.
+</p>
+
+<h3>#63</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.063.png">
+
+<p>
+  Therefore, theoretical time complexity of non-linear pattern matching does not depend on pattern size.
+  We do not write special algorithm for that in the matcher definition.
+  Algorithm described in the matcher definition is similar with the existing work.
+</p>
+<p>
+  This efficiency is achieved by the runtime algorithm inside Egison.
+  Of course, if users optimize the matcher definition, pattern matching will be much more efficient.
+</p>
+
+<h3>#64</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.064.png">
+
+<p>
+  Finally, let me talk about matcher compositions.
+  The proposed recursive pattern-matching algorithm enables us to compose matchers.
+</p>
+
+<h3>#65</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.065.png">
+
+<p>
+  As in this sample, we can compose matchers and create new matchers.
+  For example, we can create a matcher for a multiset of multisets.
+</p>
+<p>
+  Let me explain why we can compose matchers.
+</p>
+
+<h3>#66</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.066.png">
+
+<p>
+  In fact, list is defined as a function that takes a matcher and returns a matcher.
+</p>
+
+<h3>#67</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.067.png">
+
+<p>
+  multiset is also defined as a function that takes a matcher and returns a matcher.
+</p>
+
+<h3>#68</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.068.png">
+
+<p>
+  We can define a matcher for graphs and mathemtaical expressions by just composing matchers, that way.
+  For example, an adjacency graph consists of  a collection of adjacency lists.
+  Therefore, adjacency graphs can be defined as a multiset of tuples of integer and a multiset of integers, that way.
+</p>
+
+<h3>#69</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.069.png">
+
+<p>
+  Here is a sample program that uses a matcher for adjacency weighted graphs.
+  This matchAll lists all cycles that visits all cities and backs to Wellington.
+</p>
+
+<h3>#70</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.070.png">
+
+<p>
+  Egison has an interpreter implemented in Haskell and is open-sourced.
+  Please try it.
+</p>
+
+<h3>#71</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.071.png">
+
+<p>
+  Now, let me summarize our talk.
+</p>
+<p>
+  We proposed the three criteria for practical pattern matching for non-free data types: Non-linear pattern matching with backtracking, extensibility of patterns, and polymorphic patterns.
+  It is achieved by properly designing the matchAll, matcher, and pattern-matching algorithm.
+  We have implemented our design as a proof-of-concept programming language Egison.
+</p>
+
+<h3>#72</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.072.png">
+
+<p>
+  These are topics we do not cover in this presentation.
+  Please refer to our paper for the further information.
+</p>
+
+<h3>#73</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.073.png">
+
+<p>
+  Finally, let me talk about future direction.
+</p>
+
+<h3>#74</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.074.png">
+
+<p>
+  We have designed loop patterns that are extension of Kleene star operators of regular expressions for non-free data types.
+  We want to pattern-match not only lists but also trees and graphs.
+  So we had to extend Kleene star operators for them.
+  I presented a paper on the loop patterns at Scheme Workshop 3 months ago.
+</p>
+
+<h3>#75</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.075.png">
+
+<p>
+  As an application of our proposed pattern-matching system, we have implemented a computer algebra system on Egison.
+  We can implement a pattern-matching engine for mathematical expressions in very simple code.
+  Therefore, we can try to implement new ideas on Egison more easily than the existing computer algebra systems.
+  Last year, I presented a paper at Scheme Workshop for one of new features in Egison, tensor index notation, implemented on this computer algebra system.
+</p>
+
+<h3>#76</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.076.png">
+
+<p>
+  This computer algebra system can be used even for practical purpose.
+  We have been already contributing to researches of mathematics using this computer algebra system.
+</p>
+
+<h3>#77</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.077.png">
+
+<p>
+  As a succeeding work, we are now trying to establish new programming style called pattern matching oriented programming style.
+  Here is a list of functions we can define more elegantly using the proposed pattern-matching facility.
+</p>
+
+<h3>#78</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.078.png">
+
+<p>
+  Currently, Egison is a dynamic typed programming language.
+  But, we have designed typing rules for Egison pattern-matching expressions.
+  We are implementing a static type system for Egison and a GHC extension.
+</p>
+
+<h3>#79</h3>
+
+<img width="100%" style="border: 1px solid #222;" src="/images/20181203APLAS2018/20181203APLAS2018.079.png">
+
+<p>
+  That's today's topic.
+  Thank you for your attention.
+</p>

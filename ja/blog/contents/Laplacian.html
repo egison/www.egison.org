@@ -1,0 +1,152 @@
+<h1 id="Laplacian">Egisonで極座標のラプラシアンを3通りの方法で計算</h1>
+
+<div id="blog-date">2018年12月25日</div>
+
+<p>
+これは，<a target="_blank" href="https://adventar.org/calendars/3084">数理物理 Advent Calendar 2018の25日目</a>の記事です．
+</p>
+
+<p>
+この記事では，極座標のラプラシアンを計算するEgisonプログラムを3通り紹介します．
+</p>
+
+<p>
+  Egisonは
+  <ul>
+    <li>テンソルの添字記法</li>
+    <li>未定義関数の引数を省略する記法( `f(x,y,z)` を `f` と表記する記法)</li>
+  </ul>
+  をプログラムの記述においてもサポートしています．
+  そのおかげで，ラプラシアンの計算を含む微分幾何の計算を簡潔に記述できます．
+</p>
+
+
+<h2>単純に展開していく方法による計算</h2>
+
+<p>
+  下記の公式が正しいことを、右辺の`u_(r r)`と`u_r`、`u_(theta theta)`を展開することにより確かめています。
+</p>
+
+`u_(x x) + u_(y y) = u_(r r) + (1 / r) u_r + (1 / r^2) u_(theta theta)`
+
+<textarea class="code">(define $x (* r (cos θ)))
+(define $y (* r (sin θ)))
+
+(define $u (function [x y]))
+
+(define $u-r (∂/∂ u r))
+u-r
+;(+ (* u|x (cos θ)) (* u|y (sin θ)))
+
+(define $u-r-r (∂/∂ (∂/∂ u r) r))
+u-r-r
+;(+ (* 2 u|x|y (sin θ) (cos θ)) u|x|x (* -1 (sin θ)^2 u|x|x) (* u|y|y (sin θ)^2))
+
+(define $u-θ (∂/∂ u θ))
+u-θ
+;(+ (* -1 u|x r (sin θ)) (* u|y r (cos θ)))
+
+(define $u-θ-θ (∂/∂ (∂/∂ u θ) θ))
+u-θ-θ
+;(+ (* -2 u|x|y r^2 (cos θ) (sin θ)) (* u|x|x r^2 (sin θ)^2) (* -1 u|x r (cos θ)) (* u|y|y r^2) (* -1 (sin θ)^2 u|y|y r^2) (* -1 u|y r (sin θ)))
+
+(+ u-r-r (* (/ 1 (** r 2)) u-θ-θ))
+;(/ (+ (* u|x|x r) (* -1 u|x (cos θ)) (* u|y|y r) (* -1 u|y (sin θ))) r)
+
+(+ u-r-r (* (/ 1 r) u-r) (* (/ 1 (** r 2)) u-θ-θ))
+;(+ u|x|x u|y|y)</textarea>
+
+<h2>リーマン幾何学の公式を使う計算法</h2>
+
+<p>
+  リーマン幾何学の共変微分の概念を使うと、一般の座標のラプラシアンは以下のように定義できます。
+</p>
+
+<p>
+  この公式は以下のように展開できます。
+</p>
+
+`Delta = (1 / sqrt(g)) del_i sqrt(g) g^(i j) del_j`
+
+<p>
+  下記のプログラムでは、この公式を用いてラプラシアンを計算しています。
+</p>
+
+<textarea class="code">;;; Polar coordinates
+(define $x [|r θ|])
+
+(define $X [|(* r (cos θ)) ; = x
+(* r (sin θ)) ; = y
+|])
+
+;; Local coordinates
+(define $e_i_j (∂/∂ X_j x~i))
+e_i_j ; [| [| (cos θ) (sin θ) |] [| (* -1 r (sin θ)) (* r (cos θ)) |] |]
+
+;; Metric tensor
+(define $g__ (generate-tensor 2#(V.* e_%1_# e_%2_#) {2 2}))
+(define $g~~ (M.inverse g_#_#))
+
+g_#_# ; [| [| 1 0 |] [| 0 r^2 |] |]_#_#
+g~#~# ; [| [| 1 0 |] [| 0 (/ 1 r^2) |] |]~#~#
+
+;; Derive Laplacian
+(define $sqrt-g (sqrt (M.det g_#_#)))
+sqrt-g ; r
+
+(define $f (function [r θ]))
+
+(define $Δ (/ (contract + (∂/∂ (* sqrt-g (. g~i~j (∂/∂ f x~j))) x~i)) sqrt-g))
+Δ ; (/ (+ (* f|r r) (* r^2 f|r|r) f|θ|θ) r^2)
+</textarea>
+
+
+<h2>微分形式の幾何学の公式を使う計算法</h2>
+
+<p>
+  微分形式は，座標系によらない微分方程式の表現を実現することに役に立つ．
+  ベクトル解析で登場するgrad・rot・divの一般化であるウェッジ積(∧)・外微分(d)・内部積(ι)・ホッジ作用素(*)という限られたオペレーターを組み合わせて，任意の座標系で成り立つ微分方程式を記述できる．
+  Egisonはこれらの微分形式のためのオペレーターの定義も簡潔に記述できる．
+  そのおかげで微分形式によるラプラシアンの記述も簡潔に記述できる．
+  微分形式を使うとラプラシアンは以下のように表現される．
+</p>
+
+`Delta = d delta + delta d`
+
+<textarea class="code">(define $N 2)
+
+(define $x [|r θ|])
+
+(define $g__ [| [| 1 0 |] [| 0 r^2 |] |])
+(define $g~~ (M.inverse g_#_#))
+
+(define $d
+  (lambda [%X]
+    !((flip ∂/∂) x X)))
+
+(define $hodge
+  (lambda [%A]
+    (let {[$k (df-order A)]}
+      (with-symbols {i j}
+        (* (sqrt (abs (M.det g_#_#)))
+           (foldl . (. (ε' N k)_[i_1]..._[i_N]
+                       A..._[j_1]..._[j_k])
+                  (map 1#g~[i_%1]~[j_%1] (between 1 k))))))))
+
+(define $δ
+  (lambda [%A]
+    (let {[$k (df-order A)]}
+      (* (** -1 (+ (* N (+ k 1)) 1))
+         (hodge (d (hodge A)))))))
+
+(define $Δ
+  (lambda [%A]
+    (match (df-order A) integer
+      {[,0 (δ (d A))]
+       [,N (d (δ A))]
+       [_ (+ (d (δ A)) (δ (d A)))]})))
+
+(define $f (function [r θ]))
+
+(Δ f)
+;(/ (+ (* -1 f|θ|θ) (* -1 r f|r) (* -1 r^2 f|r|r)) r^2)</textarea>

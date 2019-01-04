@@ -339,7 +339,7 @@ This restriction decides which loop-patterns a given <code>...</code> belongs to
 
 <p>
 By the way, we can omit the last argument of a loop-pattern.
-In such a case, Egison regards the last argument is <code>^_</code>, which is a pattern that no objects match.
+In such a case, Egison regards the last argument is <code>!_</code>, which is a pattern that no objects match.
 For example,
 </p>
 
@@ -352,7 +352,7 @@ is interpreted as
 
 <textarea class="code">(loop $i [1 n]
   <join _ <cons $a_i ...>>
-  ^_)</textarea>
+  !_)</textarea>
 
 <h2 id="see-also">See Also ...</h2>
 

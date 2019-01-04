@@ -51,8 +51,8 @@
     <li><a href="#inductive-data">Inductive Data</a></li>
     <li><a href="#tuple">Tuples (Multiple Values)</a></li>
     <li><a href="#collection">Collections</a></li>
-    <li><a href="#array">Array</a></li>
-    <li><a href="#hash">Hash</a></li>
+    <li><a href="#tensor">Tensors</a></li>
+    <li><a href="#hash">Hash Maps</a></li>
   </ul>
   <li><a href="#syntax">Syntax of Egison</a></li>
   <ul>
@@ -62,9 +62,8 @@
     <li><a href="#letrec"><code>letrec</code> expressions</a></li>
     <li><a href="#if"><code>if</code> expressions</a></li>
     <li><a href="#apply"><code>apply</code> expressions</a></li>
-    <li><a href="#generate-array"><code>generate-array</code> expressions</a></li>
-    <li><a href="#array-bounds"><code>array-bounds</code> expressions</a></li>
-    <li><a href="#array-ref"><code>array-ref</code> expressions</a></li>
+    <li><a href="#generate-tensor"><code>generate-tensor</code> expressions</a></li>
+    <li><a href="#tensor-size"><code>tensor-size</code> expressions</a></li>
     <li><a href="#seq"><code>seq</code> expressions</a></li>
   </ul>
 </ul>
@@ -139,8 +138,8 @@
 -100
 
 ;; Gaussian integers
-1+1i
-2i</textarea>
+(+ 1 i)
+(* 2 i)</textarea>
 
 <h3 id="rational">Rational Numbers</h3>
 
@@ -149,13 +148,8 @@
 </p>
 
 <textarea class="code">;; Rational numbers
-3/2
-6/4;=>3/2
--2/1;=>-2
-
-;; Complex numbers
-1+1i/1-1i
-10+2i/3</textarea>
+(/ 3 2)
+(/ 6 4);=>(/ 3 2)</textarea>
 
 <h3 id="floats">Floats</h3>
 
@@ -178,9 +172,9 @@
 </p>
 
 <textarea class="code">;; Characters
-'a'
-'1'
-'\n'</textarea>
+c#a
+c#1
+c#\n</textarea>
 
 <h3 id="strings">Strings</h3>
 
@@ -194,11 +188,7 @@
 <h3 id="undefined">Undefined</h3>
 
 <p>
-  As shown follows, you can use an array in Egison.
-  You can access any index in an array, even if it is out of range of array.
-  For example, you can try to get the 123456th element of an array whose size is 10.
-  In such a case, you get <code>undefined</code>.
-  Of course, you can use <code>undefined</code> in any other case.
+  <code>undefined</code> is a useful built-in data that you can put where you have not written yet.
 </p>
 
 <textarea class="code">undefined</textarea>
@@ -211,8 +201,8 @@
 First of all, we explain the enclosures of Egison.
 Perhaps you are surprised at how many kinds of enclosures in Egison when you first see code of Egison.
 In Egison, there are five kinds of enclosures, i.e. parentheses <code>(</code> <code>)</code>, brackets <code>&lt;</code> <code>&gt;</code>, square brackets <code>[</code> <code>]</code>, braces <code>{</code> <code>}</code>, double brackets <code>[|</code> <code>|]</code>, and double braces <code>{|</code> <code>|}</code>.
-They represents procedure call, an <a href="#inductive-data">inductive datum</a>, a <a href="#tuple">tuple</a>, a <a href="#collection">collection</a>, an <a href="#array">array</a>, and a <a href="#hash">hash</a>.
-Roughly speaking, you should use parentheses as LISP, brackets when you want to create patterns or your own data, double brackets to create an array, and double braces to create an hash.
+They represents procedure call, an <a href="#inductive-data">inductive datum</a>, a <a href="#tuple">tuple</a>, a <a href="#collection">collection</a>, an <a href="#tensor">tensor</a>, and a <a href="#hash">hash</a>.
+Roughly speaking, you should use parentheses as LISP, brackets when you want to create patterns or your own data, double brackets to create a tensor, and double braces to create an hash.
 Square brackets and braces are both used to collect values.
 The difference between them is the number of values.
 The former are used to collect the fixed number of values, but the latter are used to collect the others.
@@ -279,52 +269,52 @@ Using this notation, you can construct a collection from subcollections.
 <textarea class="code">{1 @{2 3} 4 5};=>{1 2 3 4 5}
 {1 @{2 @{3 4}} 5};=>{1 2 3 4 5}</textarea>
 
-<h3 id="array">Array</h3>
+<h3 id="tensor">Tensors</h3>
 
 <pre><code>  [|<i>value</i> ...|]</code></pre>
 
 <p>
-An array is a sequence of elements enclosed in double brackets.
-Adding an underscore <code>_</code> and an index at the end, you can get the associated element of an array.
-If the index is larger than the size of an array, you will get <a href="#undefined">undefined</a>.
+a tensor is a sequence of elements enclosed in double brackets.
+Adding an underscore <code>_</code> and an index at the end, you can get the associated element of a tensor.
+If the index is larger than the size of a tensor, you will get an error.
 </p>
 
-<textarea class="code">;; Arrays
-(define $xa (| 1 2 3 4 5 |))
-(array-bounds xa);=> [1 5]
-xa_1;=>1
-xa_5;=>5
-xa_8;=>undefined</textarea>
+<textarea class="code">;; Tensors
+(define $t [| 1 2 3 4 5 |])
+(tensor-size t);=> {5}
+t_1;=>1
+t_5;=>5
+t_8;=>error!</textarea>
 
 <p>
-We can get the start and last index of an array with <a href="#array-bounds">array-bounds</a>.
+We can get the size of a tensor with <a href="#tensor-size">tensor-size</a>.
 </p>
 
-<textarea class="code">(array-bounds (| 1 2 3 4 5 |));=>[1 5]</textarea>
+<textarea class="code">(tensor-size [| 1 2 3 4 5 |]);=>[1 5]</textarea>
 
 <p>
-An array can have another array as its element.
-It allows us to use multi-dimensional arrays.
+a tensor can have another tensor as its element.
+It allows us to use multi-dimensional tensors.
 </p>
 
 <textarea class="code">[| [| 1 2 3 |] [| 4 5 6 |] [| 7 8 9 |] |]_1;=>[| 1 2 3 |]
 [| [| 1 2 3 |] [| 4 5 6 |] [| 7 8 9 |] |]_2_3;=>6</textarea>
 
 <p>
-Egison prepares special syntax for arrays.
-They are <a href="#generate-array">generate-array</a>, <a href="#array-bounds">array-bounds</a>, and <a href="#array-ref">array-ref</a>.
-The former gives an easy way to create complicated arrays, and the latter shows the size of arrays. 
+Egison prepares special syntax for tensors.
+They are <a href="#generate-tensor">generate-tensor</a>, <a href="#tensor-size">tensor-size</a>, and <a href="#tensor-ref">tensor-ref</a>.
+The former gives an easy way to create complicated tensors, and the latter shows the size of tensors. 
 The details are described in each subsection.
 </p>
 
-<h3 id="hash">Hash</h3>
+<h3 id="hash">Hash Maps</h3>
 
 <pre><code>  {|[<i>key</i> <i>value</i>] ...|}</code></pre>
 
 <p>
-A hash is a sequence of key-value pairs enclosed in double braces.
-Adding an underscore <code>_</code> and an index at the end, we can get the associated element of a hash.
-If the index is not a key of a hash, we will get <a href="#undefined">undefined</a>.
+A hash map is a sequence of key-value pairs enclosed in double braces.
+Adding an underscore <code>_</code> and an index at the end, we can get the associated element of a hash map.
+If the index is not a key of a hash map, we will get <a href="#undefined">undefined</a>.
 </p>
 
 <textarea class="code">{| [1 11] [2 12] [3 13] [4 14] [5 15] |}_1;=>11
@@ -435,63 +425,44 @@ That is, <code>(apply f [x<sub>0</sub> x<sub>1</sub> x<sub>2</sub>])</code> is t
 
 <textarea class="code">(apply + [1 2]);=>3</textarea>
 
-<h3 id="generate-array"><code>generate-array</code> expressions</h3>
+<h3 id="generate-tensor"><code>generate-tensor</code> expressions</h3>
 
-<pre><code>  (generate-array [<i>variable</i> ...] [<i>integer</i> ...] <i>formula</i>)</code></pre>
+<pre><code>  (generate-tensor <i>function</i> <i>collection-of-natural-numbers</i>)</code></pre>
 
 <p>
-Egison is equipped with two ways to generate an array.
+Egison is equipped with two ways to generate a tensor.
 One is to write elements explicitly using double brackets <code>[|</code> <code>|]</code>.
-The other is this <code>generate-array</code> expression.
+The other is this <code>generate-tensor</code> expression.
 </p>
 
-<textarea class="code">(generate-array [$x] [5] x)
-;=>[|1 2 3 4 5|]
-(generate-array [$x] [5] (* x 2))
-;=>[|2 4 6 8 10|]</textarea>
+<textarea class="code">(generate-tensor (lambda [$i] i) {5})
+;=>[| 1 2 3 4 5 |]
+(generate-tensor + {2 2})
+;=>[| [| 2 3 |] [| 3 4 |] |]</textarea>
 
 <p>
-The first argument is the index variable, the second is the size of each dimension, and the third argument determines each element of the array.
+The first argument is the index variable, the second is the size of each dimension, and the third argument determines each element of the tensor.
 Note the first argument and the second argument have the same number of elements.
-For example, the above and the followings are examples to create an array whose size is 5 and 5&times;3, respectively.
+For example, the above and the followings are examples to create a tensor whose size is 5 and 5&times;3, respectively.
 </p>
 
-<textarea class="code">(generate-array [$x $y] [5 3] (* x y))
+<textarea class="code">(generate-tensor * {5 3})
 ;=>[|[|1 2 3|] [|2 4 6|] [|3 6 9|] [|4 8 12|] [|5 10 15|]|]
-(generate-array [$x $y] [5 3] (+ (* 10 x) y))
-;=>[|[|11 12 13|] [|21 22 23|] [|31 32 33|] [|41 42 43|] [|51 52 53|]|]
-(generate-array [$x $y] [5 3] [x y])
-;=>[|[|[1 1] [1 2] [1 3]|] [|[2 1] [2 2] [2 3]|] [|[3 1] [3 2] [3 3]|] [|[4 1] [4 2] [4 3]|] [|[5 1] [5 2] [5 3]|]|]</textarea>
+(generate-tensor (lambda [$x $y] (+ (* 10 x) y)) {5 3})
+;=>[|[|11 12 13|] [|21 22 23|] [|31 32 33|] [|41 42 43|] [|51 52 53|]|]</textarea>
 
-<h3 id="array-bounds"><code>array-bounds</code> expressions</h3>
+<h3 id="tensor-size"><code>tensor-size</code> expressions</h3>
 
-<pre><code>  (array-bounds <i>array</i>)</code></pre>
+<pre><code>  (tensor-size <i>tensor</i>)</code></pre>
 
 <p>
-An <code>array-bounds</code> expression tells us the start index and last index of a given array.
+An <code>tensor-size</code> expression tells us the start index and last index of a given tensor.
 </p>
 
-<textarea class="code">(array-bounds (| 1 2 3 4 5 6 |));=>[1 6]
-(array-bounds (| 1 2 3 6 |));=>[1 4]
-(array-bounds (| 1 2 3 |));=>[1 3]
-(array-bounds (| |));=>[1 0]
-(array-bounds (| (| 1 2 3 |) |));=>[1 1]
-(array-bounds (generate-array (+ $ 100) [3 5]));=>[3 5]</textarea>
-
-<h3 id="array-ref"><code>array-ref</code> expressions</h3>
-
-<pre><code>  (array-ref <i>array</i> <i>integer</i>)</code></pre>
-
-<p>
-An <code>array-ref</code> is indexing function.
-(array-ref xa i) returns the i-th element of xa.
-</p>
-
-<textarea class="code">(array-ref (| 1 2 3 4 5 6 |));=>[1 6]
-(array-ref (| 1 2 3 6 |));=>[1 4]
-(array-ref (| 1 2 3 |));=>[1 3]
-(array-ref (| |));=>[1 0]
-(array-ref (| [| 1 2 3 |] |));=>[1 1]</textarea>
+<textarea class="code">(tensor-size [| 1 2 3 4 5 6 |]);=>{6}
+(tensor-size [| |]);=>{}
+(tensor-size [| [| 1 2 3 |] |]);=>{1 3}
+(tensor-size (generate-tensor + {3 5}));=>{3 5}</textarea>
 
 <h3 id="seq"><code>seq</code> expressions</h3>
 
