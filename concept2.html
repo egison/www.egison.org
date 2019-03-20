@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!--# include file="//templates/header.html" -->
+    <style>
+.version {
+    padding-top: 10px;
+    color: #888;
+}
+.version2 {
+    padding-top: 0px;
+    color: #888;
+}
+.CodeMirror {
+    margin-top: 0px;
+}
+    </style>
+    <title>Egison - テンソルの添字記法のプログラミングへの導入</title>
+  </head>
+  <body data-spy="scroll" data-target=".bs-sidebar" data-offset="0">
+    <!--# include file="//templates/navbar.html" -->
+
+    <div class="container manual">
+
+      <div class="row">
+
+        <div class="col-md-12" id="top" role="complementary">
+          <h1>テンソルの添字記法のプログラミングへの導入</h1>
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-6" role="main">
+
+<hr/>
+<p>
+  テンソルの添字記法は、数学や物理では広く使われている記法です。
+  テンソルの添字記法を使うと、ベクトルや行列よりも高階のテンソルの計算や、多くの行列が現れる計算を簡潔に記述できます。
+</p>
+
+<p>
+  Egisonは、テンソルの添字記法をそのままプログラムで使うことができます。
+  これは、「スカラー仮引数・テンソル仮引数」という独自のアイデアを元にしたテンソルの添字記法をプログラミングに導入するための手法が、実装されているからです。
+  より直接的な記述で数式を表現できる数式処理システムの研究を進めていく過程で、この手法は発見されました。
+</p>
+
+<p>
+  このドキュメントでは、この手法について解説します。
+  このドキュメントは、テンソルの添字記法についての知識が読者にすでにあることを仮定しています。
+</p>
+<hr/>
+
+<h2>テンソルの添字記法</h2>
+
+<p>
+例えば、テンソル解析で登場するリーマン曲率テンソルの公式を、Wolfram言語(Mathematica)による一般的な方法で記述したものと、Egisonで記述したものをくらべると以下のようになります。
+Wolfram言語による記述では、テンソルのそれぞれの添字に対応する次元は全て<code>M</code>であると仮定されています。
+</p>
+
+<div class="version">Formula of Riemann curvature tensor</div>
+<p>
+  `R_(jkl)^i= (partial Gamma_(jl)^i)/(partial x^k) - (partial Gamma_(jk)^i)/(partial x^l) + Gamma_(jl)^m Gamma_(mk)^i - Gamma_(jk)^m Gamma_(ml)^i`
+</p>
+
+<div class="version">Wolfram program that represents the above formula</div>
+<textarea class="ruby-code">R=Table[D[Γ[[i,j,l]],x[[k]]] - D[Γ[[i,j,k]],x[[l]]]
+       +Sum[Γ[[m,j,l]] Γ[[i,m,k]]
+          - Γ[[m,j,k]] Γ[[i,m,l]],
+          {m,M}],
+        {i,M},{j,M},{k,M},{l,M}]</textarea>
+          
+<div class="version">Egison program that represents the above formula</div>
+<textarea class="code">(define $R~i_j_k_l
+  (with-symbols {m}
+    (+ (- (∂/∂ Γ~i_j_l x~k) (∂/∂ Γ~i_j_k x~l))
+       (- (. Γ~m_j_l Γ~i_m_k) (. Γ~m_j_k Γ~i_m_l)))))</textarea>
+
+<p>
+  Wolfram言語による記述では、<code>Table</code>式と<code>Sum</code>式による二重ループがプログラム中に現れているのに対し、Egisonによる記述では、数式と同様にフラットにこの式を記述できていることに注目してください。
+  これは、テンソルの添字記法をプログラミングで使うことによって実現されています。
+  特に、`\Gamma_{jk}^{m} \Gamma_{ml}^{i} - \Gamma_{jl}^{m} \Gamma_{mk}^{i}`を表現する際に、Wolfram言語で使われている<code>Sum</code>式に対応するループ構造がEgisonによる記述に現れていないのは、アインシュタインの縮約記法がEgisonで導入できているためです。
+</p>
+
+<p>
+  この例の中で特に注目してもらいたい箇所は、右辺第一項の`\frac{\partial \Gamma_{jk}^{i}}{\partial x^l}`を表現するEgisonプログラム<code>(∂/∂ Γ~i_j_k x~l)</code>です。
+  Wolfram言語では、微分関数<code>D</code>は、<code>Table</code>式の中で、テンソルの成分に対して適用されています。
+  しかし、Egisonでは微分関数<code>∂/∂</code>はテンソルに対してそのまま適用されています。
+</p>
+
+<p>
+  これは、微分関数<code>∂/∂</code>が<b>スカラー関数</b>としてEgisonで定義されていることにより、可能になっています。
+  スカラー関数とは、スカラーに対して定義された関数で、引数としてテンソルが与えられた場合、テンソルの成分毎にその関数を自動で適用する関数です。
+  スカラー関数はEgisonによって新しく導入された関数の概念です。
+</p>
+
+<p>
+  スカラー関数を定義する際には、その引数としてスカラーのみを考えます。
+  つまり、この<code>∂/∂</code>関数の定義の中で、引数がスカラーである場合の処理しかプログラマは記述する必要はありません。
+  それにもかかわらず、このスカラー関数という機構のおかげで、プログラム<code>(∂/∂ Γ~i_j_k x~l)</code>は、4階のテンソルを返します。
+</p>
+
+<p>
+  スカラー関数に対して、<b>テンソル関数</b>という関数の概念があります。
+  テンソル関数は、引数としてテンソルが与えられた場合、引数のテンソルをテンソルとしてそのまま扱います。
+  スカラー関数として定義できない関数、例えば、行列式を計算する関数や、テンソル同士のかけ算を計算する関数を定義する際には、テンソル関数として定義します。
+  上記のプログラムにあらわれているテンソルのかけ算を計算するための関数<code>.</code>は、テンソル関数としてEgisonで定義されています。
+</p>
+
+<!--
+<p>
+そうであるにも関わらず、プログラム<code>(∂/∂ Γ~i_j_k x~l)</code>は、左から順に上添字<code>i</code>、下添字<code>j</code>、下添字<code>k</code>、下添字<code>l</code>という添字を持つ4階のテンソルを返す。
+ここで、<code>x~l</code>の上添字の<code>~l</code>は、反転して下添字<code>_l</code>となっている。
+その理由は、微分作用素はテンソル解析において特別な関数で分母に適用されたテンソルの添字は上下反転するからである。
+このあたりの詳しい事情は、第~\ref{egison}節で詳しく論じる。
+</p>
+-->
+
+<p>
+  <code>+</code>や<code>-</code>、<code>∂/∂</code>のようなスカラー関数と、<code>.</code>のようなテンソル関数とを分類し、区別しているのが、この手法の肝です。
+  こうすることにより、任意の関数をテンソルに対して、特別な記述を必要とせずに適用できるようになります。
+  その結果、プログラミング全体にアインシュタインの縮約記法を含むテンソルの添字表記法を自然に導入できます。
+</p>
+
+<h2>スカラー仮引数とテンソル仮引数</h2>
+
+<p>
+  前節の最後で述べたとおり、この手法のアイデアの核は、関数をスカラー関数とテンソル関数の2種類に分類し、区別するところにあります。
+  本節で解説する<b>スカラー仮引数</b>と<b>テンソル仮引数</b>は、ユーザーが定義した関数がどちらの種類の関数であるか指定するために用意された概念です。
+</p>
+
+<p>
+  Egisonでは、Schemeと同様<code>lambda</code>構文を用いて関数を生成します。
+  その際、仮引数の先頭に<code>$</code>、または<code>%</code>を付加します。
+  <code>$</code>が先頭に付加されている仮引数はスカラー仮引数となり、<code>%</code>が先頭に付加された仮引数はテンソル仮引数となります。
+  スカラー仮引数は、引数としてテンソルが与えられた場合、テンソルの成分毎にその関数を適用します。
+  対して、テンソル仮引数は通常の仮引数と同様に、引数としてテンソルが与えられた場合、テンソルをテンソルとしてそのまま扱います。
+</p>
+
+<p>
+  スカラー関数の例として、<code>min</code>関数の定義をします。
+  以下のプログラムはその定義です。
+  <code>min</code>関数は、引数として数を2つ取り、そのうち小さい方の数を返す関数です。
+  <code>min</code>関数は、以下のようにテンソルのことを意識することなく定義されます。
+  <code>min</code>関数の仮引数は全てスカラー仮引数であり、<code>$</code>が仮引数の先頭に付加されます。
+  <code>$min</code>と関数名の前に<code>$</code>が付いているが、これはEgisonの慣習でスカラー仮引数、テンソル仮引数とは関係ないので無視してよいです。
+</p>
+
+<textarea class="code">(define $min (lambda [$x $y] (if (less-than? x y) x y)))</textarea>
+
+<p>
+  この<code>min</code>関数は、以下のように引数としてテンソルを扱うことができます。
+  これは、スカラー関数である<code>min</code>関数の適用がテンソルの要素ごとに自動でマップされるためです。
+</p>
+
+<textarea class="code">(min [| 1 2 3 |]_i [| 10 20 30 |]_i)
+;[| 1 2 3 |]_i
+  
+(min [| 1 2 3 |]_i [| 10 20 30 |]_j)
+;[| [| 1 1 1 |] [| 2 2 2 |] [| 3 3 3 |] |]_i_j</textarea>
+
+<p>
+  テンソル関数の例として、テンソル同士のかけ算を計算する関数<code>.</code>を定義します。
+  以下のプログラムはその定義です。
+  <code>.</code>関数の仮引数は全てテンソル仮引数であり、<code>%</code>が仮引数の先頭に付加されます。
+  添字を持ったテンソルが、テンソル関数の引数に与えられた場合、テンソルの添字を保持したままテンソルはテンソル関数に渡されます。
+  ここで、<code>contract</code>構文は、上下に同じ添字がある場合に、縮約をおこなうための関数です。
+  <code>contract</code>構文は、第1引数に縮約をおこなうための関数、第2引数に対象のテンソルを受け取ります。
+</p>
+
+<textarea class="code">(define $. (lambda [%t1 %t2] (contract + (* t1 t2))))</textarea>
+
+<p>
+  以下のように<code>.</code>関数を使って、ベクトルの内積、アダマール積、テンソル積が表現できます。
+</p>
+
+<textarea class="code">(. [| 1 2 3 |]~i [| 10 20 30 |]_i)
+;140
+
+(. [| 1 2 3 |]_i [| 10 20 30 |]_j)
+;[| [| 10 20 30 |] [| 20 40 60 |] [| 30 60 90 |] |]_i_j
+
+(. [| 1 2 3 |]_i [| 10 20 30 |]_i)
+;[| 10 40 90 |]_i</textarea>
+
+<h2>微分形式の表現</h2>
+
+<p>
+  テンソルの添字が省略された場合の添字の補完のルールを上手に設計すると、ここまで説明してきた手法をそのまま使って、微分形式(共変テンソル)を扱う演算も簡潔に表現できるようになります。
+  本節ではこのことについて説明します。
+</p>
+
+<p>
+  一般に`n`階のテンソルに`k`個の添字がが付加されている場合、そのテンソルを`(n-k)`形式として扱うことにします。
+  例えば、3階のテンソルに<code>ω~i_j</code>と2つ添字が付加されていた場合は、そのテンソルを1形式として扱います。
+  同様のルールは数学でも使われています。
+  このルールに適合する省略された添字の補完のルールを考えてみましょう。
+</p>
+
+<p>
+  以下、例として、<code>A</code>、<code>B</code>はスカラーを値に持つ2形式とします。
+</p>
+
+<p>
+  以下のように、添字が省略された場合に、テンソルは微分形式として扱われます。
+  省略された添字については、以下のように同じ組み合わせの添字を自動的に補完します。
+</p>
+
+<textarea class="code">(+ A B)
+;(+ A_t1_t2 B_t1_t2)</textarea>
+
+<p>
+  ほとんどの関数適用については、上記のように添字を補完すれば、微分形式の演算が表現できます。
+  ただし、ウェッジ積のような微分形式のための特別な演算の場合には、このような補完では適していないことがあります。
+  例えば、ウェッジ積の場合は、以下のように、引数のそれぞれに全て異なる添字を付加したいです。
+</p>
+
+<textarea class="code">(wedge A B)
+;(wedge A_t1_t2 B_t3_t4)</textarea>
+
+<p>
+  そこで導入したのが、以下で使われている<code>!</code>です。
+  <code>!</code>が関数適用の前に付加されている場合は、後者の方法により、省略された添字を補完します。
+</p>
+
+<textarea class="code">(define $wedge
+  (lambda [%X %Y]
+    !(. X Y)))</textarea>
+
+<p>
+  <code>!</code>を使う必要があるのは、ウェッジ積や外微分など微分形式のための特別な関数の定義の中だけです。
+  そのため、一般ユーザーは<code>!</code>について意識する必要ありません。
+</p>
+
+<p>
+  実は、微分形式に対して、添字の付加のパターンは以上の2つで事足ります。
+  そして、後者のような添字の付加をしたいのは、微分形式のための特別な演算のみです。
+  よって、微分形式のための特別な関数のためにだけ、添字の補完方法を後者の補完方法に変更できるようにすればよいです。
+  その他の関数の場合は、デフォルトで前者の方法で、省略された添字を補完します。
+</p>
+
+<p>
+  このように、テンソルの添字が省略された場合の、添字の補完のルールを上手に設計することにより、微分形式の計算は表現できます。
+</p>
+
+<p>
+  外微分は以下のように実装できます。
+</p>
+
+<textarea class="code">(define $d
+  (lambda [%X]
+    !((flip ∂/∂) params X)))</textarea>
+
+<p>
+  ウェッジ積<code>wedge</code>と外微分<code>d</code>を使うと、以下のように曲率形式の公式を表現することが可能になります。
+</p>
+
+<div class="version">Formula of the curvature form</div>
+<p>
+  `Omega_j^i = d omega_j^i + omega_k^i ^^ omega_j^k`
+</p>
+<div class="version">Egison program that represents the above formula</div>
+<textarea class="code">(define $Ω~i_j
+  (with-symbols {k}
+    (df-normalize (+ (d ω~i_j)
+                     (wedge ω~i_k ω~k_j)))))</textarea>
+
+<h2>ベクトル場の表現</h2>
+
+<p>
+  微分形式と同様の方法で、ベクトル場を含む反変テンソルを扱う演算を簡潔に表現できるようになります。
+</p>
+
+<p>
+  ただし、反変テンソルを扱うにあたり、省略されたテンソルの添字を付加するルールに特別なルールが1つ追加します。
+  以下のように関数適用の式の関数部に、添字が省略されたテンソルがあった場合、関数部のテンソルには下添字を、引数のテンソルには上添字を付加し、<code>.</code>関数をこれらに適用します。
+  これにより、微分形式にベクトル場を適用する数学でよく現れる演算を表現します。
+</p>
+
+<p>
+  以下は、`n(n >= 1)`形式の<code>ω</code>にベクトル場<code>X</code>を適用する例です。
+</p>
+
+<textarea class="code">(ω X);(. ω_t1 X~t1)</textarea>
+
+<p>
+  以下は、`n(n >= 2)` 形式の<code>ω</code>にベクトル場<code>X</code>と<code>Y</code>を適用する例です。
+</p>
+
+<textarea class="code">(ω X Y);(. ω_t1_t2 X~t1 X~t2)</textarea>
+
+<p>
+  以下は、`n(n >= 2)` 形式の<code>ω</code>に2階の共変テンソル<code>X</code>を適用する例です。
+</p>
+
+<textarea class="code">(ω X);(. ω_t1_t2 X~t1~t2)</textarea>
+
+
+          <h2 id="next">次に見てほしいもの...</h2>
+          
+          <p>
+            <a class="btn btn-lg btn-github" href="https://arxiv.org/pdf/1702.06343.pdf" role="button" target="_blank">Egison テンソル論文 (英語) &raquo;</a>
+            <a class="btn btn-lg btn-primary" href="https://www.egison.org//math/" role="button">Egison 数学ノート &raquo;</a>
+            <a class="btn btn-lg btn-primary" href="//" role="button">トップに戻る</a>
+          </p>
+
+        </div>
+        
+      </div><!--/row-->
+    
+      <hr class="divider">
+      
+      <div class="row">
+        <!--# include file="/templates/disqus-main.html" -->
+      </div><!--/row-->
+      
+    </div><!-- /.container -->
+    
+    <!--# include file="/templates/footer.html" -->
+    <script src="/vendors/codemirror/mode/ruby/ruby.js"></script>
+    <script src="/vendors/codemirror/mode/haskell/haskell.js"></script>
+    <script>
+      $('.code').each(function() {
+        var $this = $(this);
+        var myCodeMirror = CodeMirror.fromTextArea(this, {
+          readOnly: true,
+          lineWrapping: true
+        });
+      });
+      $('.haskell-code').each(function() {
+        var $this = $(this);
+        var myCodeMirror = CodeMirror.fromTextArea(this, {
+          readOnly: true,
+          lineWrapping: true,
+          mode: "haskell"
+        });
+      });
+      $('.ruby-code').each(function() {
+        var $this = $(this);
+        var myCodeMirror = CodeMirror.fromTextArea(this, {
+          readOnly: true,
+          lineWrapping: true,
+          mode: "ruby"
+        });
+      });
+    </script>
+  </body>
+</html>

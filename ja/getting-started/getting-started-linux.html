@@ -21,7 +21,21 @@
 
         <div class="col-md-12" role="main">
           
-          <h2 id="how-to-install">Egison のインストール方法</h2>
+          <h2 id="how-to-install-homebrew">Egison のインストール方法 (Packages)</h2>
+
+          <p>
+            Linux ユーザーは、<code>apt</code> (または <code>dpkg</code>) または <code>yum</code> を使って簡単にEgisonをインストールできます。
+          </p>
+
+          <pre><code>$ suudo yum install https://github.com/egison/egison-package-builder/releases/download/3.7.14/egison-3.7.14.x86_64.rpm</code></pre>
+
+          <pre><code>$ wget https://github.com/egison/egison-package-builder/releases/download/3.7.14/egison-3.7.14.x86_64.deb
+$ sudo apt install ./egison-3.7.14.x86_64.deb</code></pre>
+
+                    <pre><code>$ wget https://github.com/egison/egison-package-builder/releases/download/3.7.14/egison-3.7.14.x86_64.deb
+$ sudo dpkg -i ./egison-3.7.14.x86_64.deb</code></pre>
+
+          <h2 id="how-to-install">Egison のインストール方法 (Haskell Platform)</h2>
 
           <h3>1. Haskell Platform をインストール</h3>
           
