@@ -46,6 +46,8 @@
     <li><a href="#and-patterns">And-Patterns</a></li>
     <li><a href="#or-patterns">Or-Patterns</a></li>
     <li><a href="#not-patterns">Not-Patterns</a></li>
+    <li><a href="#later-patterns">Later Patterns</a></li>
+    <li><a href="#sequential-patterns">Sequential Patterns</a></li>
     <li><a href="#loop-patterns">Loop Patterns</a></li>
     <li><a href="#let-patterns">Let Patterns</a></li>
   </ul>
@@ -261,6 +263,27 @@ An and-pattern is a pattern that matches the object, if and only if, all of the 
 
 <textarea class="code">(match {1 1 2 3} (list integer) {[<cons (later ,x) <cons x _>> x]})
 ;=>1</textarea>
+
+<h3 id="sequential-patterns">Sequential Patterns</h3>
+
+<pre><code>{<i>pattern</i> ...}</code></pre>
+
+<p>
+A sequential pattern is a generalization of a later pattern.
+A sequential pattern is represented as a list of patterns.
+Pattern matching is executed for each pattern in order.
+<code>@</code> that appears in a sequential pattern is called <i>later pattern variable</i>.
+The target data bound to later pattern variables are pattern-matched in the next sequence.
+When multiple later pattern variables appear, they are pattern-matched as a tuple in the next sequence.
+It allows us to apply not-patterns for different parts of a pattern at the same time.
+</p>
+
+<textarea class="code">(match-all {2 3 1 4 5} (list integer)
+  [{<cons # <cons # <cons $x _>>>
+    [,(+ x 1) #]
+    ,(+ x 2)}
+   "Matched"])
+;=> {"Matched"}</textarea>
 
 <h3 id="loop-patterns">Loop Patterns</h3>
 
