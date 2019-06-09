@@ -225,9 +225,9 @@ $w_n
 <join _ <cons $x_1 <join _ <cons $x_2 _>>>>
 
 ;; Not-patterns
-^_
-^,10
-<cons $x ^<cons ,x _>>
+!_
+!,10
+<cons $x !<cons ,x _>>
 
 ;; And-patterns
 (& ,3 $n)
@@ -408,7 +408,7 @@ $w_n
 ;=>{1 1 2 2}
 
 (match-all {1 1 2 3 2} (multiset integer)
-  [<cons $x ^<cons ,x _>> x])
+  [<cons $x !<cons ,x _>> x])
 ;=>{3}</textarea>
 
 <h3 id="loop-patterns">Loop-patterns</h3>
