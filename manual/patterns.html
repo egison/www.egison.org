@@ -308,7 +308,7 @@ The pattern is a "let" pattern, and not a "letrec" pattern.
 <textarea class="code">(define $f
   (lambda [$x]
     (match x (multiset integer)
-      {[(let {[$n (size x)]}
+      {[(let {[$n (length x)]}
           <cons ,n <cons ,n _>>)
         #t]
        [_ #f]})))
