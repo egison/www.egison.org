@@ -57,6 +57,7 @@
   <li><a href="#syntax">Syntax of Egison</a></li>
   <ul>
     <li><a href="#lambda"><code>lambda</code> expressions</a></li>
+    <li><a href="#cambda"><code>cambda</code> expressions</a></li>
     <li><a href="#let"><code>let</code> expressions</a></li>
     <li><a href="#let-star"><code>let*</code> expressions</a></li>
     <li><a href="#letrec"><code>letrec</code> expressions</a></li>
@@ -355,6 +356,27 @@ The second argument is a formula, which is the body of the function.
 ((* $1 $1) 5);=>25
 ((map $2 $1) {1 2 3} (+ $ 1));=>{2 3 4}</textarea>
 
+<h3 id="cambda"><code>cambda</code> expressions</h3>
+
+<pre><code>  (cambda <i>variable</i> <i>formula</i>)</code></pre>
+
+<p>
+<code>cambda</code> is the combination of <code>collection</code> and <code>lambda</code>.
+<code>cambda</code> differs from <code>lambda</code> in that it can take arbitrary number of arguments.
+For instance, the following code defines a function which calculates the average of its arguments.
+</p>
+
+<textarea class="code">
+(define $average (cambda $xs (/ (sum xs) (length xs))))
+(average 1 2 3);=>2
+(average 1 2 3 4 5);=>3
+</textarea>
+
+<p>
+Note that <code>cambda</code> requires only one argument variable, which is bound to the collection consisting of its arguments
+(e.g. in the case of <code>(average 1 2 3)</code>, the variable <code>xs</code> is bound to <code>{1 2 3}</code>).
+</p>
+
 <h3 id="let"><code>let</code> expressions</h3>
 
 <pre><code>  (let {[<i>variable</i> <i>formula</i>] ...} <i>formula</i>)</code></pre>
@@ -374,7 +396,7 @@ Since a formula in the first argument is evaluated with the original environment
 
 <p>
 A <code>let*</code> expression is a syntax suger to avoide nested <code>let</code> expressions.
-This expression is desugared as follow.
+This expression is desugared as follows.
 </p>
 
 <textarea class="code">(let* {[$x 2] [$y (+ x 1)]} y)
