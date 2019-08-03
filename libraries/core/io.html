@@ -64,6 +64,16 @@
 <dt id="demo-each"><code>each</code></dt>
 <dd><textarea class="code">[(each print (map show (take 10 primes)))]</textarea></dd>
 
+<dt id="demo-debug"><code>debug</code></dt>
+<dd><textarea class="code">(foldl (+ $ $) 0 (debug (take 10 nats)))
+;=>{1 2 3 4 5 6 7 8 9 10}
+;=>55</textarea></dd>
+
+<dt id="demo-debug2"><code>debug2</code></dt>
+<dd><textarea class="code">(foldl (+ $ $) 0 (debug2 "nats : " (take 10 nats)))
+;=>nats : {1 2 3 4 5 6 7 8 9 10}
+;=>55</textarea></dd>
+
 </dl>
 
 <h2 id="next">What to do next...</h2>
