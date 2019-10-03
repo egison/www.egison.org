@@ -99,14 +99,14 @@
 
 <p>
   To load your own program, we can use <code>load-file</code> expressions.
-  A <code>load-file</code> expression takes a full-path to the Egison program file.
+  A <code>load-file</code> expression takes a full-path or a relative path to the Egison program file.
 </p>
 
 <textarea class="code">; Load Egison library
 (load "lib/core/number.egi")
 
 ; Load your program
-(load-file "/home/xxx/code/egison/myfile.egi")</textarea>
+(load-file "myfile.egi")</textarea>
 
 <h2 id="built-in">Built-in Data</h2>
 
