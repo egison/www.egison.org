@@ -22,11 +22,113 @@
         <div class="col-md-12" role="main">
 
 <p>
-  Please read <a href="https://arxiv.org/pdf/1808.10603.pdf" target="_blank">our paper</a> on how to define matchers.
+In Egison, every pattern-matching algorithm is defined by matchers.
+<code>list</code>, <code>multiset</code> and <code>set</code> are matchers too, which are defined in standard libraries.
+<br/>
+This chapter explains how users can define their original matchers.
+</p>
+
+<hr/>
+
+<ul>
+  <li><a href="#matcher"><code>matcher</code></a></li>
+  <li><a href="#algebraic-data-matcher"><code>algebraic-data-matcher</code></a></li>
+</ul>
+
+<hr/>
+
+<h2 id="matcher"><code>matcher</code> Expression</h2>
+
+<!-- TODO: Add cons/snoc/empty to pdpattern -->
+<pre><code>  (matcher {[<i>primitive pattern pattern</i> <i>matcher</i> {[<i>primitive data pattern</i> <i>formula</i>] ...}] ...})
+  <i>pppattern (primitive pattern pattern)</i> ::= _ | $ | ,$<i>value</i> | &lt;<i>identifier</i> <i>pppattern</i> ...&gt; | [<i>pppattern</i> ... ]
+  <i>pdpattern (primitive data pattern)</i> ::= _ | $<i>identifier</i> | &lt;<i>Identifier</i> <i>pdpattern</i> ...&gt; | [<i>pdpattern</i> ... ] | <i>constants</i></code></pre>
+
+<p>
+Let's think about defining a matcher <code>unordered-integer-pair</code>, which matches with a tuple of 2 integers but ignores the order.
+</p>
+
+<textarea class="code">(match-all [1 2] unordered-integer-pair {[<pair $a $b> [a b]]})
+;=>{[1 2] [2 1]}</textarea>
+
+<p>
+This <code>unordered-integer-pair</code> matcher can be defined like as follows.
+</p>
+
+<textarea class="code">(define $unordered-integer-pair
+  (matcher
+    {[<pair $ $> [integer integer]
+      {[[$x $y] {[x y] [y x]}]}]
+     [$ something
+      {[$tgt {tgt}]}]}))</textarea>
+
+<p>
+Line 3 and 4 corresponds with the case where we want to decompose the tuple, and line 5 and 6 is for the case where we don't want to.
+<br/>
+The expression <code><pair $ $></code> in line 3 defines a pattern constructor named <code>pair</code>, which enables the pattern expression like <code>&lt;pair $x $y&gt;</code>. The following <code>[integer integer]</code> indicates that the both of matched 2 terms should be recursively pattern-matched by using <code>integer</code> matcher.
+<br/>
+The expression <code>[[$x $y] {[x y] [y x]}]</code> in line 4 defines the correspondense between the syntastic representation of the target data and pattern-matching results.
+<br/>
+In the example above, the target data <code>[1 2]</code> is syntastically matched with <code>[$x $y]</code>, making the variable <code>x</code> bound to <code>1</code> and <code>y</code> to <code>2</code>. As a result, the pattern-matching result (specified with <code>{[x y] [y x]}</code>) will be <code>{[1 2] [2 1]}</code>.
+Then, variable <code>a</code> and <code>b</code> in the pattern expression <code>&lt;pair $a $b&gt;</code> are bound to one of the pattern-matching result.
+Since it is a <code>match-all</code> expression, this binding enumrates for the entire results, meaning that first <code>a</code> is bound to <code>1</code> and <code>b</code> to <code>2</code>, and secondly <code>a</code> to <code>2</code> and <code>b</code> to <code>1</code>.
 </p>
 
 <p>
-  Please check the chapter <i><a href="./mechanism.html">Pattern Matching Mechanism</a></i>, too.
+In addition, we can make a "polymorphic" matcher by making it a function that takes matcher and returns a matcher. For example, <code>unordered-pair</code> for arbitrary matcher can be defined as follows:
+</p>
+
+<textarea class="code">(define $unordered-pair
+  (lambda [$m]
+    (matcher
+      {[<pair $ $> [m m]
+              {[[$x $y] {[x y] [y x]}]}]
+      [$ something
+      {[$tgt {tgt}]}]})))
+
+; Example
+(match [{1 2} {3 4}] (unordered-pair (multiset integer)) {[<pair <cons ,4 _> _> #t]})
+;=>#t</textarea>
+
+<h2 id="matcher"><code>algebraic-data-matcher</code> Expression</h2>
+
+<pre><code>  (algebraic-data-matcher {&lt;<i>identifier</i> <i>matcher</i> ...&gt; ...})</code></pre>
+
+<p>
+<code>algebraic-data-matcher</code> is a convenient syntax sugar for defining normal matchers, which decomposes data accordingly to their data structure.
+<br/>
+For example, the following code defines a matcher for terms in simple lambda calculus.
+</p>
+
+<textarea class="code">(define $term
+  (algebraic-data-matcher
+    {<var string>       ; variable
+     <abs string term>  ; abstraction
+     <app term term>    ; application
+     }))</textarea>
+
+<p>
+The above definition is desugared into the following one:
+</p>
+
+<textarea class="code">(define $term
+  (matcher
+    {[<var $> [string]
+      {[<Var $x> {x}]
+       [_ {}]}]
+     [<abs $ $> [string term]
+      {[<Abs $x $t> {[x t]}]
+       [_ {}]}]
+     [<app $ $> [term term]
+      {[<App $s $t> {[s t]}]
+       [_ {}]}]
+     [$ [something]
+      {[$tgt {tgt}]}]}))</textarea>
+
+<hr/>
+
+<p>
+  If you are interested in how our pattern-matching works, please check out the chapter <i><a href="./mechanism.html">Pattern Matching Mechanism</a></i>.
 </p>
 
 <h2 id="next">What to do next...</h2>
@@ -39,15 +141,15 @@
         </div>
 
       </div><!--/row-->
-    
+
       <hr class="divider">
-      
+
       <div class="row">
         <!--# include file="/templates/disqus-main.html" -->
       </div><!--/row-->
-      
+
     </div><!-- /.container -->
-    
+
     <!--# include file="/templates/footer.html" -->
     <script>
       $('.code').each(function() {
