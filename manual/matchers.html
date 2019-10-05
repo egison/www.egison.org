@@ -40,7 +40,7 @@ This chapter explains how users can define their original matchers.
 <h2 id="matcher"><code>matcher</code> Expression</h2>
 
 <!-- TODO: Add cons/snoc/empty to pdpattern -->
-<pre><code>  (matcher {[<i>primitive pattern pattern</i> <i>matcher</i> {[<i>primitive data pattern</i> <i>formula</i>] ...}] ...})
+<pre><code>  (matcher {[<i>pppattern</i> <i>matcher</i> {[<i>pdpattern</i> <i>formula</i>] ...}] ...})
   <i>pppattern (primitive pattern pattern)</i> ::= _ | $ | ,$<i>value</i> | &lt;<i>identifier</i> <i>pppattern</i> ...&gt; | [<i>pppattern</i> ... ]
   <i>pdpattern (primitive data pattern)</i> ::= _ | $<i>identifier</i> | &lt;<i>Identifier</i> <i>pdpattern</i> ...&gt; | [<i>pdpattern</i> ... ] | <i>constants</i></code></pre>
 
