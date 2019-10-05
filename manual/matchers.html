@@ -65,7 +65,7 @@ This <code>unordered-integer-pair</code> matcher can be defined as follows.
 <p>
 Line 3 and 4 corresponds with the case where we want to decompose the tuple, and line 5 and 6 is for the case where we don't want to.
 <br/>
-The expression <code><pair $ $></code> in line 3 defines a pattern constructor named <code>pair</code>, which enables the pattern expression like <code>&lt;pair $a $b&gt;</code>. The following <code>[integer integer]</code> indicates that the both of matched 2 terms should be recursively pattern-matched by using <code>integer</code> matcher.
+The expression <code>&lt;pair $ $&gt;</code> in line 3 defines a pattern constructor named <code>pair</code>, which enables the pattern expression like <code>&lt;pair $a $b&gt;</code>. The following <code>[integer integer]</code> indicates that the both of matched 2 terms should be recursively pattern-matched by using <code>integer</code> matcher.
 <br/>
 The expression <code>[[$x $y] {[x y] [y x]}]</code> in line 4 defines the correspondense between the syntastic representation of the target data and pattern matching results.
 <br/>
@@ -95,7 +95,7 @@ In addition, we can make a "polymorphic" matcher by making it a function that ta
 <pre><code>  (algebraic-data-matcher {&lt;<i>identifier</i> <i>matcher</i> ...&gt; ...})</code></pre>
 
 <p>
-<code>algebraic-data-matcher</code> is a convenient syntax sugar for defining normal matchers, which decomposes data accordingly to their data structure.
+<code>algebraic-data-matcher</code> is a convenient syntax sugar for defining normal matchers, which decompose data accordingly to their data structure.
 <br/>
 For example, the following code defines a matcher for terms in untyped lambda calculus.
 </p>
