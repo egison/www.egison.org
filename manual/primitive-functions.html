@@ -176,13 +176,13 @@ We don't describe precise behaviour of them, but give simply examples.
 <dd><textarea class="code">(rtof 3/2);=>1.5</textarea></dd>
 
 <dt id="demo-pack"><code>pack</code></dt>
-<dd><textarea class="code">(pack {'E' 'g' 'i' 's' 'o' 'n'});=>"Egison"</textarea></dd>
+<dd><textarea class="code">(pack {c#E c#g c#i c#s c#o c#n});=>"Egison"</textarea></dd>
 
 <dt id="demo-pack"><code>unpack</code></dt>
-<dd><textarea class="code">(unpack "Egison");=>{'E' 'g' 'i' 's' 'o' 'n'}</textarea></dd>
+<dd><textarea class="code">(unpack "Egison");=>{c#E c#g c#i c#s c#o c#n}</textarea></dd>
 
 <dt id="demo-uncons-string"><code>uncons-string</code></dt>
-<dd><textarea class="code">(uncons-string "Egison");=>['E' "gison"]</textarea></dd>
+<dd><textarea class="code">(uncons-string "Egison");=>[c#E "gison"]</textarea></dd>
 
 <dt id="demo-length-string"><code>length-string</code></dt>
 <dd><textarea class="code">(length-string "Egison");=>6</textarea></dd>
@@ -231,7 +231,7 @@ We don't describe precise behaviour of them, but give simply examples.
 <dd><textarea class="code">(rational? 1/2);=>#t</textarea></dd>
 
 <dt id="demo-char-p"><code>char?</code></dt>
-<dd><textarea class="code">(char? '1');=>#t</textarea></dd>
+<dd><textarea class="code">(char? c#1);=>#t</textarea></dd>
 
 <dt id="demo-string-p"><code>string?</code></dt>
 <dd><textarea class="code">(string? "hello");=>#t</textarea></dd>
@@ -272,13 +272,13 @@ We don't describe precise behaviour of them, but give simply examples.
 <dd><textarea class="code">[$line (read-line)]</textarea></dd>
 
 <dt id="demo-write-char"><code>write-char</code></dt>
-<dd><textarea class="code">[(write-char 'c')]</textarea></dd>
+<dd><textarea class="code">[(write-char c#c)]</textarea></dd>
 
 <dt id="demo-write-string"><code>write-string</code></dt>
 <dd><textarea class="code">[(write-string "string")]</textarea></dd>
 
 <dt id="demo-write"><code>write</code></dt>
-<dd><textarea class="code">[(write [|{[ 1 'b' "TH" ] [| #t |]} {} |])]</textarea></dd>
+<dd><textarea class="code">[(write [|{[ 1 c#b "TH" ] [| #t |]} {} |])]</textarea></dd>
 
 <dt id="demo-eof-p"><code>eof?</code></dt>
 <dd><textarea class="code">[(eof?)]</textarea></dd>
@@ -293,13 +293,13 @@ We don't describe precise behaviour of them, but give simply examples.
 <dd><textarea class="code">[$line (read-line-from-port inport)]</textarea></dd>
 
 <dt id="demo-write-char-to-port"><code>write-char-to-port</code></dt>
-<dd><textarea class="code">[(write-char-to-port 'c' outport)]</textarea></dd>
+<dd><textarea class="code">[(write-char-to-port c#c outport)]</textarea></dd>
 
 <dt id="demo-write-string-to-port"><code>write-string-to-port</code></dt>
 <dd><textarea class="code">[(write-string-to-port "String" outport)]</textarea></dd>
 
 <dt id="demo-write-to-port"><code>write-to-port</code></dt>
-<dd><textarea class="code">[(write-to-port [|{[ 1 'b' "TH" ] [| #t |]} {} |] outport)]</textarea></dd>
+<dd><textarea class="code">[(write-to-port [|{[ 1 c#b "TH" ] [| #t |]} {} |] outport)]</textarea></dd>
 
 <dt id="demo-eof-port-p"><code>eof-port?</code></dt>
 <dd><textarea class="code">[(eof-port? inport)]</textarea></dd>
