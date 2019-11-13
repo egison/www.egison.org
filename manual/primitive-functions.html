@@ -228,7 +228,7 @@ We don't describe precise behaviour of them, but give simply examples.
 <dd><textarea class="code">(integer? 1);=>#t</textarea></dd>
 
 <dt id="demo-rational-p"><code>rational?</code></dt>
-<dd><textarea class="code">(rational? 1/2);=>#t</textarea></dd>
+<dd><textarea class="code">(rational? (/ 1 2));=>#t</textarea></dd>
 
 <dt id="demo-char-p"><code>char?</code></dt>
 <dd><textarea class="code">(char? c#1);=>#t</textarea></dd>
@@ -236,14 +236,11 @@ We don't describe precise behaviour of them, but give simply examples.
 <dt id="demo-string-p"><code>string?</code></dt>
 <dd><textarea class="code">(string? "hello");=>#t</textarea></dd>
 
-<dt id="demo-tuple-p"><code>tuple?</code></dt>
-<dd><textarea class="code">(tuple? [1 2]);=>#t</textarea></dd>
-
 <dt id="demo-collection-p"><code>collection?</code></dt>
 <dd><textarea class="code">(collection? {});=>#t</textarea></dd>
 
 <dt id="demo-array-p"><code>array?</code></dt>
-<dd><textarea class="code">(array? [|1 2 3|]);=>#t</textarea></dd>
+<dd><textarea class="code">(array? (|1 2 3|));=>#t</textarea></dd>
 
 <dt id="demo-hash-p"><code>hash?</code></dt>
 <dd><textarea class="code">(hash? {|[1 1] [2 12]|});=>#t</textarea></dd>
