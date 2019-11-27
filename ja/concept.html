@@ -73,7 +73,7 @@
           <textarea class="ruby-code">xs = [1,2,3,2,4]
 
 pairs = []
-(1..xs.length).each do |i|
+(0..xs.length).each do |i|
   (i+1..xs.length).each do |j|
     if xs[i] == xs[j]
       pairs.push(xs[i])
