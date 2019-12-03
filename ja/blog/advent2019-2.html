@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!--# include file="/ja/templates/header.html" -->
+    <style>
+.version {
+    padding-top: 10px;
+    color: #888;
+}
+.version2 {
+    padding-top: 0px;
+    color: #888;
+}
+.CodeMirror {
+    margin-top: 0px;
+}
+    </style>
+    <title>Egison - ブログ</title>
+  </head>
+  <body>
+    <!--# include file="/ja/templates/navbar.html" -->
+
+    <div class="container manual blog">
+
+      <div class="row">
+
+        <div class="col-md-8" role="main">
+
+        <!--# include file="./contents/advent2019-2.html" -->
+          
+        </div>
+
+        <!--# include file="./templates/sidebar.html" -->
+
+      </div><!--/row-->
+    
+      <hr class="divider">
+      
+      <div class="row">
+        <!--# include file="/templates/disqus-main.html" -->
+      </div><!--/row-->
+      
+    </div><!-- /.container -->
+    
+    <!--# include file="/templates/footer.html" -->
+    <script>
+      $('.code').each(function() {
+        var $this = $(this);
+        var myCodeMirror = CodeMirror.fromTextArea(this, {
+          readOnly: true,
+          lineWrapping: true
+        });
+      });
+      $('.haskell-code').each(function() {
+        var $this = $(this);
+        var myCodeMirror = CodeMirror.fromTextArea(this, {
+          readOnly: true,
+          lineWrapping: true,
+          mode: "haskell"
+        });
+      });
+      $('.ruby-code').each(function() {
+        var $this = $(this);
+        var myCodeMirror = CodeMirror.fromTextArea(this, {
+          readOnly: true,
+          lineWrapping: true,
+          mode: "ruby"
+        });
+      });
+    </script>
+  </body>
+</html>

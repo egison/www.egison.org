@@ -1,0 +1,20 @@
+<h1 id="advent2019-2">Egisonのパターンマッチ式</h1>
+
+<div id="blog-date">2019年12月3日</div>
+
+<p>
+  この記事は，<a href="https://qiita.com/advent-calendar/2019/egison">2019年Egisonアドベントカレンダー</a>の3日目の記事です．
+</p>
+
+<p>
+  パターンマッチを記述するためのいくつかの構文をEgisonは提供しています．
+  そのうちもっとも基本的な構文はmatchAll式です．
+</p>
+<textarea class="code">matchAll [1,2,3] as list something with
+  $x :: $xs -> (x,xs)
+-- [(1,[2,3])]</textarea>
+<p>
+  matchAll式は，ターゲット（上記の場合， <code>[1,2,3]</code> ），マッチャー（上記の場合， <code>list something</code> ），マッチ節（上記の場合， <code>$x :: $xs -&gt; (x,xs)</code> ）から構成されます．
+  マッチ節は，パターン（上記の場合， <code>$x :: $xs</code> ）とボディ（上記の場合， <code>(x,xs)</code> ）からなります．
+  matchAll式は，既存のプログラミング言語のマッチ式と同様に，ターゲットとパターンのパターンマッチを試みて，もしマッチしたらそのマッチ節のボディを評価します．
+</p>
