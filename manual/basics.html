@@ -64,7 +64,7 @@
     <li><a href="#if"><code>if</code> expressions</a></li>
     <li><a href="#apply"><code>apply</code> expressions</a></li>
     <li><a href="#generate-tensor"><code>generate-tensor</code> expressions</a></li>
-    <li><a href="#tensor-size"><code>tensor-size</code> expressions</a></li>
+    <li><a href="#tensor-shape"><code>tensor-shape</code> expressions</a></li>
     <li><a href="#seq"><code>seq</code> expressions</a></li>
   </ul>
 </ul>
@@ -283,16 +283,16 @@ If the index is larger than the size of a tensor, you will get an error.
 
 <textarea class="code">;; Tensors
 (define $t [| 1 2 3 4 5 |])
-(tensor-size t);=> {5}
+(tensor-shape t);=> {5}
 t_1;=>1
 t_5;=>5
 t_8;=>error!</textarea>
 
 <p>
-We can get the size of a tensor with <a href="#tensor-size">tensor-size</a>.
+We can get the size of a tensor with <a href="#tensor-shape">tensor-shape</a>.
 </p>
 
-<textarea class="code">(tensor-size [| 1 2 3 4 5 |]);=>[1 5]</textarea>
+<textarea class="code">(tensor-shape [| 1 2 3 4 5 |]);=>[1 5]</textarea>
 
 <p>
 a tensor can have another tensor as its element.
@@ -304,7 +304,7 @@ It allows us to use multi-dimensional tensors.
 
 <p>
 Egison prepares special syntax for tensors.
-They are <a href="#generate-tensor">generate-tensor</a>, <a href="#tensor-size">tensor-size</a>, and <a href="#tensor-ref">tensor-ref</a>.
+They are <a href="#generate-tensor">generate-tensor</a>, <a href="#tensor-shape">tensor-shape</a>, and <a href="#tensor-ref">tensor-ref</a>.
 The former gives an easy way to create complicated tensors, and the latter shows the size of tensors. 
 The details are described in each subsection.
 </p>
@@ -473,18 +473,18 @@ For example, the above and the followings are examples to create a tensor whose 
 (generate-tensor (lambda [$x $y] (+ (* 10 x) y)) {5 3})
 ;=>[|[|11 12 13|] [|21 22 23|] [|31 32 33|] [|41 42 43|] [|51 52 53|]|]</textarea>
 
-<h3 id="tensor-size"><code>tensor-size</code> expressions</h3>
+<h3 id="tensor-shape"><code>tensor-shape</code> expressions</h3>
 
-<pre><code>  (tensor-size <i>tensor</i>)</code></pre>
+<pre><code>  (tensor-shape <i>tensor</i>)</code></pre>
 
 <p>
-An <code>tensor-size</code> expression tells us the start index and last index of a given tensor.
+An <code>tensor-shape</code> expression tells us the start index and last index of a given tensor.
 </p>
 
-<textarea class="code">(tensor-size [| 1 2 3 4 5 6 |]);=>{6}
-(tensor-size [| |]);=>{}
-(tensor-size [| [| 1 2 3 |] |]);=>{1 3}
-(tensor-size (generate-tensor + {3 5}));=>{3 5}</textarea>
+<textarea class="code">(tensor-shape [| 1 2 3 4 5 6 |]);=>{6}
+(tensor-shape [| |]);=>{}
+(tensor-shape [| [| 1 2 3 |] |]);=>{1 3}
+(tensor-shape (generate-tensor + {3 5}));=>{3 5}</textarea>
 
 <h3 id="seq"><code>seq</code> expressions</h3>
 
