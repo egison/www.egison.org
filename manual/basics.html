@@ -62,7 +62,7 @@
     <li><a href="#let-star"><code>let*</code> expressions</a></li>
     <li><a href="#letrec"><code>letrec</code> expressions</a></li>
     <li><a href="#if"><code>if</code> expressions</a></li>
-    <li><a href="#apply"><code>apply</code> expressions</a></li>
+    <li><a href="#capply"><code>capply</code> expressions</a></li>
     <li><a href="#generate-tensor"><code>generate-tensor</code> expressions</a></li>
     <li><a href="#tensor-shape"><code>tensor-shape</code> expressions</a></li>
     <li><a href="#seq"><code>seq</code> expressions</a></li>
@@ -435,17 +435,17 @@ This expression is desugared as follows.
 <textarea class="code">(if #t "YES" "NO");=>"YES"
 (if #f "YES" "NO");=>"NO"</textarea>
 
-<h3 id="apply"><code>apply</code> expressions</h3>
+<h3 id="capply"><code>capply</code> expressions</h3>
 
-<pre><code>  (apply <i>function</i> [<i>value</i> ...])</code></pre>
+<pre><code>  (capply <i>function</i> {<i>value</i> ...})</code></pre>
 
 <p>
-If you have a function and its arguments as a tuple, and want to get the result of the application, then you should use this expression.
-The result of the evaluation of an apply expression is the result of application of the function with the arguments.
-That is, <code>(apply f [x<sub>0</sub> x<sub>1</sub> x<sub>2</sub>])</code> is the same thing as <code>(f x<sub>0</sub> x<sub>1</sub> x<sub>2</sub>)</code>.
+If you have a function and its arguments as a collection, and want to get the result of the application, then you should use this expression.
+The result of the evaluation of a capply expression is the result of application of the function with the arguments.
+That is, <code>(capply f {x<sub>0</sub> x<sub>1</sub> x<sub>2</sub>})</code> is the same thing as <code>(f x<sub>0</sub> x<sub>1</sub> x<sub>2</sub>)</code>.
 </p>
 
-<textarea class="code">(apply + [1 2]);=>3</textarea>
+<textarea class="code">(capply + {1 2});=>3</textarea>
 
 <h3 id="generate-tensor"><code>generate-tensor</code> expressions</h3>
 
