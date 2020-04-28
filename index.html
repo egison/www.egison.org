@@ -28,7 +28,7 @@
           Egison makes programming dramatically simple!
         </p>
 
-        <textarea id="egison-program" class="code"><!--# include file="/source/sample/demo1.egi" --></textarea>
+        <textarea id="egison-program" class="haskell-code"><!--# include file="/source/sample/demo1.egi" --></textarea>
         
         <div class="container marketing" style="color:#5a5a5a; font-size:14px; line-height:1.428571429; padding-left:0px; padding-right:0px;">
           <div class="col-lg-4" style="padding:0px;">
@@ -105,12 +105,13 @@
 
       <div class="row">
         <div style="border-radius: 10px; background-color:#f5f5f5; border: 2px solid #222; margin-bottom:20px; padding: 10px; margin-left:15px; margin-right:15px;">
-          <b>[(2018/08/13)]</b> <a href="https://arxiv.org/abs/1808.10603" target="_blank">Paper on Egison pattern matching</a> has been accepted to APLAS 2018!<br/>
-          <b>[(2018/08/14)]</b> <a href="https://arxiv.org/abs/1809.03252" target="_blank">Paper on loop patterns</a> has been accepted to Scheme Workshop 2018!<br/>
-          <b>[(2019/11/18)]</b> <a href="https://arxiv.org/abs/1911.04631" target="_blank">Paper on Scheme macros for Egison pattern matching</a> has been accepted to Scheme Workshop 2019!
+          <b>[2020/04/13]</b> We've released Egison version 4.0.0!<br/>
+          <b>[2019/12/02]</b> <a href="/download/pmo-paper.pdf" target="_blank">Paper on pattern-match-oriented programming</a> has been accepted to &lt;Programming&gt; 2020!<br/>
+          <b>[2018/08/13]</b> <a href="https://arxiv.org/abs/1808.10603" target="_blank">Paper on the design of Egison pattern matching</a> has been accepted to APLAS 2018!<br/>
         </div>
       </div>
       
+<!--
       <div class="row">
         <div class="col-lg-6">
           <h2><i class="fa fa-download"></i> Installation</h2>
@@ -122,13 +123,7 @@
             Please refer <a href="/cheatsheet.html">this cheat sheet</a> when you write Egison programs.
           </p>
           <a href="/cheatsheet.html"><img width="100%" src="/images/cheatsheet.png" style="border:2px;"/></a>
-          <!--
-          <iframe width="560" height="463" src="//www.youtube.com/embed/AjA3cjupwbA" frameborder="0" allowfullscreen></iframe>
-          -->
-          <!--
-          <iframe src="//www.slideshare.net/slideshow/embed_code/41146701" width="563" height="463" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
-          -->
-        </div><!-- /.col-lg-6 -->
+        </div>
         <div class="col-lg-6" style="border: 2px solid #222; background-color:#f5f5f5; border-radius: 10px; padding-bottom:10px;">
           <h2><i class="fa fa-book"></i> Documentations</h2>
           <div class="col-lg-6">
@@ -165,21 +160,32 @@
         <div class="col-lg-6">
           <h2><i class="fa fa-tree"></i> Try Egison Online</h2>
           <a target="_blank" href="http://console.egison.org">
-            <!-- console start -->
             <div id="console" style="height: 120px; border-radius: 5px; background-color:#222; padding: 0px; margin-bottom: 10px;"><div style="top: 0px; left: 0px; right: 0px; bottom: 0px; position: absolute; overflow: auto;"><pre class="jqconsole jqconsole-blurred" style="margin: 0px; position: relative; min-height: 100%; box-sizing: border-box;"><span class="jqconsole-header"><span class="">Online Egison Interprter Version 3.3.8 (C) 2011-2014 Satoshi Egi
 Welcome to Egison Interpreter!
 </span></span><span class="jqconsole-output"><span class="">** Information **
 We are supporting Emacs key bindings to move cursor.
 *****************
 </span></span><span class="jqconsole-prompt "><span></span><span><span>&gt; </span><span></span><span class="jqconsole-cursor" style="color: transparent; display: inline; z-index: 0; position: absolute;">&nbsp;</span><span style="position: relative;"></span></span><span></span></span></pre><div style="position: absolute; width: 1px; height: 0px; overflow: hidden; left: 5px; top: 80px;"><textarea wrap="off" autocapitalize="off" autocorrect="off" spellcheck="false" autocomplete="off" style="position: absolute; width: 2px;"></textarea></div></div></div>
-            <!-- console end -->
           </a>
           <a class="btn btn-default btn-primary" href="http://console.egison.org" role="button" target="_blank">Online Egison Interpreter</a>
           <a class="btn btn-default btn-primary" href="/try.html" role="button" target="_blank">Online Egison Tutorial</a>
           <a class="btn btn-default btn-primary" href="https://www.egison.org/demonstrations/poker-hands.html" role="button">Online Demonstrations &raquo;</a>
         </div>
       </div>
+-->
       
+      <div class="row">
+        <div class="col-lg-12">
+          <h2><i class="fa fa-file-text-o"></i> Papers on Egison</h2>
+<ol reversed="reversed" style="font-size: medium">
+  <li>Satoshi Egi and Yuichi Nishiwaki: <a target="_blank" href="https://www.egison.org/download/pmo-paper.pdf">Functional Programming in Pattern-Match-Oriented Programming Style</a>, <i>The Art, Science, and Engineering of Programming, 2020, Vol. 4, Issue 3, Article 7</i></li>
+  <li>Satoshi Egi: <a target="_blank" href="https://arxiv.org/abs/1911.04631">Scheme Macros for Non-linear Pattern Matching with Backtracking for Non-free Data Types</a>, <i>The Scheme and Functional Programming Workshop 2019</i></li>
+  <li>Satoshi Egi and Yuichi Nishiwaki: <a target="_blank" href="https://arxiv.org/abs/1808.10603">Non-linear Pattern Matching with Backtracking for Non-free Data Types</a>, <i>APLAS 2018 - Asian Symposium on Programming Languages and Systems</i></li>
+  <li>Satoshi Egi: <a target="_blank" href="https://arxiv.org/abs/1809.03252">Loop Patterns: Extension of Kleene Star Operator for More Expressive Pattern Matching against Arbitrary Data Structures</a>, <i>The Scheme and Functional Programming Workshop 2018</i></li>
+  <li>Satoshi Egi: <a target="_blank" href="https://arxiv.org/abs/1702.06343">Scalar and Tensor Parameters for Importing Tensor Index Notation including Einstein Summation Notation</a>, <i>The Scheme and Functional Programming Workshop 2017</i></li>
+</ol>
+        </div>
+      </div>
       <hr class="divider">
       
       <div class="row">
@@ -286,14 +292,6 @@ We are supporting Emacs key bindings to move cursor.
     </div><!-- /.container -->
     
     <!--# include file="/templates/footer.html" -->
-    <script>
-      $('.code').each(function() {
-        var $this = $(this);
-        var myCodeMirror = CodeMirror.fromTextArea(this, {
-          readOnly: true,
-          lineWrapping: true
-        });
-      });
-    </script>
+    <!--# include file="/templates/code-js.html" -->
 </body>
 </html>

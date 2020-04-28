@@ -1,0 +1,25 @@
+<script>
+  $('.code').each(function() {
+    var $this = $(this);
+    var myCodeMirror = CodeMirror.fromTextArea(this, {
+      readOnly: true,
+      lineWrapping: true
+    });
+  });
+  $('.haskell-code').each(function() {
+    var $this = $(this);
+    var myCodeMirror = CodeMirror.fromTextArea(this, {
+      readOnly: true,
+      lineWrapping: true,
+      mode: "haskell"
+    });
+  });
+  $('.ruby-code').each(function() {
+    var $this = $(this);
+    var myCodeMirror = CodeMirror.fromTextArea(this, {
+      readOnly: true,
+      lineWrapping: true,
+      mode: "ruby"
+    });
+  });
+</script>
