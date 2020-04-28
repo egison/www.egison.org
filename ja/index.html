@@ -27,7 +27,7 @@
           それにより、Egison プログラマは非常にシンプルにプログラムを記述できるようになります。
         </p>
 
-        <textarea id="egison-program" class="code"><!--# include file="/source/sample/demo1-ja.egi" --></textarea>
+        <textarea id="egison-program" class="haskell-code"><!--# include file="/source/sample/demo1-ja.egi" --></textarea>
         
         <div class="container marketing" style="color:#5a5a5a; font-size:14px; line-height:1.428571429; padding-left:0px; padding-right:0px;">
           <div class="col-lg-4" style="padding:0px;">
@@ -295,14 +295,6 @@ We are supporting Emacs key bindings to move cursor.
     </div><!-- /.container -->
     
     <!--# include file="/ja/templates/footer.html" -->
-    <script>
-      $('.code').each(function() {
-        var $this = $(this);
-        var myCodeMirror = CodeMirror.fromTextArea(this, {
-          readOnly: true,
-          lineWrapping: true
-        });
-      });
-    </script>
+    <!--# include file="/templates/code-js.html" -->
 </body>
 </html>
