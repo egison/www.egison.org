@@ -42,7 +42,7 @@
 
 <p>
   Egisonは、テンソルの添字記法をそのままプログラムで使うことができます。
-  これは、「スカラー仮引数・テンソル仮引数」という独自のアイデアを元にしたテンソルの添字記法をプログラミングに導入するための手法が、実装されているからです。
+  これは、スカラー仮引数・テンソル仮引数というプログラミング言語JのRankに似たアイデアに適切なシンボリックな添字の簡約ルールを組み合わせることにより、実現されています。
   より直接的な記述で数式を表現できる数式処理システムの研究を進めていく過程で、この手法は発見されました。
 </p>
 
@@ -72,10 +72,8 @@ Wolfram言語による記述では、テンソルのそれぞれの添字に対�
         {i,M},{j,M},{k,M},{l,M}]</textarea>
           
 <div class="version">Egisonによる公式の記述</div>
-<textarea class="code">(define $R~i_j_k_l
-  (with-symbols {m}
-    (+ (- (∂/∂ Γ~i_j_l x~k) (∂/∂ Γ~i_j_k x~l))
-       (- (. Γ~m_j_l Γ~i_m_k) (. Γ~m_j_k Γ~i_m_l)))))</textarea>
+<textarea class="haskell-code">R~i_j_k_l := withSymbols [m]
+  ∂/∂ Γ~i_j_l x~k - ∂/∂ Γ~i_j_k x~l + Γ~m_j_l . Γ~i_m_k - Γ~m_j_k . Γ~i_m_l</textarea>
 
 <p>
   Wolfram言語による記述では、<code>Table</code>式と<code>Sum</code>式による二重ループがプログラム中に現れているのに対し、Egisonによる記述では、数式と同様にフラットにこの式を記述できていることに注目してください。
@@ -84,7 +82,7 @@ Wolfram言語による記述では、テンソルのそれぞれの添字に対�
 </p>
 
 <p>
-  この例の中で特に注目してもらいたい箇所は、右辺第一項の`\frac{\partial \Gamma_{jk}^{i}}{\partial x^l}`を表現するEgisonプログラム<code>(∂/∂ Γ~i_j_k x~l)</code>です。
+  この例の中で特に注目してもらいたい箇所は、右辺第一項の`\frac{\partial \Gamma_{jk}^{i}}{\partial x^l}`を表現するEgisonプログラム<code>∂/∂ Γ~i_j_k x~l</code>です。
   Wolfram言語では、微分関数<code>D</code>は、<code>Table</code>式の中で、テンソルの成分に対して適用されています。
   しかし、Egisonでは微分関数<code>∂/∂</code>はテンソルに対してそのまま適用されています。
 </p>
@@ -98,7 +96,7 @@ Wolfram言語による記述では、テンソルのそれぞれの添字に対�
 <p>
   スカラー関数を定義する際には、その引数としてスカラーのみを考えます。
   つまり、この<code>∂/∂</code>関数の定義の中で、引数がスカラーである場合の処理しかプログラマは記述する必要はありません。
-  それにもかかわらず、このスカラー関数という機構のおかげで、プログラム<code>(∂/∂ Γ~i_j_k x~l)</code>は、4階のテンソルを返します。
+  それにもかかわらず、このスカラー関数という機構のおかげで、プログラム<code>∂/∂ Γ~i_j_k x~l</code>は、4階のテンソルを返します。
 </p>
 
 <p>
@@ -147,18 +145,18 @@ Wolfram言語による記述では、テンソルのそれぞれの添字に対�
   <code>$min</code>と関数名の前に<code>$</code>が付いているが、これはEgisonの慣習でスカラー仮引数、テンソル仮引数とは関係ないので無視してよいです。
 </p>
 
-<textarea class="code">(define $min (lambda [$x $y] (if (less-than? x y) x y)))</textarea>
+<textarea class="code">min $x $y := if x <= y then x else y</textarea>
 
 <p>
   この<code>min</code>関数は、以下のように引数としてテンソルを扱うことができます。
   これは、スカラー関数である<code>min</code>関数の適用がテンソルの要素ごとに自動でマップされるためです。
 </p>
 
-<textarea class="code">(min [| 1 2 3 |]_i [| 10 20 30 |]_i)
-;[| 1 2 3 |]_i
+<textarea class="code">min [| 1 2 3 |]_i [| 10 20 30 |]_i
+-- [| 1 2 3 |]_i
   
-(min [| 1 2 3 |]_i [| 10 20 30 |]_j)
-;[| [| 1 1 1 |] [| 2 2 2 |] [| 3 3 3 |] |]_i_j</textarea>
+min [| 1 2 3 |]_i [| 10 20 30 |]_j
+-- [| [| 1 1 1 |] [| 2 2 2 |] [| 3 3 3 |] |]_i_j</textarea>
 
 <p>
   テンソル関数の例として、テンソル同士のかけ算を計算する関数<code>.</code>を定義します。
@@ -169,20 +167,20 @@ Wolfram言語による記述では、テンソルのそれぞれの添字に対�
   <code>contract</code>構文は、第1引数に縮約をおこなうための関数、第2引数に対象のテンソルを受け取ります。
 </p>
 
-<textarea class="code">(define $. (lambda [%t1 %t2] (contract + (* t1 t2))))</textarea>
+<textarea class="code">(.) %t1 %t2 := contract (+) (t1 * t2)</textarea>
 
 <p>
   以下のように<code>.</code>関数を使って、ベクトルの内積、アダマール積、テンソル積が表現できます。
 </p>
 
-<textarea class="code">(. [| 1 2 3 |]~i [| 10 20 30 |]_i)
-;140
+<textarea class="code">[| 1 2 3 |]~i . [| 10 20 30 |]_i
+-- 140
 
-(. [| 1 2 3 |]_i [| 10 20 30 |]_j)
-;[| [| 10 20 30 |] [| 20 40 60 |] [| 30 60 90 |] |]_i_j
+[| 1 2 3 |]_i . [| 10 20 30 |]_j
+-- [| [| 10 20 30 |] [| 20 40 60 |] [| 30 60 90 |] |]_i_j
 
-(. [| 1 2 3 |]_i [| 10 20 30 |]_i)
-;[| 10 40 90 |]_i</textarea>
+[| 1 2 3 |]_i . [| 10 20 30 |]_i
+-- [| 10 40 90 |]_i</textarea>
 
 <h2>微分形式の表現</h2>
 
@@ -207,8 +205,8 @@ Wolfram言語による記述では、テンソルのそれぞれの添字に対�
   省略された添字については、以下のように同じ組み合わせの添字を自動的に補完します。
 </p>
 
-<textarea class="code">(+ A B)
-;(+ A_t1_t2 B_t1_t2)</textarea>
+<textarea class="code">A + B
+-- A_t1_t2 + B_t1_t2</textarea>
 
 <p>
   ほとんどの関数適用については、上記のように添字を補完すれば、微分形式の演算が表現できます。
@@ -216,17 +214,15 @@ Wolfram言語による記述では、テンソルのそれぞれの添字に対�
   例えば、ウェッジ積の場合は、以下のように、引数のそれぞれに全て異なる添字を付加したいです。
 </p>
 
-<textarea class="code">(wedge A B)
-;(wedge A_t1_t2 B_t3_t4)</textarea>
+<textarea class="code">wedge A B
+;wedge A_t1_t2 B_t3_t4</textarea>
 
 <p>
   そこで導入したのが、以下で使われている<code>!</code>です。
   <code>!</code>が関数適用の前に付加されている場合は、後者の方法により、省略された添字を補完します。
 </p>
 
-<textarea class="code">(define $wedge
-  (lambda [%X %Y]
-    !(. X Y)))</textarea>
+<textarea class="code">wedge %X %Y := X !. Y</textarea>
 
 <p>
   <code>!</code>を使う必要があるのは、ウェッジ積や外微分など微分形式のための特別な関数の定義の中だけです。
@@ -248,9 +244,7 @@ Wolfram言語による記述では、テンソルのそれぞれの添字に対�
   外微分は以下のように実装できます。
 </p>
 
-<textarea class="code">(define $d
-  (lambda [%X]
-    !((flip ∂/∂) params X)))</textarea>
+<textarea class="code">d %A := !(flip ∂/∂) params A</textarea>
 
 <p>
   ウェッジ積<code>wedge</code>と外微分<code>d</code>を使うと、以下のように曲率形式の公式を表現することが可能になります。
@@ -261,11 +255,11 @@ Wolfram言語による記述では、テンソルのそれぞれの添字に対�
   `Omega_j^i = d omega_j^i + omega_k^i ^^ omega_j^k`
 </p>
 <div class="version">Egisonによる公式の記述</div>
-<textarea class="code">(define $Ω
-  (with-symbols {i j}
-    (df-normalize (+ (d ω~i_j)
-                     (wedge ω~i_k ω~k_j)))))</textarea>
+<textarea class="code">Ω~i_j := withSymbols [k]
+  antisymmetrize (d ω~i_j + wedge ω~i_k ω~k_j)
+</textarea>
 
+<!--
 <h2>ベクトル場の表現</h2>
 
 <p>
@@ -295,7 +289,7 @@ Wolfram言語による記述では、テンソルのそれぞれの添字に対�
 </p>
 
 <textarea class="code">(ω X);(. ω_t1_t2 X~t1~t2)</textarea>
-
+-->
 
           <h2 id="next">次に見てほしいもの...</h2>
           
