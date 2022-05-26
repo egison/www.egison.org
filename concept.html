@@ -339,32 +339,5 @@ matchAll [1, 2, 3] as (Multiset Integer) with
     </div><!-- /.container -->
     
     <!--# include file="/templates/footer.html" -->
-    <script src="/vendors/codemirror/mode/ruby/ruby.js"></script>
-    <script src="/vendors/codemirror/mode/haskell/haskell.js"></script>
-    <script>
-      $('.code').each(function() {
-        var $this = $(this);
-        var myCodeMirror = CodeMirror.fromTextArea(this, {
-          readOnly: true,
-          lineWrapping: true
-        });
-      });
-      $('.haskell-code').each(function() {
-        var $this = $(this);
-        var myCodeMirror = CodeMirror.fromTextArea(this, {
-          readOnly: true,
-          lineWrapping: true,
-          mode: "haskell"
-        });
-      });
-      $('.ruby-code').each(function() {
-        var $this = $(this);
-        var myCodeMirror = CodeMirror.fromTextArea(this, {
-          readOnly: true,
-          lineWrapping: true,
-          mode: "ruby"
-        });
-      });
-    </script>
   </body>
 </html>
