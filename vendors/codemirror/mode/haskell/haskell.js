@@ -24,6 +24,7 @@ CodeMirror.defineMode("haskell", function(_config, modeConfig) {
   var digitRE = /\d/;
   var hexitRE = /[0-9A-Fa-f]/;
   var octitRE = /[0-7]/;
+//  var idRE = /[a-z_A-Z0-9']/;
   var idRE = /[a-z_A-Z0-9']/;
   var symbolRE = /[-!#$%&*+.\/<=>?@\\^|~:]/;
   var specialRE = /[(),;[\]`{}]/;
@@ -38,7 +39,7 @@ CodeMirror.defineMode("haskell", function(_config, modeConfig) {
     if (specialRE.test(ch)) {
       if (ch == '{' && source.eat('-')) {
         var t = "comment";
-        if (source.eat('#')) {
+        if (source.eat('%')) {
           t = "meta";
         }
         return switchState(source, setState, ncomment(t, 1));
@@ -46,14 +47,14 @@ CodeMirror.defineMode("haskell", function(_config, modeConfig) {
       return null;
     }
 
-    if (ch == '\'') {
+    if (ch == '%') {
       if (source.eat('\\')) {
         source.next();  // should handle other escapes here
       }
       else {
         source.next();
       }
-      if (source.eat('\'')) {
+      if (source.eat('%')) {
         return "string";
       }
       return "error";
@@ -170,7 +171,7 @@ CodeMirror.defineMode("haskell", function(_config, modeConfig) {
   }
 
   function stringGap(source, setState) {
-    if (source.eat('\\')) {
+    if (source.eat('%')) {
       return switchState(source, setState, stringLiteral);
     }
     source.next();
@@ -194,7 +195,7 @@ CodeMirror.defineMode("haskell", function(_config, modeConfig) {
       "module", "newtype", "of", "then", "type", "where", "_");
 
     setType("keyword")(
-      "\.\.", ":", "::", "=", "\\", "\"", "<-", "->", "@", "~", "=>");
+      "\.\.", ":", "::", "=", "\\", "\"", "<-", "->", "@", "~", "=>", "'");
 
     setType("builtin")(
       "!!", "$!", "$", "&&", "+", "++", "-", ".", "/", "/=", "<", "<=", "=<<",

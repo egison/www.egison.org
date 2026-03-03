@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!--# include file="/templates/header.html" -->
+    <title>Egison - extend-matcher</title>
+  </head>
+  <body>
+    <!--# include file="/templates/navbar.html" -->
+
+    <div class="container manual">
+
+      <div class="row">
+
+        <div class="col-md-12" id="top" role="complementary">
+          <h1>Idea - <code>extend-matcher</code></h1>
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-12" role="main">
+
+          <p>
+            Previous Version
+          </p>
+          
+          <textarea class="code">(define $list
+  (lambda [$a]
+    (matcher
+      {[<nil> []
+        {[{} {[]}]
+         [_ {}]}]
+       [<cons $ $> [a (list a)]
+        {[{$x @$xs} {[x xs]}]
+         [_ {}]}]
+       [<snoc $ $> [a (list a)]
+        {[{@$xs $x} {[x xs]}]
+         [_ {}]}]
+       [<join $ $> [(list a) (list a)]
+        {[$tgt (match-all tgt (list a)
+                 [(loop $i [1 $n] <cons $xa_i ...> $rs) [(foldr (lambda [$i $r] {xa_i @r}) {} (between 1 n))
+                                                         rs]])]}]
+       [<nioj $ $> [(list a) (list a)]
+        {[$tgt (match-all tgt (list a)
+                 [(loop $i [1 $n] <snoc $xa_i ...> $rs) [(foldr (lambda [$i $r] {@r xa_i}) {} (between 1 n))
+                                                         rs]])]}]
+       [,$val []
+        {[$tgt (if (eq? val tgt) {[]} {})]}]
+       [$ [something]
+        {[$tgt {tgt}]}]
+       })))
+
+(define $sorted-list
+  (lambda [$a]
+    (matcher
+      {[<nil> []
+        {[{} {[]}]
+         [_ {}]}]
+       [<join $ <cons ,$px $>> [(sorted-list a) (sorted-list a)]
+        {[$tgt (match-all tgt (list a)
+                 [(loop $i [1 $n] <cons (& ?(lt? $ px) $xa_i) ...> <cons ,px $rs>)
+                  [(map (lambda [$i] (ref xa i)) (between 1 n))
+                   rs]])]}]
+       [<join $ $> [(sorted-list a) (sorted-list a)]
+        {[$tgt (match-all tgt (list a)
+                 [(loop $i [1 $n] <cons $xa_i ...> $rs)
+                  [(map (lambda [$i] (ref xa i)) (between 1 n))
+                   rs]])]}]
+       [<cons $ $> [a (sorted-list a)]
+        {[{$x @$xs} {[x xs]}]
+         [_ {}]}]
+       [,$val []
+        {[$tgt (if (eq? val tgt) {[]} {})]}]
+       [$ [something]
+        {[$tgt {tgt}]}]
+       })))
+</textarea>
+
+          <p>
+            New Version
+          </p>
+
+          <textarea class="code">(define $list
+  (lambda [$a]
+    (matcher
+      {[<nil> []
+        {[{} {[]}]
+         [_ {}]}]
+       [<cons $ $> [a self]
+        {[{$x @$xs} {[x xs]}]
+         [_ {}]}]
+       [<snoc $ $> [a self]
+        {[{@$xs $x} {[x xs]}]
+         [_ {}]}]
+       [<join $ $> [self self]
+        {[$tgt (match-all tgt (list a)
+                 [(loop $i [1 $n] <cons $xa_i ...> $rs) [(foldr (lambda [$i $r] {xa_i @r}) {} (between 1 n))
+                                                         rs]])]}]
+       [<nioj $ $> [self self]
+        {[$tgt (match-all tgt (list a)
+                 [(loop $i [1 $n] <snoc $xa_i ...> $rs) [(foldr (lambda [$i $r] {@r xa_i}) {} (between 1 n))
+                                                         rs]])]}]
+       [,$val []
+        {[$tgt (if (eq? val tgt) {[]} {})]}]
+       [$ [something]
+        {[$tgt {tgt}]}]
+       })))
+
+(define $sorted-list
+  (lambda [$a]
+    (extend-matcher (list a)
+      {[<join $ <cons ,$px $>> [self self]
+        {[$tgt (match-all tgt (list a)
+                 [(loop $i [1 $n] <cons (& ?(lt? $ px) $xa_i) ...> <cons ,px $rs>)
+                  [(map (lambda [$i] (ref xa i)) (between 1 n))
+                   rs]])]}]
+       })))</textarea>
+
+        </div>
+
+      </div><!--/row-->
+    
+      <hr class="divider">
+
+      <div class="row">
+        <!--# include file="/templates/disqus-main.html" -->
+      </div><!-- /.row -->
+          
+    </div><!-- /.container -->
+    
+    <!--# include file="/templates/footer.html" -->
+    <script>
+      $('.code').each(function() {
+        var $this = $(this);
+        var myCodeMirror = CodeMirror.fromTextArea(this, {
+          readOnly: true,
+          lineWrapping: true
+        });
+      });
+    </script>
+  </body>
+</html>
