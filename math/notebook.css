@@ -1,0 +1,170 @@
+.math-notebook-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 18px;
+    margin: 20px 0 30px;
+    padding: 12px 16px;
+    border: 1px solid #d9e0e8;
+    border-radius: 6px;
+    background: #f6f8fa;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.math-notebook-toolbar__label {
+    color: #44546a;
+    font-weight: 700;
+}
+
+.math-notebook {
+    color: #333;
+    font-size: 16px;
+    line-height: 1.65;
+}
+
+.math-notebook .cell {
+    clear: both;
+    margin: 0 0 24px;
+}
+
+.math-notebook .text_cell_render {
+    overflow-wrap: break-word;
+}
+
+.manual .math-notebook .text_cell_render h1,
+.manual .math-notebook .text_cell_render h2,
+.manual .math-notebook .text_cell_render h3,
+.manual .math-notebook .text_cell_render h4 {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.manual .math-notebook .text_cell_render h1 {
+    margin-bottom: 24px;
+    font-size: 34px;
+}
+
+.manual .math-notebook .text_cell_render h2 {
+    margin-bottom: 14px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #e5e8eb;
+    font-size: 25px;
+}
+
+.manual .math-notebook .text_cell_render h3 {
+    font-size: 21px;
+}
+
+.manual .math-notebook .text_cell_render p,
+.manual .math-notebook .text_cell_render li {
+    font-size: 16px;
+}
+
+.manual .math-notebook .text_cell_render p {
+    margin: 12px 0;
+}
+
+.math-notebook .anchor-link {
+    margin-left: 8px;
+    color: #9aa5b1;
+    font-size: 70%;
+    opacity: 0;
+    transition: opacity 0.15s ease-in-out;
+}
+
+.math-notebook h1:hover .anchor-link,
+.math-notebook h2:hover .anchor-link,
+.math-notebook h3:hover .anchor-link,
+.math-notebook .anchor-link:focus {
+    opacity: 1;
+}
+
+.math-notebook .code_cell {
+    overflow: hidden;
+    border: 1px solid #d8dee4;
+    border-radius: 6px;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(31, 35, 40, 0.04);
+}
+
+.math-notebook .input {
+    display: flex;
+    min-width: 0;
+}
+
+.math-notebook .inner_cell {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.math-notebook .input_area {
+    overflow-x: auto;
+    background: #f6f8fa;
+}
+
+.math-notebook .input_area pre {
+    min-width: max-content;
+    margin: 0;
+    padding: 15px 18px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: #24292f;
+    font-family: 'Oxygen Mono', Menlo, Monaco, Consolas, monospace;
+    font-size: 13px;
+    line-height: 1.55;
+    white-space: pre;
+}
+
+.math-notebook .output_wrapper {
+    border-top: 1px solid #e5e8eb;
+}
+
+.math-notebook .output_area {
+    display: flex;
+    min-width: 0;
+    background: #fff;
+}
+
+.math-notebook .output_subarea {
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: auto;
+    padding: 14px 18px;
+}
+
+.math-notebook .output_html {
+    min-height: 1.65em;
+}
+
+.math-notebook .MathJax_Display {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+@media (max-width: 767px) {
+    .math-notebook-toolbar {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .manual .math-notebook .text_cell_render h1 {
+        font-size: 29px;
+    }
+
+    .manual .math-notebook .text_cell_render h2 {
+        font-size: 23px;
+    }
+
+    .math-notebook .input_area pre {
+        padding: 13px 14px;
+        font-size: 12px;
+    }
+
+    .math-notebook .output_subarea {
+        padding: 12px 14px;
+    }
+}

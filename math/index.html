@@ -38,15 +38,21 @@
         
       <div class="row">
         <div class="col-md-12" id="top" role="complementary">
-          <h2>How to try Egison Math Notebook on your computer</h2>
+          <h2>Run the notebooks on your computer</h2>
           <p>
-            We can execute all of the above calculations on our computers by executing the following commands.<br/>
-            All programs are under <a href="https://github.com/egison/egison/tree/master/sample/math"><code>/sample/math</code></a> director of <a href="https://github.com/egison/egison/tree/master/sample/math">the git repository of Egison</a>.
+            Every page above is rendered from an executed notebook in the
+            <a href="https://github.com/egison/egison-jupyter/tree/master/math"><code>math/</code> directory of egison-jupyter</a>.
+            Install Egison 5 and follow the
+            <a href="https://github.com/egison/egison-jupyter#how-to-install">kernel installation guide</a>,
+            then start Jupyter in the repository.
           </p>
-          <pre><code>% egison -t sample/math/geometry/exterior-derivative.egi
-[| (f|1 x y z) (f|2 x y z) (f|3 x y z) |]
-[| [| 0 0 0 |] [| 0 0 0 |] [| 0 0 0 |] |]
-</code></pre>
+          <pre><code>git clone https://github.com/egison/egison-jupyter.git
+cd egison-jupyter
+python3 -m venv .venv
+source .venv/bin/activate
+pip install . jupyter
+python -m egison_kernel.install
+jupyter notebook math/</code></pre>
         </div>
       </div><!--/row-->
 
