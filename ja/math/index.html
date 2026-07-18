@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
   <head>
     <!--# include file="/ja/templates/header.html" -->
     <title>Egison 数学ノート</title>
@@ -38,15 +38,20 @@
       
       <div class="row">
         <div class="col-md-12" id="top" role="complementary">
-          <h2>Egison数学ノートの試し方</h2>
+          <h2>Notebookを手元で実行する</h2>
           <p>
-            Egison数学ノートのプログラムは、お手元のコンピューターで、すべて実行することができます。<br/>
-            上記のリストのプログラムはすべて<a href="https://github.com/egison/egison/tree/master/sample/math">EgisonのGitレポジトリ</a>の<a href="https://github.com/egison/egison/tree/master/sample/math"><code>/sample/math</code></a>ディレクトリ以下に置いてあります。
+            上の各ページは、egison-jupyterの
+            <a href="https://github.com/egison/egison-jupyter/tree/master/ja/math"><code>ja/math/</code>ディレクトリにある実行済みNotebook</a>から生成しています。
+            Egison 5をインストールして
+            <a href="https://github.com/egison/egison-jupyter#how-to-install">カーネルのインストール手順</a>を実行すると、手元のJupyterでも同じ計算を再実行できます。
           </p>
-          <pre><code>% egison -t sample/math/geometry/exterior-derivative.egi
-[| (f|1 x y z) (f|2 x y z) (f|3 x y z) |]
-[| [| 0 0 0 |] [| 0 0 0 |] [| 0 0 0 |] |]
-</code></pre>
+          <pre><code>git clone https://github.com/egison/egison-jupyter.git
+cd egison-jupyter
+python3 -m venv .venv
+source .venv/bin/activate
+pip install . jupyter
+python -m egison_kernel.install
+jupyter notebook ja/math/</code></pre>
         </div>
       </div><!--/row-->
 
@@ -58,7 +63,7 @@
       
     </div><!-- /.container -->
     
-    <!--# include file="/templates/footer.html" -->
+    <!--# include file="/ja/templates/footer.html" -->
     <script>
       $('.code').each(function() {
         var $this = $(this);
