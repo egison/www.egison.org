@@ -18,7 +18,7 @@ verify it by the multivariable chain rule.</p>
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Coordinate-metric">Coordinate metric<a class="anchor-link" href="#Coordinate-metric">¶</a></h2><p>The line element is</p>
 <p>$$ds^2=dr^2+r^2d\theta^2$$</p>
-<p>The metric and its inverse are represented as indexed tensors.</p>
+<p>The coordinate map is differentiated to obtain tangent vectors. Their dot products give the metric, and its inverse is then computed from that induced matrix.</p>
 </div>
 </div>
 </div>
@@ -28,11 +28,13 @@ verify it by the multivariable chain rule.</p>
 <div class="input_area">
 <div class="highlight hl-egison"><pre><span></span>declare symbol r, θ : MathValue
 
-def q : Vector MathValue := [| r, θ |]
+def x : Vector MathValue := [| r, θ |]
+def position : Vector MathValue := [| r * cos θ, r * sin θ |]
+
+def e_i_j : Matrix MathValue := ∂/∂ position_j x~i
 def g_i_j : Matrix MathValue :=
-  [| [| 1, 0 |], [| 0, r^2 |] |]_i_j
-def g~i~j : Matrix MathValue :=
-  [| [| 1, 0 |], [| 0, r^(-2) |] |]~i~j
+  generateTensor (\[a, b] -&gt; V.* e_a_# e_b_#) [2, 2]
+def g~i~j : Matrix MathValue := M.inverse g_#_#
 
 def f : MathValue := function (r, θ)
 </pre></div>
@@ -75,14 +77,14 @@ formula.</p>
 <div class="input_area">
 <div class="highlight hl-egison"><pre><span></span>def Γ_i_j_k : Tensor MathValue :=
   (1 / 2) *
-    (∂/∂ g_i_k q~j + ∂/∂ g_i_j q~k - ∂/∂ g_j_k q~i)
+    (∂/∂ g_i_k x~j + ∂/∂ g_i_j x~k - ∂/∂ g_j_k x~i)
 
 def Γ~i_j_k : Tensor MathValue := withSymbols [m]
   g~i~m . Γ_m_j_k
 
 def laplacian : MathValue := withSymbols [i, j, k]
-  g~i~j . ∂/∂ (∂/∂ f q~j) q~i
-    - g~i~j . Γ~k_i_j . ∂/∂ f q~k
+  g~i~j . ∂/∂ (∂/∂ f x~j) x~i
+    - g~i~j . Γ~k_i_j . ∂/∂ f x~k
 </pre></div>
 </div>
 </div>

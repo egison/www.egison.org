@@ -71,9 +71,10 @@ line element is</p>
 <p>$$
 ds^2=r^2\left(d\alpha^2 + \sin^2 \alpha d\beta^2 + \sin^2 \alpha \sin^2 \beta d\gamma^2 + \sin^2 \alpha \sin^2 \beta \sin^2 \gamma d\delta^2 + \sin^2 \alpha \sin^2 \beta \sin^2 \gamma \sin^2 \delta d\xi^2 + \sin^2 \alpha \sin^2 \beta \sin^2 \gamma \sin^2 \delta \sin^2 \xi d\zeta^2 + \sin^2 \alpha \sin^2 \beta \sin^2 \gamma \sin^2 \delta \sin^2 \xi \sin^2 \zeta d\eta^2\right).
 $$</p>
-<p>We enter this diagonal result explicitly.  That keeps the notebook quick
-while retaining the same metric derived from
-$g_{ij}=\partial_iX\mathbin{\cdot}\partial_jX$.</p>
+<p>Egison differentiates the embedding to obtain the coordinate tangent
+vectors and constructs every component as their dot product,
+$g_{ij}=\partial_iX\mathbin{\cdot}\partial_jX$.  The inverse metric is
+then computed from that induced metric.</p>
 </div>
 </div>
 </div>
@@ -81,25 +82,12 @@ $g_{ij}=\partial_iX\mathbin{\cdot}\partial_jX$.</p>
 <div class="input">
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-egison"><pre><span></span>def g_i_j : Matrix MathValue :=
-  [| [| r^2, 0, 0, 0, 0, 0, 0 |]
-  , [| 0, r^2 * (sin α)^2, 0, 0, 0, 0, 0 |]
-  , [| 0, 0, r^2 * (sin α)^2 * (sin β)^2, 0, 0, 0, 0 |]
-  , [| 0, 0, 0, r^2 * (sin α)^2 * (sin β)^2 * (sin γ)^2, 0, 0, 0 |]
-  , [| 0, 0, 0, 0, r^2 * (sin α)^2 * (sin β)^2 * (sin γ)^2 * (sin δ)^2, 0, 0 |]
-  , [| 0, 0, 0, 0, 0, r^2 * (sin α)^2 * (sin β)^2 * (sin γ)^2 * (sin δ)^2 * (sin ξ)^2, 0 |]
-  , [| 0, 0, 0, 0, 0, 0, r^2 * (sin α)^2 * (sin β)^2 * (sin γ)^2 * (sin δ)^2 * (sin ξ)^2 * (sin ζ)^2 |]
-  |]_i_j
+<div class="highlight hl-egison"><pre><span></span>def e_i_j : Matrix MathValue := ∂/∂ X_j x~i
 
-def g~i~j : Matrix MathValue :=
-  [| [| r^(-2), 0, 0, 0, 0, 0, 0 |]
-  , [| 0, r^(-2) * (sin α)^(-2), 0, 0, 0, 0, 0 |]
-  , [| 0, 0, r^(-2) * (sin α)^(-2) * (sin β)^(-2), 0, 0, 0, 0 |]
-  , [| 0, 0, 0, r^(-2) * (sin α)^(-2) * (sin β)^(-2) * (sin γ)^(-2), 0, 0, 0 |]
-  , [| 0, 0, 0, 0, r^(-2) * (sin α)^(-2) * (sin β)^(-2) * (sin γ)^(-2) * (sin δ)^(-2), 0, 0 |]
-  , [| 0, 0, 0, 0, 0, r^(-2) * (sin α)^(-2) * (sin β)^(-2) * (sin γ)^(-2) * (sin δ)^(-2) * (sin ξ)^(-2), 0 |]
-  , [| 0, 0, 0, 0, 0, 0, r^(-2) * (sin α)^(-2) * (sin β)^(-2) * (sin γ)^(-2) * (sin δ)^(-2) * (sin ξ)^(-2) * (sin ζ)^(-2) |]
-  |]~i~j
+def g_i_j : Matrix MathValue :=
+  generateTensor (\[a, b] -&gt; V.* e_a_# e_b_#) [7, 7]
+
+def g~i~j : Matrix MathValue := M.inverse g_#_#
 </pre></div>
 </div>
 </div>

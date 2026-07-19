@@ -41,11 +41,12 @@ def X : Vector MathValue :=
    , a * sin θ
    |]
 
-def g_i_j : Matrix MathValue :=
-  [| [| a^2, 0 |], [| 0, `(a * cos θ + b)^2 |] |]_i_j
+def e_i_j : Matrix MathValue := ∂/∂ X_j x~i
 
-def g~i~j : Matrix MathValue :=
-  [| [| a^(-2), 0 |], [| 0, `(a * cos θ + b)^(-2) |] |]~i~j
+def g_i_j : Matrix MathValue :=
+  generateTensor (\[u, v] -&gt; V.* e_u_# e_v_#) [2, 2]
+
+def g~i~j : Matrix MathValue := M.inverse g_#_#
 </pre></div>
 </div>
 </div>
