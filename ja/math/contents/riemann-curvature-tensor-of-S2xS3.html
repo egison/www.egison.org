@@ -69,21 +69,22 @@ def q : MathValue := `(a - 2 * y + y^2)
 </div>
 <div class="cell border-box-sizing text_cell rendered" id="cell-id=40c363a8"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="%E8%A8%88%E9%87%8F">計量<a class="anchor-link" href="#%E8%A8%88%E9%87%8F">¶</a></h2><p>ゼロでない成分は、それぞれの対称成分と合わせて次の通りです。</p>
+<h2 id="%E5%B1%80%E6%89%80%E3%83%95%E3%83%AC%E3%83%BC%E3%83%A0%E3%81%A8%E8%AA%98%E5%B0%8E%E8%A8%88%E9%87%8F">局所フレームと誘導計量<a class="anchor-link" href="#%E5%B1%80%E6%89%80%E3%83%95%E3%83%AC%E3%83%BC%E3%83%A0%E3%81%A8%E8%AA%98%E5%B0%8E%E8%A8%88%E9%87%8F">¶</a></h2><p>$f=q/(6u)$とおきます。計量は、正規直交フレームを用いて次のように
+分解できます。</p>
 <p>$$
-\begin{aligned}
-g_{11}&amp;=\frac{3p^2u\sin^2\theta+2vp\cos^2\theta+q^2\cos^2\theta}{18up},
-&amp;g_{13}&amp;=\frac{-2vp\cos\theta-q^2\cos\theta}{18up},\\
-g_{15}&amp;=-\frac{q\cos\theta}{3p},
-&amp;g_{22}&amp;=\frac p6,\\
-g_{33}&amp;=\frac{2vp+q^2}{18up},
-&amp;g_{35}&amp;=\frac q{3p},\\
-g_{44}&amp;=\frac p{2v},
-&amp;g_{55}&amp;=\frac{2u}{p}.
-\end{aligned}
+\begin{split}
+ds^2={}&amp;\frac p6(d\theta^2+\sin^2\theta\,d\phi^2)
+  +\frac{p}{2v}dy^2
+  +\frac{v}{9u}(d\psi-\cos\theta\,d\phi)^2\\
+  &amp;+\frac{2u}{p}
+    \bigl(d\alpha+f(d\psi-\cos\theta\,d\phi)\bigr)^2.
+\end{split}
 $$</p>
-<p>$(1,3,5)$ ブロックは互いに結合しています。このため、逆計量全体の計算や
-曲率の展開は、丸い球面・超球面を扱うNotebookよりも大幅に重くなります。</p>
+<p>下の<code>e_i_j</code>の各行は、座標接ベクトル$e_i$をこの正規直交フレームで
+表したものです。丸い球面のNotebookと同じように、Egisonは接ベクトルの
+内積$g_{ij}=e_i\mathbin{\cdot}e_j$からすべての計量成分を構成します。
+$(1,3,5)$ブロックの結合は、$d\psi-\cos\theta\,d\phi$が2か所に現れる
+ことから生成されます。</p>
 </div>
 </div>
 </div>
@@ -91,21 +92,22 @@ $$</p>
 <div class="input">
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-egison"><pre><span></span>def g_i_j : Matrix MathValue :=
-  [| [| (3 * p^2 * (sin θ)^2 * u + 2 * v * p * (cos θ)^2 + q^2 * (cos θ)^2) / (18 * u * p)
+<div class="highlight hl-egison"><pre><span></span>def f : MathValue := q / (6 * u)
+
+def e_i_j : Matrix MathValue :=
+  [| [| sqrt (p / 6) * sin θ
        , 0
-       , (-2 * v * p * cos θ - q^2 * cos θ) / (18 * u * p)
+       , -(sqrt (v / u) / 3) * cos θ
        , 0
-       , (-q * cos θ) / (3 * p) |]
-   , [| 0, p / 6, 0, 0, 0 |]
-   , [| (-2 * v * p * cos θ - q^2 * cos θ) / (18 * u * p)
-       , 0
-       , (2 * v * p + q^2) / (18 * u * p)
-       , 0
-       , q / (3 * p) |]
-   , [| 0, 0, 0, p / (2 * v), 0 |]
-   , [| (-q * cos θ) / (3 * p), 0, q / (3 * p), 0, 2 * u / p |]
+       , -sqrt (2 * u / p) * f * cos θ |]
+   , [| 0, sqrt (p / 6), 0, 0, 0 |]
+   , [| 0, 0, sqrt (v / u) / 3, 0, sqrt (2 * u / p) * f |]
+   , [| 0, 0, 0, sqrt (p / (2 * v)), 0 |]
+   , [| 0, 0, 0, 0, sqrt (2 * u / p) |]
    |]_i_j
+
+def g_i_j : Matrix MathValue :=
+  generateTensor (\[i, j] -&gt; V.* e_i_# e_j_#) [5, 5]
 </pre></div>
 </div>
 </div>

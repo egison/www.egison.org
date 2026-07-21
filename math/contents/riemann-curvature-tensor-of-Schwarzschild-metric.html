@@ -24,9 +24,19 @@ curvature component.</p>
 </div>
 <div class="cell border-box-sizing text_cell rendered" id="cell-id=459657af"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Metric-and-inverse">Metric and inverse<a class="anchor-link" href="#Metric-and-inverse">¶</a></h2><p>The chart covers $r&gt;0$ away from $A=0$.  The surface
+<h2 id="Local-frame,-metric,-and-inverse">Local frame, metric, and inverse<a class="anchor-link" href="#Local-frame,-metric,-and-inverse">¶</a></h2><p>The chart covers $r&gt;0$ away from $A=0$.  The surface
 $r=2GM/c^2$ is a coordinate horizon in this chart, whereas $r=0$ will be
-detected by a curvature invariant.</p>
+detected by a curvature invariant.  In a local Lorentz frame with
+$\eta=\operatorname{diag}(1,-1,-1,-1)$, the coordinate tangent vectors
+have components</p>
+<p>$$
+e_t=(\sqrt A,0,0,0),\quad
+e_r=(0,A^{-1/2},0,0),\quad
+e_\theta=(0,0,r,0),\quad
+e_\phi=(0,0,0,r\sin\theta).
+$$</p>
+<p>Egison obtains the metric as $g_{ij}=\eta(e_i,e_j)$ and computes its
+inverse, instead of entering either matrix component by component.</p>
 </div>
 </div>
 </div>
@@ -39,19 +49,20 @@ detected by a curvature invariant.</p>
 def x : Vector MathValue := [| t, r, θ, φ |]
 def A : MathValue := `(c^2 * r - 2 * G * M) / (c^2 * r)
 
-def g_i_j : Matrix MathValue :=
-  [| [| A, 0, 0, 0 |]
-   , [| 0, -1 / A, 0, 0 |]
-   , [| 0, 0, -r^2, 0 |]
-   , [| 0, 0, 0, -r^2 * (sin θ)^2 |]
+def e_i_j : Matrix MathValue :=
+  [| [| sqrt A, 0, 0, 0 |]
+   , [| 0, 1 / sqrt A, 0, 0 |]
+   , [| 0, 0, r, 0 |]
+   , [| 0, 0, 0, r * sin θ |]
    |]_i_j
 
-def g~i~j : Matrix MathValue :=
-  [| [| 1 / A, 0, 0, 0 |]
-   , [| 0, -A, 0, 0 |]
-   , [| 0, 0, -r^(-2), 0 |]
-   , [| 0, 0, 0, -r^(-2) * (sin θ)^(-2) |]
-   |]~i~j
+def minkowskiDot (u : Vector MathValue) (v : Vector MathValue) : MathValue :=
+  u_1 * v_1 - u_2 * v_2 - u_3 * v_3 - u_4 * v_4
+
+def g_i_j : Matrix MathValue :=
+  generateTensor (\[i, j] -&gt; minkowskiDot e_i_# e_j_#) [4, 4]
+
+def g~i~j : Matrix MathValue := M.inverse g_#_#
 </pre></div>
 </div>
 </div>

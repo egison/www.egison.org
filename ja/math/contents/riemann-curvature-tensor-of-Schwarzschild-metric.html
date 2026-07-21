@@ -23,9 +23,19 @@ $$</p>
 </div>
 <div class="cell border-box-sizing text_cell rendered" id="cell-id=459657af"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="%E8%A8%88%E9%87%8F%E3%81%A8%E9%80%86%E8%A8%88%E9%87%8F">計量と逆計量<a class="anchor-link" href="#%E8%A8%88%E9%87%8F%E3%81%A8%E9%80%86%E8%A8%88%E9%87%8F">¶</a></h2><p>この座標表示は、$r&gt;0$かつ$A=0$でない領域を覆います。曲面
+<h2 id="%E5%B1%80%E6%89%80%E3%83%95%E3%83%AC%E3%83%BC%E3%83%A0%E3%80%81%E8%A8%88%E9%87%8F%E3%80%81%E9%80%86%E8%A8%88%E9%87%8F">局所フレーム、計量、逆計量<a class="anchor-link" href="#%E5%B1%80%E6%89%80%E3%83%95%E3%83%AC%E3%83%BC%E3%83%A0%E3%80%81%E8%A8%88%E9%87%8F%E3%80%81%E9%80%86%E8%A8%88%E9%87%8F">¶</a></h2><p>この座標表示は、$r&gt;0$かつ$A=0$でない領域を覆います。曲面
 $r=2GM/c^2$はこの座標表示における座標地平面ですが、$r=0$の
-特異性は曲率不変量によって検出されます。</p>
+特異性は曲率不変量によって検出されます。
+$\eta=\operatorname{diag}(1,-1,-1,-1)$である局所Lorentzフレームでは、
+座標接ベクトルの成分は</p>
+<p>$$
+e_t=(\sqrt A,0,0,0),\quad
+e_r=(0,A^{-1/2},0,0),\quad
+e_\theta=(0,0,r,0),\quad
+e_\phi=(0,0,0,r\sin\theta).
+$$</p>
+<p>Egisonは計量や逆計量を成分ごとに入力するのではなく、
+$g_{ij}=\eta(e_i,e_j)$として計量を求め、その計量から逆計量を計算します。</p>
 </div>
 </div>
 </div>
@@ -38,19 +48,20 @@ $r=2GM/c^2$はこの座標表示における座標地平面ですが、$r=0$の
 def x : Vector MathValue := [| t, r, θ, φ |]
 def A : MathValue := `(c^2 * r - 2 * G * M) / (c^2 * r)
 
-def g_i_j : Matrix MathValue :=
-  [| [| A, 0, 0, 0 |]
-   , [| 0, -1 / A, 0, 0 |]
-   , [| 0, 0, -r^2, 0 |]
-   , [| 0, 0, 0, -r^2 * (sin θ)^2 |]
+def e_i_j : Matrix MathValue :=
+  [| [| sqrt A, 0, 0, 0 |]
+   , [| 0, 1 / sqrt A, 0, 0 |]
+   , [| 0, 0, r, 0 |]
+   , [| 0, 0, 0, r * sin θ |]
    |]_i_j
 
-def g~i~j : Matrix MathValue :=
-  [| [| 1 / A, 0, 0, 0 |]
-   , [| 0, -A, 0, 0 |]
-   , [| 0, 0, -r^(-2), 0 |]
-   , [| 0, 0, 0, -r^(-2) * (sin θ)^(-2) |]
-   |]~i~j
+def minkowskiDot (u : Vector MathValue) (v : Vector MathValue) : MathValue :=
+  u_1 * v_1 - u_2 * v_2 - u_3 * v_3 - u_4 * v_4
+
+def g_i_j : Matrix MathValue :=
+  generateTensor (\[i, j] -&gt; minkowskiDot e_i_# e_j_#) [4, 4]
+
+def g~i~j : Matrix MathValue := M.inverse g_#_#
 </pre></div>
 </div>
 </div>
